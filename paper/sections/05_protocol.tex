@@ -43,6 +43,37 @@ difference between them cannot be attributed to more data or to more recording d
 C. What differs is whose content the model sees. A2 varies both mechanisms at once and therefore
 serves as a plausibility check rather than as a third estimate of the same quantity.
 
+\subsection{What the contrast estimates}\label{sec:estimand}
+
+We state the estimand explicitly, because the arms differ in more than one respect.
+The treatment condition is the replacement of $m_c$ C slices by the whole
+$Q^{\text{pool}}_c$ of the same class; the control condition draws $m_c$ slices from C.
+Fixed across the two arms are the per-class slice count, the per-class count of C-side training
+recordings, the epoch count and the resulting optimiser steps
+(reported in Supplementary Material~S1), the sealed evaluation panel, the three training seeds and
+the per-class label set. What the treatment changes is the number of pool recordings that reach
+training, the identity of the content they carry, and the within-class diversity those recordings
+add: on CTIS, 578 of 963 test recordings are represented in A1 training and none in A0.
+We therefore call $A1-A0$ the \emph{pool-injection contrast} $\Delta_{\text{pool}}$ and read it as
+the score change associated with injecting the held-out pool under an otherwise fixed budget.
+It is not the effect of moving from a recording-level to a slice-level partition, because that
+move also repartitions the pool; A2 is the arm that approximates such a move.
+Table~\ref{tab:arms} summarises what each arm trains on.
+
+\begin{table}[t]
+\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{What each arm trains on in the primary library (CTIS, 201 classes, 963 test
+recordings). Recordings are distinct canonical identifiers contributing at least one training
+slice. The per-class budget $m_c$ is identical in A0, A1 and C1.}
+\label{tab:arms}
+\begin{tabular}{@{}llrrll@{}}\toprule
+Arm & Training content & Slices & Recordings & Budget & Test-recording relation\\\midrule
+A0 & C only & 25{,}502 & 3{,}017 & $m_c$ & disjoint, 0/963\\
+A1 & C + all $Q^{\text{pool}}$, equal budget & 25{,}498 & 3{,}770 & $m_c$ & 578/963 shared\\
+A2 & 80\% of $C\cup Q^{\text{pool}}$, slice level & 25{,}263 & 3{,}679 & $\approx m_c$ & same-recording mixing\\
+C1 & C remainder + part of R & 25{,}502 & 3{,}684 & $m_c$ & non-test R, 0/963\\\bottomrule
+\end{tabular}\end{table}
+
 \subsection{Training and sealing}
 
 The recipe is frozen: 224$\times$224 input, ImageNet initialisation, ten epochs, AdamW with
@@ -98,7 +129,7 @@ the replicate value is the mean over seeds; the interval is the 2.5--97.5 percen
 the $p$-value is a two-sided smaller-tail resampling measure. The original script clipped
 zero-tail estimates to $1/B$; the revision uses the add-one convention
 $2(k+1)/(B+1)$ for the smaller-tail count $k$, capped at one, with $B=2{,}000$.
-Its minimum raw value is $2/2{,}001$, not evidence of an exact tail probability.
+Its minimum raw value is $2/2{,}001$, not evidence of an exact tail probability. Because the class set is fixed by each dataset rather than sampled from a population of classes, these intervals describe resampling uncertainty over test recordings within the realised split and do not extend to unseen classes or to other libraries.
 Seed dispersion is reported as the range over
 seeds and is not tested: three seeds are too few to estimate between-seed variance reliably,
 so the primary intervals treat them as fixed and seed dispersion is descriptive. A supplementary
@@ -186,7 +217,7 @@ is part of the internal plan, and neither is used to support the primary conclus
 
 \subsection{Use of AI-assisted tools}
 
-The authors used DeepSeek Harness, an AI coding and writing assistant, to draft code for data
+The authors used Coze Agent (running GPT 6.1 Sol), an AI coding and writing assistant, to draft code for data
 processing, training, analysis and figure generation, and to produce drafts of the prose. A
 verification script re-derives the reported tables and figures from the stored artifacts and
 checks that each reported number appears in the manuscript; the bootstrap intervals themselves are

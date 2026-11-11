@@ -92,7 +92,7 @@ for ax, bb, title in zip(axes, ("alexnet", "swin_t"), ("AlexNet", "Swin-T")):
     ax.set_xlim(-0.65, len(vals) - 0.35)
     ax.set_xticks(x)
     ax.set_xticklabels([a[1] for a in ARMS], fontsize=FS)
-    ax.set_title(title, fontsize=9.6, pad=3.0)
+    ax.set_title(title, fontsize=9.6, pad=3.0, loc="left")
     ax.set_yticks([0, 20, 40, 60, 80, 100])
     ax.tick_params(axis="y", labelsize=FS, length=2.0, pad=1.5)
     ax.tick_params(axis="x", length=0, pad=2.0)

@@ -48,12 +48,11 @@
           3.7795
         ],
         "dpi": 100.0,
-        "texts": 27,
+        "texts": 25,
         "markers": 16,
         "legends": 0,
         "font_sizes_pt": [
-          9.0,
-          9.6
+          9.0
         ],
         "min_font_pt": 9.0
       },
@@ -68,12 +67,11 @@
           3.7795
         ],
         "dpi": 100.0,
-        "texts": 27,
+        "texts": 25,
         "markers": 16,
         "legends": 0,
         "font_sizes_pt": [
-          9.0,
-          9.6
+          9.0
         ],
         "min_font_pt": 9.0
       },

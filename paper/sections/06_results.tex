@@ -2,8 +2,8 @@
 
 \subsection{The pool-injection contrast across libraries}
 
-Table~\ref{tab:main} reports the exposure effect, A1$-$A0, on the sealed panel of each library.
-In the primary library the point estimates are small: $+2.02$ points under
+Table~\ref{tab:main} reports the pool-injection contrast, A1$-$A0, on the sealed panel of each library.
+In the primary library the point estimates are $+2.02$ points under
 AlexNet with a 95\% CI of $+0.83$ to $+3.35$, and $+1.70$ under Swin-T with CI $+1.28$ to
 $+2.84$. Both intervals
 exclude zero. Under the add-one convention, both smaller tails have zero hits in 2{,}000
@@ -13,7 +13,8 @@ split and the trained seeds. These are finite-resolution resampling summaries.
 Both point estimates are, however, below the three-point SESOI recorded in the internal written
 protocol, which the local record describes as set before training but which lacks an independent timestamp. The Swin-T interval is wholly below three points, whereas the AlexNet interval includes
 that magnitude. These are conditional intervals for our fixed split and trained seeds, not
-uncertainty bounds across new training runs or split realisations.
+uncertainty bounds across new training runs or split realisations. A null-compatible interval is
+not evidence of no effect, and we make no equivalence claim at any margin.
 
 \begin{table}[t]
 \centering
@@ -59,12 +60,12 @@ This normalisation is descriptive, not a decomposition of mechanisms.
 
 The CTIS-only C1 control, defined in Section~\ref{sec:protocol}, checks equal-volume
 replacement with non-test content. C1 and A1 differ primarily in the origin of injected content,
-but also in recording diversity and the use of validation recordings. C1
+but also in recording diversity and the use of validation recordings. Because C1 consumes R content, its validation scores cannot be interpreted, and every C1 number below is a sealed-panel score. C1
 trains on 25{,}502 slices against 25{,}498 for A1 and 25{,}502 for A0, and the per-class counts are
 unchanged. On the sealed panel C1$-$A0 is $+0.05$ $[-0.94,+1.35]$ under AlexNet and $+0.62$
 $[+0.14,+1.81]$ under Swin-T, against $+2.02$ and $+1.70$ for A1$-$A0. Under Swin-T the C1$-$A0
 interval excludes zero as well, so equal-volume non-test injection is not by itself equivalent to
-the control, while the point estimate is small. Equal-volume non-homologous
+the control, while the point estimate also falls below the three-point SESOI. Equal-volume non-homologous
 content changes the slice-level point estimates by about 0.6 points or less, 3\% and 36\% of the respective
 A1 point estimates. Comparing the two arms directly, as a paired contrast on the same sealed panel
 and the same three seeds, the exposure arm still leads: A1$-$C1 is $+1.96$ points, 95\% CI $+0.74$
@@ -141,7 +142,7 @@ through a random 80/10/10 partition of the pooled corpus. Its difference from A0
 usually smaller than A1's, because the random partition places only a fraction of the pool in
 training, and it is the arm that comes closest to a score a user of the stated ratio would obtain
 under a slice-level reading. As a
-share of the exposure effect, the
+share of the pool-injection contrast, the
 answer, in Table~\ref{tab:a2}, is $100\times\hat\Delta_{A2}/\hat\Delta_{A1} = 60$--103\%: in the
 four additional libraries this reconstruction recovers between 81\% and 99\% of the A1 effect,
 whereas in the primary library the recovered share spans the two extremes of the ten: 60\%

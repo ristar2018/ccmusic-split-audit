@@ -1,0 +1,378 @@
+{
+ "generated_by": "code/summarise_library_inventory.py",
+ "note": "Inventory from the released MEL manifests; thresholds from the per-class capacity artifact with the five placeholder classes removed; convergence from the final row of each run's train_log.csv, medians over seeds.",
+ "libraries": {
+  "CTIS": {
+   "slices": 43054,
+   "recordings": 4954,
+   "classes": 219
+  },
+  "music_genre": {
+   "slices": 36375,
+   "recordings": 1713,
+   "classes": 16
+  },
+  "pianos": {
+   "slices": 18352,
+   "recordings": 668,
+   "classes": 8
+  },
+  "CNPM": {
+   "slices": 2724,
+   "recordings": 287,
+   "classes": 5
+  },
+  "bel_canto": {
+   "slices": 9910,
+   "recordings": 203,
+   "classes": 4
+  },
+  "chest_falsetto": {
+   "slices": 1280,
+   "recordings": 1280,
+   "classes": 4
+  },
+  "erhu_playing_tech": {
+   "slices": 1253,
+   "recordings": 1253,
+   "classes": 11
+  },
+  "GZ_IsoTech": {
+   "slices": 2899,
+   "recordings": 2824,
+   "classes": 8
+  },
+  "Guzheng_Tech99": {
+   "slices": 99,
+   "recordings": 99,
+   "classes": null,
+   "note": "MEL release has no per-recording class directory"
+  }
+ },
+ "arm_sizes_ctis": {
+  "A0": {
+   "slices": 25502,
+   "recordings": 3017
+  },
+  "A1": {
+   "slices": 25498,
+   "recordings": 3770
+  },
+  "A2": {
+   "slices": 25263,
+   "recordings": 3679
+  },
+  "C1": {
+   "slices": 25502,
+   "recordings": 3684
+  }
+ },
+ "threshold_sensitivity": {
+  "2": {
+   "classes": 213,
+   "slices": 42882,
+   "q_recordings": 1272
+  },
+  "3": {
+   "classes": 211,
+   "slices": 42834,
+   "q_recordings": 1270
+  },
+  "5": {
+   "classes": 201,
+   "slices": 42509,
+   "q_recordings": 1241
+  },
+  "10": {
+   "classes": 159,
+   "slices": 41035,
+   "q_recordings": 1035
+  },
+  "excluded": {
+   "rule_classes": 13,
+   "rule_slices": 393,
+   "placeholder_classes": 5,
+   "placeholder_slices": 152,
+   "all_classes": 18,
+   "all_slices": 545,
+   "total_slices": 43054,
+   "rule_median_recordings": 4,
+   "rule_median_slices": 20,
+   "rule_median_k": 8.25,
+   "kept_median_recordings": 23,
+   "kept_median_slices": 197,
+   "kept_median_k": 6.9,
+   "kept_classes": 201,
+   "kept_recordings": 4887,
+   "low_resource_kept_4to6": 14,
+   "feasible_50": 10,
+   "feasible_30": 38
+  }
+ },
+ "convergence": {
+  "CNPM|A0|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4706,
+   "final_train_acc_median": 0.9919,
+   "steps": 250
+  },
+  "CNPM|A0|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4344,
+   "final_train_acc_median": 0.9888,
+   "steps": 250
+  },
+  "CNPM|A1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4631,
+   "final_train_acc_median": 0.9931,
+   "steps": 250
+  },
+  "CNPM|A1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.48,
+   "final_train_acc_median": 0.9744,
+   "steps": 250
+  },
+  "CNPM|A2|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4617,
+   "final_train_acc_median": 0.9938,
+   "steps": 250
+  },
+  "CNPM|A2|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4628,
+   "final_train_acc_median": 0.9856,
+   "steps": 250
+  },
+  "CTIS|A0|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.9016,
+   "final_train_acc_median": 0.9999,
+   "steps": 3980
+  },
+  "CTIS|A0|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.8712,
+   "final_train_acc_median": 0.9997,
+   "steps": 3980
+  },
+  "CTIS|A1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.9027,
+   "final_train_acc_median": 1.0,
+   "steps": 3980
+  },
+  "CTIS|A1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.8715,
+   "final_train_acc_median": 0.9998,
+   "steps": 3980
+  },
+  "CTIS|A2|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.9034,
+   "final_train_acc_median": 1.0,
+   "steps": 3940
+  },
+  "CTIS|A2|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.8718,
+   "final_train_acc_median": 0.9999,
+   "steps": 3940
+  },
+  "CTIS|C1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.9026,
+   "final_train_acc_median": 0.9999,
+   "steps": 3980
+  },
+  "CTIS|C1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.8714,
+   "final_train_acc_median": 0.9997,
+   "steps": 3980
+  },
+  "GZ_IsoTech|A0|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.478,
+   "final_train_acc_median": 1.0,
+   "steps": 270
+  },
+  "GZ_IsoTech|A0|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.4727,
+   "final_train_acc_median": 0.9994,
+   "steps": 270
+  },
+  "GZ_IsoTech|A2|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.4792,
+   "final_train_acc_median": 1.0,
+   "steps": 230
+  },
+  "GZ_IsoTech|A2|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.475,
+   "final_train_acc_median": 1.0,
+   "steps": 230
+  },
+  "bel_canto|A0|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.3576,
+   "final_train_acc_median": 1.0,
+   "steps": 920
+  },
+  "bel_canto|A0|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.3553,
+   "final_train_acc_median": 0.9983,
+   "steps": 920
+  },
+  "bel_canto|A1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.3579,
+   "final_train_acc_median": 0.9998,
+   "steps": 920
+  },
+  "bel_canto|A1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.3573,
+   "final_train_acc_median": 0.9981,
+   "steps": 920
+  },
+  "bel_canto|A2|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.358,
+   "final_train_acc_median": 1.0,
+   "steps": 920
+  },
+  "bel_canto|A2|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.3578,
+   "final_train_acc_median": 0.998,
+   "steps": 920
+  },
+  "chest_falsetto|A0|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.384,
+   "final_train_acc_median": 0.9961,
+   "steps": 120
+  },
+  "chest_falsetto|A0|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.5157,
+   "final_train_acc_median": 0.9232,
+   "steps": 120
+  },
+  "chest_falsetto|A2|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.3861,
+   "final_train_acc_median": 0.9969,
+   "steps": 100
+  },
+  "chest_falsetto|A2|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.4373,
+   "final_train_acc_median": 0.9703,
+   "steps": 100
+  },
+  "erhu_playing_tech|A0|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.5352,
+   "final_train_acc_median": 1.0,
+   "steps": 110
+  },
+  "erhu_playing_tech|A0|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.5326,
+   "final_train_acc_median": 0.9943,
+   "steps": 110
+  },
+  "erhu_playing_tech|A2|alexnet": {
+   "seeds": 1,
+   "final_train_loss_median": 0.5383,
+   "final_train_acc_median": 1.0,
+   "steps": 100
+  },
+  "erhu_playing_tech|A2|swin_t": {
+   "seeds": 1,
+   "final_train_loss_median": 0.5276,
+   "final_train_acc_median": 1.0,
+   "steps": 100
+  },
+  "music_genre|A0|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.6017,
+   "final_train_acc_median": 0.9995,
+   "steps": 3410
+  },
+  "music_genre|A0|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.5784,
+   "final_train_acc_median": 0.9985,
+   "steps": 3410
+  },
+  "music_genre|A1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.6071,
+   "final_train_acc_median": 0.9992,
+   "steps": 3410
+  },
+  "music_genre|A1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.5802,
+   "final_train_acc_median": 0.9979,
+   "steps": 3410
+  },
+  "music_genre|A2|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.6062,
+   "final_train_acc_median": 0.9994,
+   "steps": 3400
+  },
+  "music_genre|A2|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.5797,
+   "final_train_acc_median": 0.9983,
+   "steps": 3400
+  },
+  "pianos|A0|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4762,
+   "final_train_acc_median": 1.0,
+   "steps": 1720
+  },
+  "pianos|A0|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4713,
+   "final_train_acc_median": 0.9997,
+   "steps": 1720
+  },
+  "pianos|A1|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4774,
+   "final_train_acc_median": 1.0,
+   "steps": 1720
+  },
+  "pianos|A1|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4722,
+   "final_train_acc_median": 0.9995,
+   "steps": 1720
+  },
+  "pianos|A2|alexnet": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4775,
+   "final_train_acc_median": 1.0,
+   "steps": 1710
+  },
+  "pianos|A2|swin_t": {
+   "seeds": 3,
+   "final_train_loss_median": 0.4727,
+   "final_train_acc_median": 0.9993,
+   "steps": 1710
+  }
+ }
+}

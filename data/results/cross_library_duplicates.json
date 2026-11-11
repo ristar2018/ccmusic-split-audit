@@ -1,0 +1,31 @@
+{
+ "generated_by": "code/audit_cross_library_duplicates.py",
+ "check": "exact byte identity of the feature slice (content_hash)",
+ "libraries": [
+  "CTIS",
+  "music_genre",
+  "pianos",
+  "CNPM",
+  "bel_canto"
+ ],
+ "slices_per_library": {
+  "CTIS": 43054,
+  "music_genre": 36375,
+  "pianos": 18352,
+  "CNPM": 2724,
+  "bel_canto": 9910
+ },
+ "unique_hashes_per_library": {
+  "CTIS": 42956,
+  "music_genre": 36373,
+  "pianos": 18352,
+  "CNPM": 2713,
+  "bel_canto": 9886
+ },
+ "slices_total": 110415,
+ "unique_hashes_total": 110280,
+ "cross_library_groups": 0,
+ "within_library_duplicate_instances": 135,
+ "examples": [],
+ "limit": "Byte identity only. Re-encoded, re-cropped or differently windowed copies of the same audio are not detected; audio-level identity is not recoverable for libraries whose image file names do not encode the evaluated recording."
+}

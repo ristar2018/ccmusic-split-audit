@@ -12,7 +12,8 @@ Two independent layers:
 
 2. Text layer -- rebuild the exact table rows and reported tokens in the same
    grammar the manuscript uses, then require each one to appear in the LaTeX
-   sources after whitespace/`{}`/`$`/`\;` normalisation.  This catches typos and
+   sources after whitespace, brace, dollar-sign and escaped-semicolon normalisation.
+   This catches typos and
    stale numbers transcribed into prose.
 
 Both layers read only; nothing under D:/VSCode/Datasets is touched.  Exit code 1
@@ -678,6 +679,108 @@ def main():
                         "four fewer slices than A0 and C1"])
         ck.in_text("shortfall cause named", "duplicate-content rule before injection")
         ck.in_text("affected class coded", "C0296")
+
+    # ---- round-3 revision: arm sizes, inventory, thresholds, duplicates ----
+    inv = json.load(io.open(os.path.join(RESULTS, "library_inventory_and_convergence.json"),
+                            encoding="utf-8"))
+    for label in ("A0", "A1", "A2", "C1"):
+        rows = read_csv(os.path.join(SPLITS, "CTIS_%s_train.csv" % label.lower()))
+        n_rec = len({r.get("recording_canonical") or r["recording_uid"] for r in rows})
+        arm = inv["arm_sizes_ctis"][label]
+        ck.identity("CTIS %s training size" % label,
+                    (len(rows), n_rec) == (arm["slices"], arm["recordings"]),
+                    "%d/%d vs %s" % (len(rows), n_rec, arm))
+        ck.in_text("arm table row %s" % label,
+                   "&%s&%s&" % (thousands(len(rows)), thousands(n_rec)))
+
+    for lib in ("CTIS", "music_genre", "pianos", "CNPM", "bel_canto",
+                "chest_falsetto", "erhu_playing_tech", "GZ_IsoTech"):
+        d = inv["libraries"][lib]
+        ck.in_text("library table row %s" % lib,
+                   "&%s&%s&%s&" % (thousands(d["slices"]), thousands(d["recordings"]),
+                                    d["classes"]))
+    ck.identity("Guzheng_Tech99 releases 99 slices from 99 sources",
+                (inv["libraries"]["Guzheng_Tech99"]["slices"],
+                 inv["libraries"]["Guzheng_Tech99"]["recordings"]) == (99, 99),
+                str(inv["libraries"]["Guzheng_Tech99"]))
+    ck.in_text("arm table A1 relation to test recordings", "578/963 shared")
+
+    ts = inv["threshold_sensitivity"]
+    ck.identity("threshold of five reproduces the frozen 201 classes",
+                ts["5"]["classes"] == 201, str(ts["5"]))
+    ck.in_text("threshold class counts",
+               "keep %s, %s, %s and %s classes"
+               % tuple(ts[str(t)]["classes"] for t in (2, 3, 5, 10)))
+    ck.in_text("threshold slice counts",
+               "covering %s, %s, %s and %s of the 43{,}054"
+               % tuple(thousands(ts[str(t)]["slices"]) for t in (2, 3, 5, 10)))
+    ck.in_text("threshold Q counts",
+               "%s, %s, %s and %s Q recordings"
+               % tuple(thousands(ts[str(t)]["q_recordings"]) for t in (2, 3, 5, 10)))
+    ck.in_text("threshold trade-off sentence",
+               "the class count falls by 42 while the slice count falls by 1{,}474")
+
+    ex = ts["excluded"]
+    ck.identity("thirteen rule classes cover 393 slices",
+                (ex["rule_classes"], ex["rule_slices"]) == (13, 393),
+                "%s/%s" % (ex["rule_classes"], ex["rule_slices"]))
+    ck.identity("five placeholder classes cover 152 slices",
+                (ex["placeholder_classes"], ex["placeholder_slices"]) == (5, 152),
+                "%s/%s" % (ex["placeholder_classes"], ex["placeholder_slices"]))
+    ck.identity("eighteen excluded classes cover 545 slices",
+                (ex["all_classes"], ex["all_slices"]) == (18, 545),
+                "%s/%s" % (ex["all_classes"], ex["all_slices"]))
+    ck.identity("201 retained classes hold 4887 recordings",
+                (ex["kept_classes"], ex["kept_recordings"]) == (201, 4887),
+                "%s/%s" % (ex["kept_classes"], ex["kept_recordings"]))
+    ck.in_text("rule exclusion share", "393 slices, 0.9\\% of the library")
+    ck.in_text("placeholder share", "152 slices, 0.35\\%")
+    ck.in_text("combined exclusion share", "545 slices, 1.3\\% of the library")
+    ck.in_text("median comparison",
+               "median %d source recordings against %d, median %d slices against %d"
+               % (ex["rule_median_recordings"], ex["kept_median_recordings"],
+                  ex["rule_median_slices"], ex["kept_median_slices"]))
+    ck.in_text("density comparison",
+               "%.2f slices per recording against %.2f"
+               % (ex["rule_median_k"], ex["kept_median_k"]))
+    ck.identity("fourteen retained classes have four to six recordings",
+                ex["low_resource_kept_4to6"] == 14, str(ex["low_resource_kept_4to6"]))
+    ck.in_text("low-resource retained classes",
+               "Fourteen retained classes have four to six source recordings")
+    ck.identity("201-class capacity for a 50 and 30 percent target",
+                (ex["feasible_50"], ex["feasible_30"]) == (10, 38),
+                "%s/%s" % (ex["feasible_50"], ex["feasible_30"]))
+    ck.in_text("capacity stated in the change table",
+               "10 can supply 50\\%, 38 can supply 30\\%")
+
+    dup = json.load(io.open(os.path.join(RESULTS, "cross_library_duplicates.json"),
+                            encoding="utf-8"))
+    ck.identity("no content hash appears in two libraries",
+                dup["cross_library_groups"] == 0, str(dup["cross_library_groups"]))
+    ck.identity("cross-library check covers 110415 slices and 110280 hashes",
+                (dup["slices_total"], dup["unique_hashes_total"]) == (110415, 110280),
+                "%s/%s" % (dup["slices_total"], dup["unique_hashes_total"]))
+    ck.in_text("cross-library sentence",
+               "110{,}415 slices, 110{,}280 unique hashes, and no hash appears in two libraries")
+    ck.in_text("cross-library reproduction command",
+               "code/audit\\_cross\\_library\\_duplicates.py")
+
+    conv = inv["convergence"]
+    for key, want in (("CTIS|A0|alexnet", 0.9016), ("CTIS|A1|alexnet", 0.9027),
+                      ("CTIS|C1|alexnet", 0.9026), ("CTIS|A0|swin_t", 0.8712),
+                      ("CTIS|A1|swin_t", 0.8715), ("CTIS|C1|swin_t", 0.8714),
+                      ("CTIS|A2|alexnet", 0.9034), ("CTIS|A2|swin_t", 0.8718)):
+        ck.identity("final training loss %s" % key,
+                    abs(conv[key]["final_train_loss_median"] - want) < 1e-9,
+                    str(conv[key]["final_train_loss_median"]))
+    ck.identity("A2 ends after 3940 steps", conv["CTIS|A2|alexnet"]["steps"] == 3940,
+                str(conv["CTIS|A2|alexnet"]["steps"]))
+    ck.in_text("convergence alexnet sentence",
+               "0.9016 in A0, 0.9027 in A1 and 0.9026 in C1")
+    ck.in_text("convergence swin sentence", "0.8712, 0.8715 and 0.8714 under Swin-T")
+    ck.in_text("convergence accuracy floor", "at least 0.9997 in every arm")
+    ck.in_text("A2 convergence sentence", "ends at 0.9034 and 0.8718")
+    ck.in_text("A2 step count", "3{,}940 steps against 3{,}980")
 
     # ---- report ---------------------------------------------------------
     summary = {

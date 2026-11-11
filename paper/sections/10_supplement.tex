@@ -4,39 +4,68 @@
 
 This supplement accompanies the revised audit. It does not constitute a public preregistration. The internal design and worklog were maintained locally; no independent public timestamp establishes when each choice was fixed. Primary slice-level intervals retain the original sealed predictions and fixed split; all revision-stage analyses below are exploratory.
 
+\subsection{The thirteen libraries and the audited set}
+
+The release carries thirteen library directories under one publishing organisation and the audited
+article documents six datasets. Table~\ref{tab:libraries} lists the nine libraries this audit
+touches and what each was used for. Three of the five main-sample libraries --- CTIS, CNPM and bel canto --- are
+among the six datasets the audited article evaluates. Music genre and pianos belong to the same
+published collection but are not covered by that article, so contrasts in them audit the same
+kind of split under a framework that does not report on them. The three negative controls each
+contribute one slice per recording, with GZ\_IsoTech carrying 46 recordings of two to four
+segments. Guzheng\_Tech99 was excluded because every recording contributes one slice and its
+per-note annotations have the same per-recording dominant label in all 99 recordings, so no
+recording-level class layer exists. The four remaining libraries of the release were not part of
+the audited set; we make no claim about them.
+
+\begin{table}[ht]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\caption{Libraries touched by this audit. Slices, recordings and classes are counted in the released MEL
+manifest after canonicalisation of duplicate recordings. The frozen CTIS panel keeps 201 of the 219
+classes and 4{,}887 of the 4{,}954 recordings after the eligibility rule and the placeholder removal;
+the other four main-sample libraries keep all their classes. Guzheng\_Tech99 releases 99 MEL images
+without a per-recording class directory, so its class count is not reported.}
+\label{tab:libraries}
+\begin{tabular}{@{}lrrrl@{}}\toprule
+Library & Slices & Recordings & Classes & Role in this audit\\\midrule
+CTIS & 43{,}054 & 4{,}954 & 219 & primary; A0, A1, A2, C1\\
+music genre & 36{,}375 & 1{,}713 & 16 & primary; A0, A1, A2\\
+pianos & 18{,}352 & 668 & 8 & primary; A0, A1, A2\\
+CNPM & 2{,}724 & 287 & 5 & primary; A0, A1, A2\\
+bel canto & 9{,}910 & 203 & 4 & primary; A0, A1, A2\\
+chest\_falsetto & 1{,}280 & 1{,}280 & 4 & negative control; A0, A2\\
+erhu\_playing\_tech & 1{,}253 & 1{,}253 & 11 & negative control; A0, A2\\
+GZ\_IsoTech & 2{,}899 & 2{,}824 & 8 & negative control; A0, A2\\
+Guzheng\_Tech99 & 99 & 99 & --- & excluded; no recording-level class layer\\
+\bottomrule\end{tabular}\end{table}
+
 \subsection{Execution changes}
 
-\begin{enumerate}
+The list below records every difference between the internal plan and the executed
+runs, and adds a column the earlier version did not carry: what was known when the decision was
+taken. The column matters because a change made with the relevant count in hand is a different
+object from a change made after seeing a result. Nothing in the list is a claim that the
+sequence was planned; it records what was available, and the supplementary analyses that follow
+are marked exploratory where they were added at revision.
 
-\item Recording-capacity checks reduced CTIS from 219 source classes to 201. Thirteen classes failed the five-recording threshold; five additional classes fell from five to four after placeholder removal.
-
-\item Earlier uniform 50\%/30\% injection targets were replaced by all available pool content. The realised exposure is not a freely chosen common fraction.
-
-\item The two-percent exposure agreement rule was reported descriptively, not enforced against a 400-draw planning mean. C-side recording counts remained the matching constraint.
-
-\item Three near-single-slice libraries were trained; a fourth library had no usable recording-level class layer. The controls were expanded from one to three seeds after initial results, giving 36 final training runs.
-
-\item Per-class training-slice budgets were capped when C could not supply the planned number of slices; A0 and A1 use the same realised per-class budget. This is a slice-count constraint, not early stopping: both arms use ten epochs and final-epoch weights. The classwise feasibility artifact records the guards.
-
-\item The CTIS-only C1 non-test injection control was added after the three main arms. It consumes unused C and R content, so validation scores are not interpretable; like the main arms it uses the final epoch without validation-based selection.
-
-\item The cross-instrument intervention used a gradient-reversal head with weight at most 0.02. The recording-grouped intermediate arm was added to separate two protocol contrasts; four arms, three folds, two backbones and two seeds give 48 fold-models.
-
-\item Instrument probes use an 80/20 split of training recordings because withheld instruments are absent from the training label space. This is not held-out-instrument recognition.
-
-\item Selection-regret analysis was not run because per-epoch sealed-panel scores were not stored. Optional CQT/chroma experiments were not run.
-
-\item During human review, the recording-level point estimator was corrected to one vote per recording. Its old point summaries weighted votes by slice count although its intervals did not; the original slice-level results are unaffected.
-
-\item Class-stratified and joint seed--recording bootstrap sensitivity analyses, explicit self-test tables, formal-version comparisons and a partial compute ledger were added during revision.
-
+\begin{enumerate}\itemsep2pt
+\item \textbf{CTIS classes:} 219 $\rightarrow$ 201. Known at the decision: per-class recording counts and the no-audio placeholder flags. Reason: the five-recording eligibility rule, then placeholder removal. Effect: 8.2\% fewer classes; 545 slices (1.3\%) drop.
+\item \textbf{Injection volume:} uniform 50\%/30\% of $S_c$ $\rightarrow$ all $Q^{\text{pool}}$. Known at the decision: the capacity calculation on the 201 classes: 10 can supply 50\%, 38 can supply 30\%. Reason: a common fraction is infeasible for most classes. Effect: $\alpha_c$ varies by class, median 0.17; no fixed common exposure.
+\item \textbf{Exposure agreement:} enforce within 2\% of a 400-draw mean $\rightarrow$ report descriptively. Known at the decision: 400-draw planning means and per-class capacity. Reason: the C-side recording count is the binding constraint. Effect: $\alpha_c$ dispersion is reported, not tested.
+\item \textbf{Negative controls:} one seed $\rightarrow$ three seeds. Known at the decision: the initial single-seed contrasts. Reason: single-seed dispersion is too wide to read. Effect: exploratory; five of six intervals include zero.
+\item \textbf{Slice budget:} $m_c=0.60S_c$ $\rightarrow$ capped by C capacity. Known at the decision: the classwise feasibility artifact. Reason: C cannot supply the planned count. Effect: a slice-count constraint, not early stopping.
+\item \textbf{C1 control:} three arms $\rightarrow$ three arms plus C1. Known at the decision: the main-arm results. Reason: separate content from recording identity without test recordings. Effect: descriptive only; validation not interpretable.
+\item \textbf{Cross-instrument head:} L-inst $\rightarrow$ L-inst plus adversarial head, weight $\le 0.02$. Known at the decision: the instrument-probe pilot. Reason: instrument identity survives in the representation. Effect: the adversarial arm is exploratory.
+\item \textbf{Probe split:} 80/20 of all recordings $\rightarrow$ 80/20 of training recordings. Known at the decision: withheld instruments are absent from the training label space. Reason: a closed-set probe cannot identify unseen classes. Effect: the probe measures identity, not recognition.
+\item \textbf{Analyses not run:} selection regret; CQT/chroma $\rightarrow$ not run. Known at the decision: per-epoch sealed-panel scores were not stored. Reason: no artifact to analyse. Effect: stated as not run.
+\item \textbf{Recording-level estimator:} slice-weighted point $\rightarrow$ one vote per recording. Known at the decision: human review found that the point and the intervals used different weights. Reason: align the point estimator with the intervals. Effect: ten points change, all inside the retained intervals.
+\item \textbf{Revision-stage additions:} none $\rightarrow$ class-stratified and joint bootstrap, self-test tables, version comparisons, partial compute ledger. Known at the decision: reviewer comments. Reason: transparency. Effect: exploratory.
 \end{enumerate}
 
 \subsection{Realised injection and training steps}
 
 Table~\ref{tab:realised-injection} counts pool slices actually present in A1 training. The exposed-test numerator counts canonical recording identifiers appearing in both A1's injected pool slices and the test panel; the denominator counts unique test recording identifiers. Injected recordings also include pool recordings absent from the test panel. Steps are calculated per model as ten times the integer number of full 64-slice batches, with the last partial batch dropped; both backbones use the same counts. Counts are derived from the frozen split CSVs, not independent evidence of the timing of the split.
 
-\begin{table}[ht]\centering\small
+\begin{table}[htbp]\centering\small
 \caption{Actual A1 injection and per-model optimiser steps. Test exposure is exposed test recordings / all test recordings.}
 \label{tab:realised-injection}
 \begin{tabular}{lrrrrr}\toprule
@@ -48,6 +77,17 @@ CNPM & 268 & 50 & 47/54 & 250 & 250 \\
 bel canto & 977 & 40 & 40/40 & 920 & 920 \\
 \bottomrule\end{tabular}\end{table}
 
+\subsection{Convergence at the end of training}
+
+Per-epoch training logs were retained for every run, so the arms can be compared where they
+stop. On CTIS the final-epoch training loss has median 0.9016 in A0, 0.9027 in A1 and 0.9026 in
+C1 under AlexNet, and 0.8712, 0.8715 and 0.8714 under Swin-T; final-epoch training accuracy is at
+least 0.9997 in every arm. A2, which has 25{,}263 training slices and 3{,}940 steps against
+3{,}980, ends at 0.9034 and 0.8718. The arms therefore end at the same point of the objective,
+consistent with equal epochs and, for A0, A1 and C1, equal step counts. The logs hold
+training-set and C-side validation metrics only: per-epoch sealed-panel scores were not stored,
+so no selection-regret curve is reported.
+
 \subsection{CTIS class exclusions}
 
 The source manifest contains 219 classes. Thirteen have fewer than five source recordings:
@@ -58,9 +98,41 @@ recordings but fall to four after removal of one recording whose identifier cont
 Chinese no-audio marker. These exclusions leave 201 classes. The five-recording threshold
 is a study-specific eligibility rule, not a requirement of every recording-level split.
 
+\subsection{Threshold sensitivity and the profile of excluded classes}
+
+Because the five-recording rule is a study-specific choice, we report what other thresholds
+would do. Every row below applies the threshold and then removes the five placeholder classes,
+so each row is comparable with the frozen 201-class set. Thresholds of 2, 3, 5 and 10 source
+recordings keep 213, 211, 201 and 159 classes, covering 42{,}882, 42{,}834, 42{,}509 and
+41{,}035 of the 43{,}054 released slices and 1{,}272, 1{,}270, 1{,}241 and 1{,}035 Q
+recordings. The frozen set sits where a stricter threshold starts to remove classes in bulk:
+from 5 to 10 the class count falls by 42 while the slice count falls by 1{,}474, so the
+threshold trades many small classes for few slices.
+
+The classes removed by the rule are smaller than the retained classes in absolute size but not
+in density: the thirteen classes with fewer than five recordings have median 4 source
+recordings against 23, median 20 slices against 197, and 8.25 slices per recording against 6.90.
+The rule removes 393 slices, 0.9\% of the library; the five placeholder classes remove a
+further 152 slices, 0.35\%. Together the eighteen excluded classes account for 545 slices,
+1.3\% of the library, so the exclusion does not carve out a systematically harder stratum.
+Fourteen retained classes have four to six source recordings; their recording-level intervals
+are the widest in the primary results and are reported with the rest, without a separate
+stability claim.
+
+\subsection{Cross-library duplication check}
+
+The same slice could in principle be registered under two libraries. We compared the content
+hash of every MEL slice across the five libraries: 110{,}415 slices, 110{,}280 unique hashes,
+and no hash appears in two libraries. The 135 repeated instances are within-library, consistent
+with the 77 identical-image groups reported for CTIS. The check is exact byte identity only:
+re-encoded or re-cropped copies of the same audio would not be caught, and a recording-level
+cross-library comparison is not possible because recording identifiers are defined independently
+per library. The check is reproduced by \texttt{code/audit\_cross\_library\_duplicates.py},
+which writes \texttt{data/results/cross\_library\_duplicates.json}.
+
 \subsection{A2 self-test and contextual published scores}
 
-Self-test scores are means and sample standard deviations over three seeds. CNPM Swin-T has a self-test standard deviation of 0.0366; the available results do not establish its cause. Their difference from A0 mixes different evaluation panels and is not a paired exposure effect. Published scores are contextual comparisons only: the original split files, training realisation and retained label universe differ. A dash means no verified matching published cell. Published CTIS values are from Table 3 (printed p.33), CNPM from Table 7 and singing style from Table 8 (printed p.35) of DOI 10.5334/tismir.194. Those cells all report mel-input F1 under the article's own split, optimizer and input pipeline, which differ from ours on every axis (the article uses ImageNet V1 weights, SGD at 0.001, 40 epochs, a batch of 4 and weighted cross-entropy), so the column locates our numbers in the published landscape and is not a reproduction check. The CTIS table also lists 0.936 for a ViT-L/32 mel model, so the same figure attaches to two rows there; we quote the AlexNet row.
+Self-test scores are means and sample standard deviations over three seeds. CNPM Swin-T has a self-test standard deviation of 0.0366; the available results do not establish its cause. Their difference from A0 mixes different evaluation panels and is not a paired pool-injection contrast. Published scores are contextual comparisons only: the original split files, training realisation and retained label universe differ. A dash means no verified matching published cell. Published CTIS values are from Table 3 (printed p.33), CNPM from Table 7 and singing style from Table 8 (printed p.35) of DOI 10.5334/tismir.194. Those cells all report mel-input F1 under the article's own split, optimizer and input pipeline, which differ from ours on every axis (the article uses ImageNet V1 weights, SGD at 0.001, 40 epochs, a batch of 4 and weighted cross-entropy), so the column locates our numbers in the published landscape and is not a reproduction check. The CTIS table also lists 0.936 for a ViT-L/32 mel model, so the same figure attaches to two rows there; we quote the AlexNet row.
 
 \begin{table}[ht]\centering\small
 
