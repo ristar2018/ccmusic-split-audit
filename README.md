@@ -4,7 +4,7 @@
 
 > **Unofficial audit.** This repository is an independent re-analysis. It is not affiliated with, endorsed by, or produced in collaboration with the CCMusic authors or the ModelScope `ccmusic-database` organisation. The audited article is identified in `CITATION.cff` and in the manuscript.
 
-This repository holds the analysis code, the frozen splits, the sealed test-set predictions and the verification scripts needed to re-derive every number reported in the manuscript and its supplementary material. The manuscript is being prepared for submission to *Multimedia Systems* (Springer).
+This repository holds the analysis code, the frozen splits, the sealed test-set predictions and the verification scripts needed to re-derive every number reported in the manuscript and its supplementary material.
 
 ## What is here
 

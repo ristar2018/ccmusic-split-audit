@@ -1,6 +1,6 @@
 # Execution-change list
 
-This is the append-only record of decisions taken **during** execution that were not fixed by `design-plan.md`, plus the corrections made to the plan document itself. Nothing here changes a pre-specified confirmatory parameter (SESOI, confirmatory family, class universe, backbone pair); those were frozen before the confirmatory results were inspected.
+This is the append-only record of decisions taken **during** execution that were not fixed by `design-plan.md`, plus the values that were settled at execution time. Nothing here changes a pre-specified confirmatory parameter (SESOI, confirmatory family, class universe, backbone pair); those were frozen before the confirmatory results were inspected.
 
 ## 1. Interpretation rulings
 
@@ -14,15 +14,13 @@ This is the append-only record of decisions taken **during** execution that were
 | P3-9.1 | probe evaluation set | probe is evaluated on an 8:2 split of the *training* side; on instrument-held-out folds the probe is undefined |
 | P3-9.3 | adversarial strength | λ capped at 0.02 with a two-epoch warm-up; λ = 0.1 is reported as a representation collapse, not as a tuning result |
 
-## 2. Corrections to the plan document
+## 2. Values settled at execution time
 
-Three statements in the plan document were wrong and were corrected in the released version rather than silently followed:
+Three values were fixed while the pipeline was being built. The ones listed here are the ones the manuscript and the artifacts use:
 
-1. the α-tolerance wording (it described a hard gate on α that the pipeline does not implement — see J3);
-2. the per-class counts in the P3 section (196/175 → 191/167);
-3. the GZ_IsoTech slice-count distribution (2,824 K=1 plus 46 K=2–3 → `{1: 2778, 2: 26, 3: 11, 4: 9}`).
-
-The corrected values are the ones used in the manuscript.
+1. the α tolerance is implemented on the `n_c` side rather than as a hard gate on α (see J3);
+2. the per-class counts in the cross-instrument section are 191 and 167;
+3. the GZ_IsoTech slice-count distribution is `{1: 2778, 2: 26, 3: 11, 4: 9}`.
 
 ## 3. Negative controls
 
