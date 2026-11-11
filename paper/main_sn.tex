@@ -9,6 +9,17 @@
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{url}
+%% Links stay clickable but are printed in black; sn-jnl defaults to blue.
+\hypersetup{citecolor=black,linkcolor=black,urlcolor=black}
+%% sn-jnl prints author e-mails with a hard-coded \textcolor{blue}; keep them black.
+\makeatletter
+\def\email#1{\global\advance\emailcnt by 1\relax
+  \if@corauemail
+    \g@addto@macro\corrauthemail{\setcounter{footnote}{0}\textcolor{black}{#1};\ }%
+  \else
+    \g@addto@macro\authemail{\setcounter{footnote}{0}\textcolor{black}{#1};\ }%
+  \fi}
+\makeatother
 
 \renewcommand{\topfraction}{0.92}
 \renewcommand{\bottomfraction}{0.92}
