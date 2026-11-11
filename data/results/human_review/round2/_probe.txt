@@ -1,0 +1,48 @@
+﻿== CTIS_A0_alexnet seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9006, 'acc': 0.9535, 'n': 4605, 'macro_f1_recording': 0.9116, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A0', 'bb': 'alexnet', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1b', 'n_train': 25502, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_A0_swin_t seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9563, 'acc': 0.9757, 'n': 4605, 'macro_f1_recording': 0.9568, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A0', 'bb': 'swin_t', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1b', 'n_train': 25502, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_A1_alexnet seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9303, 'acc': 0.975, 'n': 4605, 'macro_f1_recording': 0.9328, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A1', 'bb': 'alexnet', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1b', 'n_train': 25498, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_A1_swin_t seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9648, 'acc': 0.987, 'n': 4605, 'macro_f1_recording': 0.9658, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A1', 'bb': 'swin_t', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1b', 'n_train': 25498, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_A2_alexnet seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict'), ('a2_selftest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9203, 'acc': 0.9713, 'n': 4605, 'macro_f1_recording': 0.9235, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A2', 'bb': 'alexnet', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1c', 'n_train': 25263, 'n_val': 3154, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_A2_swin_t seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict'), ('a2_selftest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9691, 'acc': 0.9859, 'n': 4605, 'macro_f1_recording': 0.9712, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'A2', 'bb': 'swin_t', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'e1c', 'n_train': 25263, 'n_val': 3154, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_C1_alexnet seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9091, 'acc': 0.9579, 'n': 4605, 'macro_f1_recording': 0.9258, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'C1', 'bb': 'alexnet', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'c1', 'n_train': 25502, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125
+== CTIS_C1_swin_t seeds= [0, 1, 2] | files: ['seed0_qtest.npz', 'seed1_qtest.npz', 'seed2_qtest.npz']
+   seed0.json keys: [('config', 'dict'), ('val_best', 'dict'), ('qtest', 'dict')]
+   qtest scalars: {'macro_f1_slice': 0.9569, 'acc': 0.9802, 'n': 4605, 'macro_f1_recording': 0.9545, 'n_recordings': 963, 'confusion': '<list len=201>'}
+   config: {'lib': 'CTIS', 'arm': 'C1', 'bb': 'swin_t', 'seed': 0, 'epochs': 10, 'batch': 64, 'lr': 0.0003, 'wd': 0.05, 'warmup_epochs': 1, 'label_smoothing': 0.1, 'amp': True, 'limit': 0, 'tag': 'c1', 'n_train': 25502, 'n_val': 6317, 'n_classes': 201, 'torch': '2.11.0+cu128', 'cuda': '12.8', 'gpu': 'NVIDIA GeForce RTX 5060 Ti', 'size': 224, 'normalize': 'imagenet', 'augment': 'none'}
+   npz: probs=(4605, 201) y=(4605,) rec=(4605,) nrec=963
+   y label range: 0 200 | probs sum1: 0.00048828125

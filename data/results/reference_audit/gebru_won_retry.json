@@ -1,0 +1,26 @@
+[
+  {
+    "key": "gebru2018",
+    "url": "https://doi.org/10.1145/3287324",
+    "http": 403,
+    "ok": false
+  },
+  {
+    "key": "gebru2018",
+    "url": "https://cacm.acm.org/practice/datasheets-for-datasets/",
+    "http": 403,
+    "ok": false
+  },
+  {
+    "key": "won2020",
+    "url": "https://archives.ismir.net/ismir2020/paper/000208.pdf",
+    "http": 404,
+    "ok": false
+  },
+  {
+    "key": "won2020",
+    "url": "https://archives.ismir.net/ismir2020/index.html",
+    "http": 404,
+    "ok": false
+  }
+]

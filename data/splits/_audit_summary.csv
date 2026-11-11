@@ -1,0 +1,14 @@
+﻿dataset,slices,sources,K,mode,leak_rate,n_eff
+CTIS,43054,4956,8.69,simulated_random,0.9758,4956
+music_genre,36375,1713,21.23,simulated_random,1.0,1713
+pianos,18352,668,27.47,simulated_random,1.0,668
+bel_canto,9910,203,48.82,simulated_random,1.0,203
+CNPM,2724,287,9.49,simulated_random,0.9925,287
+chest_falsetto,1280,1280,1.0,simulated_random,0.0,1280
+erhu_playing_tech,1253,1253,1.0,simulated_random,0.0,1253
+Guzheng_Tech99,99,99,1.0,official_dirs,0.0,99
+GZ_IsoTech,2899,2824,1.03,official_dirs,0.0,2824
+instrument_timbre,61,61,1.0,slice_random_mc20_disk,0.0,61
+timbre_range,1398,69,20.26,slice_random_mc20_disk,1.0,69
+acapella,132,6,22.0,slice_random_mc20_disk,1.0,6
+song_structure,300,300,1.0,slice_random_mc20_disk,0.0,300

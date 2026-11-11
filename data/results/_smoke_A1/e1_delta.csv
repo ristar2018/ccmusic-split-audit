@@ -1,0 +1,11 @@
+library,arm,bb,contrast,delta_slice_pt,ci_lo_slice_pt,ci_hi_slice_pt,delta_rec_pt,ci_lo_rec_pt,ci_hi_rec_pt,boot_p_slice,seed_range_pt,per_seed_delta_pt,n_recordings,n_slices,boot,meets_sesoi,confirmatory
+CNPM,A1,alexnet,A1-A0,22.39,14.89,30.09,26.45,18.36,38.44,0.005,7.13,21.69|19.17|26.30,54,271,200,True,False
+CNPM,A1,swin_t,A1-A0,28.71,21.3,37.88,29.91,23.76,39.84,0.005,2.71,28.07|30.38|27.68,54,271,200,True,False
+CTIS,A1,alexnet,A1-A0,2.02,0.83,3.4,1.67,0.2,2.86,0.005,1.86,2.97|1.97|1.11,963,4605,200,False,True
+CTIS,A1,swin_t,A1-A0,1.7,1.29,2.8,1.64,0.79,2.59,0.005,1.36,0.84|2.04|2.20,963,4605,200,False,True
+bel_canto,A1,alexnet,A1-A0,8.42,4.85,13.6,10.18,5.42,27.1,0.005,2.46,8.90|9.42|6.95,40,979,200,True,False
+bel_canto,A1,swin_t,A1-A0,13.06,6.99,23.54,15.2,11.41,40.67,0.005,2.96,14.80|12.53|11.85,40,979,200,True,False
+music_genre,A1,alexnet,A1-A0,15.22,13.07,17.81,16.07,11.83,18.79,0.005,0.97,15.63|14.66|15.37,337,3648,200,True,False
+music_genre,A1,swin_t,A1-A0,17.99,15.25,21.51,16.63,13.22,19.6,0.005,0.89,18.09|17.49|18.39,337,3648,200,True,False
+pianos,A1,alexnet,A1-A0,14.62,11.73,17.73,7.63,3.89,11.62,0.005,2.07,14.84|13.48|15.55,135,1884,200,True,False
+pianos,A1,swin_t,A1-A0,11.36,8.44,15.38,4.85,2.3,8.26,0.005,3.21,9.97|10.93|13.18,135,1884,200,True,False

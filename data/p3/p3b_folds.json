@@ -1,0 +1,66 @@
+{
+  "scheme": "B1: recording-grouped folds with instruments on both sides",
+  "seed": 20261105,
+  "n_folds": 3,
+  "min_instr_recordings": 3,
+  "min_class_recordings": 3,
+  "max_load_spread": 0.15,
+  "split_hash": "2ec0af06108057e4b5cd26d287fe4e5f5dfe5e6e",
+  "detail": {
+    "n_slices": 7528,
+    "n_recordings": 1388,
+    "n_canon_groups": 1388,
+    "n_classes": 43,
+    "n_instruments": 135,
+    "fold_load": {
+      "1": 2509,
+      "2": 2509,
+      "3": 2510
+    },
+    "load_spread_ratio": 0.0004,
+    "L1_violations": 0,
+    "L2_violations": 0,
+    "L3_missing_cells": 0,
+    "L3_hard_violations": 0,
+    "L3_missing_detail": [],
+    "instruments_multi": 110,
+    "instruments_in_two_folds": 110,
+    "L4_ratio": 1.0,
+    "instruments_multi_single_fold": []
+  },
+  "assertions": {
+    "L1_recording_not_split": true,
+    "L2_audio_duplicate_same_fold": true,
+    "L3_class_support_all_folds": true,
+    "L4_instrument_in_two_folds": true,
+    "L5_load_spread_le_15pct": true
+  },
+  "all_pass": true,
+  "per_fold": [
+    {
+      "fold": 1,
+      "slices": 2509,
+      "recordings": 461,
+      "classes": 43,
+      "instruments": 125,
+      "train_recordings": 927
+    },
+    {
+      "fold": 2,
+      "slices": 2509,
+      "recordings": 462,
+      "classes": 43,
+      "instruments": 122,
+      "train_recordings": 926
+    },
+    {
+      "fold": 3,
+      "slices": 2510,
+      "recordings": 465,
+      "classes": 43,
+      "instruments": 123,
+      "train_recordings": 923
+    }
+  ],
+  "rationale": "A0 vs A1r isolates homologous leakage (only the fold unit changes); A1r vs A1 isolates instrument novelty (only the grouping key changes). Recording-level folds keep sibling slices on one side, exactly as A0/A1 do."
+}

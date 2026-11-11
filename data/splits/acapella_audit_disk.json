@@ -1,0 +1,24 @@
+{
+  "dataset": "acapella",
+  "slices": 132,
+  "sources": 6,
+  "K": 22.0,
+  "source_size_hist": {
+    "22": 6
+  },
+  "subgroups": {
+    "acapella": 132
+  },
+  "mode": "slice_random_mc20_disk",
+  "leak": {
+    "leak_rate_mean": 1.0,
+    "leak_rate_min": 1.0,
+    "leak_rate_max": 1.0,
+    "seeds": 20
+  },
+  "grouped_check": {
+    "test_slices": 22,
+    "leak_slices": 0,
+    "leak_rate": 0.0
+  }
+}

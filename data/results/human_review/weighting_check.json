@@ -1,0 +1,38 @@
+{
+ "stream": "default_rng(20261105), recordings drawn with replacement, B=2000",
+ "note": "corroboration only: same stream, two weightings; 端点接近不能证明逐位一致",
+ "arms": {
+  "alexnet": {
+   "sliceweighted_cnt": [
+    0.321,
+    3.049
+   ],
+   "unweighted_onevote": [
+    0.188,
+    2.827
+   ],
+   "published": [
+    0.26,
+    2.83
+   ],
+   "unweighted_matches_published": false,
+   "sliceweighted_matches_published": false
+  },
+  "swin_t": {
+   "sliceweighted_cnt": [
+    0.803,
+    2.606
+   ],
+   "unweighted_onevote": [
+    0.849,
+    2.607
+   ],
+   "published": [
+    0.87,
+    2.6
+   ],
+   "unweighted_matches_published": false,
+   "sliceweighted_matches_published": false
+  }
+ }
+}

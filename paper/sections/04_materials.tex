@@ -1,0 +1,142 @@
+\section{Materials}\label{sec:materials}
+
+\subsection{Five libraries with released MEL slices}
+
+We use the five collections for which the MEL family is released with per-class labels and more
+than one slice per recording: CTIS for Chinese instrument recognition, music genre for
+popular-song excerpts, pianos for eight piano brands, CNPM for Chinese pentatonic-mode classification, and
+bel canto for bel-canto and folk singing. Three of the five --- CTIS, CNPM and bel canto --- are
+among the six datasets evaluated in the audited article; \emph{music genre} and \emph{pianos}
+belong to the same published collection of libraries but are not covered by it, so contrasts in
+those two libraries audit the same kind of split under a framework that does not report on them.
+Together they release 110{,}415 slices from 7{,}827 recordings in
+252 source classes. Of these, 109{,}831 slices from 7{,}756 recordings in 234 classes survive the
+minimum-recording rule and placeholder removal described in
+Section~\ref{sec:capacity}, listed in Table~\ref{tab:panels}; the remainder is excluded under
+these study-specific rules. The four candidate near-single-slice collections are not part of the main sample; three are used
+as controls and the fourth is excluded for lack of a usable class layer, as described
+in Section~\ref{sec:protocol}.
+
+\begin{table}[t]
+\centering
+\caption{The five audited libraries after manifest construction and recording-level splitting,
+i.e.\ the sample every reported number is computed on. Classes are the source classes that
+survive the minimum-recording rule; $\bar K$ is the mean number of slices per recording;
+$Q_{\text{test}}$ is the sealed panel; $\alpha$ is the realised exposure ratio
+$Q^{\text{pool}}_c/m_c$, summarised by its median over classes (not the pooled ratio).}
+\label{tab:panels}
+\footnotesize
+\setlength{\tabcolsep}{3.4pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Library & Classes & Recordings & Slices & $\bar K$ & $Q_{\text{test}}$ sl. & $Q_{\text{test}}$ rec. & $\alpha$ \\
+\midrule
+CTIS            & 201 & 4{,}887 & 42{,}505 &  8.70 & 4{,}605 & 963 & 0.160 \\
+music genre   &  16 & 1{,}713 & 36{,}375 & 21.23 & 3{,}648 & 337 & 0.166 \\
+pianos          &   8 &   668 & 18{,}352 & 27.47 & 1{,}884 & 135 & 0.170 \\
+CNPM            &   5 &   286 &  2{,}713 &  9.49 &   271 &  54 & 0.161 \\
+bel canto     &   4 &   202 &  9{,}886 & 48.94 &   979 &  40 & 0.161 \\
+\midrule
+Total           & 234 & 7{,}756 & 109{,}831 & 14.16 & 11{,}387 & 1{,}529 & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Recording identity}
+
+Every slice is mapped to a \texttt{recording\_uid} by a rule specific to the library, derived
+from the release format: CTIS by the
+per-class file stem, prefixed by the class code when a stem repeats across classes;
+music genre by the pair of track index and duration that the file name encodes; pianos by brand,
+recording number and duration; CNPM by joining the file name to the dataset's own
+\texttt{label.csv}; and bel canto by class and recording number. Parsing succeeded for
+110{,}415 of 110{,}415 slices for the identity field; the separate instrument-name field parses
+for 99.49\% of CTIS slices, and the 14 unparsed stems are reported in the manifest summary.
+Audio-level verification of these identities was possible only for CTIS, the one library whose
+audio files map unambiguously onto its evaluation recordings. CNPM, pianos and bel canto also
+ship audio, but their audio file names carry no reliable link to the evaluation recording
+identifiers, so their identities rest on the file-name rule alone; music genre ships feature
+images only. A correct parse is in any case not the same as a correct identity: the rule can
+reproduce a plausible recording identifier without proving that the released images and the
+released audio belong together.
+
+Two checks protect the mapping. First, the mapping between a CTIS recording and the numbering of
+its slices is a global counter over classes, not a per-class index; using the per-class index
+mis-assigns 218 of 219 classes, and the manifest builder recomputes the global counter before
+joining. Second, a SHA-1 sweep over all 4{,}956 CTIS files, 13.3 GB, found two identical pairs
+--- the same take released under two technique names, and one take with a duplicate-download
+suffix --- which we fold to a single canonical identifier, so that no recording can sit on two
+sides of a split by accident. At the slice level CTIS holds 77 groups of identical images,
+covering 175 slices. In every one of them the same window appears under more than one recording
+name: in 51 groups those names resolve to one recording's audio after the SHA-1 folding above, and
+in 26 they resolve to two or more distinct recordings, so the group key rather than the recording
+name is what keeps the copies on one side. Separately, in music genre one group of identical
+images spans three classes. Within the sealed panel and the exposure arms, every such group is
+forced to a single side.
+
+\subsection{Capacity for a recording-level split}\label{sec:capacity}
+
+Capacity planning targets $q_c=\min\{\max(5,\mathrm{round}(0.2n_c)),n_c-1\}$
+recordings and $m_c^{\text{plan}}=0.60S_c$ slices. The implemented split also reserves R:
+it starts from $\max(1,\mathrm{round}(0.15n_c))$ validation recordings, selected to
+approximate $0.15S_c$ slices while retaining the training budget. It starts Q from
+$\min\{\max(5,\mathrm{round}(0.2n_c)),n_c-2\}$ recordings, reduces Q when necessary to
+leave C non-empty and large enough, and flags these relaxations per class.
+The planning half-pool approximation is $\sum_{i\in Q}\lfloor k_i/2\rfloor$;
+it is not the exact implemented allocation. Within each selected Q recording, adjacent slice
+pairs are joined, and groups sharing an image content hash within the same class are joined
+further. Every group is keyed by the smallest content-derived identifier among its members --- a
+string formed from the first twelve hexadecimal digits of the slice's SHA-1 --- so the key
+depends on image content only, never on time, class or label. Groups are sorted by that key and
+assigned alternately to sealed test and injection pool, with singleton groups forced to the test
+side and any further copy of an already assigned hash following it. This is neither a contiguous
+time half nor independent random assignment; group ordering and duplicate constraints determine
+realised pool size.
+The realised
+exposure ratio $\alpha_c = Q^{\text{pool}}_c/m_c$ is largely determined by design:
+a 20\% recording test share, approximately half of its slices in the pool, and a
+$0.60S_c$ training budget give $\alpha\approx0.2\times0.5/0.6=0.167$.
+Rounding, class support, slice multiplicity and duplicate constraints cause deviations; its median lies between 0.160 and 0.170 in every library, and its per-library span
+is 0.000--0.250 for CTIS, 0.162--0.168 for music genre, 0.161--0.173 for pianos, 0.154--0.175
+for CNPM and 0.158--0.170 for bel canto. Earlier 50\% and 30\% replacement targets are
+capacity questions, distinct from realised exposure. A planning calculation using the upper
+95th-percentile pool over repeated draws gives 24 and 54 feasible classes among 219 source
+CTIS classes; restricted to the 201 analysed classes these counts are 10 and 38.
+These upper-capacity counts do not mean that the frozen split realises such exposures.
+CNPM selects 57 recordings for Q, but only 54 contribute sealed test slices: the other three
+have all their selected groups allocated to the pool. Table~\ref{tab:panels} counts
+recordings actually represented in the test panel.
+
+Two consequences shape the design. First, equal replacement, not addition: injecting
+$Q^{\text{pool}}_c$ slices while keeping $m_c$ fixed removes exactly as many C slices as it adds,
+so the arms differ in composition and not in size. Second, the training-recording count must be
+matched on the C side: A0 and A1 draw their training recordings from C, and matching the total
+training-recording count across arms is impossible once A1 must also include pool recordings, so
+we match the C-side count exactly and report the A1 total, C side plus pool, per class. Where
+the C side cannot supply the planned budget the realised $m_c$ is capped at what C holds, and
+where a class cannot yield the planned $q_c$ the pool is trimmed; both events are flagged per
+class in the released feasibility table, so a reader can see exactly where the arithmetic binds.
+
+We required at least five recordings per class as a study-specific eligibility rule; this is not a
+mathematical minimum for every possible recording-level split. Applying that rule to CTIS reduces 219 source
+classes to 206. Five further classes (D0051, D0058, D0060, D0061 and D0062) each contain
+one placeholder recording whose identifier includes a Chinese ``no audio'' marker; removing it reduces
+five recordings to four in each class, giving 201 classes and 4{,}887 recordings. The placeholder
+slices in D0060--D0062 share a byte-identical set of 21 images; D0051 and D0058 have 27 and 26
+placeholder images, respectively. Supplementary Material S1 lists the class-level exclusions. The other four libraries keep
+all their classes; two of them lose one recording each, because duplicate removal took every
+slice of that recording, leaving CNPM with 286 of 287 and bel canto with 202 of 203, while
+pianos and music genre lose nothing. We report both counts wherever the source documents state 219, so that the
+difference between the released class count and the auditable one is visible rather than
+implicit.
+
+\subsection{Feature cache}
+
+All five libraries release MEL images at 496$\times$369. We resize to 224$\times$224 with
+bilinear interpolation and store the result as a \texttt{uint8} memmap in manifest order: the
+109{,}831 audited images plus the excluded classes come to 15.48 GiB for the five libraries, and
+the 5{,}432 negative-control images add 0.76 GiB. Aspect ratio is deliberately not preserved: the source
+images share one size here, but across the full release the aspect ratios span two orders of
+magnitude, and padding to a common shape would turn padding fraction into a library-level
+covariate. A random sample of 200 images per library was re-decoded and compared with the cache
+byte for byte: the maximum absolute difference is zero for all eight libraries.

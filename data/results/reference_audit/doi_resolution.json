@@ -1,0 +1,403 @@
+[
+  {
+    "key": "zhou2025ccmusic",
+    "doi": "10.5334/tismir.194",
+    "crossref_status": 200,
+    "crossref_title": "CCMusic: An Open and Diverse Database for Chinese Music Information Retrieval Research",
+    "crossref_year": 2025,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.5334/tismir.194",
+        "status": 302
+      },
+      {
+        "url": "https://transactions.ismir.net/articles/10.5334/tismir.194/",
+        "error": "URLError: <urlopen error timed out>"
+      }
+    ],
+    "landing_status": null,
+    "landing_url": "https://transactions.ismir.net/articles/10.5334/tismir.194/"
+  },
+  {
+    "key": "kapoor2023leakage",
+    "doi": "10.1016/j.patter.2023.100804",
+    "crossref_status": 200,
+    "crossref_title": "Leakage and the reproducibility crisis in machine-learning-based science",
+    "crossref_year": 2023,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1016/j.patter.2023.100804",
+        "status": 302
+      },
+      {
+        "url": "https://linkinghub.elsevier.com/retrieve/pii/S2666389923001599",
+        "status": 200
+      }
+    ],
+    "landing_status": 200,
+    "landing_url": "https://linkinghub.elsevier.com/retrieve/pii/S2666389923001599"
+  },
+  {
+    "key": "salamon2014urbansound",
+    "doi": "10.1145/2647868.2655045",
+    "crossref_status": 200,
+    "crossref_title": "A Dataset and Taxonomy for Urban Sound Research",
+    "crossref_year": 2014,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/2647868.2655045",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/2647868.2655045",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/2647868.2655045"
+  },
+  {
+    "key": "sturm2012gtzan",
+    "doi": "10.1145/2390848.2390851",
+    "crossref_status": 200,
+    "crossref_title": "An analysis of the GTZAN music genre dataset",
+    "crossref_year": 2012,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/2390848.2390851",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/2390848.2390851",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/2390848.2390851"
+  },
+  {
+    "key": "ji2023leakage",
+    "doi": "10.1145/3569930",
+    "crossref_status": 200,
+    "crossref_title": "A Critical Study on Data Leakage in Recommender System Offline Evaluation",
+    "crossref_year": 2023,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/3569930",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/3569930",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/3569930"
+  },
+  {
+    "key": "kong2022giantmidi",
+    "doi": "10.5334/tismir.80",
+    "crossref_status": 200,
+    "crossref_title": "GiantMIDI-Piano: A Large-Scale MIDI Dataset for Classical Piano Music",
+    "crossref_year": 2022,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.5334/tismir.80",
+        "status": 302
+      },
+      {
+        "url": "http://transactions.ismir.net/articles/10.5334/tismir.80/",
+        "error": "URLError: <urlopen error timed out>"
+      }
+    ],
+    "landing_status": null,
+    "landing_url": "http://transactions.ismir.net/articles/10.5334/tismir.80/"
+  },
+  {
+    "key": "gemmeke2017audioset",
+    "doi": "10.1109/icassp.2017.7952261",
+    "crossref_status": 200,
+    "crossref_title": "Audio Set: An ontology and human-labeled dataset for audio events",
+    "crossref_year": 2017,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/icassp.2017.7952261",
+        "status": 302
+      },
+      {
+        "url": "http://ieeexplore.ieee.org/document/7952261/",
+        "status": 301
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/7952261/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/7952261/"
+  },
+  {
+    "key": "elizalde2024clap",
+    "doi": "10.1109/icassp48485.2024.10448504",
+    "crossref_status": 200,
+    "crossref_title": "Natural Language Supervision For General-Purpose Audio Representations",
+    "crossref_year": 2024,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/icassp48485.2024.10448504",
+        "status": 302
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/10448504/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/10448504/"
+  },
+  {
+    "key": "saito2015pr",
+    "doi": "10.1371/journal.pone.0118432",
+    "crossref_status": 200,
+    "crossref_title": "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets",
+    "crossref_year": 2015,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1371/journal.pone.0118432",
+        "status": 302
+      },
+      {
+        "url": "https://dx.plos.org/10.1371/journal.pone.0118432",
+        "status": 301
+      },
+      {
+        "url": "https://journals.plos.org/plosone/doi?id=10.1371/journal.pone.0118432",
+        "status": 301
+      },
+      {
+        "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432",
+        "status": 200
+      }
+    ],
+    "landing_status": 200,
+    "landing_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432"
+  },
+  {
+    "key": "sturm2014horse",
+    "doi": "10.1109/tmm.2014.2330697",
+    "crossref_status": 200,
+    "crossref_title": "A Simple Method to Determine if a Music Information Retrieval System is a “Horse”",
+    "crossref_year": 2014,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/tmm.2014.2330697",
+        "status": 302
+      },
+      {
+        "url": "http://ieeexplore.ieee.org/document/6847693/",
+        "status": 301
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/6847693/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/6847693/"
+  },
+  {
+    "key": "hershey2017cnn",
+    "doi": "10.1109/icassp.2017.7952132",
+    "crossref_status": 200,
+    "crossref_title": "CNN architectures for large-scale audio classification",
+    "crossref_year": 2017,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/icassp.2017.7952132",
+        "status": 302
+      },
+      {
+        "url": "http://ieeexplore.ieee.org/document/7952132/",
+        "status": 301
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/7952132/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/7952132/"
+  },
+  {
+    "key": "kong2020panns",
+    "doi": "10.1109/taslp.2020.3030497",
+    "crossref_status": 200,
+    "crossref_title": "PANNs: Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition",
+    "crossref_year": 2020,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/taslp.2020.3030497",
+        "status": 302
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/9229505/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/9229505/"
+  },
+  {
+    "key": "salamon2017augment",
+    "doi": "10.1109/lsp.2017.2657381",
+    "crossref_status": 200,
+    "crossref_title": "Deep Convolutional Neural Networks and Data Augmentation for Environmental Sound Classification",
+    "crossref_year": 2017,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/lsp.2017.2657381",
+        "status": 302
+      },
+      {
+        "url": "http://ieeexplore.ieee.org/document/7829341/",
+        "status": 301
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/7829341/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/7829341/"
+  },
+  {
+    "key": "downie2010mirex",
+    "doi": "10.1007/978-3-642-11674-2_5",
+    "crossref_status": 200,
+    "crossref_title": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights",
+    "crossref_year": 2010,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1007/978-3-642-11674-2_5",
+        "status": 302
+      },
+      {
+        "url": "http://link.springer.com/10.1007/978-3-642-11674-2_5",
+        "status": 301
+      },
+      {
+        "url": "https://link.springer.com/10.1007/978-3-642-11674-2_5",
+        "status": 301
+      },
+      {
+        "url": "https://link.springer.com/chapter/10.1007/978-3-642-11674-2_5",
+        "status": 303
+      },
+      {
+        "url": "https://idp.springer.com/authorize?response_type=cookie&client_id=springerlink&redirect_uri=https%3A%2F%2Flink.springer.com%2Fchapter%2F10.1007%2F978-3-642-11674-2_5",
+        "status": 302
+      }
+    ],
+    "landing_status": 302,
+    "landing_url": "https://idp.springer.com/authorize?response_type=cookie&client_id=springerlink&redirect_uri=https%3A%2F%2Flink.springer.com%2Fchapter%2F10.1007%2F978-3-642-11674-2_5"
+  },
+  {
+    "key": "brookshire2024eeg",
+    "doi": "10.3389/fnins.2024.1373515",
+    "crossref_status": 200,
+    "crossref_title": "Data leakage in deep learning studies of translational EEG",
+    "crossref_year": 2024,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.3389/fnins.2024.1373515",
+        "status": 302
+      },
+      {
+        "url": "https://www.frontiersin.org/articles/10.3389/fnins.2024.1373515/full",
+        "status": 301
+      },
+      {
+        "url": "https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2024.1373515/full",
+        "status": 200
+      }
+    ],
+    "landing_status": 200,
+    "landing_url": "https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2024.1373515/full"
+  },
+  {
+    "key": "alexnet2012",
+    "doi": "10.1145/3065386",
+    "crossref_status": 200,
+    "crossref_title": "ImageNet classification with deep convolutional neural networks",
+    "crossref_year": 2017,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/3065386",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/3065386",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/3065386"
+  },
+  {
+    "key": "swin2021",
+    "doi": "10.1109/iccv48922.2021.00986",
+    "crossref_status": 200,
+    "crossref_title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "crossref_year": 2021,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1109/iccv48922.2021.00986",
+        "status": 302
+      },
+      {
+        "url": "https://ieeexplore.ieee.org/document/9710580/",
+        "status": 202
+      }
+    ],
+    "landing_status": 202,
+    "landing_url": "https://ieeexplore.ieee.org/document/9710580/"
+  },
+  {
+    "key": "piczak2015",
+    "doi": "10.1145/2733373.2806390",
+    "crossref_status": 200,
+    "crossref_title": "ESC",
+    "crossref_year": 2015,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/2733373.2806390",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/2733373.2806390",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/2733373.2806390"
+  },
+  {
+    "key": "kaufman2012",
+    "doi": "10.1145/2382577.2382579",
+    "crossref_status": 200,
+    "crossref_title": "Leakage in data mining",
+    "crossref_year": 2012,
+    "redirect_chain": [
+      {
+        "url": "https://doi.org/10.1145/2382577.2382579",
+        "status": 302
+      },
+      {
+        "url": "https://dl.acm.org/doi/10.1145/2382577.2382579",
+        "status": 403
+      }
+    ],
+    "landing_status": 403,
+    "landing_url": "https://dl.acm.org/doi/10.1145/2382577.2382579"
+  }
+]

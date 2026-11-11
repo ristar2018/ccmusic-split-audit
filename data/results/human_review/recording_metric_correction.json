@@ -1,0 +1,522 @@
+{
+ "meta": {
+  "CTIS": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2",
+    "C1"
+   ],
+   "n_recordings": 963,
+   "n_slices": 4605,
+   "n_classes": 201
+  },
+  "music_genre": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 337,
+   "n_slices": 3648,
+   "n_classes": 16
+  },
+  "pianos": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 135,
+   "n_slices": 1884,
+   "n_classes": 8
+  },
+  "CNPM": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 54,
+   "n_slices": 271,
+   "n_classes": 5
+  },
+  "bel_canto": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 40,
+   "n_slices": 979,
+   "n_classes": 4
+  }
+ },
+ "rows": [
+  {
+   "library": "CTIS",
+   "bb": "alexnet",
+   "contrast": "A1-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 1.366,
+   "ci_lo_unw_pt": 0.1883,
+   "ci_hi_unw_pt": 2.8267,
+   "boot_mean_unw_pt": 1.5265,
+   "boot_median_unw_pt": 1.5327,
+   "p_raw": 0.028,
+   "per_seed_unw_pt": [
+    2.1219,
+    1.4778,
+    0.4983
+   ],
+   "seed_range_unw_pt": 1.6236,
+   "legacy_point_sw_pt": 1.6683,
+   "boot": 2000
+  },
+  {
+   "library": "CTIS",
+   "bb": "alexnet",
+   "contrast": "A2-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 0.2323,
+   "ci_lo_unw_pt": -0.9429,
+   "ci_hi_unw_pt": 1.6482,
+   "boot_mean_unw_pt": 0.3509,
+   "boot_median_unw_pt": 0.3615,
+   "p_raw": 0.589,
+   "per_seed_unw_pt": [
+    1.1904,
+    0.3323,
+    -0.8257
+   ],
+   "seed_range_unw_pt": 2.0161,
+   "legacy_point_sw_pt": 0.564,
+   "boot": 2000
+  },
+  {
+   "library": "CTIS",
+   "bb": "alexnet",
+   "contrast": "C1-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 0.1402,
+   "ci_lo_unw_pt": -0.7583,
+   "ci_hi_unw_pt": 1.5982,
+   "boot_mean_unw_pt": 0.3928,
+   "boot_median_unw_pt": 0.3895,
+   "p_raw": 0.506,
+   "per_seed_unw_pt": [
+    1.4228,
+    0.2929,
+    -1.2951
+   ],
+   "seed_range_unw_pt": 2.7179,
+   "legacy_point_sw_pt": 0.4107,
+   "boot": 2000
+  },
+  {
+   "library": "CTIS",
+   "bb": "swin_t",
+   "contrast": "A1-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 1.6094,
+   "ci_lo_unw_pt": 0.8489,
+   "ci_hi_unw_pt": 2.6066,
+   "boot_mean_unw_pt": 1.7784,
+   "boot_median_unw_pt": 1.7926,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    0.8994,
+    1.1887,
+    2.7403
+   ],
+   "seed_range_unw_pt": 1.8409,
+   "legacy_point_sw_pt": 1.6383,
+   "boot": 2000
+  },
+  {
+   "library": "CTIS",
+   "bb": "swin_t",
+   "contrast": "A2-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 1.768,
+   "ci_lo_unw_pt": 0.8889,
+   "ci_hi_unw_pt": 2.6469,
+   "boot_mean_unw_pt": 1.8228,
+   "boot_median_unw_pt": 1.8512,
+   "p_raw": 0.002,
+   "per_seed_unw_pt": [
+    1.4428,
+    1.6828,
+    2.1784
+   ],
+   "seed_range_unw_pt": 0.7356,
+   "legacy_point_sw_pt": 1.8607,
+   "boot": 2000
+  },
+  {
+   "library": "CTIS",
+   "bb": "swin_t",
+   "contrast": "C1-A0",
+   "n_recordings": 963,
+   "n_seeds": 3,
+   "point_unw_pt": 0.4408,
+   "ci_lo_unw_pt": -0.0851,
+   "ci_hi_unw_pt": 1.4032,
+   "boot_mean_unw_pt": 0.6208,
+   "boot_median_unw_pt": 0.6098,
+   "p_raw": 0.092,
+   "per_seed_unw_pt": [
+    -0.2343,
+    0.5871,
+    0.9696
+   ],
+   "seed_range_unw_pt": 1.2038,
+   "legacy_point_sw_pt": 0.3654,
+   "boot": 2000
+  },
+  {
+   "library": "music_genre",
+   "bb": "alexnet",
+   "contrast": "A1-A0",
+   "n_recordings": 337,
+   "n_seeds": 3,
+   "point_unw_pt": 15.133,
+   "ci_lo_unw_pt": 12.0585,
+   "ci_hi_unw_pt": 18.9302,
+   "boot_mean_unw_pt": 15.4044,
+   "boot_median_unw_pt": 15.3741,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    16.0134,
+    14.7517,
+    14.6339
+   ],
+   "seed_range_unw_pt": 1.3795,
+   "legacy_point_sw_pt": 16.0651,
+   "boot": 2000
+  },
+  {
+   "library": "music_genre",
+   "bb": "alexnet",
+   "contrast": "A2-A0",
+   "n_recordings": 337,
+   "n_seeds": 3,
+   "point_unw_pt": 13.9261,
+   "ci_lo_unw_pt": 10.9142,
+   "ci_hi_unw_pt": 17.5368,
+   "boot_mean_unw_pt": 14.1814,
+   "boot_median_unw_pt": 14.0825,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    14.9137,
+    13.6723,
+    13.1923
+   ],
+   "seed_range_unw_pt": 1.7215,
+   "legacy_point_sw_pt": 14.7981,
+   "boot": 2000
+  },
+  {
+   "library": "music_genre",
+   "bb": "swin_t",
+   "contrast": "A1-A0",
+   "n_recordings": 337,
+   "n_seeds": 3,
+   "point_unw_pt": 15.9807,
+   "ci_lo_unw_pt": 12.9976,
+   "ci_hi_unw_pt": 19.8443,
+   "boot_mean_unw_pt": 16.2829,
+   "boot_median_unw_pt": 16.1963,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    15.9494,
+    15.0512,
+    16.9415
+   ],
+   "seed_range_unw_pt": 1.8903,
+   "legacy_point_sw_pt": 16.6302,
+   "boot": 2000
+  },
+  {
+   "library": "music_genre",
+   "bb": "swin_t",
+   "contrast": "A2-A0",
+   "n_recordings": 337,
+   "n_seeds": 3,
+   "point_unw_pt": 15.3952,
+   "ci_lo_unw_pt": 12.4747,
+   "ci_hi_unw_pt": 19.1402,
+   "boot_mean_unw_pt": 15.6719,
+   "boot_median_unw_pt": 15.6059,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    15.6087,
+    14.3463,
+    16.2307
+   ],
+   "seed_range_unw_pt": 1.8844,
+   "legacy_point_sw_pt": 15.8001,
+   "boot": 2000
+  },
+  {
+   "library": "pianos",
+   "bb": "alexnet",
+   "contrast": "A1-A0",
+   "n_recordings": 135,
+   "n_seeds": 3,
+   "point_unw_pt": 7.5296,
+   "ci_lo_unw_pt": 3.9693,
+   "ci_hi_unw_pt": 12.0176,
+   "boot_mean_unw_pt": 7.851,
+   "boot_median_unw_pt": 7.8032,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    8.2832,
+    7.164,
+    7.1416
+   ],
+   "seed_range_unw_pt": 1.1416,
+   "legacy_point_sw_pt": 7.6314,
+   "boot": 2000
+  },
+  {
+   "library": "pianos",
+   "bb": "alexnet",
+   "contrast": "A2-A0",
+   "n_recordings": 135,
+   "n_seeds": 3,
+   "point_unw_pt": 7.7685,
+   "ci_lo_unw_pt": 4.2515,
+   "ci_hi_unw_pt": 12.2132,
+   "boot_mean_unw_pt": 8.0893,
+   "boot_median_unw_pt": 8.0573,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    8.9998,
+    7.164,
+    7.1416
+   ],
+   "seed_range_unw_pt": 1.8582,
+   "legacy_point_sw_pt": 7.7021,
+   "boot": 2000
+  },
+  {
+   "library": "pianos",
+   "bb": "swin_t",
+   "contrast": "A1-A0",
+   "n_recordings": 135,
+   "n_seeds": 3,
+   "point_unw_pt": 4.8617,
+   "ci_lo_unw_pt": 2.0825,
+   "ci_hi_unw_pt": 8.3714,
+   "boot_mean_unw_pt": 4.9893,
+   "boot_median_unw_pt": 4.9193,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    3.4805,
+    4.8748,
+    6.2297
+   ],
+   "seed_range_unw_pt": 2.7492,
+   "legacy_point_sw_pt": 4.8463,
+   "boot": 2000
+  },
+  {
+   "library": "pianos",
+   "bb": "swin_t",
+   "contrast": "A2-A0",
+   "n_recordings": 135,
+   "n_seeds": 3,
+   "point_unw_pt": 5.1006,
+   "ci_lo_unw_pt": 2.1886,
+   "ci_hi_unw_pt": 8.8167,
+   "boot_mean_unw_pt": 5.2273,
+   "boot_median_unw_pt": 5.1471,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    4.1972,
+    4.8748,
+    6.2297
+   ],
+   "seed_range_unw_pt": 2.0326,
+   "legacy_point_sw_pt": 4.9171,
+   "boot": 2000
+  },
+  {
+   "library": "CNPM",
+   "bb": "alexnet",
+   "contrast": "A1-A0",
+   "n_recordings": 54,
+   "n_seeds": 3,
+   "point_unw_pt": 28.437,
+   "ci_lo_unw_pt": 17.7929,
+   "ci_hi_unw_pt": 39.0986,
+   "boot_mean_unw_pt": 28.4886,
+   "boot_median_unw_pt": 28.4126,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    24.8639,
+    25.8338,
+    34.6134
+   ],
+   "seed_range_unw_pt": 9.7496,
+   "legacy_point_sw_pt": 26.4473,
+   "boot": 2000
+  },
+  {
+   "library": "CNPM",
+   "bb": "alexnet",
+   "contrast": "A2-A0",
+   "n_recordings": 54,
+   "n_seeds": 3,
+   "point_unw_pt": 24.9413,
+   "ci_lo_unw_pt": 15.8123,
+   "ci_hi_unw_pt": 35.3081,
+   "boot_mean_unw_pt": 25.0781,
+   "boot_median_unw_pt": 24.9947,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    21.4137,
+    22.0279,
+    31.3824
+   ],
+   "seed_range_unw_pt": 9.9686,
+   "legacy_point_sw_pt": 23.2761,
+   "boot": 2000
+  },
+  {
+   "library": "CNPM",
+   "bb": "swin_t",
+   "contrast": "A1-A0",
+   "n_recordings": 54,
+   "n_seeds": 3,
+   "point_unw_pt": 30.7492,
+   "ci_lo_unw_pt": 21.7622,
+   "ci_hi_unw_pt": 39.6021,
+   "boot_mean_unw_pt": 30.8765,
+   "boot_median_unw_pt": 30.8413,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    31.2312,
+    27.2483,
+    33.7682
+   ],
+   "seed_range_unw_pt": 6.5199,
+   "legacy_point_sw_pt": 29.9056,
+   "boot": 2000
+  },
+  {
+   "library": "CNPM",
+   "bb": "swin_t",
+   "contrast": "A2-A0",
+   "n_recordings": 54,
+   "n_seeds": 3,
+   "point_unw_pt": 34.0428,
+   "ci_lo_unw_pt": 24.027,
+   "ci_hi_unw_pt": 43.684,
+   "boot_mean_unw_pt": 34.2159,
+   "boot_median_unw_pt": 34.2561,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    36.4158,
+    36.1736,
+    29.539
+   ],
+   "seed_range_unw_pt": 6.8768,
+   "legacy_point_sw_pt": 34.2142,
+   "boot": 2000
+  },
+  {
+   "library": "bel_canto",
+   "bb": "alexnet",
+   "contrast": "A1-A0",
+   "n_recordings": 40,
+   "n_seeds": 3,
+   "point_unw_pt": 14.6147,
+   "ci_lo_unw_pt": 5.821,
+   "ci_hi_unw_pt": 26.1826,
+   "boot_mean_unw_pt": 15.4313,
+   "boot_median_unw_pt": 15.1222,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    20.4428,
+    9.634,
+    13.7673
+   ],
+   "seed_range_unw_pt": 10.8088,
+   "legacy_point_sw_pt": 10.1767,
+   "boot": 2000
+  },
+  {
+   "library": "bel_canto",
+   "bb": "alexnet",
+   "contrast": "A2-A0",
+   "n_recordings": 40,
+   "n_seeds": 3,
+   "point_unw_pt": 17.0452,
+   "ci_lo_unw_pt": 6.4723,
+   "ci_hi_unw_pt": 31.0202,
+   "boot_mean_unw_pt": 18.0728,
+   "boot_median_unw_pt": 17.6527,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    20.4428,
+    9.634,
+    21.0589
+   ],
+   "seed_range_unw_pt": 11.4249,
+   "legacy_point_sw_pt": 11.931,
+   "boot": 2000
+  },
+  {
+   "library": "bel_canto",
+   "bb": "swin_t",
+   "contrast": "A1-A0",
+   "n_recordings": 40,
+   "n_seeds": 3,
+   "point_unw_pt": 22.7399,
+   "ci_lo_unw_pt": 10.2115,
+   "ci_hi_unw_pt": 41.399,
+   "boot_mean_unw_pt": 24.1465,
+   "boot_median_unw_pt": 23.4545,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    25.1012,
+    16.4252,
+    26.6931
+   ],
+   "seed_range_unw_pt": 10.2679,
+   "legacy_point_sw_pt": 15.1993,
+   "boot": 2000
+  },
+  {
+   "library": "bel_canto",
+   "bb": "swin_t",
+   "contrast": "A2-A0",
+   "n_recordings": 40,
+   "n_seeds": 3,
+   "point_unw_pt": 22.7399,
+   "ci_lo_unw_pt": 10.2115,
+   "ci_hi_unw_pt": 41.399,
+   "boot_mean_unw_pt": 24.1465,
+   "boot_median_unw_pt": 23.4545,
+   "p_raw": 0.0,
+   "per_seed_unw_pt": [
+    25.1012,
+    16.4252,
+    26.6931
+   ],
+   "seed_range_unw_pt": 10.2679,
+   "legacy_point_sw_pt": 15.1993,
+   "boot": 2000
+  }
+ ],
+ "boot": 2000,
+ "seed": 20261105,
+ "elapsed_s": 11.2
+}

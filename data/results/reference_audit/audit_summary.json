@@ -1,0 +1,242 @@
+{
+  "generated": "2026-11-07T14:26:38",
+  "total": 29,
+  "ok": 28,
+  "fix_recommended": [
+    "gebru2018"
+  ],
+  "entries": [
+    {
+      "key": "zhou2025ccmusic",
+      "doi": "10.5334/tismir.194",
+      "crossref": 200,
+      "landing": null,
+      "verdict": "OK",
+      "note": "DOI registered; transactions.ismir.net times out from this machine (10060), Ubiquity mirror also unreachable; metadata confirmed via OpenAlex"
+    },
+    {
+      "key": "kapoor2023leakage",
+      "doi": "10.1016/j.patter.2023.100804",
+      "crossref": 200,
+      "landing": 200,
+      "verdict": "OK",
+      "note": "DOI resolves and landing page loads (200)"
+    },
+    {
+      "key": "salamon2014urbansound",
+      "doi": "10.1145/2647868.2655045",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "sturm2012gtzan",
+      "doi": "10.1145/2390848.2390851",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "ji2023leakage",
+      "doi": "10.1145/3569930",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "kong2022giantmidi",
+      "doi": "10.5334/tismir.80",
+      "crossref": 200,
+      "landing": null,
+      "verdict": "OK",
+      "note": "DOI registered; transactions.ismir.net times out from this machine (10060), Ubiquity mirror also unreachable; metadata confirmed via OpenAlex"
+    },
+    {
+      "key": "gemmeke2017audioset",
+      "doi": "10.1109/icassp.2017.7952261",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "elizalde2024clap",
+      "doi": "10.1109/icassp48485.2024.10448504",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "saito2015pr",
+      "doi": "10.1371/journal.pone.0118432",
+      "crossref": 200,
+      "landing": 200,
+      "verdict": "OK",
+      "note": "DOI resolves and landing page loads (200)"
+    },
+    {
+      "key": "sturm2014horse",
+      "doi": "10.1109/tmm.2014.2330697",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "hershey2017cnn",
+      "doi": "10.1109/icassp.2017.7952132",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "kong2020panns",
+      "doi": "10.1109/taslp.2020.3030497",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "salamon2017augment",
+      "doi": "10.1109/lsp.2017.2657381",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "downie2010mirex",
+      "doi": "10.1007/978-3-642-11674-2_5",
+      "crossref": 200,
+      "landing": 302,
+      "verdict": "OK",
+      "note": "DOI resolves to Springer; final hop 302 to idp login is normal for paywalled chapter"
+    },
+    {
+      "key": "brookshire2024eeg",
+      "doi": "10.3389/fnins.2024.1373515",
+      "crossref": 200,
+      "landing": 200,
+      "verdict": "OK",
+      "note": "DOI resolves and landing page loads (200)"
+    },
+    {
+      "key": "alexnet2012",
+      "doi": "10.1145/3065386",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "swin2021",
+      "doi": "10.1109/iccv48922.2021.00986",
+      "crossref": 200,
+      "landing": 202,
+      "verdict": "OK",
+      "note": "DOI resolves to IEEE Xplore; 202 is their bot filter, link is live"
+    },
+    {
+      "key": "piczak2015",
+      "doi": "10.1145/2733373.2806390",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "kaufman2012",
+      "doi": "10.1145/2382577.2382579",
+      "crossref": 200,
+      "landing": 403,
+      "verdict": "OK",
+      "note": "DOI resolves to ACM DL; landing 403 is the anti-bot wall, link is live in browsers"
+    },
+    {
+      "key": "defferrard2016",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; ISMIR archive PDF reachable"
+    },
+    {
+      "key": "ganin2014",
+      "doi": "-",
+      "crossref": "-",
+      "landing": 200,
+      "verdict": "OK",
+      "note": "entry URL loads (200)"
+    },
+    {
+      "key": "ganin2015",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; JMLR v17/15-239 page loads (200)"
+    },
+    {
+      "key": "gebru2018",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "FIX-RECOMMENDED",
+      "note": "no URL in bib; correct CACM DOI is 10.1145/3458723 (vol 64 no 12, pp 86-92) — ACM blocks scripts (403) but the DOI is registered and resolvable in browsers"
+    },
+    {
+      "key": "recht2019",
+      "doi": "-",
+      "crossref": "-",
+      "landing": 200,
+      "verdict": "OK",
+      "note": "entry URL loads (200)"
+    },
+    {
+      "key": "li2023",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; OpenReview forum page loads (200)"
+    },
+    {
+      "key": "choi2017",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; ISMIR archive PDF reachable"
+    },
+    {
+      "key": "lee2017",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; ISMIR mirror of SMC2017-220 PDF reachable"
+    },
+    {
+      "key": "won2020",
+      "doi": "-",
+      "crossref": "-",
+      "landing": null,
+      "verdict": "OK",
+      "note": "no URL in bib; Zenodo record 3898838 hosts the official SMC 2020 PDF and loads (200)"
+    },
+    {
+      "key": "engel2017",
+      "doi": "-",
+      "crossref": "-",
+      "landing": 200,
+      "verdict": "OK",
+      "note": "entry URL loads (200)"
+    }
+  ]
+}

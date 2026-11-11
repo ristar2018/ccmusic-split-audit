@@ -1,0 +1,38 @@
+[
+  {
+    "name": "gebru_cacm",
+    "url": "https://doi.org/10.1145/3458723",
+    "http": 403,
+    "ok": false
+  },
+  {
+    "name": "won_zenodo",
+    "url": "https://zenodo.org/record/3898838",
+    "http": 200,
+    "final": "https://zenodo.org/records/3898838",
+    "ok": true,
+    "is_pdf": false
+  },
+  {
+    "name": "won_pdf",
+    "url": "https://zenodo.org/records/3898838/files/SMCCIM_2020_paper_210.pdf",
+    "http": 200,
+    "final": "https://zenodo.org/records/3898838/files/SMCCIM_2020_paper_210.pdf",
+    "ok": true,
+    "is_pdf": true
+  },
+  {
+    "name": "mert_openreview",
+    "url": "https://openreview.net/forum?id=c7klOsw0wbu",
+    "http": 200,
+    "final": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3Dc7klOsw0wbu",
+    "ok": true,
+    "is_pdf": false
+  },
+  {
+    "name": "li_openreview_pdf",
+    "url": "https://openreview.net/pdf?id=c7klOsw0wbu",
+    "http": 403,
+    "ok": false
+  }
+]

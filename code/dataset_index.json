@@ -1,0 +1,525 @@
+{
+ "datasets": {
+  "CNPM": {
+   "group": "labels",
+   "labels": [
+    "data/label.csv",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/cnpm.jpg",
+    "CNPM.py",
+    "data/cnpm_bar.jpg",
+    "data/cnpm_pie.jpg",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/label.csv",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md"
+   ],
+   "sizes": {
+    ".gitattributes": 2350,
+    ".gitignore": 103,
+    "data/audio.zip": 2110484165,
+    "data/cnpm.jpg": 46326,
+    "CNPM.py": 7010,
+    "data/cnpm_bar.jpg": 51487,
+    "data/cnpm_pie.jpg": 19385,
+    "data/data.py": 8887,
+    "dataset_infos.json": 293,
+    "data/eval.zip": 328547742,
+    "data/hf.py": 356,
+    "data/label.csv": 22930,
+    "data/mel.zip": 765996983,
+    "data/plot.py": 6996,
+    "quickstart.md": 350,
+    "README.md": 11687
+   }
+  },
+  "Guzheng_Tech99": {
+   "group": "labels",
+   "labels": [
+    "data/label.zip",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "Guzheng_Tech99.py",
+    "data/hf.py",
+    "data/label.zip",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/requirements.txt",
+    "data/tech99.jpg",
+    "data/tech99_bar.jpg",
+    "data/tech99_pie.jpg"
+   ],
+   "sizes": {
+    ".gitattributes": 2307,
+    ".gitignore": 73,
+    "data/audio.zip": 667458676,
+    "data/data.py": 5529,
+    "dataset_infos.json": 318,
+    "Guzheng_Tech99.py": 12522,
+    "data/hf.py": 366,
+    "data/label.zip": 149194,
+    "data/mel.zip": 15507293,
+    "data/plot.py": 9457,
+    "quickstart.md": 370,
+    "README.md": 11227,
+    "data/requirements.txt": 7,
+    "data/tech99.jpg": 50299,
+    "data/tech99_bar.jpg": 55043,
+    "data/tech99_pie.jpg": 30579
+   }
+  },
+  "instrument_timbre": {
+   "group": "labels",
+   "labels": [
+    "data/Chinese.csv",
+    "data/Western.csv",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/Chinese.csv",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/hf.py",
+    "instrument_timbre.py",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/Western.csv"
+   ],
+   "sizes": {
+    ".gitattributes": 2265,
+    ".gitignore": 66,
+    "data/audio.zip": 105477166,
+    "data/Chinese.csv": 7402,
+    "data/data.py": 5525,
+    "dataset_infos.json": 739,
+    "data/hf.py": 415,
+    "instrument_timbre.py": 5977,
+    "data/mel.zip": 1172068,
+    "data/plot.py": 781,
+    "quickstart.md": 327,
+    "README.md": 8480,
+    "data/Western.csv": 1828
+   }
+  },
+  "GZ_IsoTech": {
+   "group": "labels",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "GZ_IsoTech.py",
+    "data/gziso.jpg",
+    "data/gziso_bar.jpg",
+    "data/gziso_pie.jpg",
+    "data/hf.py",
+    "data/iso.png",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md"
+   ],
+   "sizes": {
+    ".gitattributes": 2309,
+    ".gitignore": 81,
+    "data/audio.zip": 265012844,
+    "data/data.py": 9041,
+    "dataset_infos.json": 325,
+    "data/eval.zip": 249961089,
+    "GZ_IsoTech.py": 6813,
+    "data/gziso.jpg": 61139,
+    "data/gziso_bar.jpg": 47844,
+    "data/gziso_pie.jpg": 30672,
+    "data/hf.py": 362,
+    "data/iso.png": 82007,
+    "data/mel.zip": 8668816,
+    "data/plot.py": 10750,
+    "quickstart.md": 365,
+    "README.md": 9107
+   }
+  },
+  "erhu_playing_tech": {
+   "group": "labels",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/erhu.jpg",
+    "data/erhu.png",
+    "data/erhu_bar.jpg",
+    "data/erhu_pie.jpg",
+    "erhu_playing_tech.py",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md"
+   ],
+   "sizes": {
+    ".gitattributes": 2311,
+    ".gitignore": 97,
+    "data/audio.zip": 220667351,
+    "data/data.py": 7728,
+    "dataset_infos.json": 414,
+    "data/erhu.jpg": 57244,
+    "data/erhu.png": 188047,
+    "data/erhu_bar.jpg": 53887,
+    "data/erhu_pie.jpg": 23941,
+    "erhu_playing_tech.py": 7124,
+    "data/eval.zip": 127625997,
+    "data/hf.py": 472,
+    "data/mel.zip": 8545559,
+    "data/plot.py": 10452,
+    "quickstart.md": 375,
+    "README.md": 10859
+   }
+  },
+  "timbre_range": {
+   "group": "labels",
+   "labels": [
+    "data/range.csv",
+    "data/timbre.csv",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "dataset_infos.json",
+    "data/hf.py",
+    "quickstart.md",
+    "data/range.csv",
+    "data/range.zip",
+    "README.md",
+    "data/timbre.csv",
+    "data/timbre.zip",
+    "timbre_range.py"
+   ],
+   "sizes": {
+    ".gitattributes": 3818,
+    ".gitignore": 59,
+    "dataset_infos.json": 405,
+    "data/hf.py": 385,
+    "quickstart.md": 340,
+    "data/range.csv": 5801,
+    "data/range.zip": 65303363,
+    "README.md": 1001,
+    "data/timbre.csv": 1864,
+    "data/timbre.zip": 595424057,
+    "timbre_range.py": 4505
+   }
+  },
+  "pianos": {
+   "group": "audio",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/mel.zip",
+    "pianos.py",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/requirements.txt"
+   ],
+   "sizes": {
+    ".gitattributes": 2265,
+    ".gitignore": 100,
+    "data/audio.zip": 352363700,
+    "data/data.py": 6776,
+    "dataset_infos.json": 459,
+    "data/eval.zip": 288824672,
+    "data/hf.py": 423,
+    "data/mel.zip": 4675627,
+    "pianos.py": 7886,
+    "data/plot.py": 2042,
+    "quickstart.md": 339,
+    "README.md": 9418,
+    "data/requirements.txt": 32
+   }
+  },
+  "music_genre": {
+   "group": "audio",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/genre.png",
+    "data/hf.py",
+    "data/mel.zip",
+    "music_genre.py",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/requirements.txt"
+   ],
+   "sizes": {
+    ".gitattributes": 2265,
+    ".gitignore": 118,
+    "data/audio.zip": 13788108906,
+    "data/data.py": 9948,
+    "dataset_infos.json": 425,
+    "data/eval.zip": 4436653005,
+    "data/genre.png": 137641,
+    "data/hf.py": 352,
+    "data/mel.zip": 84216174,
+    "music_genre.py": 6766,
+    "data/plot.py": 2122,
+    "quickstart.md": 331,
+    "README.md": 6898,
+    "data/requirements.txt": 29
+   }
+  },
+  "chest_falsetto": {
+   "group": "audio",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "chest_falsetto.py",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/requirements.txt"
+   ],
+   "sizes": {
+    ".gitattributes": 2265,
+    ".gitignore": 115,
+    "data/audio.zip": 39256131,
+    "chest_falsetto.py": 5740,
+    "data/data.py": 8515,
+    "dataset_infos.json": 386,
+    "data/eval.zip": 81547911,
+    "data/hf.py": 399,
+    "data/mel.zip": 1744488,
+    "data/plot.py": 4726,
+    "quickstart.md": 345,
+    "README.md": 7848,
+    "data/requirements.txt": 29
+   }
+  },
+  "acapella": {
+   "group": "audio",
+   "labels": [
+    "data/song1.csv",
+    "data/song2.csv",
+    "data/song3.csv",
+    "data/song4.csv",
+    "data/song5.csv",
+    "data/song6.csv",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "acapella.py",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/hf.py",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/song1.csv",
+    "data/song2.csv",
+    "data/song3.csv",
+    "data/song4.csv",
+    "data/song5.csv",
+    "data/song6.csv"
+   ],
+   "sizes": {
+    ".gitattributes": 2306,
+    ".gitignore": 68,
+    "acapella.py": 4488,
+    "data/audio.zip": 1361863391,
+    "data/data.py": 5516,
+    "dataset_infos.json": 768,
+    "data/hf.py": 406,
+    "data/mel.zip": 23417682,
+    "data/plot.py": 481,
+    "quickstart.md": 304,
+    "README.md": 3207,
+    "data/song1.csv": 962,
+    "data/song2.csv": 967,
+    "data/song3.csv": 940,
+    "data/song4.csv": 971,
+    "data/song5.csv": 989,
+    "data/song6.csv": 987
+   }
+  },
+  "song_structure": {
+   "group": "audio",
+   "labels": [
+    "data/label.zip",
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/hf.py",
+    "data/label.zip",
+    "data/mel.zip",
+    "data/msa.png",
+    "data/MSA_dataset.zip",
+    "quickstart.md",
+    "README.md",
+    "song_structure.py"
+   ],
+   "sizes": {
+    ".gitattributes": 2309,
+    ".gitignore": 86,
+    "data/audio.zip": 2293711283,
+    "data/data.py": 5339,
+    "dataset_infos.json": 186,
+    "data/hf.py": 358,
+    "data/label.zip": 82617,
+    "data/mel.zip": 15046039,
+    "data/msa.png": 65335,
+    "data/MSA_dataset.zip": 2249684796,
+    "quickstart.md": 298,
+    "README.md": 2247,
+    "song_structure.py": 3682
+   }
+  },
+  "bel_canto": {
+   "group": "audio",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "data/bel_bar.jpg",
+    "data/bel_canto.jpg",
+    "bel_canto.py",
+    "data/bel_pie.jpg",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/mel.zip",
+    "data/plot.py",
+    "quickstart.md",
+    "README.md",
+    "data/requirements.txt"
+   ],
+   "sizes": {
+    ".gitattributes": 2265,
+    ".gitignore": 111,
+    "data/audio.zip": 1199515798,
+    "data/bel_bar.jpg": 51198,
+    "data/bel_canto.jpg": 52024,
+    "bel_canto.py": 5496,
+    "data/bel_pie.jpg": 22426,
+    "data/data.py": 9035,
+    "dataset_infos.json": 249,
+    "data/eval.zip": 889320608,
+    "data/hf.py": 361,
+    "data/mel.zip": 1221158882,
+    "data/plot.py": 7668,
+    "quickstart.md": 360,
+    "README.md": 10411,
+    "data/requirements.txt": 29
+   }
+  },
+  "CTIS": {
+   "group": "audio",
+   "labels": [
+    "dataset_infos.json"
+   ],
+   "files": [
+    ".gitattributes",
+    ".gitignore",
+    "data/audio.zip",
+    "CTIS.py",
+    "data/ctis_bar.jpg",
+    "data/ctis_cls.jpg",
+    "data/data.py",
+    "dataset_infos.json",
+    "data/eval.zip",
+    "data/hf.py",
+    "data/mel.zip",
+    "plot.py",
+    "data/processor.py",
+    "quickstart.md",
+    "README.md"
+   ],
+   "sizes": {
+    ".gitattributes": 2317,
+    ".gitignore": 131,
+    "data/audio.zip": 6468132216,
+    "CTIS.py": 15836,
+    "data/ctis_bar.jpg": 59229,
+    "data/ctis_cls.jpg": 51063,
+    "data/data.py": 5633,
+    "dataset_infos.json": 235,
+    "data/eval.zip": 3443906087,
+    "data/hf.py": 356,
+    "data/mel.zip": 172828721,
+    "plot.py": 6312,
+    "data/processor.py": 9084,
+    "quickstart.md": 350,
+    "README.md": 8118
+   }
+  }
+ }
+}

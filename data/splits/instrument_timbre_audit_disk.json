@@ -1,0 +1,29 @@
+{
+  "dataset": "instrument_timbre",
+  "slices": 61,
+  "sources": 61,
+  "K": 1.0,
+  "source_size_hist": {
+    "1": 61
+  },
+  "subgroups": {
+    "Chinese": 37,
+    "Western": 24
+  },
+  "mode": "slice_random_mc20_disk",
+  "leak": {
+    "leak_rate_mean": 0.0,
+    "leak_rate_min": 0.0,
+    "leak_rate_max": 0.0,
+    "seeds": 20
+  },
+  "grouped_check": {
+    "test_slices": 12,
+    "leak_slices": 0,
+    "leak_rate": 0.0
+  },
+  "classes": {
+    "Chinese": 37,
+    "Western": 24
+  }
+}

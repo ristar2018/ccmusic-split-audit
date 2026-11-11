@@ -1,0 +1,54 @@
+{
+  "passes": 270,
+  "fails": 0,
+  "checks": [],
+  "panels": {
+    "CTIS": {
+      "classes": 201,
+      "recordings": 4887,
+      "slices": 42505,
+      "kbar": 8.697564968283201,
+      "qtest_slices": 4605,
+      "qtest_recs": 963
+    },
+    "music_genre": {
+      "classes": 16,
+      "recordings": 1713,
+      "slices": 36375,
+      "kbar": 21.234676007005255,
+      "qtest_slices": 3648,
+      "qtest_recs": 337
+    },
+    "pianos": {
+      "classes": 8,
+      "recordings": 668,
+      "slices": 18352,
+      "kbar": 27.473053892215567,
+      "qtest_slices": 1884,
+      "qtest_recs": 135
+    },
+    "CNPM": {
+      "classes": 5,
+      "recordings": 286,
+      "slices": 2713,
+      "kbar": 9.486013986013987,
+      "qtest_slices": 271,
+      "qtest_recs": 54
+    },
+    "bel_canto": {
+      "classes": 4,
+      "recordings": 202,
+      "slices": 9886,
+      "kbar": 48.94059405940594,
+      "qtest_slices": 979,
+      "qtest_recs": 40
+    }
+  },
+  "totals": {
+    "slices": 109831,
+    "recordings": 7756,
+    "classes": 234,
+    "qtest_slices": 11387,
+    "qtest_recordings": 1529
+  }
+}

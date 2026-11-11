@@ -1,0 +1,5 @@
+lib,arm,base,bb,delta_slice,ci_lo,ci_hi,p_boot,delta_rec,rec_ci_lo,rec_ci_hi,confirmatory,n_seeds
+CTIS,A0,A1,alexnet,39.632,36.838,42.385,0.0,38.806,35.762,42.503,False,2
+CTIS,A0,A1,swin_t,34.774,31.998,38.083,0.0,33.655,30.646,38.118,False,2
+CTIS,A2,A1,alexnet,-0.362,-1.746,0.909,0.555,-2.031,-3.737,-0.497,True,2
+CTIS,A2,A1,swin_t,-2.828,-4.806,-0.89,0.003,-2.093,-4.138,0.097,True,2

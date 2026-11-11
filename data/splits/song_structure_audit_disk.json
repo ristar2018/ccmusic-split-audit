@@ -1,0 +1,24 @@
+{
+  "dataset": "song_structure",
+  "slices": 300,
+  "sources": 300,
+  "K": 1.0,
+  "source_size_hist": {
+    "1": 300
+  },
+  "subgroups": {
+    "song_structure": 300
+  },
+  "mode": "slice_random_mc20_disk",
+  "leak": {
+    "leak_rate_mean": 0.0,
+    "leak_rate_min": 0.0,
+    "leak_rate_max": 0.0,
+    "seeds": 20
+  },
+  "grouped_check": {
+    "test_slices": 60,
+    "leak_slices": 0,
+    "leak_rate": 0.0
+  }
+}

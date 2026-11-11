@@ -1,0 +1,934 @@
+{
+ "libraries": {
+  "CTIS": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": true,
+    "A1_alpha_material": true,
+    "A1_alpha_2pct_report": {
+     "violations": 71,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": true,
+    "A1_slice_budget": true,
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": true,
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": false,
+   "neg_note": "",
+   "n_classes": 201,
+   "n_classes_rare": 42,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 578,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [
+    {
+     "class": "D0128",
+     "pool": 5,
+     "band": [
+      8,
+      19
+     ],
+     "reason": "realized_pool 5 vs predicted_max 8（分组拆 pair），非确认性族"
+    }
+   ],
+   "n_q_relaxed": 47,
+   "n_alpha_infeasible": 35,
+   "alpha_infeasible_classes": [
+    {
+     "class": "C0182",
+     "n_rec": 12,
+     "pool": 2,
+     "pool_max": 3,
+     "band": [
+      5,
+      5
+     ],
+     "m_c": 15
+    },
+    {
+     "class": "C0264",
+     "n_rec": 7,
+     "pool": 11,
+     "pool_max": 11,
+     "band": [
+      26,
+      48
+     ],
+     "m_c": 67
+    },
+    {
+     "class": "C0283",
+     "n_rec": 10,
+     "pool": 5,
+     "pool_max": 6,
+     "band": [
+      8,
+      14
+     ],
+     "m_c": 31
+    },
+    {
+     "class": "C0305",
+     "n_rec": 10,
+     "pool": 12,
+     "pool_max": 12,
+     "band": [
+      17,
+      34
+     ],
+     "m_c": 65
+    },
+    {
+     "class": "D0015",
+     "n_rec": 14,
+     "pool": 16,
+     "pool_max": 14,
+     "band": [
+      15,
+      25
+     ],
+     "m_c": 73
+    },
+    {
+     "class": "D0048",
+     "n_rec": 5,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      5,
+      8
+     ],
+     "m_c": 11
+    },
+    {
+     "class": "D0063",
+     "n_rec": 8,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      5,
+      5
+     ],
+     "m_c": 11
+    },
+    {
+     "class": "D0069",
+     "n_rec": 6,
+     "pool": 4,
+     "pool_max": 5,
+     "band": [
+      19,
+      21
+     ],
+     "m_c": 30
+    },
+    {
+     "class": "D0070",
+     "n_rec": 8,
+     "pool": 3,
+     "pool_max": 3,
+     "band": [
+      6,
+      9
+     ],
+     "m_c": 18
+    },
+    {
+     "class": "D0071",
+     "n_rec": 10,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      2,
+      6
+     ],
+     "m_c": 14
+    },
+    {
+     "class": "D0102",
+     "n_rec": 6,
+     "pool": 6,
+     "pool_max": 6,
+     "band": [
+      13,
+      20
+     ],
+     "m_c": 28
+    },
+    {
+     "class": "D0105",
+     "n_rec": 9,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      3
+     ],
+     "m_c": 9
+    },
+    {
+     "class": "D0129",
+     "n_rec": 12,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      5
+     ],
+     "m_c": 12
+    },
+    {
+     "class": "D0131",
+     "n_rec": 12,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      3
+     ],
+     "m_c": 11
+    },
+    {
+     "class": "D0137",
+     "n_rec": 10,
+     "pool": 2,
+     "pool_max": 1,
+     "band": [
+      2,
+      6
+     ],
+     "m_c": 12
+    },
+    {
+     "class": "D0143",
+     "n_rec": 8,
+     "pool": 2,
+     "pool_max": 3,
+     "band": [
+      5,
+      7
+     ],
+     "m_c": 14
+    },
+    {
+     "class": "D0145",
+     "n_rec": 8,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      3
+     ],
+     "m_c": 8
+    },
+    {
+     "class": "D0147",
+     "n_rec": 10,
+     "pool": 0,
+     "pool_max": 1,
+     "band": [
+      2,
+      6
+     ],
+     "m_c": 14
+    },
+    {
+     "class": "D0172",
+     "n_rec": 8,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      2,
+      7
+     ],
+     "m_c": 11
+    },
+    {
+     "class": "D0184",
+     "n_rec": 8,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      4
+     ],
+     "m_c": 9
+    },
+    {
+     "class": "D0186",
+     "n_rec": 8,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      5
+     ],
+     "m_c": 9
+    },
+    {
+     "class": "D0241",
+     "n_rec": 5,
+     "pool": 23,
+     "pool_max": 23,
+     "band": [
+      67,
+      87
+     ],
+     "m_c": 119
+    },
+    {
+     "class": "D0242",
+     "n_rec": 6,
+     "pool": 12,
+     "pool_max": 12,
+     "band": [
+      27,
+      42
+     ],
+     "m_c": 55
+    },
+    {
+     "class": "D0247",
+     "n_rec": 8,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      1,
+      4
+     ],
+     "m_c": 7
+    },
+    {
+     "class": "D0268",
+     "n_rec": 9,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      3,
+      6
+     ],
+     "m_c": 11
+    },
+    {
+     "class": "D0272",
+     "n_rec": 7,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      6,
+      10
+     ],
+     "m_c": 16
+    },
+    {
+     "class": "D0273",
+     "n_rec": 13,
+     "pool": 0,
+     "pool_max": 1,
+     "band": [
+      2,
+      6
+     ],
+     "m_c": 16
+    },
+    {
+     "class": "D0274",
+     "n_rec": 13,
+     "pool": 0,
+     "pool_max": 1,
+     "band": [
+      2,
+      6
+     ],
+     "m_c": 15
+    },
+    {
+     "class": "D0276",
+     "n_rec": 6,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      5,
+      5
+     ],
+     "m_c": 8
+    },
+    {
+     "class": "D0290",
+     "n_rec": 7,
+     "pool": 2,
+     "pool_max": 2,
+     "band": [
+      4,
+      5
+     ],
+     "m_c": 10
+    },
+    {
+     "class": "D0325",
+     "n_rec": 6,
+     "pool": 0,
+     "pool_max": 0,
+     "band": [
+      10,
+      21
+     ],
+     "m_c": 28
+    },
+    {
+     "class": "L0291",
+     "n_rec": 7,
+     "pool": 6,
+     "pool_max": 5,
+     "band": [
+      11,
+      24
+     ],
+     "m_c": 37
+    },
+    {
+     "class": "T0088",
+     "n_rec": 8,
+     "pool": 51,
+     "pool_max": 50,
+     "band": [
+      93,
+      141
+     ],
+     "m_c": 231
+    },
+    {
+     "class": "T0089",
+     "n_rec": 14,
+     "pool": 26,
+     "pool_max": 25,
+     "band": [
+      26,
+      47
+     ],
+     "m_c": 127
+    },
+    {
+     "class": "T0301",
+     "n_rec": 13,
+     "pool": 23,
+     "pool_max": 22,
+     "band": [
+      24,
+      47
+     ],
+     "m_c": 112
+    }
+   ],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 4182,
+    "plan": 4678.9
+   },
+   "n_c_side_mismatch": [],
+   "alpha_liblevel": {
+    "pool": 4182,
+    "plan": 4678.9
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [
+    {
+     "library": "CTIS",
+     "class": "C0296",
+     "recording": "C0296/【唢呐】演奏技巧 燕音 第一遍"
+    }
+   ],
+   "dropped_placeholder_rows": 115,
+   "dropped_dup_slices": 12,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "music_genre": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": true,
+    "A1_alpha_material": true,
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": true,
+    "A1_slice_budget": true,
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": true,
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": false,
+   "neg_note": "",
+   "n_classes": 16,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 335,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 3613,
+    "plan": 3542.5
+   },
+   "n_c_side_mismatch": [],
+   "alpha_liblevel": {
+    "pool": 3613,
+    "plan": 3542.5
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 0,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "pianos": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": true,
+    "A1_alpha_material": true,
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": true,
+    "A1_slice_budget": true,
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": true,
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": false,
+   "neg_note": "",
+   "n_classes": 8,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 133,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 1862,
+    "plan": 1838.2
+   },
+   "n_c_side_mismatch": [],
+   "alpha_liblevel": {
+    "pool": 1862,
+    "plan": 1838.2
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 0,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "CNPM": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": true,
+    "A1_alpha_material": true,
+    "A1_alpha_2pct_report": {
+     "violations": 1,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": true,
+    "A1_slice_budget": true,
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": true,
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": false,
+   "neg_note": "",
+   "n_classes": 5,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 47,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 268,
+    "plan": 255.3
+   },
+   "n_c_side_mismatch": [],
+   "alpha_liblevel": {
+    "pool": 268,
+    "plan": 255.3
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 39,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "bel_canto": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": true,
+    "A1_alpha_material": true,
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": true,
+    "A1_slice_budget": true,
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": true,
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": false,
+   "neg_note": "",
+   "n_classes": 4,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 40,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 977,
+    "plan": 966.1
+   },
+   "n_c_side_mismatch": [],
+   "alpha_liblevel": {
+    "pool": 977,
+    "plan": 966.1
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 89,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "chest_falsetto": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": "na",
+    "A1_alpha_material": "na",
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": "na",
+    "A1_slice_budget": "na",
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": "na",
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": true,
+   "neg_note": "K̄≈1：Q_pool=0，A1≡A0，E1f 只跑 A0 vs A2（设计稿 §3.7 :308）；A1_* 断言标 na，A0/A2/预算/同侧仍硬判",
+   "n_classes": 4,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 0,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 0,
+    "plan": 0
+   },
+   "n_c_side_mismatch": [
+    {
+     "class": "f_chest",
+     "a0_rec": 247,
+     "c_rec": 268
+    },
+    {
+     "class": "f_falsetto",
+     "a0_rec": 245,
+     "c_rec": 265
+    },
+    {
+     "class": "m_chest",
+     "a0_rec": 138,
+     "c_rec": 150
+    },
+    {
+     "class": "m_falsetto",
+     "a0_rec": 138,
+     "c_rec": 150
+    }
+   ],
+   "alpha_liblevel": {
+    "pool": 0,
+    "plan": 0
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [
+    {
+     "library": "chest_falsetto",
+     "class": "f_chest",
+     "recording": "0653"
+    }
+   ],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 0,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "erhu_playing_tech": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": "na",
+    "A1_alpha_material": "na",
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": "na",
+    "A1_slice_budget": "na",
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": "na",
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": true,
+   "neg_note": "K̄≈1：Q_pool=0，A1≡A0，E1f 只跑 A0 vs A2（设计稿 §3.7 :308）；A1_* 断言标 na，A0/A2/预算/同侧仍硬判",
+   "n_classes": 11,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 0,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 0,
+    "plan": 0
+   },
+   "n_c_side_mismatch": [
+    {
+     "class": "detache",
+     "a0_rec": 57,
+     "c_rec": 62
+    },
+    {
+     "class": "diangong",
+     "a0_rec": 30,
+     "c_rec": 32
+    },
+    {
+     "class": "harmonic",
+     "a0_rec": 18,
+     "c_rec": 20
+    },
+    {
+     "class": "legato_slide_glissando",
+     "a0_rec": 98,
+     "c_rec": 106
+    },
+    {
+     "class": "pizzicato",
+     "a0_rec": 67,
+     "c_rec": 72
+    },
+    {
+     "class": "ricochet",
+     "a0_rec": 40,
+     "c_rec": 43
+    },
+    {
+     "class": "staccato",
+     "a0_rec": 106,
+     "c_rec": 115
+    },
+    {
+     "class": "tremolo",
+     "a0_rec": 104,
+     "c_rec": 113
+    },
+    {
+     "class": "trill",
+     "a0_rec": 149,
+     "c_rec": 162
+    },
+    {
+     "class": "vibrato",
+     "a0_rec": 59,
+     "c_rec": 64
+    }
+   ],
+   "alpha_liblevel": {
+    "pool": 0,
+    "plan": 0
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 0,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  },
+  "GZ_IsoTech": {
+   "ok": {
+    "A0_disjoint": true,
+    "A1_test_val_disjoint": true,
+    "A1_train_has_q": "na",
+    "A1_alpha_material": "na",
+    "A1_alpha_2pct_report": {
+     "violations": 0,
+     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"
+    },
+    "A1_alpha_rare_reported": "na",
+    "A1_slice_budget": "na",
+    "A0_slice_budget": true,
+    "A2_sample_disjoint": true,
+    "A1_n_c_side_match": "na",
+    "per_class_test_ge1": true,
+    "hash_same_side": true
+   },
+   "all_pass": true,
+   "neg_lib": true,
+   "neg_note": "K̄≈1：Q_pool=0，A1≡A0，E1f 只跑 A0 vs A2（设计稿 §3.7 :308）；A1_* 断言标 na，A0/A2/预算/同侧仍硬判",
+   "n_classes": 8,
+   "n_classes_rare": 0,
+   "A0_overlap_recordings": [],
+   "A1_q_recordings_in_train": 4,
+   "A1_alpha_violations_material": [],
+   "A1_alpha_violations_relaxed_or_rare": [],
+   "n_q_relaxed": 0,
+   "n_alpha_infeasible": 0,
+   "alpha_infeasible_classes": [],
+   "n_m_c_capped": 0,
+   "alpha_total": {
+    "pool": 10,
+    "plan": 10.9
+   },
+   "n_c_side_mismatch": [
+    {
+     "class": "downward_portamento",
+     "a0_rec": 230,
+     "c_rec": 249
+    },
+    {
+     "class": "harmonics",
+     "a0_rec": 227,
+     "c_rec": 246
+    },
+    {
+     "class": "plucks",
+     "a0_rec": 203,
+     "c_rec": 220
+    },
+    {
+     "class": "returning_portamento",
+     "a0_rec": 220,
+     "c_rec": 238
+    },
+    {
+     "class": "tremolo",
+     "a0_rec": 139,
+     "c_rec": 148
+    },
+    {
+     "class": "upward_portamento",
+     "a0_rec": 322,
+     "c_rec": 349
+    },
+    {
+     "class": "vibrato",
+     "a0_rec": 140,
+     "c_rec": 152
+    }
+   ],
+   "alpha_liblevel": {
+    "pool": 10,
+    "plan": 10.9
+   },
+   "A1_slice_shortfall": [],
+   "A0_slice_shortfall": [],
+   "hash_groups_multi_side": {},
+   "shadow_moves": [],
+   "dropped_placeholder_rows": 0,
+   "dropped_dup_slices": 0,
+   "bounds": {
+    "alpha_tol": 0.02,
+    "alpha_big_m": 100
+   }
+  }
+ },
+ "judgements": {
+  "J1": "A1 同 n_c 取「C 侧录音数相等」读法：A1 必须含 Q 录音，两臂训练录音总数不可能相等",
+  "J2": "Q 抽签在 400 个随机子集里取 Σfloor(k/2) 最接近账面 Q_pool 的一版（容量配平）",
+  "J3": "α 不进容差（取代「逐类 ≤2%」，按设计稿 :210/:245 定稿；:352 的「一致（容差 ≤2%）」与其直接矛盾，登记待 v2.9 改措辞）：披露带宽 max(0.02, 1.5/m_c) 仅记录不判死；硬判为实现池片数 ∈ [qp_p5−1, qp_p95+1]；±2% 硬判只留 n_c 侧（A1_n_c_side_match）",
+  "J4": "剔除「没音频」占位录音；同 hash 跨侧切片只留一侧（qtest>qpool>r>c）"
+ }
+}

@@ -1,0 +1,11 @@
+family,runs,ok,failed,skipped,zero_minute_runs,minutes,gpu_h,in_cost_json
+E0_smoke,0,0,0,0,0,0,0.000,NO
+E1b_A0A1,20,20,0,0,0,375,6.250,E1b
+E1c_A2,10,10,0,0,0,249,4.150,E1c
+E1f_negcontrol,12,10,0,2,8,2,0.033,E1f
+B2_negcontrol_rerun,12,0,12,0,12,0,0.000,NO
+B1C1_probe_and_C1,6,6,0,0,0,103,1.717,NO
+P3_A0,12,0,0,0,0,0,0.842,P3
+P3_A1,12,0,0,0,0,0,0.801,P3
+P3_A1r,12,0,0,0,0,0,0.527,P3
+P3_A2,12,0,0,0,0,0,0.818,P3

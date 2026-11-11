@@ -1,0 +1,44 @@
+# Execution-change list
+
+This is the append-only record of decisions taken **during** execution that were not fixed by `design-plan.md`, plus the corrections made to the plan document itself. Nothing here changes a pre-specified confirmatory parameter (SESOI, confirmatory family, class universe, backbone pair); those were frozen before the confirmatory results were inspected.
+
+## 1. Interpretation rulings
+
+| id | conflict | ruling |
+| :-- | :-- | :-- |
+| J1 | what "equal `n_c`" means for A1 | equality is imposed on the C-side recording count; both A0 and A1 use the full C side |
+| J2 | Q-draw noise versus the 2% tolerance | capacity balancing: over 400 random subsets, keep the one minimising `abs(sum(floor(k/2)) - budget)` |
+| J3 | the ±2% tolerance applied to α | moved to the `n_c` side (`A1_n_c_side_match`); α is only gated on "realised pool ≥ qp_p5" and is disclosed per class |
+| J5 | `m_c = 0.60·S_c` does not fit on the C side | cap at the C side and record `m_c_capped` explicitly (no class triggered the cap in this batch) |
+| J6/J7 | small classes cannot reach the α target | structurally infeasible classes are listed separately as `alpha_infeasible` (35 classes) and are not mixed into hard failures |
+| P3-9.1 | probe evaluation set | probe is evaluated on an 8:2 split of the *training* side; on instrument-held-out folds the probe is undefined |
+| P3-9.3 | adversarial strength | λ capped at 0.02 with a two-epoch warm-up; λ = 0.1 is reported as a representation collapse, not as a tuning result |
+
+## 2. Corrections to the plan document
+
+Three statements in the plan document were wrong and were corrected in the released version rather than silently followed:
+
+1. the α-tolerance wording (it described a hard gate on α that the pipeline does not implement — see J3);
+2. the per-class counts in the P3 section (196/175 → 191/167);
+3. the GZ_IsoTech slice-count distribution (2,824 K=1 plus 46 K=2–3 → `{1: 2778, 2: 26, 3: 11, 4: 9}`).
+
+The corrected values are the ones used in the manuscript.
+
+## 3. Negative controls
+
+Six control contrasts (three libraries × two backbones) were run at seed 0. Five had a 95% CI spanning zero. The single exception (chest_falsetto, Swin-T, +5.57) was re-run at three seeds and moved to −2.53 [−4.97, −0.19] with a 16.12-point seed spread. The manuscript therefore reports "five of six intervals span zero, and the sixth returns to within the interval once three seeds are used", and states that chest_falsetto has only four classes, 1,280 slices and 257 test slices, so a single-seed Δ carries no discriminating power there.
+
+## 4. Cross-instrument revisions
+
+Two changes were made to the cross-instrument stage after the first run:
+
+* the probe was moved to the training side (§1, P3-9.1), because a probe evaluated on an instrument-held-out fold has no defined notion of "seen instrument";
+* the adversarial term was capped at λ = 0.02 with a warm-up (P3-9.3), after λ = 0.1 collapsed the representation (pooled score 0.2080). No third λ was tried.
+
+Both changes are disclosed in the manuscript, together with the probe AUC/top-1 values, so that the negative result on the adversarial term can be read as "the mechanism did not take effect" rather than "the mechanism took effect and did not help".
+
+## 5. Things deliberately not claimed
+
+* No study-wide GPU-hour total is claimed: timing comes from integer-minute driver logs that are incomplete and rounded.
+* No claim is made about the audited authors' actual split procedure; the audit reconstructs one slice-level reading of the stated ratios.
+* A2's self-test score is illustrative, not a reproduction of the original benchmark score.

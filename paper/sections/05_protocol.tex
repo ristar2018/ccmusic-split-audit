@@ -1,0 +1,195 @@
+\section{Protocol}\label{sec:protocol}
+
+\subsection{Three main arms and a CTIS-only injection control}
+
+A0 and A1 use the same per-class slice budget and are evaluated on the same sealed panel.
+A2 approximates that budget through its random partition; C1 is an additional CTIS-only control,
+not a fourth arm run across all five libraries.
+
+\begin{description}
+\item[A0, control.] For each class, sample a realised budget $m_c$ close to the planned
+$0.60\,S_c$ slices from $r_c^{C}$ distinct recordings in C, the training partition, which contains no slice of a test recording. Nothing the model sees
+shares a recording with anything it is scored on.
+
+\item[A1, homologous exposure.] Same $m_c$ and same C-side recording count, but the entire
+$Q^{\text{pool}}_c$ is injected and an equal number of C slices is removed. Much of this pool
+shares recording identifiers with the sealed panel, but some pool recordings contribute no test
+slices. Realised overlap is given in Supplementary Material S1; $\alpha_c$ is the full injected
+pool fraction, not the fraction restricted to recordings represented in the test panel. In one
+class (a suona technique cell, C0296) four candidate pool slices repeat content that already sits
+in the sealed panel and are removed by the duplicate-content rule before injection, so A1 trains
+on four fewer slices than A0 and C1 (25{,}498 against 25{,}502) and the per-class budgets are equal
+everywhere else.
+
+\item[A2, slice-level reconstruction.] Draw the slice-level 80/10/10 partition of C $\cup$
+$Q^{\text{pool}}$, i.e.\ a slice-level interpretation of the audited protocol, including same-recording
+mixing. Training uses 80\% of that union; because the union is about $0.75\,S_c$, the realised
+training count lands within one percent of $m_c$ in every library, as Table~\ref{tab:a2} shows. A2 also
+reports a self-test score on its own 10\% held-out share, which is an illustrative self-test score
+under our reconstruction of a slice-level split over the pooled corpus; it is neither a
+reproduction of the original authors' split nor the original benchmark score.
+\item[C1, non-test injection (CTIS only).] Starting from A0, remove 4{,}177 slices and
+replace them classwise with 1{,}665 slices from unused C content and 2{,}512 from R, all from
+non-test recordings. Injection is disjoint from A0 samples, test samples, test recording IDs
+and test content hashes. One class lacks one requested slice; realised counts equal A0
+classwise, and the total is 25{,}502 versus 25{,}498 for A1 (a four-slice difference).
+C1 uses seeds 0--2 and the same final-epoch recipe. Because it consumes R content, its
+validation scores cannot be interpreted; it performs no validation-based selection.
+This exploratory addition holds volume approximately fixed but not recording diversity.
+\end{description}
+
+A0 and A1 hold the number of training slices and the C-side recording count fixed, so a
+difference between them cannot be attributed to more data or to more recording diversity within
+C. What differs is whose content the model sees. A2 varies both mechanisms at once and therefore
+serves as a plausibility check rather than as a third estimate of the same quantity.
+
+\subsection{Training and sealing}
+
+The recipe is frozen: 224$\times$224 input, ImageNet initialisation, ten epochs, AdamW with
+learning rate $3\times10^{-4}$ and weight decay 0.05, cosine schedule with one warm-up epoch,
+label smoothing 0.1, batch size 64, and two backbones --- AlexNet \citep{alexnet2012} and
+Swin-T \citep{swin2021} --- under three seeds.
+No data augmentation is applied: the recipe specifies none, and time-axis flips are not
+meaningful for spectrograms. The number of epochs is fixed at ten and the final-epoch weights are
+the ones evaluated: no checkpoint, epoch or seed is chosen on any panel, so the reported scores
+carry no selection step, and the validation partition is monitored and reported but never used to
+pick a model.
+
+The sealed panel is evaluated once per run, after training, and never during it. Per-seed
+predictions are written to a staging directory and moved into a sealed directory only when all
+seeds of a library--arm--backbone group have completed; the sealed record contains the
+group's seed spread. This local record is not an independent timestamp and does not by itself
+prove when analytical choices were made. No model, epoch or seed selection is performed; R contains no test
+recording and is used for monitoring only, except that C1 consumes part of R as described above. This is what makes the reported differences interpretable: a
+pipeline that peeked at the sealed panel to choose a checkpoint would produce a number that no
+longer measures transfer.
+
+\subsection{Metrics}
+
+The primary metric is macro-F1 on the sealed panel. We compute it at two levels. At the slice
+level, each slice is one prediction. At the recording level, the predicted probabilities of all
+slices of a recording are averaged and the recording receives one label, which gives every
+recording the same weight within a library and keeps a library with $\bar K = 48$ from dominating
+one with $\bar K = 8.7$ through sheer slice count. Both levels are reported side by side; the
+primary contrast is at the slice level, as specified in the internal analysis plan, and the recording level
+serves as a robustness check, with any disagreement between the two flagged in the text. Macro-averaging is a reasonable summary when class support is uneven; we take the
+motivating argument from the literature on precision--recall summaries under imbalance \citep{saito2015pr}, though that argument concerns two-class problems and we do not treat it as a general justification. Macro-F1 averages only over classes with non-zero support or
+predictions in the evaluation panel. In the reported intervals the class set is recomputed within
+each resampling replicate: a class that is absent from a replicate is dropped from that
+replicate's mean rather than scored as zero. Supplementary Material S1 reports the variant in
+which the class set is fixed once at the panel level and absent classes score zero; the point
+estimates are identical and the intervals differ by less than half a point.
+
+\subsection{Statistics}
+
+Differences are paired at the slice level: for a given library and backbone, all arms are
+scored on the same slices, which we verify by comparing the label and recording arrays of the
+sealed records element by element. Intervals come from 2{,}000 bootstrap resamples of test
+\emph{recordings}, with whole recordings resampled and the same resampling indices applied to
+every arm and backbone. These intervals describe test-recording resampling uncertainty
+conditional on the realised split and the three trained seeds; they do not include uncertainty
+from new training seeds or a new train/test split. Concretely, let $f_{s,a,b}$ be the macro-F1 of seed $s$, arm $a$ and
+backbone $b$ on the sealed panel. A reported arm score is the mean over seeds,
+$\bar f_{a,b} = \frac{1}{3}\sum_s f_{s,a,b}$, and a reported effect is
+$\hat\Delta_b = \frac{1}{3}\sum_s (f_{s,A1,b} - f_{s,A0,b})$, so the printed arm columns,
+rounded to four decimals, need not subtract to the printed effect. Within each bootstrap
+replicate the per-seed paired difference is recomputed from the stored per-slice predictions and
+the replicate value is the mean over seeds; the interval is the 2.5--97.5 percentile range and
+the $p$-value is a two-sided smaller-tail resampling measure. The original script clipped
+zero-tail estimates to $1/B$; the revision uses the add-one convention
+$2(k+1)/(B+1)$ for the smaller-tail count $k$, capped at one, with $B=2{,}000$.
+Its minimum raw value is $2/2{,}001$, not evidence of an exact tail probability.
+Seed dispersion is reported as the range over
+seeds and is not tested: three seeds are too few to estimate between-seed variance reliably,
+so the primary intervals treat them as fixed and seed dispersion is descriptive. A supplementary
+class-stratified recording bootstrap and joint seed--recording bootstrap assess sensitivity;
+resampling three seeds does not replace additional training or split realisations.
+
+The internal plan designates a primary family of two tests: CTIS under AlexNet and CTIS under Swin-T, both for
+A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We correct within that family by Holm's method at $\alpha = 0.05$. The smallest effect
+of interest, or SESOI, is the three-point macro-F1 threshold recorded in the internal plan.
+It is a study-specific practical decision threshold, not a significance cutoff and not an
+externally validated minimum useful gain. Precision does not justify practical importance.
+The other four libraries are additional, non-confirmatory applications of the same operation,
+not replications of an identical task. No public preregistration was made; Supplementary
+Material S1 distinguishes the internal plan, execution changes and post hoc analyses.
+
+\subsection{Negative controls}
+
+If the mechanism is homologous content, libraries whose recordings contribute one slice have
+nothing to inject: $Q^{\text{pool}}_c = \sum_i \lfloor k_i/2 \rfloor = 0$ in every class, so the
+exposure arm coincides with the control and A1$-$A0 is not identifiable. The only arm that can
+then differ is A2, which also changes the random partition; we therefore report A0 and A2 with three
+seeds on three collections --- chest\_falsetto with 1{,}280 recordings of one slice each,
+erhu\_playing\_tech with 1{,}253, and GZ\_IsoTech with 2{,}824 recordings, 2{,}899 slices and 46 recordings
+with two to four segments --- and read the contrasts as a pipeline sanity check rather than a test of the main intervention.
+The expansion from the initial single-seed controls to three seeds is exploratory and is
+listed in Supplementary Material S1.
+
+Guzheng\_Tech99 is excluded from the control runs: every recording contributes one slice, and
+the release carries per-note technique annotations whose per-recording dominant label is the same
+technique \emph{boxian} in all 99 recordings, so no recording-level class layer exists. GZ\_IsoTech
+is kept, and its exposure is not exactly zero: 46 multi-segment recordings put nine slices into
+the pool under one random draw, an exposure of 0.005, against an expectation of 0.0065 under 400 draws with a 95th
+percentile 0.0098. Its realised exposure is therefore small but not zero; it is a low-exposure rather than a
+zero-exposure control.
+
+\subsection{Cross-instrument experiment}
+
+One library supports a second question: whether the technique classification of CTIS transfers
+to instruments never seen in training. We froze the class universe by a single rule fixed before
+training: a technique--instrument cell entered if it held at least two recordings and its
+instrument contributed at least three recordings, and six content-type labels were excluded as
+material rather than technique (scales, open strings, fundamental tones, single tones, excerpts
+and instrument-specific techniques). That leaves 43 techniques over 1{,}388 recordings from 49
+candidate classes over 4{,}037 recordings. We then grouped instruments --- rather than recordings
+--- into three folds, so that each
+recording is predicted exactly once by a model that has not seen its instrument. Because that
+partition changes both recording overlap and instrument novelty, a recording-grouped reference
+partition provides an operational separation of the two successive contrasts. We build it by grouping slices of the same
+recording, and of the same duplicate-audio group, into one fold, then balancing fold sizes across
+classes; all 43 classes keep at least one test recording per fold and 110 instruments with at least
+three recordings appear on at least two folds. The labels here are distinct from the main arms:
+R-slice denotes random slice-level folds; R-rec denotes recording-grouped folds with instrument
+overlap; L-inst denotes instrument-withheld folds; and L-inst+Adv adds an adversarial instrument head on the penultimate
+representation through a gradient-reversal layer \citep{ganin2014,ganin2015} with weight ramped to 0.02 over two warm-up epochs,
+and an auxiliary loss weight of 0.2. All four partitions use two seeds and three folds. Because held-out instruments never occur in training, the
+instrument-identity probe that diagnoses the mechanism is fitted on an 80/20 split of the
+\emph{training} recordings: a closed-set probe cannot identify unseen instrument classes.
+The probe is standardised logistic regression ($C=1$, at most 200 iterations) on frozen
+penultimate features: AlexNet's 4{,}096-dimensional final hidden representation or Swin-T's
+pooled pre-head representation. Each side is capped at 3{,}000 slices. Its AUC is the unweighted
+mean of one-versus-rest binary AUCs for fitted instrument classes with positives and negatives
+in the probe test subset; its separate top-1 score is instrument accuracy, not technique macro-F1.
+The probe split uses seed 0 and has no test-recording overlap between fitting and evaluation.
+
+\subsection{The internal plan and what changed}
+
+The design was written down before the main runs, but it was not publicly registered and no
+independent timestamp records when it was fixed; we therefore describe it as the internal plan and
+treat the two CTIS tests as its primary family rather than as a registered hypothesis. Several
+choices changed during execution; Supplementary Material S1 lists each one. The CTIS class
+universe narrowed from 219 to 201 classes after the five-recording rule and placeholder removal.
+Early injection targets of 50\% and 30\% of the pool were abandoned in favour of injecting the
+entire pool, which is the arm reported here. Per-class budgets are capped where C content is
+insufficient; both arms train for the same ten epochs and the final-epoch weights are evaluated,
+so a capped budget is not an early-stopping decision. The negative-control libraries were
+expanded from one seed to three. C1 was added after the three main arms and is therefore
+exploratory: it draws on unused C and R content, and its validation scores cannot be interpreted.
+Recording-level point estimates were corrected during revision from a mean weighted by slice count
+to one vote per recording; the slice-level estimates are unaffected, and Supplementary Material S1
+reports both. The class-stratified and joint seed--recording bootstraps, the self-test table and
+the comparison against published scores were also added during revision. Two further analyses are
+post hoc and are reported as such: the split of the CTIS sealed panel into test recordings that do
+and do not contribute slices to the injected pool, and the fixed-class-set sensitivity table. Neither
+is part of the internal plan, and neither is used to support the primary conclusion.
+
+\subsection{Use of AI-assisted tools}
+
+The authors used DeepSeek Harness, an AI coding and writing assistant, to draft code for data
+processing, training, analysis and figure generation, and to produce drafts of the prose. A
+verification script re-derives the reported tables and figures from the stored artifacts and
+checks that each reported number appears in the manuscript; the bootstrap intervals themselves are
+recomputed by separate analysis scripts from the sealed predictions, which the verifier does not
+rerun. After using the tool, the authors reviewed and edited the content as needed and take full
+responsibility for the content of the publication.

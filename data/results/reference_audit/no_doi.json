@@ -1,0 +1,146 @@
+[
+  {
+    "key": "defferrard2016",
+    "title": "FMA",
+    "year": 2017,
+    "authors": [
+      "Michaël Defferrard",
+      "Kirell Benzi",
+      "Pierre Vandergheynst",
+      "Xavier Bresson"
+    ],
+    "url": ""
+  },
+  {
+    "key": "ganin2014",
+    "title": "Unsupervised Domain Adaptation by Backpropagation",
+    "year": 2015,
+    "authors": [
+      "Ganin",
+      "Lempitsky"
+    ],
+    "url": "https://proceedings.mlr.press/v37/ganin15.html"
+  },
+  {
+    "key": "ganin2015",
+    "title": "Domain-Adversarial Training of Neural Networks",
+    "year": 2016,
+    "authors": [
+      "Yaroslav Ganin",
+      "Evgeniya Ustinova",
+      "Hana Ajakan",
+      "Pascal Germain",
+      "Hugo Larochelle",
+      "François Laviolette",
+      "Mario Marchand",
+      "Victor Lempitsky"
+    ],
+    "url": ""
+  },
+  {
+    "key": "gebru2018",
+    "title": "Datasheets for Datasets",
+    "year": 2021,
+    "authors": [
+      "Timnit Gebru",
+      "Jamie Morgenstern",
+      "Briana Vecchione",
+      "Jennifer Wortman Vaughan",
+      "Hanna Wallach",
+      "Hal Daumé",
+      "Kate Crawford"
+    ],
+    "url": ""
+  },
+  {
+    "key": "recht2019",
+    "title": "Do ImageNet",
+    "year": 2019,
+    "authors": [
+      "Recht",
+      "Roelofs",
+      "Schmidt",
+      "Shankar"
+    ],
+    "url": "https://proceedings.mlr.press/v97/recht19a.html"
+  },
+  {
+    "key": "li2023",
+    "title": "MERT",
+    "year": 2024,
+    "authors": [
+      "Yizhi Li",
+      "Ruibin Yuan",
+      "Ge Zhang",
+      "Yinghao Ma",
+      "Xingran Chen",
+      "Hanzhi Yin",
+      "Chenghao Xiao",
+      "Chenghua Lin",
+      "Anton Ragni",
+      "Emmanouil Benetos",
+      "Norbert Gyenge",
+      "Roger Dannenberg",
+      "Ruibo Liu",
+      "Wenhu Chen",
+      "Gus Xia",
+      "Yemin Shi",
+      "Wenhao Huang",
+      "Zili Wang",
+      "Yike Guo",
+      "Jie Fu"
+    ],
+    "url": ""
+  },
+  {
+    "key": "choi2017",
+    "title": "Transfer learning for music classification and regression tasks",
+    "year": 2017,
+    "authors": [
+      "Keunwoo Choi",
+      "György Fazekas",
+      "Mark Sandler",
+      "Kyunghyun Cho"
+    ],
+    "url": ""
+  },
+  {
+    "key": "lee2017",
+    "title": "Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms",
+    "year": 2017,
+    "authors": [
+      "Jongpil Lee",
+      "Jiyoung Park",
+      "Keunhyoung Luke Kim",
+      "Juhan Nam"
+    ],
+    "url": ""
+  },
+  {
+    "key": "won2020",
+    "title": "Evaluation of CNN",
+    "year": 2020,
+    "authors": [
+      "Minz Won",
+      "Andres Ferraro",
+      "Dmitry Bogdanov",
+      "Xavier Serra"
+    ],
+    "url": ""
+  },
+  {
+    "key": "engel2017",
+    "title": "Neural Audio Synthesis of Musical Notes with WaveNet",
+    "year": 2017,
+    "authors": [
+      "Engel",
+      "Resnick",
+      "Roberts",
+      "Dieleman",
+      "Eck",
+      "Simonyan",
+      "Norouzi"
+    ],
+    "url": "https://proceedings.mlr.press/v70/engel17a.html"
+  }
+]

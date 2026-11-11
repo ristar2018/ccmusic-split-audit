@@ -1,0 +1,17 @@
+library,arm,bb,contrast,delta_slice_pt,ci_lo_slice_pt,ci_hi_slice_pt,delta_rec_pt,ci_lo_rec_pt,ci_hi_rec_pt,boot_p_slice,seed_range_pt,per_seed_delta_pt,n_recordings,n_slices,boot,meets_sesoi,confirmatory
+CNPM,A2,alexnet,A2-A0,18.07,10.48,26.13,23.28,15.35,34.28,0.0005,8.29,16.97|14.48|22.77,54,271,2000,True,False
+CNPM,A2,swin_t,A2-A0,26.76,17.01,35.66,34.21,24.52,43.62,0.0005,4.3,28.55|27.48|24.26,54,271,2000,True,False
+CTIS,A2,alexnet,A2-A0,1.21,-0.02,2.44,0.56,-0.95,1.69,0.056,1.74,1.97|1.43|0.23,963,4605,2000,False,False
+CTIS,A2,swin_t,A2-A0,1.75,1.18,2.7,1.86,0.89,2.65,0.0005,0.87,1.27|2.14|1.82,963,4605,2000,False,False
+GZ_IsoTech,A2,alexnet,A2-A0,0.27,-0.42,1.12,0.27,-0.42,1.12,0.454,,0.27,564,571,2000,False,False
+GZ_IsoTech,A2,swin_t,A2-A0,-0.7,-1.63,0.07,-0.7,-1.63,0.07,0.089,,-0.70,564,571,2000,False,False
+bel_canto,A2,alexnet,A2-A0,7.3,4.46,11.98,11.93,6.47,31.17,0.0005,1.83,6.78|8.47|6.64,40,979,2000,True,False
+bel_canto,A2,swin_t,A2-A0,12.51,7.0,24.54,15.2,9.28,41.28,0.0005,2.05,13.63|12.32|11.58,40,979,2000,True,False
+chest_falsetto,A2,alexnet,A2-A0,-0.71,-3.46,2.0,-0.71,-3.46,2.0,0.592,,-0.71,257,257,2000,False,False
+chest_falsetto,A2,swin_t,A2-A0,5.57,0.62,10.31,5.57,0.62,10.31,0.02,,5.57,257,257,2000,True,False
+erhu_playing_tech,A2,alexnet,A2-A0,0.25,-1.24,1.75,0.25,-1.24,1.75,0.728,,0.25,251,251,2000,False,False
+erhu_playing_tech,A2,swin_t,A2-A0,-1.58,-5.65,0.65,-1.58,-5.65,0.65,0.346,,-1.58,251,251,2000,False,False
+music_genre,A2,alexnet,A2-A0,14.06,12.19,16.14,14.8,10.96,17.55,0.0005,0.9,13.89|13.69|14.59,337,3648,2000,True,False
+music_genre,A2,swin_t,A2-A0,16.52,14.16,19.39,15.8,12.31,19.19,0.0005,1.02,16.49|16.03|17.05,337,3648,2000,True,False
+pianos,A2,alexnet,A2-A0,14.07,11.48,17.65,7.7,4.23,12.5,0.0005,1.27,14.55|13.28|14.39,135,1884,2000,True,False
+pianos,A2,swin_t,A2-A0,11.23,8.09,15.13,4.92,2.18,8.91,0.0005,2.68,10.21|10.58|12.89,135,1884,2000,True,False

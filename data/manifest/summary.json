@@ -1,0 +1,1719 @@
+{
+ "built_by": "code/manifest.py",
+ "root": "D:\\VSCode\\Datasets",
+ "feature": "mel",
+ "columns": [
+  "sample_id",
+  "dataset",
+  "feature",
+  "relative_path",
+  "label",
+  "recording_uid",
+  "candidate_group",
+  "label_version",
+  "content_hash",
+  "domain",
+  "song_id",
+  "identity_level",
+  "label_name",
+  "slice_index",
+  "recording_duration_s",
+  "instrument",
+  "technique",
+  "take",
+  "top_category",
+  "mid_category",
+  "audio_hash",
+  "recording_canonical"
+ ],
+ "libraries": {
+  "CTIS": {
+   "library": "CTIS",
+   "audio_root": "CTIS/data/audio",
+   "mel_root": "CTIS/data/eval/mel",
+   "classes": 219,
+   "recordings_on_disk": 4956,
+   "recordings_with_slices": 4956,
+   "recordings_in_manifest": 4956,
+   "slices": 43054,
+   "K": 8.69,
+   "audio_hours": 32.63,
+   "recordings_without_mel": [],
+   "mel_gidx_without_audio": [],
+   "non_jpg_in_mel": {},
+   "instrument_parse_ok": 42836,
+   "uid_parse_rate": 0.9949,
+   "unparsed_files": [
+    {
+     "class": "D0051",
+     "file": "D0051A2-1a 没音频.wav"
+    },
+    {
+     "class": "D0058",
+     "file": "D0058A2-1a 没音频.wav"
+    },
+    {
+     "class": "D0060",
+     "file": "D0060A2-1a 没音频.wav"
+    },
+    {
+     "class": "D0061",
+     "file": "D0061A2-1a 没音频.wav"
+    },
+    {
+     "class": "D0062",
+     "file": "D0062A2-1a 没音频.wav"
+    },
+    {
+     "class": "T0294",
+     "file": "T0294A2-1b1-1.wav"
+    },
+    {
+     "class": "T0294",
+     "file": "T0294A2-1c1-1.wav"
+    },
+    {
+     "class": "T0294",
+     "file": "T0294A2-1c2-1.wav"
+    },
+    {
+     "class": "T0294",
+     "file": "T0294A2-1c3-1.wav"
+    },
+    {
+     "class": "T0295",
+     "file": "T0295A2-1b1-1.wav"
+    },
+    {
+     "class": "T0295",
+     "file": "T0295A2-1b1-2.wav"
+    },
+    {
+     "class": "T0295",
+     "file": "T0295A2-1c1-1.wav"
+    },
+    {
+     "class": "T0295",
+     "file": "T0295A2-1c2-1.wav"
+    },
+    {
+     "class": "T0295",
+     "file": "T0295A2-1e1.wav"
+    }
+   ],
+   "per_class": {
+    "C0090": {
+     "recordings": 28,
+     "slices": 402,
+     "K": 14.36
+    },
+    "C0091": {
+     "recordings": 30,
+     "slices": 413,
+     "K": 13.77
+    },
+    "C0092": {
+     "recordings": 27,
+     "slices": 398,
+     "K": 14.74
+    },
+    "C0093": {
+     "recordings": 33,
+     "slices": 275,
+     "K": 8.33
+    },
+    "C0094": {
+     "recordings": 25,
+     "slices": 166,
+     "K": 6.64
+    },
+    "C0095": {
+     "recordings": 26,
+     "slices": 248,
+     "K": 9.54
+    },
+    "C0096": {
+     "recordings": 28,
+     "slices": 279,
+     "K": 9.96
+    },
+    "C0097": {
+     "recordings": 28,
+     "slices": 249,
+     "K": 8.89
+    },
+    "C0098": {
+     "recordings": 26,
+     "slices": 274,
+     "K": 10.54
+    },
+    "C0099": {
+     "recordings": 27,
+     "slices": 341,
+     "K": 12.63
+    },
+    "C0100": {
+     "recordings": 28,
+     "slices": 229,
+     "K": 8.18
+    },
+    "C0101": {
+     "recordings": 20,
+     "slices": 199,
+     "K": 9.95
+    },
+    "C0113": {
+     "recordings": 18,
+     "slices": 36,
+     "K": 2.0
+    },
+    "C0114": {
+     "recordings": 18,
+     "slices": 39,
+     "K": 2.17
+    },
+    "C0117": {
+     "recordings": 31,
+     "slices": 246,
+     "K": 7.94
+    },
+    "C0123": {
+     "recordings": 34,
+     "slices": 396,
+     "K": 11.65
+    },
+    "C0124": {
+     "recordings": 26,
+     "slices": 229,
+     "K": 8.81
+    },
+    "C0182": {
+     "recordings": 12,
+     "slices": 25,
+     "K": 2.08
+    },
+    "C0183": {
+     "recordings": 4,
+     "slices": 8,
+     "K": 2.0
+    },
+    "C0187": {
+     "recordings": 20,
+     "slices": 64,
+     "K": 3.2
+    },
+    "C0188": {
+     "recordings": 20,
+     "slices": 77,
+     "K": 3.85
+    },
+    "C0200": {
+     "recordings": 2,
+     "slices": 42,
+     "K": 21.0
+    },
+    "C0201": {
+     "recordings": 1,
+     "slices": 20,
+     "K": 20.0
+    },
+    "C0237": {
+     "recordings": 48,
+     "slices": 471,
+     "K": 9.81
+    },
+    "C0243": {
+     "recordings": 29,
+     "slices": 585,
+     "K": 20.17
+    },
+    "C0244": {
+     "recordings": 19,
+     "slices": 153,
+     "K": 8.05
+    },
+    "C0257": {
+     "recordings": 3,
+     "slices": 13,
+     "K": 4.33
+    },
+    "C0259": {
+     "recordings": 28,
+     "slices": 214,
+     "K": 7.64
+    },
+    "C0263": {
+     "recordings": 52,
+     "slices": 929,
+     "K": 17.87
+    },
+    "C0264": {
+     "recordings": 7,
+     "slices": 112,
+     "K": 16.0
+    },
+    "C0265": {
+     "recordings": 14,
+     "slices": 192,
+     "K": 13.71
+    },
+    "C0280": {
+     "recordings": 19,
+     "slices": 140,
+     "K": 7.37
+    },
+    "C0281": {
+     "recordings": 21,
+     "slices": 188,
+     "K": 8.95
+    },
+    "C0282": {
+     "recordings": 17,
+     "slices": 122,
+     "K": 7.18
+    },
+    "C0283": {
+     "recordings": 10,
+     "slices": 51,
+     "K": 5.1
+    },
+    "C0296": {
+     "recordings": 70,
+     "slices": 402,
+     "K": 5.74
+    },
+    "C0303": {
+     "recordings": 30,
+     "slices": 332,
+     "K": 11.07
+    },
+    "C0304": {
+     "recordings": 10,
+     "slices": 69,
+     "K": 6.9
+    },
+    "C0305": {
+     "recordings": 10,
+     "slices": 108,
+     "K": 10.8
+    },
+    "C0306": {
+     "recordings": 26,
+     "slices": 381,
+     "K": 14.65
+    },
+    "C0308": {
+     "recordings": 30,
+     "slices": 367,
+     "K": 12.23
+    },
+    "C0309": {
+     "recordings": 29,
+     "slices": 306,
+     "K": 10.55
+    },
+    "C0310": {
+     "recordings": 19,
+     "slices": 226,
+     "K": 11.89
+    },
+    "C0311": {
+     "recordings": 20,
+     "slices": 226,
+     "K": 11.3
+    },
+    "C0316": {
+     "recordings": 13,
+     "slices": 188,
+     "K": 14.46
+    },
+    "D0015": {
+     "recordings": 14,
+     "slices": 122,
+     "K": 8.71
+    },
+    "D0048": {
+     "recordings": 5,
+     "slices": 18,
+     "K": 3.6
+    },
+    "D0049": {
+     "recordings": 4,
+     "slices": 11,
+     "K": 2.75
+    },
+    "D0050": {
+     "recordings": 4,
+     "slices": 8,
+     "K": 2.0
+    },
+    "D0051": {
+     "recordings": 5,
+     "slices": 37,
+     "K": 7.4
+    },
+    "D0058": {
+     "recordings": 5,
+     "slices": 31,
+     "K": 6.2
+    },
+    "D0060": {
+     "recordings": 5,
+     "slices": 29,
+     "K": 5.8
+    },
+    "D0061": {
+     "recordings": 5,
+     "slices": 28,
+     "K": 5.6
+    },
+    "D0062": {
+     "recordings": 5,
+     "slices": 27,
+     "K": 5.4
+    },
+    "D0063": {
+     "recordings": 8,
+     "slices": 18,
+     "K": 2.25
+    },
+    "D0064": {
+     "recordings": 10,
+     "slices": 16,
+     "K": 1.6
+    },
+    "D0065": {
+     "recordings": 8,
+     "slices": 12,
+     "K": 1.5
+    },
+    "D0066": {
+     "recordings": 10,
+     "slices": 29,
+     "K": 2.9
+    },
+    "D0067": {
+     "recordings": 8,
+     "slices": 10,
+     "K": 1.25
+    },
+    "D0068": {
+     "recordings": 12,
+     "slices": 47,
+     "K": 3.92
+    },
+    "D0069": {
+     "recordings": 6,
+     "slices": 50,
+     "K": 8.33
+    },
+    "D0070": {
+     "recordings": 8,
+     "slices": 30,
+     "K": 3.75
+    },
+    "D0071": {
+     "recordings": 10,
+     "slices": 24,
+     "K": 2.4
+    },
+    "D0102": {
+     "recordings": 6,
+     "slices": 47,
+     "K": 7.83
+    },
+    "D0103": {
+     "recordings": 4,
+     "slices": 33,
+     "K": 8.25
+    },
+    "D0104": {
+     "recordings": 4,
+     "slices": 40,
+     "K": 10.0
+    },
+    "D0105": {
+     "recordings": 9,
+     "slices": 15,
+     "K": 1.67
+    },
+    "D0125": {
+     "recordings": 16,
+     "slices": 35,
+     "K": 2.19
+    },
+    "D0126": {
+     "recordings": 16,
+     "slices": 24,
+     "K": 1.5
+    },
+    "D0127": {
+     "recordings": 12,
+     "slices": 38,
+     "K": 3.17
+    },
+    "D0128": {
+     "recordings": 12,
+     "slices": 74,
+     "K": 6.17
+    },
+    "D0129": {
+     "recordings": 12,
+     "slices": 20,
+     "K": 1.67
+    },
+    "D0130": {
+     "recordings": 10,
+     "slices": 21,
+     "K": 2.1
+    },
+    "D0131": {
+     "recordings": 12,
+     "slices": 19,
+     "K": 1.58
+    },
+    "D0132": {
+     "recordings": 10,
+     "slices": 11,
+     "K": 1.1
+    },
+    "D0137": {
+     "recordings": 10,
+     "slices": 20,
+     "K": 2.0
+    },
+    "D0138": {
+     "recordings": 6,
+     "slices": 6,
+     "K": 1.0
+    },
+    "D0140": {
+     "recordings": 8,
+     "slices": 8,
+     "K": 1.0
+    },
+    "D0143": {
+     "recordings": 8,
+     "slices": 23,
+     "K": 2.88
+    },
+    "D0144": {
+     "recordings": 8,
+     "slices": 9,
+     "K": 1.12
+    },
+    "D0145": {
+     "recordings": 8,
+     "slices": 14,
+     "K": 1.75
+    },
+    "D0146": {
+     "recordings": 22,
+     "slices": 50,
+     "K": 2.27
+    },
+    "D0147": {
+     "recordings": 10,
+     "slices": 23,
+     "K": 2.3
+    },
+    "D0172": {
+     "recordings": 8,
+     "slices": 19,
+     "K": 2.38
+    },
+    "D0173": {
+     "recordings": 8,
+     "slices": 16,
+     "K": 2.0
+    },
+    "D0176": {
+     "recordings": 8,
+     "slices": 21,
+     "K": 2.62
+    },
+    "D0177": {
+     "recordings": 8,
+     "slices": 19,
+     "K": 2.38
+    },
+    "D0178": {
+     "recordings": 8,
+     "slices": 11,
+     "K": 1.38
+    },
+    "D0179": {
+     "recordings": 8,
+     "slices": 13,
+     "K": 1.62
+    },
+    "D0180": {
+     "recordings": 8,
+     "slices": 15,
+     "K": 1.88
+    },
+    "D0181": {
+     "recordings": 6,
+     "slices": 6,
+     "K": 1.0
+    },
+    "D0184": {
+     "recordings": 8,
+     "slices": 15,
+     "K": 1.88
+    },
+    "D0185": {
+     "recordings": 8,
+     "slices": 13,
+     "K": 1.62
+    },
+    "D0186": {
+     "recordings": 8,
+     "slices": 15,
+     "K": 1.88
+    },
+    "D0241": {
+     "recordings": 5,
+     "slices": 199,
+     "K": 39.8
+    },
+    "D0242": {
+     "recordings": 6,
+     "slices": 92,
+     "K": 15.33
+    },
+    "D0245": {
+     "recordings": 6,
+     "slices": 6,
+     "K": 1.0
+    },
+    "D0246": {
+     "recordings": 4,
+     "slices": 6,
+     "K": 1.5
+    },
+    "D0247": {
+     "recordings": 8,
+     "slices": 12,
+     "K": 1.5
+    },
+    "D0248": {
+     "recordings": 24,
+     "slices": 32,
+     "K": 1.33
+    },
+    "D0249": {
+     "recordings": 18,
+     "slices": 32,
+     "K": 1.78
+    },
+    "D0250": {
+     "recordings": 14,
+     "slices": 19,
+     "K": 1.36
+    },
+    "D0251": {
+     "recordings": 6,
+     "slices": 6,
+     "K": 1.0
+    },
+    "D0252": {
+     "recordings": 10,
+     "slices": 195,
+     "K": 19.5
+    },
+    "D0268": {
+     "recordings": 9,
+     "slices": 19,
+     "K": 2.11
+    },
+    "D0269": {
+     "recordings": 17,
+     "slices": 37,
+     "K": 2.18
+    },
+    "D0270": {
+     "recordings": 17,
+     "slices": 35,
+     "K": 2.06
+    },
+    "D0271": {
+     "recordings": 15,
+     "slices": 23,
+     "K": 1.53
+    },
+    "D0272": {
+     "recordings": 7,
+     "slices": 26,
+     "K": 3.71
+    },
+    "D0273": {
+     "recordings": 13,
+     "slices": 26,
+     "K": 2.0
+    },
+    "D0274": {
+     "recordings": 13,
+     "slices": 25,
+     "K": 1.92
+    },
+    "D0275": {
+     "recordings": 9,
+     "slices": 12,
+     "K": 1.33
+    },
+    "D0276": {
+     "recordings": 6,
+     "slices": 14,
+     "K": 2.33
+    },
+    "D0277": {
+     "recordings": 6,
+     "slices": 6,
+     "K": 1.0
+    },
+    "D0278": {
+     "recordings": 5,
+     "slices": 8,
+     "K": 1.6
+    },
+    "D0279": {
+     "recordings": 4,
+     "slices": 54,
+     "K": 13.5
+    },
+    "D0284": {
+     "recordings": 2,
+     "slices": 6,
+     "K": 3.0
+    },
+    "D0286": {
+     "recordings": 5,
+     "slices": 9,
+     "K": 1.8
+    },
+    "D0287": {
+     "recordings": 4,
+     "slices": 37,
+     "K": 9.25
+    },
+    "D0290": {
+     "recordings": 7,
+     "slices": 17,
+     "K": 2.43
+    },
+    "D0298": {
+     "recordings": 11,
+     "slices": 118,
+     "K": 10.73
+    },
+    "D0299": {
+     "recordings": 4,
+     "slices": 115,
+     "K": 28.75
+    },
+    "D0315": {
+     "recordings": 15,
+     "slices": 150,
+     "K": 10.0
+    },
+    "D0325": {
+     "recordings": 6,
+     "slices": 47,
+     "K": 7.83
+    },
+    "D0326": {
+     "recordings": 10,
+     "slices": 16,
+     "K": 1.6
+    },
+    "D0327": {
+     "recordings": 8,
+     "slices": 20,
+     "K": 2.5
+    },
+    "D0328": {
+     "recordings": 14,
+     "slices": 94,
+     "K": 6.71
+    },
+    "L0044": {
+     "recordings": 42,
+     "slices": 304,
+     "K": 7.24
+    },
+    "L0045": {
+     "recordings": 56,
+     "slices": 342,
+     "K": 6.11
+    },
+    "L0046": {
+     "recordings": 36,
+     "slices": 309,
+     "K": 8.58
+    },
+    "L0047": {
+     "recordings": 36,
+     "slices": 274,
+     "K": 7.61
+    },
+    "L0053": {
+     "recordings": 46,
+     "slices": 345,
+     "K": 7.5
+    },
+    "L0055": {
+     "recordings": 36,
+     "slices": 229,
+     "K": 6.36
+    },
+    "L0056": {
+     "recordings": 38,
+     "slices": 261,
+     "K": 6.87
+    },
+    "L0072": {
+     "recordings": 40,
+     "slices": 200,
+     "K": 5.0
+    },
+    "L0073": {
+     "recordings": 38,
+     "slices": 164,
+     "K": 4.32
+    },
+    "L0074": {
+     "recordings": 37,
+     "slices": 293,
+     "K": 7.92
+    },
+    "L0075": {
+     "recordings": 32,
+     "slices": 325,
+     "K": 10.16
+    },
+    "L0076": {
+     "recordings": 34,
+     "slices": 258,
+     "K": 7.59
+    },
+    "L0077": {
+     "recordings": 38,
+     "slices": 155,
+     "K": 4.08
+    },
+    "L0080": {
+     "recordings": 40,
+     "slices": 252,
+     "K": 6.3
+    },
+    "L0084": {
+     "recordings": 25,
+     "slices": 227,
+     "K": 9.08
+    },
+    "L0085": {
+     "recordings": 23,
+     "slices": 306,
+     "K": 13.3
+    },
+    "L0086": {
+     "recordings": 23,
+     "slices": 280,
+     "K": 12.17
+    },
+    "L0115": {
+     "recordings": 34,
+     "slices": 263,
+     "K": 7.74
+    },
+    "L0121": {
+     "recordings": 40,
+     "slices": 244,
+     "K": 6.1
+    },
+    "L0122": {
+     "recordings": 36,
+     "slices": 212,
+     "K": 5.89
+    },
+    "L0133": {
+     "recordings": 36,
+     "slices": 279,
+     "K": 7.75
+    },
+    "L0134": {
+     "recordings": 36,
+     "slices": 265,
+     "K": 7.36
+    },
+    "L0135": {
+     "recordings": 45,
+     "slices": 523,
+     "K": 11.62
+    },
+    "L0136": {
+     "recordings": 34,
+     "slices": 260,
+     "K": 7.65
+    },
+    "L0139": {
+     "recordings": 42,
+     "slices": 301,
+     "K": 7.17
+    },
+    "L0141": {
+     "recordings": 34,
+     "slices": 329,
+     "K": 9.68
+    },
+    "L0148": {
+     "recordings": 32,
+     "slices": 313,
+     "K": 9.78
+    },
+    "L0149": {
+     "recordings": 43,
+     "slices": 394,
+     "K": 9.16
+    },
+    "L0150": {
+     "recordings": 30,
+     "slices": 206,
+     "K": 6.87
+    },
+    "L0151": {
+     "recordings": 32,
+     "slices": 195,
+     "K": 6.09
+    },
+    "L0152": {
+     "recordings": 34,
+     "slices": 236,
+     "K": 6.94
+    },
+    "L0153": {
+     "recordings": 32,
+     "slices": 207,
+     "K": 6.47
+    },
+    "L0154": {
+     "recordings": 28,
+     "slices": 210,
+     "K": 7.5
+    },
+    "L0155": {
+     "recordings": 28,
+     "slices": 234,
+     "K": 8.36
+    },
+    "L0156": {
+     "recordings": 28,
+     "slices": 172,
+     "K": 6.14
+    },
+    "L0157": {
+     "recordings": 26,
+     "slices": 153,
+     "K": 5.88
+    },
+    "L0158": {
+     "recordings": 28,
+     "slices": 188,
+     "K": 6.71
+    },
+    "L0160": {
+     "recordings": 34,
+     "slices": 228,
+     "K": 6.71
+    },
+    "L0161": {
+     "recordings": 34,
+     "slices": 211,
+     "K": 6.21
+    },
+    "L0162": {
+     "recordings": 34,
+     "slices": 216,
+     "K": 6.35
+    },
+    "L0163": {
+     "recordings": 44,
+     "slices": 479,
+     "K": 10.89
+    },
+    "L0164": {
+     "recordings": 32,
+     "slices": 453,
+     "K": 14.16
+    },
+    "L0165": {
+     "recordings": 40,
+     "slices": 372,
+     "K": 9.3
+    },
+    "L0166": {
+     "recordings": 32,
+     "slices": 197,
+     "K": 6.16
+    },
+    "L0167": {
+     "recordings": 42,
+     "slices": 549,
+     "K": 13.07
+    },
+    "L0168": {
+     "recordings": 42,
+     "slices": 478,
+     "K": 11.38
+    },
+    "L0169": {
+     "recordings": 41,
+     "slices": 419,
+     "K": 10.22
+    },
+    "L0170": {
+     "recordings": 32,
+     "slices": 206,
+     "K": 6.44
+    },
+    "L0239": {
+     "recordings": 40,
+     "slices": 269,
+     "K": 6.72
+    },
+    "L0240": {
+     "recordings": 41,
+     "slices": 329,
+     "K": 8.02
+    },
+    "L0256": {
+     "recordings": 42,
+     "slices": 356,
+     "K": 8.48
+    },
+    "L0266": {
+     "recordings": 108,
+     "slices": 867,
+     "K": 8.03
+    },
+    "L0285": {
+     "recordings": 21,
+     "slices": 388,
+     "K": 18.48
+    },
+    "L0288": {
+     "recordings": 10,
+     "slices": 241,
+     "K": 24.1
+    },
+    "L0291": {
+     "recordings": 7,
+     "slices": 61,
+     "K": 8.71
+    },
+    "L0292": {
+     "recordings": 14,
+     "slices": 89,
+     "K": 6.36
+    },
+    "L0297": {
+     "recordings": 36,
+     "slices": 229,
+     "K": 6.36
+    },
+    "L0307": {
+     "recordings": 32,
+     "slices": 486,
+     "K": 15.19
+    },
+    "L0312": {
+     "recordings": 44,
+     "slices": 774,
+     "K": 17.59
+    },
+    "L0313": {
+     "recordings": 16,
+     "slices": 169,
+     "K": 10.56
+    },
+    "L0314": {
+     "recordings": 41,
+     "slices": 524,
+     "K": 12.78
+    },
+    "T0006": {
+     "recordings": 30,
+     "slices": 165,
+     "K": 5.5
+    },
+    "T0007": {
+     "recordings": 40,
+     "slices": 233,
+     "K": 5.83
+    },
+    "T0078": {
+     "recordings": 36,
+     "slices": 122,
+     "K": 3.39
+    },
+    "T0081": {
+     "recordings": 21,
+     "slices": 163,
+     "K": 7.76
+    },
+    "T0082": {
+     "recordings": 20,
+     "slices": 334,
+     "K": 16.7
+    },
+    "T0083": {
+     "recordings": 22,
+     "slices": 249,
+     "K": 11.32
+    },
+    "T0087": {
+     "recordings": 22,
+     "slices": 358,
+     "K": 16.27
+    },
+    "T0088": {
+     "recordings": 8,
+     "slices": 385,
+     "K": 48.12
+    },
+    "T0089": {
+     "recordings": 14,
+     "slices": 212,
+     "K": 15.14
+    },
+    "T0111": {
+     "recordings": 46,
+     "slices": 151,
+     "K": 3.28
+    },
+    "T0116": {
+     "recordings": 52,
+     "slices": 244,
+     "K": 4.69
+    },
+    "T0159": {
+     "recordings": 38,
+     "slices": 170,
+     "K": 4.47
+    },
+    "T0171": {
+     "recordings": 28,
+     "slices": 206,
+     "K": 7.36
+    },
+    "T0238": {
+     "recordings": 50,
+     "slices": 796,
+     "K": 15.92
+    },
+    "T0254": {
+     "recordings": 33,
+     "slices": 809,
+     "K": 24.52
+    },
+    "T0255": {
+     "recordings": 38,
+     "slices": 473,
+     "K": 12.45
+    },
+    "T0260": {
+     "recordings": 49,
+     "slices": 1462,
+     "K": 29.84
+    },
+    "T0261": {
+     "recordings": 52,
+     "slices": 555,
+     "K": 10.67
+    },
+    "T0262": {
+     "recordings": 50,
+     "slices": 450,
+     "K": 9.0
+    },
+    "T0267": {
+     "recordings": 43,
+     "slices": 442,
+     "K": 10.28
+    },
+    "T0289": {
+     "recordings": 41,
+     "slices": 617,
+     "K": 15.05
+    },
+    "T0294": {
+     "recordings": 14,
+     "slices": 75,
+     "K": 5.36
+    },
+    "T0295": {
+     "recordings": 10,
+     "slices": 98,
+     "K": 9.8
+    },
+    "T0300": {
+     "recordings": 28,
+     "slices": 625,
+     "K": 22.32
+    },
+    "T0301": {
+     "recordings": 13,
+     "slices": 187,
+     "K": 14.38
+    },
+    "T0302": {
+     "recordings": 27,
+     "slices": 607,
+     "K": 22.48
+    },
+    "T0317": {
+     "recordings": 23,
+     "slices": 307,
+     "K": 13.35
+    },
+    "T0318": {
+     "recordings": 38,
+     "slices": 241,
+     "K": 6.34
+    },
+    "T0319": {
+     "recordings": 54,
+     "slices": 271,
+     "K": 5.02
+    },
+    "T0320": {
+     "recordings": 54,
+     "slices": 285,
+     "K": 5.28
+    },
+    "T0323": {
+     "recordings": 40,
+     "slices": 281,
+     "K": 7.03
+    }
+   },
+   "classes_with_multi_instrument": {
+    "C0263": [
+     [
+      "中音笙",
+      51
+     ],
+     [
+      "中芦笙",
+      1
+     ]
+    ],
+    "D0051": [
+     [
+      "钹",
+      4
+     ],
+     [
+      "<unparsed>",
+      1
+     ]
+    ],
+    "D0058": [
+     [
+      "提手 [板]",
+      4
+     ],
+     [
+      "<unparsed>",
+      1
+     ]
+    ],
+    "D0060": [
+     [
+      "川小锣",
+      4
+     ],
+     [
+      "<unparsed>",
+      1
+     ]
+    ],
+    "D0061": [
+     [
+      "大铛铛",
+      4
+     ],
+     [
+      "<unparsed>",
+      1
+     ]
+    ],
+    "D0062": [
+     [
+      "小铛铛",
+      4
+     ],
+     [
+      "<unparsed>",
+      1
+     ]
+    ],
+    "L0045": [
+     [
+      "扬剧主胡",
+      44
+     ],
+     [
+      "扬剧主胡 D调",
+      12
+     ]
+    ],
+    "T0294": [
+     [
+      "南音琵琶",
+      10
+     ],
+     [
+      "<unparsed>",
+      4
+     ]
+    ],
+    "T0295": [
+     [
+      "<unparsed>",
+      5
+     ],
+     [
+      "南音三弦",
+      5
+     ]
+    ]
+   },
+   "domain": "real",
+   "domain_basis": "盘内有 wav 音频（4,956 条真实乐器演奏录音，32.63 h），非合成",
+   "song_id_rule": "留空：CTIS 为单音源库（一条 wav = 一次演奏），无歌曲/作品层，§4.1 允许留空",
+   "identity_level": "performance",
+   "uid_rule": "mel 首段全局录音号按「类名升序→类内 wav 名升序」跨类累加；uid = wav 文件名主干（文件名跨类重名 → uid 加类码前缀）",
+   "audio_hash_done": true,
+   "duplicate_audio_groups": {
+    "132b75a3267abc0ed646f27943551948891ad50c": [
+     "C0090/【大笒】筒音 自然衰减 力度中强 第一遍",
+     "C0090/【大笒】音阶 自然衰减 力度中强 第一遍"
+    ],
+    "1db8d10518c4f4e322ba976c3fe7588d21b2bf8c": [
+     "L0148/【板胡】 音阶 慢速 力度弱 第一遍",
+     "L0148/【板胡】 音阶 慢速 力度弱 第一遍(1)"
+    ]
+   },
+   "duplicate_audio_recordings": 4,
+   "dedup_rule": "audio_hash 相同的多个发布名折成 recording_canonical（组内字典序最小 uid）；splits_v2 的 A0/A2 按 canonical 判互斥",
+   "limit": null,
+   "checks_vs_design": {
+    "classes": {
+     "expected": 219,
+     "got": 219,
+     "ok": true
+    },
+    "recordings": {
+     "expected": 4956,
+     "got": 4956,
+     "ok": true
+    },
+    "slices": {
+     "expected": 43054,
+     "got": 43054,
+     "ok": true
+    },
+    "audio_hours": {
+     "expected": 32.63,
+     "got": 32.63,
+     "ok": true
+    }
+   },
+   "csv": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\CTIS.csv",
+   "csv_rows": 43054,
+   "spotcheck": {
+    "path": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\CTIS_spotcheck.csv",
+    "n": 100
+   }
+  },
+  "music_genre": {
+   "library": "music_genre",
+   "mel_root": "music_genre/data/eval/mel",
+   "classes": 16,
+   "recordings_in_manifest": 1713,
+   "slices": 36375,
+   "K": 21.23,
+   "audio_hours": 0.0,
+   "audio_note": "盘面无音频，仅 eval 特征；录音时长取自文件名中段（秒）",
+   "duration_from_filename_h": 117.73,
+   "bad_filenames": [],
+   "bad_filename_count": 0,
+   "uid_parse_rate": 1.0,
+   "per_class": {
+    "10_soul or r&b": {
+     "recordings": 205,
+     "slices": 3978,
+     "K": 19.4,
+     "audio_hours": 12.9
+    },
+    "12_Pop Vocal Ballad": {
+     "recordings": 101,
+     "slices": 1612,
+     "K": 15.96,
+     "audio_hours": 5.25
+    },
+    "13_Adult Contemporary": {
+     "recordings": 100,
+     "slices": 2067,
+     "K": 20.67,
+     "audio_hours": 6.69
+    },
+    "14_Teen Pop": {
+     "recordings": 100,
+     "slices": 1993,
+     "K": 19.93,
+     "audio_hours": 6.44
+    },
+    "15_contemporary dance pop": {
+     "recordings": 100,
+     "slices": 1794,
+     "K": 17.94,
+     "audio_hours": 5.81
+    },
+    "16_dance pop": {
+     "recordings": 100,
+     "slices": 2634,
+     "K": 26.34,
+     "audio_hours": 8.49
+    },
+    "17_classic indie pop": {
+     "recordings": 101,
+     "slices": 1763,
+     "K": 17.46,
+     "audio_hours": 5.73
+    },
+    "18_chamber,cabaret & art pop": {
+     "recordings": 100,
+     "slices": 2057,
+     "K": 20.57,
+     "audio_hours": 6.66
+    },
+    "19_Adult Alternative Rock": {
+     "recordings": 101,
+     "slices": 2014,
+     "K": 19.94,
+     "audio_hours": 6.53
+    },
+    "20_Uplifting Anthemic Rock": {
+     "recordings": 100,
+     "slices": 1259,
+     "K": 12.59,
+     "audio_hours": 4.16
+    },
+    "21_Soft Rock": {
+     "recordings": 100,
+     "slices": 1806,
+     "K": 18.06,
+     "audio_hours": 5.88
+    },
+    "22_Acoustic Pop": {
+     "recordings": 100,
+     "slices": 1795,
+     "K": 17.95,
+     "audio_hours": 5.83
+    },
+    "3_symphony": {
+     "recordings": 101,
+     "slices": 3772,
+     "K": 37.35,
+     "audio_hours": 12.09
+    },
+    "4_opera": {
+     "recordings": 101,
+     "slices": 1433,
+     "K": 14.19,
+     "audio_hours": 4.7
+    },
+    "5_solo": {
+     "recordings": 103,
+     "slices": 2785,
+     "K": 27.04,
+     "audio_hours": 8.97
+    },
+    "6_chamber": {
+     "recordings": 100,
+     "slices": 3613,
+     "K": 36.13,
+     "audio_hours": 11.59
+    }
+   },
+   "domain": "real",
+   "domain_basis": "MTG-Jamendo 真实曲目录音（上游官方描述；本地仅有特征、无音频与元数据可复核）",
+   "song_id_rule": "song_id = recording_uid：一轨即一作品，作品层与录音层同一标识",
+   "identity_level": "work",
+   "uid_rule": "mel 文件名 <轨道序号>_<时长秒>_<切片列位置> → uid = <叶子类>/<轨道序号>_<时长秒>",
+   "audio_hash_done": false,
+   "dedup_rule": "盘面无音频，无法做音频级去重；recording_canonical = recording_uid",
+   "limit": null,
+   "checks_vs_design": {
+    "classes": {
+     "expected": 16,
+     "got": 16,
+     "ok": true
+    },
+    "recordings": {
+     "expected": 1713,
+     "got": 1713,
+     "ok": true
+    },
+    "slices": {
+     "expected": 36375,
+     "got": 36375,
+     "ok": true
+    }
+   },
+   "csv": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\music_genre.csv",
+   "csv_rows": 36375,
+   "spotcheck": {
+    "path": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\music_genre_spotcheck.csv",
+    "n": 100
+   }
+  },
+  "pianos": {
+   "library": "pianos",
+   "classes": 8,
+   "recordings_in_manifest": 668,
+   "slices": 18352,
+   "K": 27.47,
+   "audio_hours": 0.9,
+   "per_class": {
+    "Hsinghai": {
+     "recordings": 88,
+     "slices": 2262,
+     "K": 25.7,
+     "audio_hours": 0.11
+    },
+    "Kawai": {
+     "recordings": 88,
+     "slices": 1542,
+     "K": 17.52,
+     "audio_hours": 0.08
+    },
+    "Kawai-G": {
+     "recordings": 88,
+     "slices": 2250,
+     "K": 25.57,
+     "audio_hours": 0.11
+    },
+    "PearlRiver": {
+     "recordings": 88,
+     "slices": 771,
+     "K": 8.76,
+     "audio_hours": 0.04
+    },
+    "Steinway": {
+     "recordings": 52,
+     "slices": 1566,
+     "K": 30.12,
+     "audio_hours": 0.08
+    },
+    "Steinway-T": {
+     "recordings": 88,
+     "slices": 3900,
+     "K": 44.32,
+     "audio_hours": 0.19
+    },
+    "Yamaha": {
+     "recordings": 88,
+     "slices": 2235,
+     "K": 25.4,
+     "audio_hours": 0.11
+    },
+    "YoungChang": {
+     "recordings": 88,
+     "slices": 3826,
+     "K": 43.48,
+     "audio_hours": 0.19
+    }
+   },
+   "bad_filenames": [],
+   "bad_filename_count": 0,
+   "uid_parse_rate": 1.0,
+   "uid_rule": "<品牌>/<录音号>_<时长秒>",
+   "identity_level": "performance",
+   "domain": "real",
+   "audio_hash_done": false,
+   "dedup_rule": "盘面音频无可靠命名映射，未做音频级去重；recording_canonical = recording_uid",
+   "limit": null,
+   "checks_vs_design": {
+    "classes": {
+     "expected": 8,
+     "got": 8,
+     "ok": true
+    },
+    "recordings": {
+     "expected": 668,
+     "got": 668,
+     "ok": true
+    },
+    "slices": {
+     "expected": 18352,
+     "got": 18352,
+     "ok": true
+    }
+   },
+   "csv": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\pianos.csv",
+   "csv_rows": 18352,
+   "spotcheck": {
+    "path": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\pianos_spotcheck.csv",
+    "n": 100
+   }
+  },
+  "CNPM": {
+   "library": "CNPM",
+   "classes": 5,
+   "recordings_in_manifest": 287,
+   "slices": 2724,
+   "K": 9.49,
+   "audio_hours": 0.0,
+   "per_class": {
+    "pattern_0": {
+     "recordings": 82,
+     "slices": 914,
+     "K": 11.15,
+     "audio_hours": 0.0
+    },
+    "pattern_1": {
+     "recordings": 45,
+     "slices": 260,
+     "K": 5.78,
+     "audio_hours": 0.0
+    },
+    "pattern_2": {
+     "recordings": 49,
+     "slices": 231,
+     "K": 4.71,
+     "audio_hours": 0.0
+    },
+    "pattern_3": {
+     "recordings": 52,
+     "slices": 605,
+     "K": 11.63,
+     "audio_hours": 0.0
+    },
+    "pattern_4": {
+     "recordings": 59,
+     "slices": 714,
+     "K": 12.1,
+     "audio_hours": 0.0
+    }
+   },
+   "bad_filenames": [],
+   "bad_filename_count": 0,
+   "uid_parse_rate": 1.0,
+   "uid_rule": "mel 文件名去 `_<片位>`（含扩展名）",
+   "identity_level": "performance",
+   "domain": "real",
+   "audio_hash_done": false,
+   "dedup_rule": "盘面音频无可靠命名映射，未做音频级去重；recording_canonical = recording_uid",
+   "limit": null,
+   "label_source": "CNPM/data/label.csv（GBK，列「样式/Pattern」5 类）",
+   "csv_join": {
+    "csv_rows": 287,
+    "mel_recs": 287,
+    "mel_not_in_csv": 0
+   },
+   "checks_vs_design": {
+    "classes": {
+     "expected": 5,
+     "got": 5,
+     "ok": true
+    },
+    "recordings": {
+     "expected": 287,
+     "got": 287,
+     "ok": true
+    },
+    "slices": {
+     "expected": 2724,
+     "got": 2724,
+     "ok": true
+    }
+   },
+   "csv": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\CNPM.csv",
+   "csv_rows": 2724,
+   "spotcheck": {
+    "path": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\CNPM_spotcheck.csv",
+    "n": 100
+   }
+  },
+  "bel_canto": {
+   "library": "bel_canto",
+   "classes": 4,
+   "recordings_in_manifest": 203,
+   "slices": 9910,
+   "K": 48.82,
+   "audio_hours": 0.0,
+   "per_class": {
+    "f_bel": {
+     "recordings": 36,
+     "slices": 2333,
+     "K": 64.81,
+     "audio_hours": 0.0
+    },
+    "f_folk": {
+     "recordings": 93,
+     "slices": 4101,
+     "K": 44.1,
+     "audio_hours": 0.0
+    },
+    "m_bel": {
+     "recordings": 32,
+     "slices": 1531,
+     "K": 47.84,
+     "audio_hours": 0.0
+    },
+    "m_folk": {
+     "recordings": 42,
+     "slices": 1945,
+     "K": 46.31,
+     "audio_hours": 0.0
+    }
+   },
+   "bad_filenames": [],
+   "bad_filename_count": 0,
+   "uid_parse_rate": 1.0,
+   "uid_rule": "<类别>/<录音号>",
+   "identity_level": "performance",
+   "domain": "real",
+   "audio_hash_done": false,
+   "dedup_rule": "盘面音频无可靠命名映射，未做音频级去重；recording_canonical = recording_uid",
+   "limit": null,
+   "checks_vs_design": {
+    "classes": {
+     "expected": 4,
+     "got": 4,
+     "ok": true
+    },
+    "recordings": {
+     "expected": 203,
+     "got": 203,
+     "ok": true
+    },
+    "slices": {
+     "expected": 9910,
+     "got": 9910,
+     "ok": true
+    }
+   },
+   "csv": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\bel_canto.csv",
+   "csv_rows": 9910,
+   "spotcheck": {
+    "path": "D:\\VSCode\\科研任务\\音乐情感研究\\data\\manifest\\bel_canto_spotcheck.csv",
+    "n": 100
+   }
+  }
+ }
+}

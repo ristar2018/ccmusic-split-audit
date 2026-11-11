@@ -1,0 +1,53 @@
+{
+ "disk": 4956,
+ "rows": 4942,
+ "unparsed": 14,
+ "n_inst": 212,
+ "n_labels": 329,
+ "cellcount_median": 2.0,
+ "cellcount_mean": 3.63,
+ "EX6_mc2_mi2": {
+  "classes": 63,
+  "rec": 1533,
+  "cells": 619,
+  "med": 6,
+  "min": 4,
+  "test_rec": 821,
+  "test_med": 4,
+  "test_min": 0,
+  "test_short": 3
+ },
+ "EX6_mc2_mi3": {
+  "classes": 32,
+  "rec": 1364,
+  "cells": 557,
+  "med": 10.0,
+  "min": 6,
+  "test_rec": 724,
+  "test_med": 6.0,
+  "test_min": 2,
+  "test_short": 0
+ },
+ "EX7_mc2_mi2": {
+  "classes": 62,
+  "rec": 1345,
+  "cells": 584,
+  "med": 6.0,
+  "min": 4,
+  "test_rec": 743,
+  "test_med": 4.0,
+  "test_min": 0,
+  "test_short": 3
+ },
+ "EX7_mc2_mi3": {
+  "classes": 31,
+  "rec": 1176,
+  "cells": 522,
+  "med": 10,
+  "min": 6,
+  "test_rec": 646,
+  "test_med": 6,
+  "test_min": 2,
+  "test_short": 0
+ }
+}

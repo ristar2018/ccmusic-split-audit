@@ -1,0 +1,256 @@
+{
+ "min_score": 0.92,
+ "n_wanted": 33,
+ "n_ok": 17,
+ "entries": [
+  {
+   "title": "CCMusic: An Open and Diverse Database for Chinese Music Information Retrieval Research",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.5334/tismir.194",
+   "got": "CCMusic: An Open and Diverse Database for Chinese Music Information Retrieval Research",
+   "year": 2025,
+   "container": "Transactions of the International Society for Music Information Retrieval"
+  },
+  {
+   "title": "Leakage and the reproducibility crisis in machine-learning-based science",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1016/j.patter.2023.100804",
+   "got": "Leakage and the reproducibility crisis in machine-learning-based science",
+   "year": 2023,
+   "container": "Patterns"
+  },
+  {
+   "title": "Leakage in data mining: Formulation, detection, and avoidance",
+   "status": "rejected",
+   "score": 0.58,
+   "got": "Leakage in data mining"
+  },
+  {
+   "title": "A Dataset and Taxonomy for Urban Sound Research",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1145/2647868.2655045",
+   "got": "A Dataset and Taxonomy for Urban Sound Research",
+   "year": 2014,
+   "container": "Proceedings of the 22nd ACM international conference on Multimedia"
+  },
+  {
+   "title": "An analysis of the GTZAN music genre dataset",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1145/2390848.2390851",
+   "got": "An analysis of the GTZAN music genre dataset",
+   "year": 2012,
+   "container": "Proceedings of the second international ACM workshop on Music information retrieval with user-centered and multimodal strategies"
+  },
+  {
+   "title": "Data leakage in deep learning studies of translational EEG",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1101/2024.01.16.24301366",
+   "got": "Data leakage in deep learning studies of translational EEG",
+   "year": 2024,
+   "container": ""
+  },
+  {
+   "title": "A Critical Study on Data Leakage in Recommender System Offline Evaluation",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1145/3569930",
+   "got": "A Critical Study on Data Leakage in Recommender System Offline Evaluation",
+   "year": 2023,
+   "container": "ACM Transactions on Information Systems"
+  },
+  {
+   "title": "GiantMIDI-Piano: A large-scale MIDI dataset for classical piano music",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.5334/tismir.80",
+   "got": "GiantMIDI-Piano: A Large-Scale MIDI Dataset for Classical Piano Music",
+   "year": 2022,
+   "container": "Transactions of the International Society for Music Information Retrieval"
+  },
+  {
+   "title": "FMA: A Dataset for Music Analysis",
+   "status": "rejected",
+   "score": 0.427,
+   "got": "Supplemental Information 6: Sensitivity analysis of FMA-UE"
+  },
+  {
+   "title": "The Million Song Dataset",
+   "status": "rejected",
+   "score": 0.858,
+   "got": "The million song dataset challenge"
+  },
+  {
+   "title": "The MTG-Jamendo dataset for automatic music tagging",
+   "status": "rejected",
+   "score": 0.529,
+   "got": "Automatic music tagging via PARAFAC2"
+  },
+  {
+   "title": "Unsupervised Domain Adaptation by Backpropagation",
+   "status": "rejected",
+   "score": 0.784,
+   "got": "Unsupervised domain adaptation for LiDAR segmentation"
+  },
+  {
+   "title": "Domain-Adversarial Training of Neural Networks",
+   "status": "rejected",
+   "score": 0.73,
+   "got": "Domain-Adversarial Training of Neural Networks for Enhancing Nirs Model Transfer"
+  },
+  {
+   "title": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+   "status": "rejected",
+   "score": 0.714,
+   "got": "Evaluation Protocol of Early Classifiers over Multiple Data Sets"
+  },
+  {
+   "title": "Audio Set: An ontology and human-labeled dataset for audio events",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/icassp.2017.7952261",
+   "got": "Audio Set: An ontology and human-labeled dataset for audio events",
+   "year": 2017,
+   "container": "2017 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"
+  },
+  {
+   "title": "ESC: Dataset for Environmental Sound Classification",
+   "status": "rejected",
+   "score": 0.787,
+   "got": "Adv-ESC: Adversarial attack datasets for an environmental sound classification"
+  },
+  {
+   "title": "Datasheets for datasets",
+   "status": "rejected",
+   "score": 0.767,
+   "got": "Datasheets for Earth Science Datasets"
+  },
+  {
+   "title": "Do ImageNet Classifiers Generalize to ImageNet?",
+   "status": "rejected",
+   "score": 0.534,
+   "got": "Image Classification using ImageNet Classifiers in Environments with Limited Data"
+  },
+  {
+   "title": "MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training",
+   "status": "rejected",
+   "score": 0.659,
+   "got": "Let Network Decide What to Learn: Symbolic Music Understanding Model Based on Large-scale Adversarial Pre-training"
+  },
+  {
+   "title": "Natural Language Supervision for General-Purpose Audio Representations",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/icassp48485.2024.10448504",
+   "got": "Natural Language Supervision For General-Purpose Audio Representations",
+   "year": 2024,
+   "container": "ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"
+  },
+  {
+   "title": "Transfer learning for music classification and regression tasks",
+   "status": "rejected",
+   "score": 0.905,
+   "got": "Transfer Learning for Music Classification and Regression Tasks Using Artist Tags"
+  },
+  {
+   "title": "Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms",
+   "status": "rejected",
+   "score": 0.803,
+   "got": "Sample-Level CNN Architectures for Music Auto-Tagging Using Raw Waveforms"
+  },
+  {
+   "title": "Evaluation of CNN-based Automatic Music Tagging Models",
+   "status": "rejected",
+   "score": 0.533,
+   "got": "Automatic music tagging via PARAFAC2"
+  },
+  {
+   "title": "Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders",
+   "status": "rejected",
+   "score": 0.549,
+   "got": "Unsupervised Speech Representation Learning Using WaveNet Autoencoders"
+  },
+  {
+   "title": "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1371/journal.pone.0118432",
+   "got": "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets",
+   "year": 2015,
+   "container": "PLOS ONE"
+  },
+  {
+   "title": "A Simple Method to Determine if a Music Information Retrieval System is a Horse",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/tmm.2014.2330697",
+   "got": "A Simple Method to Determine if a Music Information Retrieval System is a “Horse”",
+   "year": 2014,
+   "container": "IEEE Transactions on Multimedia"
+  },
+  {
+   "title": "CNN Architectures for Large-Scale Audio Classification",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/icassp.2017.7952132",
+   "got": "CNN architectures for large-scale audio classification",
+   "year": 2017,
+   "container": "2017 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"
+  },
+  {
+   "title": "PANNs: Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/taslp.2020.3030497",
+   "got": "PANNs: Large-Scale Pretrained Audio Neural Networks for Audio Pattern Recognition",
+   "year": 2020,
+   "container": "IEEE/ACM Transactions on Audio, Speech, and Language Processing"
+  },
+  {
+   "title": "Automatic Tagging Using Deep Convolutional Neural Networks",
+   "status": "ok",
+   "score": 0.928,
+   "doi": "10.1117/12.2304643",
+   "got": "Automatic target recognition using deep convolutional neural networks",
+   "year": 2018,
+   "container": "Automatic Target Recognition XXVIII"
+  },
+  {
+   "title": "Deep Convolutional Neural Networks and Data Augmentation for Environmental Sound Classification",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1109/lsp.2017.2657381",
+   "got": "Deep Convolutional Neural Networks and Data Augmentation for Environmental Sound Classification",
+   "year": 2017,
+   "container": "IEEE Signal Processing Letters"
+  },
+  {
+   "title": "Improving Reproducibility in Machine Learning Research",
+   "status": "rejected",
+   "score": 0.775,
+   "got": "Improving Reproducibility in Machine Learning: Overview, Barriers, and Drivers"
+  },
+  {
+   "title": "Music Information Retrieval: Recent Developments and Applications",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1561/9781601988331",
+   "got": "Music Information Retrieval: Recent Developments and Applications",
+   "year": 2014,
+   "container": ""
+  },
+  {
+   "title": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights",
+   "status": "ok",
+   "score": 1.03,
+   "doi": "10.1007/978-3-642-11674-2_5",
+   "got": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights",
+   "year": 2010,
+   "container": "Studies in Computational Intelligence"
+  }
+ ]
+}

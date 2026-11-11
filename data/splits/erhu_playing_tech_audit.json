@@ -1,0 +1,24 @@
+{
+ "slices": 1253,
+ "sources": 1253,
+ "slices_per_source": 1.0,
+ "classes": 11,
+ "source_slice_hist": {
+  "1": 1253
+ },
+ "mode": "simulated_random",
+ "seeds": 20,
+ "leak_rate_mean": 0.0,
+ "leak_rate_min": 0.0,
+ "leak_rate_max": 0.0,
+ "theoretical": 0.0,
+ "split_sizes": {
+  "train": 1002,
+  "validation": 125,
+  "test": 126
+ },
+ "n_eff": 1253,
+ "effective_reduction": 1.0,
+ "note": "leak_rate=测试切片中同源切片也出现在训练集的比例；n_eff=独立源数量",
+ "dataset": "erhu_playing_tech"
+}

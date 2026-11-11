@@ -1,0 +1,204 @@
+{
+  "group": "bel_canto_A1_alexnet",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "sealed_at": "2026-11-05 17:40:32",
+  "runs": {
+    "seed0": {
+      "config": {
+        "lib": "bel_canto",
+        "arm": "A1",
+        "bb": "alexnet",
+        "seed": 0,
+        "epochs": 10,
+        "batch": 64,
+        "lr": 0.0003,
+        "wd": 0.05,
+        "warmup_epochs": 1,
+        "label_smoothing": 0.1,
+        "amp": true,
+        "limit": 0,
+        "tag": "e1b",
+        "n_train": 5928,
+        "n_val": 1487,
+        "n_classes": 4,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "size": 224,
+        "normalize": "imagenet",
+        "augment": "none"
+      },
+      "val_best": {
+        "macro_f1_slice": 0.7205,
+        "epoch": 9,
+        "macro_f1_recording": 0.777
+      },
+      "qtest": {
+        "macro_f1_slice": 0.9059,
+        "acc": 0.9162,
+        "n": 979,
+        "macro_f1_recording": 1.0,
+        "n_recordings": 40,
+        "confusion": [
+          [
+            205,
+            21,
+            0,
+            0
+          ],
+          [
+            24,
+            399,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            126,
+            19
+          ],
+          [
+            0,
+            2,
+            16,
+            167
+          ]
+        ]
+      }
+    },
+    "seed1": {
+      "config": {
+        "lib": "bel_canto",
+        "arm": "A1",
+        "bb": "alexnet",
+        "seed": 1,
+        "epochs": 10,
+        "batch": 64,
+        "lr": 0.0003,
+        "wd": 0.05,
+        "warmup_epochs": 1,
+        "label_smoothing": 0.1,
+        "amp": true,
+        "limit": 0,
+        "tag": "e1b",
+        "n_train": 5928,
+        "n_val": 1487,
+        "n_classes": 4,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "size": 224,
+        "normalize": "imagenet",
+        "augment": "none"
+      },
+      "val_best": {
+        "macro_f1_slice": 0.723,
+        "epoch": 6,
+        "macro_f1_recording": 0.75
+      },
+      "qtest": {
+        "macro_f1_slice": 0.9087,
+        "acc": 0.9183,
+        "n": 979,
+        "macro_f1_recording": 1.0,
+        "n_recordings": 40,
+        "confusion": [
+          [
+            212,
+            14,
+            0,
+            0
+          ],
+          [
+            29,
+            392,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            127,
+            18
+          ],
+          [
+            0,
+            1,
+            16,
+            168
+          ]
+        ]
+      }
+    },
+    "seed2": {
+      "config": {
+        "lib": "bel_canto",
+        "arm": "A1",
+        "bb": "alexnet",
+        "seed": 2,
+        "epochs": 10,
+        "batch": 64,
+        "lr": 0.0003,
+        "wd": 0.05,
+        "warmup_epochs": 1,
+        "label_smoothing": 0.1,
+        "amp": true,
+        "limit": 0,
+        "tag": "e1b",
+        "n_train": 5928,
+        "n_val": 1487,
+        "n_classes": 4,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "size": 224,
+        "normalize": "imagenet",
+        "augment": "none"
+      },
+      "val_best": {
+        "macro_f1_slice": 0.7155,
+        "epoch": 6,
+        "macro_f1_recording": 0.75
+      },
+      "qtest": {
+        "macro_f1_slice": 0.8982,
+        "acc": 0.9132,
+        "n": 979,
+        "macro_f1_recording": 0.9271,
+        "n_recordings": 40,
+        "confusion": [
+          [
+            209,
+            17,
+            0,
+            0
+          ],
+          [
+            24,
+            398,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            117,
+            28
+          ],
+          [
+            0,
+            1,
+            14,
+            170
+          ]
+        ]
+      }
+    }
+  },
+  "seed_spread_qtest_slice": 0.0105
+}

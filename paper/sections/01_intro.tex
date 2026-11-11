@@ -1,0 +1,91 @@
+\section{Introduction}\label{sec:intro}
+
+A benchmark number is only as informative as the split that produced it. When a dataset is
+released as pre-computed spectrogram images, one image corresponds to a short window of one
+recording, and a model trained on images from a recording has already seen the acoustics of
+that recording: instrument timbre, room, performer, and microphone. A split over images can
+therefore test within-recording recognition rather than generalisation to unseen recordings.
+This is a case of non-independence between training and test, one category in the leakage
+taxonomy of Kapoor and Narayanan~\cite{kapoor2023leakage}. The magnitude is an empirical
+question; our paired audit measures it without changing the backbone.
+
+Music information retrieval, or MIR, has dealt with this problem for a long time. The standard
+practice for urban sound, instrument, and genre corpora is to split by recording, and to state
+the split unit explicitly; Salamon et al.~\cite{salamon2014urbansound} fixed a recording-level split for
+UrbanSound8K in 2014, keeping slices of one recording within one fold so that evaluation is
+recording-disjoint and comparable across papers. Yet datasets
+that distribute features instead of audio make the split unit easy to lose, and multi-library
+benchmarks, which pool heterogeneous sources under one evaluation protocol, make the loss hard
+to notice: each library carries its own release format, its own file naming, and its own notion
+of what one ``item'' is.
+
+This paper audits one such framework. CCMusic \citep{zhou2025ccmusic} is a recent Chinese-music
+resource whose associated article documents six datasets and evaluates all six under one
+framework; the public release carries thirteen libraries under one publishing organisation, of
+which those six are a subset. It distributes chroma, CQT and MEL features as pre-computed
+images, and its evaluation framework states a split ratio for each collection --- 8:1:1 for
+CTIS after 2-second segmentation, a recording-level 79:10:10 for Guzheng Tech99, 6:2:2 for
+ErhuPT --- naming the split unit only in the recording-level case. We examine a
+slice-level interpretation supported by the released format: MEL images are named by recording
+and window index, and a naive 8:1:1 split over image filenames places windows of the same
+recording on both sides. The released archives make this reconstruction possible, but do not
+establish the split actually used by the original authors.
+
+Our contribution is a measurement, not a discovery of a new phenomenon. The framework's own
+documentation leaves three quantities unstated, and we estimate each of them. The first is the
+size of the A1$-$A0 contrast under equal-volume replacement with matched training-pool
+recording counts, while acknowledging that A1 introduces additional pool recordings. The second is whether a recording-level split is feasible for these libraries at their
+stated class counts, given that splitting by recording consumes recordings that would otherwise
+train the model. The third is whether the pipeline yields small contrasts in near-single-slice controls,
+where homologous exposure is absent or very limited by construction.
+
+To answer them we rebuilt the five libraries that release MEL slices --- 110{,}415 released
+images from 7{,}827 recordings across 252 classes, of which 109{,}831 images from 7{,}756
+recordings across 234 classes survive a minimum-recording rule --- under a recording-level
+three-way split, and trained two standard backbones, AlexNet and Swin-T, under three main arms.
+A CTIS-only fourth arm, C1, was added to check equal-volume non-test injection. The control arm, A0, samples a fixed number of
+slices per class from the training recordings and never touches a test recording. The exposure
+arm, A1, injects the entire held-out Q pool by equal replacement. Many pool slices come from
+recordings also represented in the test set, but not all do; realised overlap is reported in
+Supplementary Material S1. The number of training slices is held fixed and the
+number of training recordings drawn from the training pool is matched. A1 differs from A0 in
+whose content reaches training and in the additional pool recordings, whose counts are reported
+per class; the contrast is therefore consistent with an advantage associated with
+within-recording exposure, but it does not isolate one. A2 provides an illustrative self-test
+score under our reconstruction of a slice-level split over the pooled corpus; it is neither a
+reproduction of the original authors' unknown split files nor the original benchmark score.
+
+Three results organise the paper. Conditional on the fixed split and the trained seeds, the
+exposure arm gains $+2.02$ points of macro-F1 in the primary library identified in the internal
+plan under AlexNet, with a 95\% CI of $+0.83$ to $+3.35$, and $+1.70$ under
+Swin-T with CI $+1.28$ to $+2.84$. Both intervals exclude zero. The Swin-T interval
+lies wholly below the three-point smallest effect of interest specified in the internal plan;
+the AlexNet interval includes three points, so that magnitude is not excluded. A CTIS-only
+control arm that supplies the same volume of training slices from non-test content, C1, moves
+the point estimate by $+0.05$ and $+0.62$ points only; measured against C1, the exposure arm
+still gains $+1.96$ points $[+0.74,+2.99]$ under AlexNet and $+1.07$ $[+0.23,+1.96]$ under
+Swin-T, so the difference is smaller than the A0 contrast but is not an artefact of noise. In four other libraries
+the same manipulation moves macro-F1 by $+8.4$ to $+28.7$ points. In the three negative-control
+libraries --- near-single-slice collections --- five of six contrasts include zero. The sixth,
+chest falsetto under Swin-T, is $-2.53$ $[-5.00,-0.21]$; its three seed-specific deltas are
+$+5.57$, $-2.62$ and $-10.54$ points, so the sign is not stable across seeds. With six
+contrasts and no correction for multiplicity, these controls check the pipeline, not the
+mechanism in isolation, and they do not establish equivalence.
+
+We are careful about what these numbers license. They do not show that CCMusic is
+irreproducible, nor that its authors made an error that invalidates published results: the
+audited article is a database paper, and its evaluation framework is one section of it. They do
+show a small positive equal-replacement contrast in CTIS and larger contrasts in four additional
+libraries, conditional on our fixed reconstruction and training recipe. They also give the
+arithmetic needed to judge whether a recording-disjoint split is feasible at the stated
+per-class requirements, rather than treating feature images as independent examples.
+
+The remainder of the paper is organised as follows. Section~\ref{sec:related} positions the
+audit against leakage taxonomy, audio-dataset practice, and dataset audits in adjacent fields.
+Section~\ref{sec:framework} states what the audited framework says and what its released files
+imply. Section~\ref{sec:materials} describes the five libraries, the manifest, and the
+capacity calculation. Section~\ref{sec:protocol} defines the arms, the sealing protocol, and
+the statistical plan. Section~\ref{sec:results} reports the main effect, the random-split arm,
+the negative controls, and a cross-instrument experiment on one library.
+Section~\ref{sec:discussion} discusses what the size of the effect depends on and what a
+reporting standard should require. Section~\ref{sec:conclusion} concludes.

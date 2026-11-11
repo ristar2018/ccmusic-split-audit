@@ -1,0 +1,122 @@
+{
+ "manifest": "data/manifest/CTIS.csv",
+ "manifest_rows": 43054,
+ "classes_source": 219,
+ "dropped_min5": 13,
+ "dropped_placeholder_push": 5,
+ "classes_kept": 201,
+ "placeholder_recordings_total": 5,
+ "placeholder_classes": [
+  "D0051",
+  "D0058",
+  "D0060",
+  "D0061",
+  "D0062"
+ ],
+ "dropped_min5_detail": [
+  {
+   "label": "C0183",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "C0200",
+   "n_rec_source": 2,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "C0201",
+   "n_rec_source": 1,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "C0257",
+   "n_rec_source": 3,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0049",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0050",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0103",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0104",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0246",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0279",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0284",
+   "n_rec_source": 2,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0287",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  },
+  {
+   "label": "D0299",
+   "n_rec_source": 4,
+   "n_placeholder_rec": 0
+  }
+ ],
+ "dropped_placeholder_detail": [
+  {
+   "label": "D0051",
+   "n_rec_source": 5,
+   "n_placeholder_rec": 1,
+   "n_rec_after": 4,
+   "uids": "D0051/D0051A2-1a 没音频"
+  },
+  {
+   "label": "D0058",
+   "n_rec_source": 5,
+   "n_placeholder_rec": 1,
+   "n_rec_after": 4,
+   "uids": "D0058/D0058A2-1a 没音频"
+  },
+  {
+   "label": "D0060",
+   "n_rec_source": 5,
+   "n_placeholder_rec": 1,
+   "n_rec_after": 4,
+   "uids": "D0060/D0060A2-1a 没音频"
+  },
+  {
+   "label": "D0061",
+   "n_rec_source": 5,
+   "n_placeholder_rec": 1,
+   "n_rec_after": 4,
+   "uids": "D0061/D0061A2-1a 没音频"
+  },
+  {
+   "label": "D0062",
+   "n_rec_source": 5,
+   "n_placeholder_rec": 1,
+   "n_rec_after": 4,
+   "uids": "D0062/D0062A2-1a 没音频"
+  }
+ ],
+ "check_219_minus_13": 206,
+ "check_206_minus_5": 201
+}

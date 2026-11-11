@@ -1,0 +1,36 @@
+{
+  "E1b": {
+    "label": "E1b A0/A1 五库×2骨干×3seed",
+    "runs": 20,
+    "gpu_h": 6.25,
+    "ok": 20,
+    "failed": 0,
+    "completed": 1
+  },
+  "E1c": {
+    "label": "E1c A2 五库×2骨干×3seed",
+    "runs": 10,
+    "gpu_h": 4.15,
+    "ok": 10,
+    "failed": 0,
+    "completed": 1
+  },
+  "E1f": {
+    "label": "E1f 负对照 3库×2骨干×{A0,A2}×seed0",
+    "runs": 10,
+    "gpu_h": 0.03,
+    "ok": 10,
+    "failed": 0,
+    "completed": 1
+  },
+  "P3": {
+    "label": "P3 三折×三臂×2骨干×2seed（训练墙钟，含折内评估前）",
+    "runs": 36,
+    "folds_done": 36,
+    "gpu_h": 2.46,
+    "expected_folds": 108
+  },
+  "design_estimate_gpu_h": 10.6,
+  "note": "E1b/E1c/E1f 的分钟数来自驱动日志（含每 run 的测试与封存）；P3 来自 fold 级 elapsed_s，不含探针与自助分析。两者都与设计稿的「10.6 GPU·h」不同口径：设计稿按 339–341 片/s 的吞吐估，实测吞吐更低（I/O + 小库的固定开销），故实跑机时更高——报告里应写实测值并说明口径。",
+  "total_measured_gpu_h": 12.89
+}

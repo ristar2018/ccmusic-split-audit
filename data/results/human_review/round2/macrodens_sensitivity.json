@@ -1,0 +1,260 @@
+{
+  "nc": 201,
+  "mask_classes_slice": 201,
+  "boot": 2000,
+  "boot_seed": 20261105,
+  "n_recordings": 963,
+  "n_slices": 4605,
+  "levels": {
+    "alexnet|A1-A0": {
+      "slice": {
+        "dynamic_keep": {
+          "point": 2.0169169981246626,
+          "ci_lo": 0.8328928310721648,
+          "ci_hi": 3.3450392524363326,
+          "width": 2.512146421364168,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "fixed_mask": {
+          "point": 2.0169169981246626,
+          "ci_lo": 0.7399494124082662,
+          "ci_hi": 3.1219102330620583,
+          "width": 2.3819608206537923,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.001,
+          "n_le0": 1,
+          "n_ge0": 1999
+        },
+        "width_diff_pp": -0.13018560071037566,
+        "point_diff_pp": 0.0,
+        "flip": false
+      },
+      "recording": {
+        "dynamic_keep": {
+          "point": 1.3660246335258013,
+          "ci_lo": 0.2617054601390481,
+          "ci_hi": 2.82793368930576,
+          "width": 2.5662282291667116,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.016,
+          "n_le0": 16,
+          "n_ge0": 1984
+        },
+        "fixed_mask": {
+          "point": 1.3660246335258013,
+          "ci_lo": 0.08796718200508397,
+          "ci_hi": 2.654621176114519,
+          "width": 2.5666539941094353,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.035,
+          "n_le0": 35,
+          "n_ge0": 1965
+        },
+        "width_diff_pp": 0.00042576494272372756,
+        "point_diff_pp": 0.0,
+        "flip": false
+      }
+    },
+    "alexnet|A1-C1": {
+      "slice": {
+        "dynamic_keep": {
+          "point": 1.963328627883043,
+          "ci_lo": 0.7391314998914156,
+          "ci_hi": 2.9912804286590613,
+          "width": 2.252148928767646,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "fixed_mask": {
+          "point": 1.963328627883043,
+          "ci_lo": 0.8650518363538553,
+          "ci_hi": 2.7014699399505497,
+          "width": 1.8364181035966944,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "width_diff_pp": -0.4157308251709515,
+        "point_diff_pp": 0.0,
+        "flip": false
+      },
+      "recording": {
+        "dynamic_keep": {
+          "point": 1.2258420492020194,
+          "ci_lo": 0.035184749565436366,
+          "ci_hi": 2.1269814389781443,
+          "width": 2.091796689412708,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.043,
+          "n_le0": 43,
+          "n_ge0": 1957
+        },
+        "fixed_mask": {
+          "point": 1.2258420492020194,
+          "ci_lo": 0.06552374097771216,
+          "ci_hi": 1.9823651788927523,
+          "width": 1.9168414379150402,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.033,
+          "n_le0": 33,
+          "n_ge0": 1967
+        },
+        "width_diff_pp": -0.17495525149766755,
+        "point_diff_pp": 0.0,
+        "flip": false
+      }
+    },
+    "swin_t|A1-A0": {
+      "slice": {
+        "dynamic_keep": {
+          "point": 1.6962722848036165,
+          "ci_lo": 1.2799183312705313,
+          "ci_hi": 2.843601600467006,
+          "width": 1.5636832691964746,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "fixed_mask": {
+          "point": 1.6962722848036165,
+          "ci_lo": 0.9200117811364504,
+          "ci_hi": 2.367289389332577,
+          "width": 1.4472776081961265,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "width_diff_pp": -0.1164056610003481,
+        "point_diff_pp": 0.0,
+        "flip": false
+      },
+      "recording": {
+        "dynamic_keep": {
+          "point": 1.6094328943931997,
+          "ci_lo": 0.8651426559117906,
+          "ci_hi": 2.5980176369368264,
+          "width": 1.7328749810250357,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "fixed_mask": {
+          "point": 1.6094328943931997,
+          "ci_lo": 0.5901077038703456,
+          "ci_hi": 2.272175326813893,
+          "width": 1.6820676229435474,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.0005,
+          "n_le0": 0,
+          "n_ge0": 2000
+        },
+        "width_diff_pp": -0.050807358081488285,
+        "point_diff_pp": 0.0,
+        "flip": false
+      }
+    },
+    "swin_t|A1-C1": {
+      "slice": {
+        "dynamic_keep": {
+          "point": 1.0742014357649616,
+          "ci_lo": 0.2329928957421775,
+          "ci_hi": 1.9582015522339873,
+          "width": 1.7252086564918099,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.015,
+          "n_le0": 15,
+          "n_ge0": 1985
+        },
+        "fixed_mask": {
+          "point": 1.0742014357649616,
+          "ci_lo": 0.17901207469964533,
+          "ci_hi": 1.742654684550663,
+          "width": 1.5636426098510177,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.015,
+          "n_le0": 15,
+          "n_ge0": 1985
+        },
+        "width_diff_pp": -0.16156604664079222,
+        "point_diff_pp": 0.0,
+        "flip": false
+      },
+      "recording": {
+        "dynamic_keep": {
+          "point": 1.1686407049373921,
+          "ci_lo": 0.13028334273303524,
+          "ci_hi": 2.085320335207607,
+          "width": 1.9550369924745716,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.024,
+          "n_le0": 24,
+          "n_ge0": 1976
+        },
+        "fixed_mask": {
+          "point": 1.1686407049373921,
+          "ci_lo": 0.06931230613244947,
+          "ci_hi": 1.8674814121516388,
+          "width": 1.7981691060191893,
+          "excludes_zero": true,
+          "boot_p_legacy": 0.034,
+          "n_le0": 34,
+          "n_ge0": 1966
+        },
+        "width_diff_pp": -0.1568678864553823,
+        "point_diff_pp": 0.0,
+        "flip": false
+      }
+    }
+  },
+  "attribution": {
+    "alexnet": {
+      "published": [
+        2.02,
+        0.83,
+        3.35
+      ],
+      "dynamic_keep": [
+        2.0169,
+        0.8329,
+        3.345
+      ],
+      "fixed_mask": [
+        2.0169,
+        0.7399,
+        3.1219
+      ],
+      "matches_dynamic": true
+    },
+    "swin_t": {
+      "published": [
+        1.7,
+        1.28,
+        2.84
+      ],
+      "dynamic_keep": [
+        1.6963,
+        1.2799,
+        2.8436
+      ],
+      "fixed_mask": [
+        1.6963,
+        0.92,
+        2.3673
+      ],
+      "matches_dynamic": true
+    }
+  },
+  "mask_classes_recording": 201,
+  "max_abs_width_diff_pp": 0.4157308251709515,
+  "any_flip": false,
+  "elapsed_sec": 19.1
+}

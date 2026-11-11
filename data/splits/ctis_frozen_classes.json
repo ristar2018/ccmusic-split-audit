@@ -1,0 +1,194 @@
+[
+ {
+  "label": "演奏技巧",
+  "n": 368,
+  "cells": 52,
+  "insts": 52
+ },
+ {
+  "label": "打音",
+  "n": 181,
+  "cells": 62,
+  "insts": 62
+ },
+ {
+  "label": "滑音",
+  "n": 159,
+  "cells": 63,
+  "insts": 63
+ },
+ {
+  "label": "长音",
+  "n": 156,
+  "cells": 60,
+  "insts": 60
+ },
+ {
+  "label": "连音",
+  "n": 142,
+  "cells": 60,
+  "insts": 60
+ },
+ {
+  "label": "华彩",
+  "n": 124,
+  "cells": 54,
+  "insts": 54
+ },
+ {
+  "label": "颤弓",
+  "n": 82,
+  "cells": 33,
+  "insts": 33
+ },
+ {
+  "label": "颤音",
+  "n": 74,
+  "cells": 31,
+  "insts": 31
+ },
+ {
+  "label": "揉弦",
+  "n": 54,
+  "cells": 23,
+  "insts": 23
+ },
+ {
+  "label": "下滑音",
+  "n": 16,
+  "cells": 8,
+  "insts": 8
+ },
+ {
+  "label": "上滑音",
+  "n": 14,
+  "cells": 7,
+  "insts": 7
+ },
+ {
+  "label": "泛音",
+  "n": 14,
+  "cells": 7,
+  "insts": 7
+ },
+ {
+  "label": "滑揉",
+  "n": 14,
+  "cells": 4,
+  "insts": 4
+ },
+ {
+  "label": "轮指",
+  "n": 14,
+  "cells": 4,
+  "insts": 4
+ },
+ {
+  "label": "扫弦",
+  "n": 12,
+  "cells": 6,
+  "insts": 6
+ },
+ {
+  "label": "三吐",
+  "n": 10,
+  "cells": 5,
+  "insts": 5
+ },
+ {
+  "label": "单吐",
+  "n": 10,
+  "cells": 5,
+  "insts": 5
+ },
+ {
+  "label": "连打",
+  "n": 10,
+  "cells": 5,
+  "insts": 5
+ },
+ {
+  "label": "双吐",
+  "n": 8,
+  "cells": 4,
+  "insts": 4
+ },
+ {
+  "label": "抛弓",
+  "n": 8,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "滚奏",
+  "n": 8,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "垫弓",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "垫指滑音",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "大上滑音",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "大下滑音",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "弹挑",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "扫",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "摇指",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "琶音",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "自然泛音",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "花舌",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ },
+ {
+  "label": "长轮",
+  "n": 6,
+  "cells": 3,
+  "insts": 3
+ }
+]

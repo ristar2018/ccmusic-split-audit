@@ -1,0 +1,8 @@
+{
+ "family": "确认性族 = CTIS × {alexnet, swin_t} 的 A1−A0（只收 A1 臂）",
+ "alpha": 0.05,
+ "sesoi_pt": 3.0,
+ "boot": 2000,
+ "note": "boot_p 为录音簇自助的双侧百分位 p；Holm 逐项取 (m−i)·p 并单调化",
+ "tests": {}
+}

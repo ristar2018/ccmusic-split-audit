@@ -1,0 +1,123 @@
+\section{Discussion}\label{sec:discussion}
+
+\subsection{What the size of the effect depends on}
+
+The ten point estimates in Table~\ref{tab:main} differ across libraries and backbones. The
+library medians of exposure are similar, but class-level exposures and other properties vary.
+We did not fit an explanatory model or establish a variance decomposition, so we cannot determine
+which factors explain the observed spread.
+
+Headroom constrains the scale. A library whose control arm already reaches 0.95 cannot show a large
+absolute gain, whatever the split does; CTIS loses at most 4.6 points to Swin-T and 9.2 to
+AlexNet. In bel canto the recording-level control reaches the low 0.9s and the exposure arm
+saturates at 1.00 for most seeds, so its recording-level contrast is limited by a ceiling and its
+interval is wide for that reason as well as for the small panel of 40 test recordings.
+Rescaling by headroom, as Table~\ref{tab:headroom} does, reduces but does not remove
+the dispersion (0.219--0.873, still about four-fold): the normalised contrast is 22--37\% of the score headroom in CTIS, 38--48\% in
+CNPM, 47--68\% in bel canto, 49--68\% in music genre, and 83--87\% in pianos. Absolute points
+answer the question ``how much would the leaderboard move''; the rescaled number answers the
+question ``how large is the contrast relative to the baseline's remaining score headroom''.
+Because $1-\text{macro-F1}$ is not an error count, this is a descriptive normalised
+effect size, not a division of predictions into memorisation and transfer.
+
+The exposure ratio mainly reflects the chosen test share, half-pool allocation and training
+budget, giving approximately 0.167. The five library medians range from 0.160 to 0.170, while
+class-level values vary. These summaries alone cannot establish the role of exposure in the
+between-library differences; task difficulty, class structure and recording similarity may also
+matter, and our measurements do not isolate their contributions.
+
+\subsection{Interpreting the primary result}
+
+The internal plan identifies CTIS as the primary library because it is the largest and its class
+structure supports the main design. There is no independent public timestamp establishing when
+that choice was fixed. CTIS has the smallest observed absolute effects, with limited score
+headroom for both backbones. Conditional intervals exclude zero, but only the Swin-T interval is
+wholly below the study-specific three-point SESOI. These results distinguish statistical evidence
+from practical importance; they do not establish the timing of the internal choice.
+
+The four additional libraries show larger observed changes, from $+8.4$ to $+28.7$ points,
+compared with $+2.02$ (AlexNet) and $+1.70$ (Swin-T) in CTIS. The tasks and class structures
+differ, so these comparisons are descriptive.
+
+The C1 control sharpens what the primary contrast can and cannot mean. It supplies the same volume
+of training slices from non-test content, and the exposure arm still leads it by $+1.96$ points
+under AlexNet ($+0.74$ to $+2.99$) and $+1.07$ under Swin-T ($+0.23$ to $+1.96$), so the
+difference between the two arms is not explained by training volume. What survives is a contrast
+that also changes the provenance of the injected content and the diversity of its recordings, which
+the design does not separate: the A1--A0 difference is consistent with an advantage of
+within-recording exposure, and it does not isolate one.
+
+\subsection{What a reporting standard should require}
+
+Four reporting practices would make evaluation protocols easier to interpret.
+
+\emph{Name the split unit.} ``Randomly split 8:1:1'' is ambiguous only because the release format
+makes slices look atomic. A statement of the form ``split by recording, 8:1:1 over recordings,
+stratified by class'' identifies the intended unit; releasing the split assignments and grouping
+rules allows the implementation to be checked.
+
+\emph{Report the slice-per-recording distribution.} The distribution of $K$, not its mean alone,
+determines the exposure probabilities under a specified slice-level split; the mean ranges from 8.7 to 48.9 across these
+five libraries, so a single pooled statement about ``the dataset'' would be misleading even if
+the split unit were named.
+
+\emph{Report capacity when a stricter split is claimed.} If a paper says it splits by recording,
+the reader needs to know whether that was feasible at the stated class counts: $q_c$,
+$m_c$, and the resulting $\alpha_c$ document the constraints. CNPM and bel canto retain only
+54 and 40 test recordings, respectively, so inference at recording level is especially uncertain. Our feasibility table is released with the splits precisely so that this
+arithmetic can be checked rather than trusted.
+
+\emph{Preserve the evaluation record.} Evaluating the held-out panel after training without
+selecting on it limits selection bias, and stored predictions permit re-analysis. Our local
+staging and sealing records do not independently establish when choices were made.
+
+\subsection{Relation to prior audits}
+
+Our result is consistent with Sturm~\cite{sturm2012gtzan} in kind and different in object: Sturm found
+that a benchmark's content --- its labels and its duplicates --- did not support the conclusions drawn from it; we
+show how one reconstruction of an ambiguously described evaluation recipe can affect scores.
+The original realised split is unknown, so we cannot attribute an inflation to that implementation.
+The distinction matters for repair. Mislabelled audio has to be re-annotated; a
+slice-level split can be rebuilt from recording identifiers if class capacity permits it, as
+we demonstrate for the retained classes in these five libraries. Split construction itself is
+CPU work; training costs are itemised separately in Section~\ref{sec:results}.
+
+\subsection{Limitations and threats to validity}
+
+\emph{One feature family.} We audited MEL only. The framework also releases chroma and CQT, and
+the leakage mechanism is identical for them, but the magnitude need not be: chroma discards
+timbre and may carry less recording identity.
+
+\emph{What the contrast identifies.} A1 holds the training budget and the C-side recording
+count fixed, but it does add pool recordings, so its training set contains more distinct
+recordings than A0's. The contrast is therefore the effect of equal replacement under the
+corpus's own composition --- the rule a reader applying this protocol would follow --- and not a
+decomposition of memory into a content component and a diversity component. C1 addresses this
+partly: equal-volume non-test injection changes macro-F1 by $+0.05$ and $+0.62$ points compared
+with $+2.02$ and $+1.70$ for A1. C1 also changes recording diversity and uses R content; the
+C1--A1 difference therefore cannot isolate a pure memorisation component.
+
+\emph{Two backbones, three seeds.} The primary analysis uses AlexNet and Swin-T at seeds
+0--2. The primary intervals condition on these runs; the supplementary joint bootstrap exposes
+sensitivity to their dispersion, but three seeds cannot characterise the distribution of training
+outcomes. We claim neither upper nor lower bounds for other architectures or training recipes.
+
+\emph{One split realisation.} The recording-level split has a single seed. Capacity numbers are
+computed for that realisation, and per-class exposure is reported rather than tested, because
+the capacity table stores the mean of 400 random draws while a split realises one.
+
+\emph{Reconstruction of the audited protocol.} We could not retrieve the framework's own split
+files; the A2 arm reconstructs one slice-level interpretation of the stated 8:1:1 protocol and
+may differ from the authors' actual choice of split unit, seed and stratification. The A1$-$A0
+contrast does not depend on that reconstruction and is the primary contrast in the internal plan.
+
+\emph{Version of record.} We checked the published split description in TISMIR 8(1),
+pp. 22--38 (Section~\ref{sec:framework}). The original realised splits remain unavailable, so
+our contrasts cannot be attributed numerically to the original authors' models.
+
+\emph{External validity.} All five libraries are Chinese-music collections. Nothing in the
+mechanism is language-specific. In the single-slice controls recording- and slice-level units
+coincide by construction; the low-exposure control only approximates this condition. These
+sanity checks are consistent with, but do not by themselves establish, slice multiplicity as the
+operative explanation. The control libraries differ in task and classes, and one contrast excludes
+zero. We do not claim that the magnitudes transfer to other benchmark suites without measurement.

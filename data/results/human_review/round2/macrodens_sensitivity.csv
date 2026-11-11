@@ -1,0 +1,9 @@
+﻿library,bb,contrast,scheme,point,ci_lo,ci_hi,width,excludes_zero
+CTIS,alexnet,A1-A0,dynamic_keep,2.0169,0.8329,3.345,2.5121,True
+CTIS,alexnet,A1-A0,fixed_mask,2.0169,0.7399,3.1219,2.382,True
+CTIS,alexnet,A1-C1,dynamic_keep,1.9633,0.7391,2.9913,2.2521,True
+CTIS,alexnet,A1-C1,fixed_mask,1.9633,0.8651,2.7015,1.8364,True
+CTIS,swin_t,A1-A0,dynamic_keep,1.6963,1.2799,2.8436,1.5637,True
+CTIS,swin_t,A1-A0,fixed_mask,1.6963,0.92,2.3673,1.4473,True
+CTIS,swin_t,A1-C1,dynamic_keep,1.0742,0.233,1.9582,1.7252,True
+CTIS,swin_t,A1-C1,fixed_mask,1.0742,0.179,1.7427,1.5636,True

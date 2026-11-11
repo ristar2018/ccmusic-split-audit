@@ -1,0 +1,61 @@
+{
+  "figures": [
+    {
+      "figure": "fig1_split_units.pdf",
+      "page_pt": [
+        340.16,
+        311.81
+      ],
+      "page_mm": [
+        120.0,
+        110.0
+      ],
+      "words": 111,
+      "word_heights_pt": [
+        10.48,
+        10.49,
+        11.18
+      ],
+      "problems": []
+    },
+    {
+      "figure": "fig2_p3_decomposition.pdf",
+      "page_pt": [
+        340.16,
+        272.13
+      ],
+      "page_mm": [
+        120.0,
+        96.0
+      ],
+      "words": 32,
+      "word_heights_pt": [
+        8.55,
+        10.48,
+        10.49,
+        11.18
+      ],
+      "problems": []
+    },
+    {
+      "figure": "fig4_three_arms.pdf",
+      "page_pt": [
+        340.16,
+        362.83
+      ],
+      "page_mm": [
+        120.0,
+        128.0
+      ],
+      "words": 61,
+      "word_heights_pt": [
+        7.34,
+        10.48,
+        10.49,
+        11.18
+      ],
+      "problems": []
+    }
+  ],
+  "figures_with_problems": 0
+}

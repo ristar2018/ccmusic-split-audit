@@ -1,0 +1,13 @@
+{
+  "url": "https://zenodo.org/api/records?q=title%3A%22Evaluation%20of%20CNN-based%20Automatic%20Music%20Tagging%20Models%22&size=3",
+  "http": 200,
+  "hits": [
+    {
+      "id": 3898838,
+      "title": "Evaluation of CNN-based automatic music tagging models",
+      "files": [
+        "SMCCIM_2020_paper_210.pdf"
+      ]
+    }
+  ]
+}

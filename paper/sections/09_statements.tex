@@ -1,0 +1,62 @@
+\section*{Statements and Declarations}
+
+\subsection*{Funding}
+
+This research was supported by the Xinxiang Social Science Federation Research Project (2026,
+Grant No.\ SKL-2026-0504).
+
+\subsection*{Competing interests}
+
+The authors have no relevant financial or non-financial interests to disclose.
+
+\subsection*{Data availability}
+
+The underlying libraries are publicly released by the CCMusic project; we do not redistribute
+them, and they remain under the terms of their original release. The recording manifests, the
+recording-level splits, the sealed predictions, the analysis
+code and the verification script required to reproduce every table and figure are available from
+the corresponding author on reasonable request; during review, an archive with the splits, the
+sealed predictions and the analysis scripts can be supplied to editors or reviewers on request.
+They will be deposited in a public repository upon
+acceptance at \texttt{[repository URL to be inserted before submission]}, and the repository will
+carry the internal plan, the execution-change list and the expected
+verification output. The feature cache is a derived artifact and can be rebuilt from the released
+images with the script provided.
+
+\subsection*{Author contributions}
+
+\textbf{Yuan Zhao:} Conceptualization, Methodology, Formal analysis, Writing -- review \& editing,
+Project administration. \textbf{Yingtao Ji:} Data curation, Formal analysis, Investigation,
+Methodology, Writing -- original draft, Writing -- review \& editing, Funding acquisition.
+\textbf{Mengjie Hu:} Software, Methodology, Formal analysis, Investigation.
+\textbf{Songmei Liu:} Validation, Writing -- review \& editing, Supervision.
+\textbf{Chenyu Yang:} Data curation, Investigation, Validation.
+All authors have read and approved the final manuscript.
+
+\subsection*{Ethics approval}
+
+Not applicable. The study analyses publicly released datasets; it involves no human participants,
+no animals, and no personally identifiable information.
+
+\subsection*{Reproducibility and verification}
+
+The numerical verifier checks artifact identities, recalculates seed means and differences,
+and compares generated table rows with the manuscript. Bootstrap intervals are produced by
+separate scripts from sealed predictions; the verifier does not independently rerun every
+bootstrap or validate every prose claim. Supplementary Material S1 records the environment,
+commands, execution changes, supplementary analyses and known gaps. The design was documented
+internally and was not publicly preregistered. Each training run writes its own log and its own validation curve, and every driver script
+skips completed runs, so an interrupted batch resumes by re-issuing the same command.
+
+\begin{sloppypar}
+\noindent\textbf{Artifacts.}
+Splits: \texttt{data/splits/v2/} covering eight libraries, with \texttt{assertions.json},
+\texttt{feasibility.csv} and \texttt{splits\_hash.json}.
+Feature cache: \texttt{data/cache/mel224/} with 115{,}847 images, 16.24 GiB, and
+\texttt{CACHE.json}; the cache covers the released images of all audited libraries, including the
+images of classes excluded by the minimum-recording rule, plus the 5{,}432 control images.
+Sealed predictions: \texttt{runs/sealed\_eval/}, holding \texttt{.npz} archives with per-slice
+probabilities, labels and recording indices.
+Cross-instrument archive: \texttt{runs\_p3/}.
+Result tables: \texttt{data/results/}.
+\end{sloppypar}

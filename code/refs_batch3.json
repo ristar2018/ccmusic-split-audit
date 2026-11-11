@@ -1,0 +1,19 @@
+[
+  {"key": "mofi2026", "arxiv": "2512.17946", "claim": "EMOPIA mode-guided tonality AAAI 2026"},
+  {"key": "va_icl_2026", "arxiv": "2610.31202", "claim": "LLM in-context valence arousal"},
+  {"key": "poplyrics2025", "arxiv": "2509.05617", "claim": "pop lyrics emotion benchmark"},
+  {"key": "choi2017noise", "arxiv": "1706.02361", "claim": "label noise robustness deep learning"},
+  {"key": "prinz2020noise", "arxiv": "2008.06273", "claim": "systematic label noise class-wise"},
+  {"key": "chmusic_arxiv", "arxiv": "2108.08470", "claim": "CHMusic Chinese traditional instruments"},
+  {"key": "emopia_baseline", "arxiv": "2201.05782", "claim": "EMOPIA baseline 67.58%"},
+  {"key": "gpt4o_ismir2025", "arxiv": "2508.12626", "claim": "GPT-4o music emotion annotation experts"},
+  {"key": "deam2017", "doi": "10.1371/journal.pone.0173392", "claim": "Developing a benchmark for emotional analysis of music"},
+  {"key": "multilabel2014", "doi": "10.1145/2647868.2654904", "claim": "Music emotion recognition multi-label multi-instance"},
+  {"key": "epjds_playlist2025", "doi": "10.1140/epjds/s13688-025-00531-3", "claim": "playlist characteristics coherence user-curated"},
+  {"key": "mksc2024", "doi": "10.1287/mksc.2022.0323", "claim": "explainable deep learning architecture music emotion"},
+  {"key": "giantmidi", "doi": "10.5334/tismir.80", "claim": "GiantMIDI-Piano dataset"},
+  {"key": "pom2024crosscultural", "doi": "10.1177/03057356241303857", "claim": "cross-cultural Chinese Western music emotion"},
+  {"key": "plosone2019culture", "doi": "10.1371/journal.pone.0222380", "claim": "cultural differences acoustic cues emotion"},
+  {"key": "jamendo2019", "doi": "10.5281/zenodo.7410751", "claim": "MTG-Jamendo dataset"},
+  {"key": "merp_sensors", "doi": "10.3390/s23010382", "claim": "MERP dataset sensors"}
+]

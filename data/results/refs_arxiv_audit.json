@@ -1,0 +1,237 @@
+{
+ "min_score": 0.9,
+ "n_wanted": 16,
+ "n_ok": 10,
+ "entries": [
+  {
+   "title": "FMA: A Dataset for Music Analysis",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1612.01840v3",
+   "got": "FMA: A Dataset For Music Analysis",
+   "year": "2016",
+   "authors": [
+    "Michaël Defferrard",
+    "Kirell Benzi",
+    "Pierre Vandergheynst",
+    "Xavier Bresson"
+   ],
+   "journal_ref": "",
+   "comment": "ISMIR 2017 camera-ready",
+   "key": "defferrard2016"
+  },
+  {
+   "title": "The Million Song Dataset",
+   "status": "rejected",
+   "score": 0.535,
+   "got": "Music Recommendation System for Million Song Dataset Challenge"
+  },
+  {
+   "title": "The MTG-Jamendo dataset for automatic music tagging",
+   "status": "rejected",
+   "score": 0.0,
+   "got": null
+  },
+  {
+   "title": "Unsupervised Domain Adaptation by Backpropagation",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1409.7495v2",
+   "got": "Unsupervised Domain Adaptation by Backpropagation",
+   "year": "2014",
+   "authors": [
+    "Yaroslav Ganin",
+    "Victor Lempitsky"
+   ],
+   "journal_ref": "",
+   "comment": "",
+   "key": "ganin2014"
+  },
+  {
+   "title": "Domain-Adversarial Training of Neural Networks",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1505.07818v4",
+   "got": "Domain-Adversarial Training of Neural Networks",
+   "year": "2015",
+   "authors": [
+    "Yaroslav Ganin",
+    "Evgeniya Ustinova",
+    "Hana Ajakan",
+    "Pascal Germain",
+    "Hugo Larochelle",
+    "François Laviolette",
+    "Mario Marchand",
+    "Victor Lempitsky"
+   ],
+   "journal_ref": "Journal of Machine Learning Research 2016, vol. 17, p. 1-35",
+   "comment": "Published in JMLR: http://jmlr.org/papers/v17/15-239.html",
+   "key": "ganin2015"
+  },
+  {
+   "title": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+   "status": "rejected",
+   "score": 0.0,
+   "got": null
+  },
+  {
+   "title": "ESC: Dataset for Environmental Sound Classification",
+   "status": "rejected",
+   "score": 0.0,
+   "got": null
+  },
+  {
+   "title": "Datasheets for datasets",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1803.09010v8",
+   "got": "Datasheets for Datasets",
+   "year": "2018",
+   "authors": [
+    "Timnit Gebru",
+    "Jamie Morgenstern",
+    "Briana Vecchione",
+    "Jennifer Wortman Vaughan",
+    "Hanna Wallach",
+    "Hal Daumé",
+    "Kate Crawford"
+   ],
+   "journal_ref": "",
+   "comment": "Published in CACM in December, 2021",
+   "key": "gebru2018"
+  },
+  {
+   "title": "Do ImageNet Classifiers Generalize to ImageNet?",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1902.10811v2",
+   "got": "Do ImageNet Classifiers Generalize to ImageNet?",
+   "year": "2019",
+   "authors": [
+    "Benjamin Recht",
+    "Rebecca Roelofs",
+    "Ludwig Schmidt",
+    "Vaishaal Shankar"
+   ],
+   "journal_ref": "",
+   "comment": "",
+   "key": "recht2019"
+  },
+  {
+   "title": "MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "2306.00107v5",
+   "got": "MERT: Acoustic Music Understanding Model with Large-Scale Self-supervised Training",
+   "year": "2023",
+   "authors": [
+    "Yizhi Li",
+    "Ruibin Yuan",
+    "Ge Zhang",
+    "Yinghao Ma",
+    "Xingran Chen",
+    "Hanzhi Yin",
+    "Chenghao Xiao",
+    "Chenghua Lin",
+    "Anton Ragni",
+    "Emmanouil Benetos",
+    "Norbert Gyenge",
+    "Roger Dannenberg",
+    "Ruibo Liu",
+    "Wenhu Chen",
+    "Gus Xia",
+    "Yemin Shi",
+    "Wenhao Huang",
+    "Zili Wang",
+    "Yike Guo",
+    "Jie Fu"
+   ],
+   "journal_ref": "",
+   "comment": "accepted by ICLR 2024",
+   "key": "li2023"
+  },
+  {
+   "title": "Transfer learning for music classification and regression tasks",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1703.09179v4",
+   "got": "Transfer learning for music classification and regression tasks",
+   "year": "2017",
+   "authors": [
+    "Keunwoo Choi",
+    "György Fazekas",
+    "Mark Sandler",
+    "Kyunghyun Cho"
+   ],
+   "journal_ref": "",
+   "comment": "18th International Society of Music Information Retrieval (ISMIR) Conference, Suzhou, China, 2017",
+   "key": "choi2017"
+  },
+  {
+   "title": "Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1703.01789v2",
+   "got": "Sample-level Deep Convolutional Neural Networks for Music Auto-tagging Using Raw Waveforms",
+   "year": "2017",
+   "authors": [
+    "Jongpil Lee",
+    "Jiyoung Park",
+    "Keunhyoung Luke Kim",
+    "Juhan Nam"
+   ],
+   "journal_ref": "",
+   "comment": "7 pages, Sound and Music Computing Conference (SMC), 2017",
+   "key": "lee2017"
+  },
+  {
+   "title": "Evaluation of CNN-based Automatic Music Tagging Models",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "2006.00751v1",
+   "got": "Evaluation of CNN-based Automatic Music Tagging Models",
+   "year": "2020",
+   "authors": [
+    "Minz Won",
+    "Andres Ferraro",
+    "Dmitry Bogdanov",
+    "Xavier Serra"
+   ],
+   "journal_ref": "",
+   "comment": "7 pages, 2 figures, Sound and Music Computing 2020 (SMC 2020)",
+   "key": "won2020"
+  },
+  {
+   "title": "Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders",
+   "status": "ok",
+   "score": 1.0,
+   "arxiv": "1704.01279v1",
+   "got": "Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders",
+   "year": "2017",
+   "authors": [
+    "Jesse Engel",
+    "Cinjon Resnick",
+    "Adam Roberts",
+    "Sander Dieleman",
+    "Douglas Eck",
+    "Karen Simonyan",
+    "Mohammad Norouzi"
+   ],
+   "journal_ref": "",
+   "comment": "",
+   "key": "engel2017"
+  },
+  {
+   "title": "Improving Reproducibility in Machine Learning Research",
+   "status": "rejected",
+   "score": 0.694,
+   "got": "More Rigorous Software Engineering Would Improve Reproducibility in Machine Learning Research"
+  },
+  {
+   "title": "Leakage in data mining: Formulation, detection, and avoidance",
+   "status": "rejected",
+   "score": 0.0,
+   "got": null
+  }
+ ]
+}

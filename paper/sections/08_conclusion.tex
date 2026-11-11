@@ -1,0 +1,28 @@
+\section{Conclusion}\label{sec:conclusion}
+
+A benchmark that releases feature images rather than audio makes the split unit easy to lose. We
+audited the unified evaluation framework of CCMusic, which states an 8:1:1 ratio for CTIS after
+2-second segmentation without naming a unit, and rebuilt five MEL libraries --- 110{,}415 slices, 7{,}827
+recordings, 252 source classes --- retaining 109{,}831 slices, 7{,}756 recordings and 234 classes
+for recording-level analysis. Three main arms and the CTIS-only C1 control assess equal-volume
+replacement rather than isolate a pure memory component: in the primary library, injecting the
+held-out pool of test-adjacent slices by equal replacement raises macro-F1 by $+2.02$ points
+with CI $+0.83$ to $+3.35$ under AlexNet and $+1.70$ with CI $+1.28$ to $+2.84$ under
+Swin-T. The Swin-T interval lies below the internally specified three-point threshold;
+AlexNet's upper limit of 3.35 does not exclude that magnitude. Against C1, which replaces the same
+volume with non-test content, the exposure arm still leads by $+1.96$ and $+1.07$ points with
+intervals that exclude zero. Four additional libraries show
+$+8.4$ to $+28.7$ points. In near-single-slice controls five of six conditional intervals include
+zero; the sixth excludes zero, but its three seed-specific effects differ in sign, and the six are
+reported without a multiplicity correction. Dividing the A1$-$A0 contrasts by the baseline's score
+headroom gives 22--87\%; this is a normalised effect size, not a decomposition into
+memorisation and transfer, since $1-\text{macro-F1}$ is not an error count.
+
+Two things follow for practice: report the split unit, the slice-per-recording distribution, and
+the capacity arithmetic that makes a stricter split feasible; and seal the held-out panel so that
+the resulting estimate can be re-derived from stored predictions. The manifests, splits, sealed predictions and analysis code supporting the reported results
+are available from the corresponding author on reasonable request and will be deposited in a
+public repository upon acceptance; the repository address will be inserted before submission.
+Supplementary Material S1 documents the reconstruction and
+execution history. The verification script checks the reported tables against stored artifacts;
+recomputation of bootstrap summaries uses the separate analysis scripts and needs no new training.

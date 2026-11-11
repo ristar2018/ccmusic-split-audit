@@ -1,0 +1,65 @@
+[
+  {
+    "key": "defferrard2016",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "ganin2014",
+    "url": "https://proceedings.mlr.press/v37/ganin15.html",
+    "http": 200,
+    "ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "ganin2015",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "gebru2018",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "recht2019",
+    "url": "https://proceedings.mlr.press/v97/recht19a.html",
+    "http": 200,
+    "ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "li2023",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "choi2017",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "lee2017",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "won2020",
+    "url": "",
+    "ok": null,
+    "error": "no url in entry"
+  },
+  {
+    "key": "engel2017",
+    "url": "https://proceedings.mlr.press/v70/engel17a.html",
+    "http": 200,
+    "ok": true,
+    "page_title": ""
+  }
+]

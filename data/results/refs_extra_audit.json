@@ -1,0 +1,118 @@
+{
+ "min_score": 0.9,
+ "n_ok": 7,
+ "entries": [
+  {
+   "title": "Data leakage in deep learning studies of translational EEG",
+   "status": "ok",
+   "via": "crossref-doi",
+   "doi": "10.3389/fnins.2024.1373515"
+  },
+  {
+   "title": "The Million Song Dataset",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.06,
+   "got": "The Million Song Dataset",
+   "authors": [
+    "Thierry Bertin-Mahieux",
+    "Daniel P. W. Ellis",
+    "Brian Whitman",
+    "Paul Lamere"
+   ],
+   "year": "2011",
+   "venue": "",
+   "doi": "10.7916/d8nz8j07",
+   "openalex": "https://openalex.org/W1556219185",
+   "key": "bertinmahieux2011"
+  },
+  {
+   "title": "The MTG-Jamendo dataset for automatic music tagging",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.06,
+   "got": "The MTG-Jamendo dataset for automatic music tagging",
+   "authors": [
+    "Dmitry Bogdanov",
+    "Minz Won",
+    "Philip Tovstogan",
+    "Alastair Porter",
+    "Xavier Serra"
+   ],
+   "year": "2019",
+   "venue": "Repositori digital de la UPF (Universitat Pompeu Fabra)",
+   "doi": "",
+   "openalex": "https://openalex.org/W2950060770",
+   "key": "bogdanov2019"
+  },
+  {
+   "title": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.03,
+   "got": "Statistical Comparisons of Classifiers over Multiple Data Sets",
+   "authors": [
+    "Janez Demšar"
+   ],
+   "year": "2006",
+   "venue": "",
+   "doi": "10.5555/1248547.1248548",
+   "openalex": "https://openalex.org/W1565746575",
+   "key": "demar2006"
+  },
+  {
+   "title": "ESC: Dataset for Environmental Sound Classification",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.06,
+   "got": "ESC: Dataset for Environmental Sound Classification",
+   "authors": [
+    "Karol J. Piczak"
+   ],
+   "year": "2015",
+   "venue": "Harvard Dataverse",
+   "doi": "10.7910/dvn/ydeput",
+   "openalex": "https://openalex.org/W4398958419",
+   "key": "piczak2015"
+  },
+  {
+   "title": "Improving Reproducibility in Machine Learning Research",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.03,
+   "got": "Improving Reproducibility in Machine Learning Research",
+   "authors": [
+    "Philippe Vincent‐Lamarre"
+   ],
+   "year": "2021",
+   "venue": "",
+   "doi": "",
+   "openalex": "https://openalex.org/W3200758773",
+   "key": "vincentlamarre2021"
+  },
+  {
+   "title": "Leakage in data mining: Formulation, detection, and avoidance",
+   "status": "rejected",
+   "via": "openalex",
+   "score": 0.562,
+   "got": "Data Leakage in Notebooks: Static Detection and Better Processes"
+  },
+  {
+   "title": "Automatic Tagging Using Deep Convolutional Neural Networks",
+   "status": "ok",
+   "via": "openalex",
+   "score": 1.06,
+   "got": "Automatic tagging using deep convolutional neural networks",
+   "authors": [
+    "Keunwoo Choi",
+    "György Fazekas",
+    "Mark B. Sandler"
+   ],
+   "year": "2016",
+   "venue": "arXiv (Cornell University)",
+   "doi": "10.48550/arxiv.1606.00298",
+   "openalex": "https://openalex.org/W2414894569",
+   "key": "choi2016"
+  }
+ ]
+}

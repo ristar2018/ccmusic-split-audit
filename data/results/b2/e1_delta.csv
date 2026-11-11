@@ -1,0 +1,7 @@
+library,bb,contrast,delta_slice_pt,ci_lo_slice_pt,ci_hi_slice_pt,delta_rec_pt,ci_lo_rec_pt,ci_hi_rec_pt,boot_p_slice,seed_range_pt,per_seed_delta_pt,n_recordings,n_slices,boot,meets_sesoi,confirmatory
+GZ_IsoTech,alexnet,A2-A0,0.26,-0.23,0.87,0.26,-0.23,0.87,0.381,0.26,0.27|0.38|0.12,564,571,2000,False,False
+GZ_IsoTech,swin_t,A2-A0,-0.22,-0.56,0.05,-0.22,-0.56,0.05,0.163,0.74,-0.70|0.00|0.05,564,571,2000,False,False
+chest_falsetto,alexnet,A2-A0,-1.37,-3.31,0.56,-1.37,-3.31,0.56,0.167,4.29,-0.71|-3.85|0.45,257,257,2000,False,False
+chest_falsetto,swin_t,A2-A0,-2.53,-5.0,-0.21,-2.53,-5.0,-0.21,0.036,16.12,5.57|-2.62|-10.54,257,257,2000,False,False
+erhu_playing_tech,alexnet,A2-A0,0.03,-1.14,1.24,0.03,-1.14,1.24,0.928,2.54,0.25|1.19|-1.36,251,251,2000,False,False
+erhu_playing_tech,swin_t,A2-A0,-0.49,-1.93,0.4,-0.49,-1.93,0.4,0.382,1.93,-1.58|0.34|-0.22,251,251,2000,False,False

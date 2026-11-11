@@ -1,0 +1,968 @@
+{
+ "families": {
+  "E0_smoke": {
+   "log_lines": 0,
+   "runs": 0,
+   "ok": 0,
+   "failed": 0,
+   "skipped_already_done": 0,
+   "zero_minute_runs": 0,
+   "minutes_sum": 0,
+   "gpu_h_from_logs": 0.0,
+   "files": [
+    "e0_ctis_a0_alexnet.log"
+   ],
+   "detail": []
+  },
+  "E1b_A0A1": {
+   "log_lines": 20,
+   "runs": 20,
+   "ok": 20,
+   "failed": 0,
+   "skipped_already_done": 0,
+   "zero_minute_runs": 0,
+   "minutes_sum": 375,
+   "gpu_h_from_logs": 6.25,
+   "files": [
+    "e1b_driver.log"
+   ],
+   "detail": [
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 16,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 16,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 55,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 54,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 13,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 13,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 46,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 46,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 7,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 7,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 24,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 38,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 1,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 1,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 13,
+     "skipped": false
+    },
+    {
+     "file": "e1b_driver.log",
+     "arm": "A1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 13,
+     "skipped": false
+    }
+   ]
+  },
+  "E1c_A2": {
+   "log_lines": 10,
+   "runs": 10,
+   "ok": 10,
+   "failed": 0,
+   "skipped_already_done": 0,
+   "zero_minute_runs": 0,
+   "minutes_sum": 249,
+   "gpu_h_from_logs": 4.15,
+   "files": [
+    "e1c_driver.log",
+    "e1c_wrapper.log"
+   ],
+   "detail": [
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 15,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 52,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 13,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 67,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 10,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 51,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 1,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 7,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 5,
+     "skipped": false
+    },
+    {
+     "file": "e1c_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 28,
+     "skipped": false
+    }
+   ]
+  },
+  "E1f_negcontrol": {
+   "log_lines": 12,
+   "runs": 12,
+   "ok": 10,
+   "failed": 0,
+   "skipped_already_done": 2,
+   "zero_minute_runs": 8,
+   "minutes_sum": 2,
+   "gpu_h_from_logs": 0.033,
+   "files": [
+    "e1f_driver.log",
+    "e1f_driver_1.log",
+    "e1f_drv_driver.log",
+    "e1f2_driver.log"
+   ],
+   "detail": [
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": true
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": true
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 1,
+     "skipped": false
+    },
+    {
+     "file": "e1f_driver.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 1,
+     "skipped": false
+    }
+   ]
+  },
+  "B2_negcontrol_rerun": {
+   "log_lines": 12,
+   "runs": 12,
+   "ok": 0,
+   "failed": 12,
+   "skipped_already_done": 0,
+   "zero_minute_runs": 12,
+   "minutes_sum": 0,
+   "gpu_h_from_logs": 0.0,
+   "files": [
+    "b2_driver.log",
+    "b2_nohup.log"
+   ],
+   "detail": [
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A0",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    },
+    {
+     "file": "b2_nohup.log",
+     "arm": "A2",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 0,
+     "skipped": false
+    }
+   ]
+  },
+  "B1C1_probe_and_C1": {
+   "log_lines": 6,
+   "runs": 6,
+   "ok": 6,
+   "failed": 0,
+   "skipped_already_done": 0,
+   "zero_minute_runs": 0,
+   "minutes_sum": 103,
+   "gpu_h_from_logs": 1.717,
+   "files": [
+    "b1c1_driver.log"
+   ],
+   "detail": [
+    {
+     "file": "b1c1_driver.log",
+     "arm": "C1",
+     "bb": "alexnet",
+     "seed": "",
+     "minutes": 16,
+     "skipped": false
+    },
+    {
+     "file": "b1c1_driver.log",
+     "arm": "C1",
+     "bb": "swin_t",
+     "seed": "",
+     "minutes": 54,
+     "skipped": false
+    },
+    {
+     "file": "b1c1_driver.log",
+     "arm": "A1r",
+     "bb": "alexnet",
+     "seed": "seed0",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "b1c1_driver.log",
+     "arm": "A1r",
+     "bb": "alexnet",
+     "seed": "seed1",
+     "minutes": 3,
+     "skipped": false
+    },
+    {
+     "file": "b1c1_driver.log",
+     "arm": "A1r",
+     "bb": "swin_t",
+     "seed": "seed0",
+     "minutes": 13,
+     "skipped": false
+    },
+    {
+     "file": "b1c1_driver.log",
+     "arm": "A1r",
+     "bb": "swin_t",
+     "seed": "seed1",
+     "minutes": 14,
+     "skipped": false
+    }
+   ]
+  }
+ },
+ "sealed": {
+  "runs": [
+   {
+    "group": "CNPM_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CNPM_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CNPM_A1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CNPM_A1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CNPM_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CNPM_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_C1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "CTIS_C1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "GZ_IsoTech_A0_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "GZ_IsoTech_A0_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "GZ_IsoTech_A2_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "GZ_IsoTech_A2_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "bel_canto_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "bel_canto_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "bel_canto_A1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "bel_canto_A1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "bel_canto_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "bel_canto_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A0_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "chest_falsetto_A0_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "chest_falsetto_A2_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "chest_falsetto_A2_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "erhu_playing_tech_A0_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "erhu_playing_tech_A0_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "erhu_playing_tech_A2_alexnet",
+    "seeds": 1
+   },
+   {
+    "group": "erhu_playing_tech_A2_swin_t",
+    "seeds": 1
+   },
+   {
+    "group": "music_genre_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "music_genre_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "music_genre_A1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "music_genre_A1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "music_genre_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "music_genre_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "pending",
+    "seeds": 0
+   },
+   {
+    "group": "pianos_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "pianos_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "pianos_A1_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "pianos_A1_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "pianos_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "pianos_A2_swin_t",
+    "seeds": 3
+   }
+  ],
+  "runs_chk": [
+   {
+    "group": "chest_falsetto_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "pending",
+    "seeds": 0
+   }
+  ],
+  "runs_b2": [
+   {
+    "group": "GZ_IsoTech_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "GZ_IsoTech_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "GZ_IsoTech_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "GZ_IsoTech_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "chest_falsetto_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "erhu_playing_tech_A0_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "erhu_playing_tech_A0_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "erhu_playing_tech_A2_alexnet",
+    "seeds": 3
+   },
+   {
+    "group": "erhu_playing_tech_A2_swin_t",
+    "seeds": 3
+   },
+   {
+    "group": "pending",
+    "seeds": 0
+   }
+  ],
+  "runs_p3": []
+ },
+ "p3": {
+  "total_folds": 48,
+  "total_gpu_h": 2.988,
+  "by_arm": {
+   "A0": {
+    "folds": 12,
+    "gpu_h": 0.842,
+    "n_groups": 4
+   },
+   "A1": {
+    "folds": 12,
+    "gpu_h": 0.801,
+    "n_groups": 4
+   },
+   "A1r": {
+    "folds": 12,
+    "gpu_h": 0.527,
+    "n_groups": 4
+   },
+   "A2": {
+    "folds": 12,
+    "gpu_h": 0.818,
+    "n_groups": 4
+   }
+  }
+ },
+ "flags": [
+  "E1f_negcontrol: 8 个 run 的驱动日志分钟数为 0（取整），机时被低估",
+  "B2_negcontrol_rerun: 12 个 run 的驱动日志分钟数为 0（取整），机时被低估",
+  "cost.json 只含 E1b/E1c/E1f/P3 四族，C1（runs_chk）与 A1r 探针（b1c1）未记账",
+  "E1f 的 10 runs 里有 2 行是 SKIP（已完成），实际 12 组",
+  "P3 记账 48 folds，expected_folds 标 108（36 组×3 折），口径不一致"
+ ],
+ "cost_json": {
+  "E1b": {
+   "label": "E1b A0/A1 五库×2骨干×3seed",
+   "runs": 20,
+   "gpu_h": 6.25,
+   "ok": 20,
+   "failed": 0,
+   "completed": 1
+  },
+  "E1c": {
+   "label": "E1c A2 五库×2骨干×3seed",
+   "runs": 10,
+   "gpu_h": 4.15,
+   "ok": 10,
+   "failed": 0,
+   "completed": 1
+  },
+  "E1f": {
+   "label": "E1f 负对照 3库×2骨干×{A0,A2}×seed0",
+   "runs": 10,
+   "gpu_h": 0.03,
+   "ok": 10,
+   "failed": 0,
+   "completed": 1
+  },
+  "P3": {
+   "label": "P3 三折×三臂×2骨干×2seed（训练墙钟，含折内评估前）",
+   "runs": 36,
+   "folds_done": 36,
+   "gpu_h": 2.46,
+   "expected_folds": 108
+  },
+  "design_estimate_gpu_h": 10.6,
+  "note": "E1b/E1c/E1f 的分钟数来自驱动日志（含每 run 的测试与封存）；P3 来自 fold 级 elapsed_s，不含探针与自助分析。两者都与设计稿的「10.6 GPU·h」不同口径：设计稿按 339–341 片/s 的吞吐估，实测吞吐更低（I/O + 小库的固定开销），故实跑机时更高——报告里应写实测值并说明口径。",
+  "total_measured_gpu_h": 12.89
+ },
+ "reconciliation": {
+  "cost_json_total": 12.89,
+  "covered_by_family": {
+   "E1b": 6.25,
+   "E1c": 4.15,
+   "E1f_negcontrol": 0.03,
+   "P3": 2.46
+  },
+  "measured_by_family": {
+   "E1b": 6.25,
+   "E1c": 4.15,
+   "E1f_negcontrol": 0.033,
+   "P3": 2.988
+  },
+  "components_gpu_h": {
+   "E1b_confirmatory": 6.25,
+   "E1c_A2_random_split": 4.15,
+   "B2_negative_controls": 0.033,
+   "P3_cross_instrument": 2.988,
+   "C1_attribution": 1.1667,
+   "A1r_probes": 0.55
+  },
+  "component_sum_gpu_h": 15.1377,
+  "not_in_cost_json": {
+   "B1C1_probe_and_C1": 1.717,
+   "E0_smoke": 0.0
+  },
+  "not_in_cost_json_gpu_h": 1.717,
+  "corrected_total_gpu_h": 15.1377,
+  "classification": {
+   "confirmatory": {
+    "E1b_confirmatory": 6.25
+   },
+   "additional": {
+    "E1c_A2_random_split": 4.15,
+    "B2_negative_controls": 0.033,
+    "P3_cross_instrument": 2.988
+   },
+   "supplementary": {
+    "C1_attribution": 1.1667,
+    "A1r_probes": 0.55
+   },
+   "abandoned_unquantified": [
+    "logs/e1f_chest_falsetto_A2_alexnet.log 为 0 字节（一次失败尝试，无耗时记录）",
+    "logs/ 下无 lambda=0.1 试验的任何日志，失败试跑无法定量"
+   ],
+   "excluded_but_known": [
+    "E0 smoke（e0_ctis_a0_alexnet.log）",
+    "B2 负对照重跑的墙钟（驱动日志取整为 0）"
+   ]
+  },
+  "runs_not_counted": {
+   "C1": 6,
+   "E1f_skipped_lines": 2,
+   "p3_folds_vs_expected": [
+    48,
+    108
+   ]
+  }
+ }
+}

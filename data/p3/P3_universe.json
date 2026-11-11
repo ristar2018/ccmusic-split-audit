@@ -1,0 +1,39 @@
+{
+  "generated_by": "code/p3_universe.py",
+  "design_ref": [
+    "report/聚焦版实验设计方案v2.8.md:635-636",
+    "同文件 §7.2"
+  ],
+  "rule": {
+    "min_cell": 2,
+    "min_instr": 3,
+    "unit": "recording_uid",
+    "drop_labels": [
+      "音阶",
+      "空弦音",
+      "筒音",
+      "单音",
+      "乐曲片段",
+      "特有演奏技法"
+    ]
+  },
+  "before": {
+    "classes": 49,
+    "recordings": 4037
+  },
+  "after": {
+    "classes": 43,
+    "recordings": 1388,
+    "median": 10,
+    "min": 6
+  },
+  "instrument_names": 212,
+  "merge_candidates": 14,
+  "checks": {
+    "before_classes": true,
+    "before_recordings": true,
+    "after_classes": true,
+    "after_recordings": true
+  },
+  "all_pass": true
+}

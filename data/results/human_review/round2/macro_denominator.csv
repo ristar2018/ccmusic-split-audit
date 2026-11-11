@@ -1,0 +1,13 @@
+﻿bb,contrast,mode,d_pp,lo_pp,hi_pp,seed_range_pp,ci_width_pp,dropped_classes_mean,dropped_classes_max
+alexnet,A1-A0,fixed,2.017,0.721,3.092,1.864,2.371,6.56,18
+alexnet,A1-A0,dynamic,2.017,0.805,3.36,1.864,2.555,6.56,18
+alexnet,A1-A0,fullC,2.017,0.721,3.092,1.864,2.371,6.56,18
+alexnet,A1-C1,fixed,1.963,0.871,2.648,0.539,1.777,6.56,18
+alexnet,A1-C1,dynamic,1.963,0.793,2.906,0.539,2.113,6.56,18
+alexnet,A1-C1,fullC,1.963,0.871,2.648,0.539,1.777,6.56,18
+swin_t,A1-A0,fixed,1.696,0.931,2.361,1.358,1.43,6.97,15
+swin_t,A1-A0,dynamic,1.696,1.284,2.814,1.358,1.53,6.97,15
+swin_t,A1-A0,fullC,1.696,0.931,2.361,1.358,1.43,6.97,15
+swin_t,A1-C1,fixed,1.074,0.2,1.713,0.843,1.512,6.97,15
+swin_t,A1-C1,dynamic,1.074,0.213,1.931,0.843,1.717,6.97,15
+swin_t,A1-C1,fullC,1.074,0.2,1.713,0.843,1.512,6.97,15

@@ -1,0 +1,40 @@
+Expected verifier output
+========================
+
+Command
+-------
+    python code/verify_paper_numbers.py
+
+Expected tail
+-------------
+    checks passed: 270, failed: 0
+    report: data/results/paper_verify.json
+
+What the 270 checks cover
+-------------------------
+1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
+   re-derived from the artifact tables under data/results/ and compared with the
+   values reported in the manuscript and the supplementary material.
+
+2. Text layer. Table rows and reported tokens are rebuilt from the manuscript
+   source and each one is required to appear in the text, so that a table and a
+   sentence cannot drift apart.
+
+3. Round-2 layer. A1-C1 cells and their transitivity, the exposure split, fold
+   composition, the class-set table, the 43-class cross-instrument universe and
+   the bel canto ceiling.
+
+What the verifier does not do
+-----------------------------
+It reads the CSV and JSON artifacts, not the .npz predictions. The bootstrap
+intervals are produced by the analysis scripts from the sealed predictions; the
+verifier checks that the reported intervals match the stored analysis outputs,
+it does not re-run the bootstrap. To re-derive the intervals, run:
+
+    python code/round2_a1_minus_c1.py
+    python code/round2_macro_denominator.py
+    python code/sealed_eval_delta.py
+    python code/round2_data_accounting.py
+
+Each finishes in about a minute on one CPU core and reads only
+runs/sealed_eval/.

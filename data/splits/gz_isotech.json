@@ -1,0 +1,102 @@
+{
+ "train": {
+  "mel_segs": 2389,
+  "mel_bases": 2328,
+  "audio": 2328,
+  "K_dist": {
+   "1": 2294,
+   "2": 16,
+   "3": 9,
+   "4": 9
+  },
+  "extra": 61,
+  "multi": 34,
+  "maxK": 4
+ },
+ "test": {
+  "mel_segs": 510,
+  "mel_bases": 496,
+  "audio": 496,
+  "K_dist": {
+   "1": 484,
+   "2": 10,
+   "3": 2
+  },
+  "extra": 14,
+  "multi": 12,
+  "maxK": 3
+ },
+ "rep_base_sets": {
+  "mel": 2824,
+  "chroma": 2824,
+  "cqt": 2824
+ },
+ "rep_sets_equal": true,
+ "test_dur": {
+  "n": 496,
+  "bad": 0,
+  "total_h": 0.1737,
+  "median_s": 1.024,
+  "max_s": 8.0,
+  "min_s": 0.394
+ },
+ "test_dur_per_class": {
+  "downward_portamento": {
+   "n": 51,
+   "h": 0.024,
+   "median_s": 1.78
+  },
+  "glissando": {
+   "n": 42,
+   "h": 0.027,
+   "median_s": 1.73
+  },
+  "harmonics": {
+   "n": 61,
+   "h": 0.012,
+   "median_s": 0.61
+  },
+  "plucks": {
+   "n": 135,
+   "h": 0.028,
+   "median_s": 0.74
+  },
+  "returning_portamento": {
+   "n": 94,
+   "h": 0.026,
+   "median_s": 1.02
+  },
+  "tremolo": {
+   "n": 23,
+   "h": 0.017,
+   "median_s": 2.43
+  },
+  "upward_portamento": {
+   "n": 48,
+   "h": 0.026,
+   "median_s": 2.05
+  },
+  "vibrato": {
+   "n": 42,
+   "h": 0.014,
+   "median_s": 1.14
+  }
+ },
+ "seg_mech": {
+  "multi_n": 46,
+  "multi_median_s": 5.59,
+  "single_n": 2778,
+  "single_median_s": 1.12,
+  "K_mult": {
+   "2": 26,
+   "3": 11,
+   "4": 9
+  }
+ },
+ "test_sessions": {
+  "record4": 131,
+  "record": 136,
+  "record5": 229
+ },
+ "metadata_files": 0
+}

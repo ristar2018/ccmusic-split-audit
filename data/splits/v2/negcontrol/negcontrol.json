@@ -1,0 +1,555 @@
+{
+ "generated_by": "code/negcontrol.py",
+ "design_ref": "report/聚焦版实验设计方案v2.8.md §3.7 :296-310",
+ "seed": 20261105,
+ "draws": 400,
+ "q_share": 0.2,
+ "m_share": 0.6,
+ "libraries": {
+  "chest_falsetto": {
+   "slices": 1280,
+   "recordings": 1280,
+   "k": 1.0,
+   "k_dist": {
+    "1": 1280
+   },
+   "q_panel_q": 256,
+   "m_c_total": 768,
+   "qpool_total": 0,
+   "alpha_total": 0.0,
+   "mc_pool_mean": 0.0,
+   "mc_pool_p95": 0,
+   "alpha_mc_mean": 0.0,
+   "alpha_mc_p95": 0.0,
+   "official_overlap": null,
+   "qpanel": [
+    {
+     "cls": "all",
+     "slices": 1280,
+     "recordings": 1280,
+     "kbar": 1.0,
+     "m_c": 768,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    }
+   ]
+  },
+  "erhu_playing_tech": {
+   "slices": 1253,
+   "recordings": 1253,
+   "k": 1.0,
+   "k_dist": {
+    "1": 1253
+   },
+   "q_panel_q": 251,
+   "m_c_total": 751,
+   "qpool_total": 0,
+   "alpha_total": 0.0,
+   "mc_pool_mean": 0.0,
+   "mc_pool_p95": 0,
+   "alpha_mc_mean": 0.0,
+   "alpha_mc_p95": 0.0,
+   "official_overlap": null,
+   "qpanel": [
+    {
+     "cls": "detache",
+     "slices": 95,
+     "recordings": 95,
+     "kbar": 1.0,
+     "m_c": 57,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "diangong",
+     "slices": 50,
+     "recordings": 50,
+     "kbar": 1.0,
+     "m_c": 30,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "harmonic",
+     "slices": 30,
+     "recordings": 30,
+     "kbar": 1.0,
+     "m_c": 18,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "legato_slide_glissando",
+     "slices": 164,
+     "recordings": 164,
+     "kbar": 1.0,
+     "m_c": 98,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "percussive",
+     "slices": 38,
+     "recordings": 38,
+     "kbar": 1.0,
+     "m_c": 22,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "pizzicato",
+     "slices": 111,
+     "recordings": 111,
+     "kbar": 1.0,
+     "m_c": 66,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "ricochet",
+     "slices": 66,
+     "recordings": 66,
+     "kbar": 1.0,
+     "m_c": 39,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "staccato",
+     "slices": 177,
+     "recordings": 177,
+     "kbar": 1.0,
+     "m_c": 106,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "tremolo",
+     "slices": 174,
+     "recordings": 174,
+     "kbar": 1.0,
+     "m_c": 104,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "trill",
+     "slices": 249,
+     "recordings": 249,
+     "kbar": 1.0,
+     "m_c": 149,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "vibrato",
+     "slices": 99,
+     "recordings": 99,
+     "kbar": 1.0,
+     "m_c": 59,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    }
+   ]
+  },
+  "Guzheng_Tech99": {
+   "slices": 99,
+   "recordings": 99,
+   "k": 1.0,
+   "k_dist": {
+    "1": 99
+   },
+   "q_panel_q": 20,
+   "m_c_total": 59,
+   "qpool_total": 0,
+   "alpha_total": 0.0,
+   "mc_pool_mean": 0.0,
+   "mc_pool_p95": 0,
+   "alpha_mc_mean": 0.0,
+   "alpha_mc_p95": 0.0,
+   "official_overlap": {
+    "test&train": 0,
+    "test&validation": 0,
+    "train&validation": 0
+   },
+   "qpanel": [
+    {
+     "cls": "test",
+     "slices": 10,
+     "recordings": 10,
+     "kbar": 1.0,
+     "m_c": 6,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "train",
+     "slices": 79,
+     "recordings": 79,
+     "kbar": 1.0,
+     "m_c": 47,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "validation",
+     "slices": 10,
+     "recordings": 10,
+     "kbar": 1.0,
+     "m_c": 6,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    }
+   ]
+  },
+  "GZ_IsoTech": {
+   "slices": 2899,
+   "recordings": 2824,
+   "k": 1.0266,
+   "k_dist": {
+    "1": 2778,
+    "2": 26,
+    "3": 11,
+    "4": 9
+   },
+   "q_panel_q": 580,
+   "m_c_total": 1739,
+   "qpool_total": 0,
+   "alpha_total": 0.0,
+   "mc_pool_mean": 11.3575,
+   "mc_pool_p95": 17,
+   "alpha_mc_mean": 0.006531,
+   "alpha_mc_p95": 0.009776,
+   "official_overlap": {
+    "test&train": 0
+   },
+   "qpanel": [
+    {
+     "cls": "downward_portamento",
+     "slices": 384,
+     "recordings": 384,
+     "kbar": 1.0,
+     "m_c": 230,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "glissando",
+     "slices": 429,
+     "recordings": 358,
+     "kbar": 1.1983,
+     "m_c": 257,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "harmonics",
+     "slices": 379,
+     "recordings": 379,
+     "kbar": 1.0,
+     "m_c": 227,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "plucks",
+     "slices": 339,
+     "recordings": 339,
+     "kbar": 1.0,
+     "m_c": 203,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "returning_portamento",
+     "slices": 366,
+     "recordings": 366,
+     "kbar": 1.0,
+     "m_c": 219,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "tremolo",
+     "slices": 232,
+     "recordings": 228,
+     "kbar": 1.0175,
+     "m_c": 139,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "upward_portamento",
+     "slices": 536,
+     "recordings": 536,
+     "kbar": 1.0,
+     "m_c": 321,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    },
+    {
+     "cls": "vibrato",
+     "slices": 234,
+     "recordings": 234,
+     "kbar": 1.0,
+     "m_c": 140,
+     "qpool_c": 0,
+     "alpha_c": 0.0
+    }
+   ]
+  }
+ },
+ "assertions": [
+  {
+   "id": "chest_falsetto_slices",
+   "desc": "切片数与设计稿 §3.7 一致",
+   "expected": 1280,
+   "actual": 1280,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_recordings",
+   "desc": "录音数与设计稿 §3.7 一致",
+   "expected": 1280,
+   "actual": 1280,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_k",
+   "desc": "K̄ 与设计稿一致（±0.0005）",
+   "expected": 1.0,
+   "actual": 1.0,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_kdist_sum",
+   "desc": "Σ k_dist == recordings",
+   "expected": 1280,
+   "actual": 1280,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_qpool_zero",
+   "desc": "Q_pool 合计 = 0（K̄=1 → floor(1/2)）",
+   "expected": 0,
+   "actual": 0,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_alpha_zero",
+   "desc": "α 合计 = 0（A1≡A0，不跑 A1）",
+   "expected": 0.0,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "chest_falsetto_alpha_mc_under_1pct",
+   "desc": "单次真实抽签的期望 α ≤ 1%（多段录音只带来可忽略暴露）",
+   "expected": 0.01,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_slices",
+   "desc": "切片数与设计稿 §3.7 一致",
+   "expected": 1253,
+   "actual": 1253,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_recordings",
+   "desc": "录音数与设计稿 §3.7 一致",
+   "expected": 1253,
+   "actual": 1253,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_k",
+   "desc": "K̄ 与设计稿一致（±0.0005）",
+   "expected": 1.0,
+   "actual": 1.0,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_kdist_sum",
+   "desc": "Σ k_dist == recordings",
+   "expected": 1253,
+   "actual": 1253,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_qpool_zero",
+   "desc": "Q_pool 合计 = 0（K̄=1 → floor(1/2)）",
+   "expected": 0,
+   "actual": 0,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_alpha_zero",
+   "desc": "α 合计 = 0（A1≡A0，不跑 A1）",
+   "expected": 0.0,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "erhu_playing_tech_alpha_mc_under_1pct",
+   "desc": "单次真实抽签的期望 α ≤ 1%（多段录音只带来可忽略暴露）",
+   "expected": 0.01,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_slices",
+   "desc": "切片数与设计稿 §3.7 一致",
+   "expected": 99,
+   "actual": 99,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_recordings",
+   "desc": "录音数与设计稿 §3.7 一致",
+   "expected": 99,
+   "actual": 99,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_k",
+   "desc": "K̄ 与设计稿一致（±0.0005）",
+   "expected": 1.0,
+   "actual": 1.0,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_kdist_sum",
+   "desc": "Σ k_dist == recordings",
+   "expected": 99,
+   "actual": 99,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_qpool_zero",
+   "desc": "Q_pool 合计 = 0（K̄=1 → floor(1/2)）",
+   "expected": 0,
+   "actual": 0,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_alpha_zero",
+   "desc": "α 合计 = 0（A1≡A0，不跑 A1）",
+   "expected": 0.0,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "Guzheng_Tech99_alpha_mc_under_1pct",
+   "desc": "单次真实抽签的期望 α ≤ 1%（多段录音只带来可忽略暴露）",
+   "expected": 0.01,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_slices",
+   "desc": "切片数与设计稿 §3.7 一致",
+   "expected": 2899,
+   "actual": 2899,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_recordings",
+   "desc": "录音数与设计稿 §3.7 一致",
+   "expected": 2824,
+   "actual": 2824,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_k",
+   "desc": "K̄ 与设计稿一致（±0.0005）",
+   "expected": 1.0266,
+   "actual": 1.0266,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_kdist_sum",
+   "desc": "Σ k_dist == recordings",
+   "expected": 2824,
+   "actual": 2824,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_qpool_zero",
+   "desc": "Q_pool 合计 = 0（K̄=1 → floor(1/2)）",
+   "expected": 0,
+   "actual": 0,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_alpha_zero",
+   "desc": "α 合计 = 0（A1≡A0，不跑 A1）",
+   "expected": 0.0,
+   "actual": 0.0,
+   "ok": true
+  },
+  {
+   "id": "GZ_IsoTech_alpha_mc_under_1pct",
+   "desc": "单次真实抽签的期望 α ≤ 1%（多段录音只带来可忽略暴露）",
+   "expected": 0.01,
+   "actual": 0.006531,
+   "ok": true
+  },
+  {
+   "id": "GZ_kdist_exact",
+   "desc": "GZ k_dist 精确 = {1:2778,2:26,3:11,4:9}",
+   "expected": {
+    "1": 2778,
+    "2": 26,
+    "3": 11,
+    "4": 9
+   },
+   "actual": {
+    "1": 2778,
+    "2": 26,
+    "3": 11,
+    "4": 9
+   },
+   "ok": true
+  },
+  {
+   "id": "GZ_long_records",
+   "desc": "GZ 长录音 46 行 / 多 75 段（train 61、test 14）",
+   "expected": {
+    "rows": 46,
+    "extra_segments": 75,
+    "train": 61,
+    "test": 14
+   },
+   "actual": {
+    "rows": 46,
+    "extra_segments": 75,
+    "train": 61,
+    "test": 14
+   },
+   "ok": true
+  }
+ ],
+ "gz_long_recordings": {
+  "rows": 46,
+  "extra_segments": 75,
+  "by_split": {
+   "test": {
+    "rows": 12,
+    "segments": 14
+   },
+   "train": {
+    "rows": 34,
+    "segments": 61
+   }
+  }
+ },
+ "domain": {
+  "chest_falsetto": "synth",
+  "erhu_playing_tech": "real",
+  "Guzheng_Tech99": "real",
+  "GZ_IsoTech": "real"
+ },
+ "all_pass": true
+}

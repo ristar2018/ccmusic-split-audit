@@ -1,0 +1,66 @@
+\section{Related work}\label{sec:related}
+
+\subsection{Leakage as a reproducible failure mode}
+
+Kapoor and Narayanan~\cite{kapoor2023leakage} catalogue leakage across machine-learning-based science and give it
+a working taxonomy: leakage occurs when information that would not be available at prediction
+time enters training, and it is dangerous precisely because the result looks better rather than
+worse. One of their categories, ``non-independence between train and test'', covers our case
+directly: two rows derived from the same underlying unit are not independent, and a random
+split over rows therefore delivers an optimistic estimate of generalisation. The same
+diagnosis has been made in recommendation \citep{ji2023leakage}, where offline evaluation
+routinely mixes user interactions across the split, and in translational
+EEG \citep{brookshire2024eeg}, where segments of one recording are treated as separate samples. The phenomenon also has a data-mining formulation: leakage arises when a feature is generated
+after the target and therefore carries information about it \citep{kaufman2012}. Our case is a
+different mechanism with the same consequence. The window is not generated after the label; it
+comes from the same recording, so a training row and a test row can be two views of one
+performance and are not independent draws.
+
+The methodological implication is that the unit of splitting must be named and, when the release
+format makes rows rather than units look atomic, verified against the files. A benchmark that
+releases feature images falls into exactly this trap, and the trap is silent: the pipeline runs
+without error, the score looks plausible, and only the split unit distinguishes an optimistic
+number from a transferable one.
+
+\subsection{Splitting practice in audio}
+
+Recording-level separation is an established practice in audio evaluation. Slice- or chunk-level
+partitioning can expose a model to siblings of test examples, making within-recording recognition
+possible rather than ensuring transfer to new recordings. Salamon et al.~\cite{salamon2014urbansound}
+formalised this for urban sound, fixing ten folds at the recording level so that folds are
+comparable across papers. Corpora that share the practice differ in what they document as the
+splitting unit rather than in a single convention: FMA fixes an 8:1:1 partition at the recording
+level \citep{defferrard2016}, whereas tagging and transfer studies built on curated track-level
+collections report track identifiers instead \citep{choi2017,lee2017,won2020}, and shared
+evaluation campaigns have made cross-paper comparison routine \citep{downie2010mirex}; CCMusic
+extends this landscape to a multi-library Chinese-music resource \citep{zhou2025ccmusic}.
+GiantMIDI-Piano is instead a large classical-piano MIDI resource \citep{kong2022giantmidi}.
+Environmental-sound datasets and augmentation studies provide useful evaluation recipes
+\citep{piczak2015,salamon2017augment}; we do not take them as evidence that augmentation
+quantitatively removes, or fails to remove, leakage. The
+difficulty is sharpest for collections distributed as pre-computed features: the audio may or may
+not accompany the images, the file names encode windows, and new users inherit whatever split the
+release implies.
+
+\subsection{Released representations and what they cost}
+
+Release formats changed as audio models grew. Large annotated corpora of audio events and music \citep{gemmeke2017audioset,engel2017} made it attractive to publish embeddings or spectrograms instead of waveforms \citep{hershey2017cnn,kong2020panns}, and self-supervised audio models now ship representations that downstream users fine-tune rather than retrain \citep{elizalde2024clap,li2023}. Each of these releases moves the split decision upstream: whoever pre-computes the features also decides what an item is, and a downstream user who sees one image per row has no reason to suspect that rows are windows.
+
+\subsection{Dataset audits}
+
+Auditing a published dataset is an established genre. Sturm~\cite{sturm2012gtzan} showed that a
+widely used genre benchmark contains mislabels and duplicates that change conclusions drawn
+from it. Our audit differs in object: we do not question the content of the labels or the
+duplication structure of the corpus, but the protocol that maps that corpus onto train and test.
+Audits of this kind have a second, sharper form: a system can be shown not to listen at all, in which case the benchmark measures the shortcut rather than the task \citep{sturm2014horse}. Re-measuring a leaderboard number under a different protocol and finding that it moves is likewise an established result \citep{recht2019}, and dataset documentation now asks authors to state the split unit rather than leave it to the reader \citep{gebru2018}. That distinction matters for how the result should be read --- a labelling defect is a property
+of the data, whereas a split-unit defect is a property of the evaluation recipe and can be
+repaired without re-collecting audio, provided recording identifiers are recoverable and
+each class retains enough independent recordings, the condition our capacity calculation checks.
+
+\subsection{What is new here}
+
+To our knowledge, score inflation under slice-level splitting and the feasibility of a
+recording-level split have not been jointly quantified on a multi-library Chinese MIR benchmark.
+Our three main arms control training volume while varying content origin; the CTIS-only C1
+control probes non-test replacement. These controls narrow the interpretation, but do not fully
+separate content identity from recording diversity.

@@ -1,0 +1,23 @@
+library,bb,contrast,n_seeds,point_unw_pt,ci_lo_unw_orig_pt,ci_hi_unw_orig_pt,legacy_point_sw_pt,correction_pt,per_seed_unw_pt,seed_range_unw_pt,conditional_ci_lo_pt,conditional_ci_hi_pt,conditional_note
+CNPM,alexnet,A1-A0,3,28.4370150315,17.82,38.7,26.4472673601,1.9897476714,24.86|25.83|34.61,9.7495546208,18.3587230000,38.8230400000,conditional on the three trained seeds; recordings resampled only
+CNPM,alexnet,A2-A0,3,24.9413323567,15.35,34.28,23.2761492696,1.6651830871,21.41|22.03|31.38,9.9686198473,15.5768300000,34.3705180000,conditional on the three trained seeds; recordings resampled only
+CNPM,swin_t,A1-A0,3,30.7492481342,21.66,39.57,29.9056312009,0.8436169334,31.23|27.25|33.77,6.5198689256,22.3238000000,40.2929810000,conditional on the three trained seeds; recordings resampled only
+CNPM,swin_t,A2-A0,3,34.0427882125,24.52,43.62,34.2141525214,-0.1713643089,36.42|36.17|29.54,6.8768110101,24.6580660000,44.1340090000,conditional on the three trained seeds; recordings resampled only
+CTIS,alexnet,A1-A0,3,1.3660246335,0.26,2.83,1.6683302703,-0.3023056368,2.12|1.48|0.50,1.6236128787,0.2617050000,2.8279340000,conditional on the three trained seeds; recordings resampled only
+CTIS,alexnet,A2-A0,3,0.2323041670,-0.95,1.69,0.5640195719,-0.3317154049,1.19|0.33|-0.83,2.0161048829,-0.9523980000,1.6877620000,conditional on the three trained seeds; recordings resampled only
+CTIS,alexnet,C1-A0,3,0.1401825843,,,0.4107057792,-0.2705231949,1.42|0.29|-1.30,2.7178590358,-0.6960420000,1.6093500000,conditional on the three trained seeds; recordings resampled only
+CTIS,swin_t,A1-A0,3,1.6094328944,0.87,2.6,1.6383024811,-0.0288695867,0.90|1.19|2.74,1.8408867034,0.8651430000,2.5980180000,conditional on the three trained seeds; recordings resampled only
+CTIS,swin_t,A2-A0,3,1.7680244283,0.89,2.65,1.8606601571,-0.0926357287,1.44|1.68|2.18,0.7355708571,0.8924080000,2.6475580000,conditional on the three trained seeds; recordings resampled only
+CTIS,swin_t,C1-A0,3,0.4407921895,,,0.3653735549,0.0754186346,-0.23|0.59|0.97,1.2038493600,-0.0626940000,1.3756860000,conditional on the three trained seeds; recordings resampled only
+bel_canto,alexnet,A1-A0,3,14.6146786085,5.71,26.23,10.1766659652,4.4380126433,20.44|9.63|13.77,10.8087645917,5.7547690000,26.3200800000,conditional on the three trained seeds; recordings resampled only
+bel_canto,alexnet,A2-A0,3,17.0452341640,6.47,31.17,11.9309531805,5.1142809836,20.44|9.63|21.06,11.4249108734,6.4714680000,31.3214800000,conditional on the three trained seeds; recordings resampled only
+bel_canto,swin_t,A1-A0,3,22.7398536898,9.28,41.28,15.1993152774,7.5405384124,25.10|16.43|26.69,10.2678907172,10.3392740000,40.5343980000,conditional on the three trained seeds; recordings resampled only
+bel_canto,swin_t,A2-A0,3,22.7398536898,9.28,41.28,15.1993152774,7.5405384124,25.10|16.43|26.69,10.2678907172,10.3392740000,40.5343980000,conditional on the three trained seeds; recordings resampled only
+music_genre,alexnet,A1-A0,3,15.1329593868,11.97,18.91,16.0650595227,-0.9321001359,16.01|14.75|14.63,1.3795154542,11.9915530000,18.8626550000,conditional on the three trained seeds; recordings resampled only
+music_genre,alexnet,A2-A0,3,13.9260985704,10.96,17.55,14.7981400299,-0.8720414596,14.91|13.67|13.19,1.7214642583,11.0232860000,17.4133590000,conditional on the three trained seeds; recordings resampled only
+music_genre,swin_t,A1-A0,3,15.9807267834,12.88,19.78,16.6302276467,-0.6495008633,15.95|15.05|16.94,1.8903026118,12.9084330000,19.8076200000,conditional on the three trained seeds; recordings resampled only
+music_genre,swin_t,A2-A0,3,15.3952478694,12.31,19.19,15.8000558236,-0.4048079542,15.61|14.35|16.23,1.8844227479,12.3256950000,19.1211860000,conditional on the three trained seeds; recordings resampled only
+pianos,alexnet,A1-A0,3,7.5296056900,3.9,12.26,7.6313707437,-0.1017650537,8.28|7.16|7.14,1.1416194849,3.6999330000,12.3773040000,conditional on the three trained seeds; recordings resampled only
+pianos,alexnet,A2-A0,3,7.7684809288,4.23,12.5,7.7020731298,0.0664077990,9.00|7.16|7.14,1.8582452016,4.0821820000,12.6294530000,conditional on the three trained seeds; recordings resampled only
+pianos,swin_t,A1-A0,3,4.8616918151,2.07,8.43,4.8463288647,0.0153629503,3.48|4.87|6.23,2.7491777951,2.1523820000,8.1444980000,conditional on the three trained seeds; recordings resampled only
+pianos,swin_t,A2-A0,3,5.1005670539,2.18,8.91,4.9171089988,0.1834580551,4.20|4.87|6.23,2.0325520785,2.2562740000,8.6434860000,conditional on the three trained seeds; recordings resampled only

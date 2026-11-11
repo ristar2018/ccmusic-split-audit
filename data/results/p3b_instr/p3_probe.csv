@@ -1,0 +1,13 @@
+lib,arm,bb,seed,probe_auc_mean,probe_top1_mean,folds
+CTIS,A0,alexnet,0,0.9383,0.5567,3
+CTIS,A0,alexnet,1,0.9264,0.5533,3
+CTIS,A0,swin_t,0,0.9425,0.632,3
+CTIS,A0,swin_t,1,0.9363,0.6333,3
+CTIS,A1,alexnet,0,0.9619,0.6657,3
+CTIS,A1,alexnet,1,0.9606,0.6706,3
+CTIS,A1,swin_t,0,0.9668,0.7308,3
+CTIS,A1,swin_t,1,0.9726,0.7333,3
+CTIS,A2,alexnet,0,0.9327,0.5969,3
+CTIS,A2,alexnet,1,0.9194,0.5935,3
+CTIS,A2,swin_t,0,0.9321,0.6674,3
+CTIS,A2,swin_t,1,0.9412,0.6711,3

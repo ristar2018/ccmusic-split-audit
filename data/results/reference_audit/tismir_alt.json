@@ -1,0 +1,31 @@
+[
+  {
+    "name": "ubiquity_ccmusic",
+    "url": "https://tismir.musicinformationretrieval.org/index.php/tismir/article/view/194",
+    "http": null,
+    "ok": false,
+    "error": "URLError: <urlopen error [Errno 11001] getaddrinfo failed>"
+  },
+  {
+    "name": "doaj_ccmusic",
+    "url": "https://doaj.org/api/articles/search/search=%2210.5334%2Ftismir.194%22",
+    "http": 404,
+    "ok": false
+  },
+  {
+    "name": "openalex_ccmusic",
+    "url": "https://api.openalex.org/works/doi:10.5334/tismir.194",
+    "http": 200,
+    "ok": true,
+    "openalex_id": "https://openalex.org/W4408772031",
+    "n_queries": 13
+  },
+  {
+    "name": "openalex_giantmidi",
+    "url": "https://api.openalex.org/works/doi:10.5334/tismir.80",
+    "http": 200,
+    "ok": true,
+    "openalex_id": "https://openalex.org/W3093121331",
+    "n_queries": 75
+  }
+]

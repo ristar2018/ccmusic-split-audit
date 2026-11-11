@@ -1,0 +1,192 @@
+[
+  {
+    "key": "zhou2025ccmusic",
+    "kind": "doi",
+    "url": "https://doi.org/10.5334/tismir.194",
+    "http": null,
+    "resolver_ok": false,
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+  },
+  {
+    "key": "kapoor2023leakage",
+    "kind": "doi",
+    "url": "https://doi.org/10.1016/j.patter.2023.100804",
+    "http": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S2666389923001599",
+    "resolver_ok": true,
+    "page_title": "Redirecting"
+  },
+  {
+    "key": "salamon2014urbansound",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/2647868.2655045",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "sturm2012gtzan",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/2390848.2390851",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "ji2023leakage",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/3569930",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "kong2022giantmidi",
+    "kind": "doi",
+    "url": "https://doi.org/10.5334/tismir.80",
+    "http": null,
+    "resolver_ok": false,
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+  },
+  {
+    "key": "gemmeke2017audioset",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/icassp.2017.7952261",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/7952261/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "elizalde2024clap",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/icassp48485.2024.10448504",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/10448504/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "saito2015pr",
+    "kind": "doi",
+    "url": "https://doi.org/10.1371/journal.pone.0118432",
+    "http": 200,
+    "final_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0118432",
+    "resolver_ok": true,
+    "page_title": "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Dataset"
+  },
+  {
+    "key": "sturm2014horse",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/tmm.2014.2330697",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/6847693/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "hershey2017cnn",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/icassp.2017.7952132",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/7952132/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "kong2020panns",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/taslp.2020.3030497",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/9229505/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "salamon2017augment",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/lsp.2017.2657381",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/7829341/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "downie2010mirex",
+    "kind": "doi",
+    "url": "https://doi.org/10.1007/978-3-642-11674-2_5",
+    "http": 200,
+    "final_url": "https://link.springer.com/chapter/10.1007/978-3-642-11674-2_5?error=cookies_not_supported&code=abad259a-6992-4464-b06c-6ac36d5c7cc0",
+    "resolver_ok": true,
+    "page_title": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights | Springer Nature Link"
+  },
+  {
+    "key": "brookshire2024eeg",
+    "kind": "doi",
+    "url": "https://doi.org/10.3389/fnins.2024.1373515",
+    "http": 200,
+    "final_url": "https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2024.1373515/full",
+    "resolver_ok": true,
+    "page_title": "Frontiers | Data leakage in deep learning studies of translational EEG"
+  },
+  {
+    "key": "alexnet2012",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/3065386",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "swin2021",
+    "kind": "doi",
+    "url": "https://doi.org/10.1109/iccv48922.2021.00986",
+    "http": 202,
+    "final_url": "https://ieeexplore.ieee.org/document/9710580/",
+    "resolver_ok": true,
+    "page_title": ""
+  },
+  {
+    "key": "piczak2015",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/2733373.2806390",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "kaufman2012",
+    "kind": "doi",
+    "url": "https://doi.org/10.1145/2382577.2382579",
+    "http": 403,
+    "resolver_ok": false,
+    "error": "HTTPError 403"
+  },
+  {
+    "key": "ganin2014",
+    "kind": "url",
+    "url": "https://proceedings.mlr.press/v37/ganin15.html",
+    "http": 200,
+    "final_url": "https://proceedings.mlr.press/v37/ganin15.html",
+    "resolver_ok": true,
+    "page_title": "Unsupervised Domain Adaptation by Backpropagation"
+  },
+  {
+    "key": "recht2019",
+    "kind": "url",
+    "url": "https://proceedings.mlr.press/v97/recht19a.html",
+    "http": 200,
+    "final_url": "https://proceedings.mlr.press/v97/recht19a.html",
+    "resolver_ok": true,
+    "page_title": "Do ImageNet Classifiers Generalize to ImageNet?"
+  },
+  {
+    "key": "engel2017",
+    "kind": "url",
+    "url": "https://proceedings.mlr.press/v70/engel17a.html",
+    "http": 200,
+    "final_url": "https://proceedings.mlr.press/v70/engel17a.html",
+    "resolver_ok": true,
+    "page_title": "Neural Audio Synthesis of Musical Notes with WaveNet Autoencoders"
+  }
+]

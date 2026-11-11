@@ -1,0 +1,3 @@
+library,bb,contrast,delta_slice_pt,ci_lo_slice_pt,ci_hi_slice_pt,delta_rec_pt,ci_lo_rec_pt,ci_hi_rec_pt,boot_p_slice,seed_range_pt,per_seed_delta_pt,n_recordings,n_slices,boot,meets_sesoi,confirmatory
+CTIS,alexnet,C1-A0,0.05,-0.94,1.35,0.41,-0.7,1.61,0.731,1.9,0.85|0.35|-1.04,963,4605,2000,False,False
+CTIS,swin_t,C1-A0,0.62,0.14,1.81,0.37,-0.06,1.38,0.02,1.18,0.06|1.24|0.57,963,4605,2000,False,False

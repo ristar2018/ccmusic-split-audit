@@ -1,0 +1,269 @@
+sample_id,label,recording_uid,recording_canonical,content_hash,candidate_group,slice_index
+CNPM:CNPM/data/eval/mel/万马奔腾 - 朝克吉勒图.mp3_3444.jpg,pattern_0,万马奔腾 - 朝克吉勒图.mp3,万马奔腾 - 朝克吉勒图.mp3,c0bbd206a10afa1928e2f252145ca4eab37ae7aa,gc0bbd206a10a,3444
+CNPM:CNPM/data/eval/mel/万马奔腾 - 朝克吉勒图.mp3_5166.jpg,pattern_0,万马奔腾 - 朝克吉勒图.mp3,万马奔腾 - 朝克吉勒图.mp3,42e3b9320460bc83cc74fae4f2a9e98597ac0437,g42e3b9320460,5166
+CNPM:CNPM/data/eval/mel/万马奔腾 - 朝克吉勒图.mp3_13776.jpg,pattern_0,万马奔腾 - 朝克吉勒图.mp3,万马奔腾 - 朝克吉勒图.mp3,df84a21884f452c646c22597241ff4f9be9681a6,gdf84a21884f4,13776
+CNPM:CNPM/data/eval/mel/万马奔腾 - 朝克吉勒图.mp3_15498.jpg,pattern_0,万马奔腾 - 朝克吉勒图.mp3,万马奔腾 - 朝克吉勒图.mp3,bbab97bdad61fba082f68c1c9f6b198383ff57a9,gbbab97bdad61,15498
+CNPM:CNPM/data/eval/mel/关山月 - 赵晓霞古琴.mp3_10332.jpg,pattern_0,关山月 - 赵晓霞古琴.mp3,关山月 - 赵晓霞古琴.mp3,eb7a7c526987021bfec4199efc651bc585aee1a5,geb7a7c526987,10332
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_0.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,87b432cbcca472269bfd494f77773a5d0e41c080,g87b432cbcca4,0
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_1722.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,9e0aa54d8b890dbdaacb0a33fd5d1f1fbf2b5430,g9e0aa54d8b89,1722
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_6888.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,ec4e67597f985c073f8abc8f671245850c8eca53,gec4e67597f98,6888
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_8610.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,27a87be8f6c777b8ac37d8ad9a24fa575394a7a0,g27a87be8f6c7,8610
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_10332.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,785dbd5f2a22826d4385383041f86b32764b0ebe,g785dbd5f2a22,10332
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_12054.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,ee8b61ce4f82c3bd64aaaf22322d12c5c43380bc,gee8b61ce4f82,12054
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_17220.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,57de92541fc2772eb1b695ff5a09493e4bcaa614,g57de92541fc2,17220
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_18942.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,53af98628d3a6c32cf860c6b98798542bf2f4762,g53af98628d3a,18942
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_24108.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,4127e186b0df08752cd7722867fcc44154cb1343,g4127e186b0df,24108
+CNPM:CNPM/data/eval/mel/出水莲 (古筝独奏版) - 项斯华.mp3_25830.jpg,pattern_0,出水莲 (古筝独奏版) - 项斯华.mp3,出水莲 (古筝独奏版) - 项斯华.mp3,9ea2f9804b184c8233713995b61750df57b187e3,g9ea2f9804b18,25830
+CNPM:CNPM/data/eval/mel/小白杨 - 阎维文.mp3_6888.jpg,pattern_0,小白杨 - 阎维文.mp3,小白杨 - 阎维文.mp3,90b2a7da4a76a5d60af4c81ced3e60a179d021a4,g90b2a7da4a76,6888
+CNPM:CNPM/data/eval/mel/小白杨 - 阎维文.mp3_8610.jpg,pattern_0,小白杨 - 阎维文.mp3,小白杨 - 阎维文.mp3,961ee185c6e00faf0981133a583d41f113000af6,g961ee185c6e0,8610
+CNPM:CNPM/data/eval/mel/小白杨 - 阎维文.mp3_10332.jpg,pattern_0,小白杨 - 阎维文.mp3,小白杨 - 阎维文.mp3,1281efa7a295fb7a798450d8ef932ca785005f5e,g1281efa7a295,10332
+CNPM:CNPM/data/eval/mel/小白杨 - 阎维文.mp3_12054.jpg,pattern_0,小白杨 - 阎维文.mp3,小白杨 - 阎维文.mp3,72c60c5d08d1f0631c5a8b68e41ffec8f3185ec4,g72c60c5d08d1,12054
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_6888.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,7f758aac668590549583e98c780d5e8057f95b01,g7f758aac6685,6888
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_8610.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,4c2d3049722c0aea7ffdaaf3076f85b21e6500a4,g4c2d3049722c,8610
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_10332.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,96059fedeb43e542ab72e34d83ded0e67f052b13,g96059fedeb43,10332
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_12054.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,f24688acb072fa52a02b5a0e35abd96fba684684,gf24688acb072,12054
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_17220.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,67ba453fe1ae2d7feca5bb75dcc4fdf54fc7c230,g67ba453fe1ae,17220
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_18942.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,3349cd1608b6b592d4bd7e75553e37f5d0d2ab8b,g3349cd1608b6,18942
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_20664.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,a94770840ac936d22622d741ea2195f9004b58ea,ga94770840ac9,20664
+CNPM:CNPM/data/eval/mel/幸福渠 (古筝独奏) - 项斯华.mp3_22386.jpg,pattern_0,幸福渠 (古筝独奏) - 项斯华.mp3,幸福渠 (古筝独奏) - 项斯华.mp3,81ce11d31bd9f2fce789a1ed43f6ba5cd3a3ae48,g81ce11d31bd9,22386
+CNPM:CNPM/data/eval/mel/彩云追月 - 纯音乐.wav_0.jpg,pattern_0,彩云追月 - 纯音乐.wav,彩云追月 - 纯音乐.wav,a79cf673e13f883678c3bfeca7c9d255b7981421,ga79cf673e13f,0
+CNPM:CNPM/data/eval/mel/彩云追月 - 纯音乐.wav_1722.jpg,pattern_0,彩云追月 - 纯音乐.wav,彩云追月 - 纯音乐.wav,c98f89f1e420dcd2f0676904572af231e66ffa58,gc98f89f1e420,1722
+CNPM:CNPM/data/eval/mel/彩云追月 - 纯音乐.wav_3444.jpg,pattern_0,彩云追月 - 纯音乐.wav,彩云追月 - 纯音乐.wav,5752815bd22900f8947940d1fd6fa9b12d6eaee2,g5752815bd229,3444
+CNPM:CNPM/data/eval/mel/彩云追月 - 纯音乐.wav_5166.jpg,pattern_0,彩云追月 - 纯音乐.wav,彩云追月 - 纯音乐.wav,f372664f4cb34eb739f750f8e284669955c6605f,gf372664f4cb3,5166
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_0.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,05f7f7126863fbc0bd0107a44aec509e6f7e0713,g05f7f7126863,0
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_1722.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,c8beb7c3780e36ff3d4fcb55dce778cfc62b30ae,gc8beb7c3780e,1722
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_3444.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,70d664d8d1c22fcaffa3faf84b3a1f36a4dd874e,g70d664d8d1c2,3444
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_5166.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,5ec2a26dcf24c11dc26b1edd9708bc7758f901dd,g5ec2a26dcf24,5166
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_6888.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,5fb60d19c2b551b3a02bf6a989c90ea98467d05d,g5fb60d19c2b5,6888
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_8610.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,0365f668649a3fbc3bd3ae456383d9747274bfee,g0365f668649a,8610
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_10332.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,fdf040c5f0725607348d29c3abf8507ae2acd8fe,gfdf040c5f072,10332
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_12054.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,fdb9c2c95e870ec3f666fe8138a4846d5ead2326,gfdb9c2c95e87,12054
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_17220.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,5c6b5b75b80f0eb1bc3abedbc3ef9cd89be95f12,g5c6b5b75b80f,17220
+CNPM:CNPM/data/eval/mel/怀念曲 - 吴晓燕.mp3_18942.jpg,pattern_0,怀念曲 - 吴晓燕.mp3,怀念曲 - 吴晓燕.mp3,91a4325bdea65d39c2d6f1dd78105bf45e1a18e3,g91a4325bdea6,18942
+CNPM:CNPM/data/eval/mel/春风得意 - 林翠萍.mp3_6888.jpg,pattern_0,春风得意 - 林翠萍.mp3,春风得意 - 林翠萍.mp3,882547661c375775919a7474543cf783d8319fe2,g882547661c37,6888
+CNPM:CNPM/data/eval/mel/春风得意 - 林翠萍.mp3_8610.jpg,pattern_0,春风得意 - 林翠萍.mp3,春风得意 - 林翠萍.mp3,15f0acb067502f3b90b7a7cd313319d83a98743f,g15f0acb06750,8610
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_6888.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,b723254e7ad6579eecaf8c12b5da17c5acd8f8cd,gb723254e7ad6,6888
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_8610.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,ac88dca742de4811c4406a854a37d2569671f4fd,gac88dca742de,8610
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_10332.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,6d8484ab0ebc75dfa6768ec24ca53d525b564b02,g6d8484ab0ebc,10332
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_12054.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,dd2b127dada83e51f9e6ff8aa3bcafba21ea2f96,gdd2b127dada8,12054
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_13776.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,6389e6ebc043ec71233addcff60b106291f57b24,g6389e6ebc043,13776
+CNPM:CNPM/data/eval/mel/沧海一声笑 - 张晓红.mp3_15498.jpg,pattern_0,沧海一声笑 - 张晓红.mp3,沧海一声笑 - 张晓红.mp3,86ab6f0131bbe30c98fec9bfbb1d1acbf02ce63d,g86ab6f0131bb,15498
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_3444.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,43ef928fe3b90da89a279a6ca088ec26edfc73af,g43ef928fe3b9,3444
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_5166.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,86469861a8a57546fbd3704711667f815a87cfa9,g86469861a8a5,5166
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_10332.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,b8819f464c6e6d10a1d5486a3754448791cc3cd1,gb8819f464c6e,10332
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_12054.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,39a3267e86333dfab5008603ddcb29da61087374,g39a3267e8633,12054
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_13776.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,fd1aef88eed9522ec37d19d73db1c38aace0bbd3,gfd1aef88eed9,13776
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_15498.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,b29f20f15ab2111ce2091fd8a6bf563a22fe1551,gb29f20f15ab2,15498
+CNPM:CNPM/data/eval/mel/渔光曲 - 付娜.mp3_24108.jpg,pattern_0,渔光曲 - 付娜.mp3,渔光曲 - 付娜.mp3,5114988136e61c855323e23968ed6e6c0691faec,g5114988136e6,24108
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_0.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,834e4cb5962491dc622872ec2935f476391962d0,g834e4cb59624,0
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_1722.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,e06ea663926712f2063762daa590af276c85da0b,ge06ea6639267,1722
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_3444.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,be491c619e4a54711b4f9cf31039e9edb63b2f93,gbe491c619e4a,3444
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_5166.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,3bffac5d1645638f0635e56599a14e4d57c017dc,g3bffac5d1645,5166
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_6888.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,0559eade4b2e9eb61959afd193c22a8848789904,g0559eade4b2e,6888
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_8610.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,027912dc9f3327afa58e6db06345a29fc5498fa5,g027912dc9f33,8610
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_10332.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,9499de9bffc121872c2361d31683ce52ad71990d,g9499de9bffc1,10332
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_12054.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,2264a43134f349744548fb0a98b8ec00da2fab63,g2264a43134f3,12054
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_13776.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,db036783a5bc855789b5fc19319ffc25eb33df61,gdb036783a5bc,13776
+CNPM:CNPM/data/eval/mel/渔舟唱晚 - 赵玉齐.mp3_15498.jpg,pattern_0,渔舟唱晚 - 赵玉齐.mp3,渔舟唱晚 - 赵玉齐.mp3,19d091c24c2932b8afda545100d9d9c61ba6f1d9,g19d091c24c29,15498
+CNPM:CNPM/data/eval/mel/湘妃怨 - 龚一.mp3_6888.jpg,pattern_0,湘妃怨 - 龚一.mp3,湘妃怨 - 龚一.mp3,04f1a7368a66a4970982bdc1f30327db8217e23b,g04f1a7368a66,6888
+CNPM:CNPM/data/eval/mel/湘妃怨 - 龚一.mp3_8610.jpg,pattern_0,湘妃怨 - 龚一.mp3,湘妃怨 - 龚一.mp3,c154c20386c67e29ec591dfbd793abb9e70dd74c,gc154c20386c6,8610
+CNPM:CNPM/data/eval/mel/湘妃怨 - 龚一.mp3_17220.jpg,pattern_0,湘妃怨 - 龚一.mp3,湘妃怨 - 龚一.mp3,a0c7a538b2dd4a1580aa958ae3fce8f1c1811f73,ga0c7a538b2dd,17220
+CNPM:CNPM/data/eval/mel/湘妃怨 - 龚一.mp3_18942.jpg,pattern_0,湘妃怨 - 龚一.mp3,湘妃怨 - 龚一.mp3,3849dff5882a09639857dad8c1e9e9e170987844,g3849dff5882a,18942
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_0.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,1c298520fa5f10f3b4505e2e7657e818e52a9399,g1c298520fa5f,0
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_1722.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,3a0217dd586dc7ee46ea7a7a8818de3e5ea9df80,g3a0217dd586d,1722
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_13776.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,c7bd0e99f4b78997bbfb75638a9346aa69b0c0b1,gc7bd0e99f4b7,13776
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_15498.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,ec2e447a0fa3678435f566bc9a98f756d3920e84,gec2e447a0fa3,15498
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_17220.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,b2d87f7d39c7601892379b4a6381c5c6e3e599fa,gb2d87f7d39c7,17220
+CNPM:CNPM/data/eval/mel/绿岛小夜曲 - 李茂山.mp3_18942.jpg,pattern_0,绿岛小夜曲 - 李茂山.mp3,绿岛小夜曲 - 李茂山.mp3,a6738a75d1e1dddd3a3829917b7dc3ba09538329,ga6738a75d1e1,18942
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_3444.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,f3b9ae51160b59acc419a4a2ef789500ce866b4d,gf3b9ae51160b,3444
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_5166.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,d41b22d7459c1dadc048e67eee6a6dc990a76055,gd41b22d7459c,5166
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_6888.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,dc1a0466cc0ff53d2856b3865aedd86bc05e5da2,gdc1a0466cc0f,6888
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_8610.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,8eabdb46448464dbe1b2a8e0c3b327c1aa8a57c4,g8eabdb464484,8610
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_10332.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,421a1c773e2b3c593316f78eff7c37d6fc1ede45,g421a1c773e2b,10332
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_12054.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,a36d0d6902292153cbb54ad2c7e404dc2ed9a51b,ga36d0d690229,12054
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_17220.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,75dddc72edf8d95dd80b8f56f870b7cbbf0545a0,g75dddc72edf8,17220
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_18942.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,ade8c83be7c8c302a6dd15318d1574ce115fe52e,gade8c83be7c8,18942
+CNPM:CNPM/data/eval/mel/苏武思乡 - 赵晓霞.mp3_20664.jpg,pattern_0,苏武思乡 - 赵晓霞.mp3,苏武思乡 - 赵晓霞.mp3,45bd303179d743bf2d583fe7ae7ed9b48834b9d0,g45bd303179d7,20664
+CNPM:CNPM/data/eval/mel/青城山下白素贞（笛子版） - 笛子绿洲.mp3_6888.jpg,pattern_0,青城山下白素贞（笛子版） - 笛子绿洲.mp3,青城山下白素贞（笛子版） - 笛子绿洲.mp3,2648b02a0dabe5360e756459cb1cacab80f57a3e,g2648b02a0dab,6888
+CNPM:CNPM/data/eval/mel/青城山下白素贞（笛子版） - 笛子绿洲.mp3_8610.jpg,pattern_0,青城山下白素贞（笛子版） - 笛子绿洲.mp3,青城山下白素贞（笛子版） - 笛子绿洲.mp3,c48a980d5f5969bf24c8e3d90e02d91b72548a1b,gc48a980d5f59,8610
+CNPM:CNPM/data/eval/mel/青城山下白素贞（笛子版） - 笛子绿洲.mp3_10332.jpg,pattern_0,青城山下白素贞（笛子版） - 笛子绿洲.mp3,青城山下白素贞（笛子版） - 笛子绿洲.mp3,dd0f2d246df7e45fe0e9861e571feb7816a49019,gdd0f2d246df7,10332
+CNPM:CNPM/data/eval/mel/商15.wav_0.jpg,pattern_1,商15.wav,商15.wav,063b863703adeb34f6649a64c7fabd44c5734964,g063b863703ad,0
+CNPM:CNPM/data/eval/mel/商15.wav_1722.jpg,pattern_1,商15.wav,商15.wav,5a6dc3166f4ff8d51ecd6383b1e6d75217d60adc,g5a6dc3166f4f,1722
+CNPM:CNPM/data/eval/mel/商17.wav_0.jpg,pattern_1,商17.wav,商17.wav,90994b8bbc9cfee6ebe61ef57de43d6ca01e00b4,g90994b8bbc9c,0
+CNPM:CNPM/data/eval/mel/商17.wav_1722.jpg,pattern_1,商17.wav,商17.wav,16c4d6ec49175c4d34d10efe65064ce7c94bfb7c,g16c4d6ec4917,1722
+CNPM:CNPM/data/eval/mel/商17.wav_6888.jpg,pattern_1,商17.wav,商17.wav,76fccc53af53bef9588092ecd2257879128b32e8,g76fccc53af53,6888
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_0.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",738bad00150a2c25cd3aca660eea25bc2cbe0eb7,g738bad00150a,0
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_1722.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",b32adebd51c9508f1f0fc0da2e45dc669cc3b5fe,gb32adebd51c9,1722
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_3444.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",d11c98896d6c6ec30596fa1b29a6fba916826288,gd11c98896d6c,3444
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_5166.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",88d1a5abbb334a7e95f955ab63d6450be99feaaf,g88d1a5abbb33,5166
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_6888.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",fc29ba3e145438fae8b142271bff6254f06754d9,gfc29ba3e1454,6888
+"CNPM:CNPM/data/eval/mel/慨古吟 - 山阳琴人,李家祥.mp3_8610.jpg",pattern_1,"慨古吟 - 山阳琴人,李家祥.mp3","慨古吟 - 山阳琴人,李家祥.mp3",46cecb3e91f0ef7c1d730d277f5f3b4af805724a,g46cecb3e91f0,8610
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_0.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,5b385634fbbf2d9740df617c154e5e57827d15b0,g5b385634fbbf,0
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_1722.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,549c28ae2fb35532151102e4d97eb3aec338a6d2,g549c28ae2fb3,1722
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_3444.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,8ba386423a62a6a2f0c9d9c29b975863ebe0ab94,g8ba386423a62,3444
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_5166.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,192145edfb88b6b8e044cc4401fa6e7cf23f4467,g192145edfb88,5166
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_13776.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,3bccda8fe4714637896a6706c59ad4f59445113f,g3bccda8fe471,13776
+CNPM:CNPM/data/eval/mel/柳青娘 - 苏巧筝.mp3_15498.jpg,pattern_1,柳青娘 - 苏巧筝.mp3,柳青娘 - 苏巧筝.mp3,c224c6cb42818cf4f9eec2f0e6e4a8057bd12094,gc224c6cb4281,15498
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_0.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,28dd83a5dc281924a374c9be88cddc017a177ef6,g28dd83a5dc28,0
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_1722.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,9ae9ebd65285017ab0185e503314deb7cfe23acf,g9ae9ebd65285,1722
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_3444.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,63bf334c22d3bee49d24534cea07b24751033490,g63bf334c22d3,3444
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_5166.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,e0949547e0f3ff2b939ce1a9a2ade5538e1b2e89,ge0949547e0f3,5166
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_10332.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,11cdc0335d37ae76167ce37c1ca3b5cfc0d2f0de,g11cdc0335d37,10332
+CNPM:CNPM/data/eval/mel/绣金匾 - 纯音乐.wav_12054.jpg,pattern_1,绣金匾 - 纯音乐.wav,绣金匾 - 纯音乐.wav,1415f83639999206b0b13d8294bec3fa35e22fd8,g1415f8363999,12054
+CNPM:CNPM/data/eval/mel/金蛇狂舞 - 刘德海.mp3_3444.jpg,pattern_1,金蛇狂舞 - 刘德海.mp3,金蛇狂舞 - 刘德海.mp3,ad0747d220fbfc9733c389ae55d4a9ab8e7cf6d5,gad0747d220fb,3444
+CNPM:CNPM/data/eval/mel/金蛇狂舞 - 刘德海.mp3_5166.jpg,pattern_1,金蛇狂舞 - 刘德海.mp3,金蛇狂舞 - 刘德海.mp3,4fc16e6b03136cfef20459edd95f2368f44c0e30,g4fc16e6b0313,5166
+CNPM:CNPM/data/eval/mel/金蛇狂舞 - 刘德海.mp3_6888.jpg,pattern_1,金蛇狂舞 - 刘德海.mp3,金蛇狂舞 - 刘德海.mp3,e1c1219a88dcaf70a8c86cc61d48cd147ee83d9a,ge1c1219a88dc,6888
+CNPM:CNPM/data/eval/mel/金蛇狂舞 - 刘德海.mp3_8610.jpg,pattern_1,金蛇狂舞 - 刘德海.mp3,金蛇狂舞 - 刘德海.mp3,a6a81207cbeaba95bab01d433378481db8a0b127,ga6a81207cbea,8610
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_0.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,c1321e1f2b014c089a83de563dd1fdd99a95f45a,gc1321e1f2b01,0
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_1722.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,34e1cee3cf0b762666e8c86a12b8824ad6ed71e8,g34e1cee3cf0b,1722
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_3444.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,33611b4ad5043461201acab728f88839cf0f9922,g33611b4ad504,3444
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_5166.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,b26d161574aea4ee4f9b38aa30eb571339a99eda,gb26d161574ae,5166
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_10332.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,e8d38ea98b4305236e6482433f88ced378093891,ge8d38ea98b43,10332
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_12054.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,c38048eebb37943421ff5f8a25592220283be72d,gc38048eebb37,12054
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_13776.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,02cb896f29c246a2de74a2ced41aaef6493a2093,g02cb896f29c2,13776
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_15498.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,6310d6510654194834a597a0ae1edc00885b40cd,g6310d6510654,15498
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_17220.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,db37653b3a8b8ab905a841c459f225e050987cfb,gdb37653b3a8b,17220
+CNPM:CNPM/data/eval/mel/三六 - 林石城.mp3_18942.jpg,pattern_2,三六 - 林石城.mp3,三六 - 林石城.mp3,87a2fa6efaf00286569390cfc66c8ac7cd9c028d,g87a2fa6efaf0,18942
+CNPM:CNPM/data/eval/mel/西楼月 - 曹节.mp3_13776.jpg,pattern_2,西楼月 - 曹节.mp3,西楼月 - 曹节.mp3,1cddaa03fd02c70c4ed8905d388165e5669bf50a,g1cddaa03fd02,13776
+CNPM:CNPM/data/eval/mel/角32.wav_3444.jpg,pattern_2,角32.wav,角32.wav,6d54ef739a29e82f2194a8447f491cbfa72f092c,g6d54ef739a29,3444
+CNPM:CNPM/data/eval/mel/角32.wav_5166.jpg,pattern_2,角32.wav,角32.wav,e92c490cd13916addff67097bb4841989adcfb25,ge92c490cd139,5166
+CNPM:CNPM/data/eval/mel/角35.wav_0.jpg,pattern_2,角35.wav,角35.wav,21cb0cac5ebe9a58c77f8a95aaba8663ae88ac48,g21cb0cac5ebe,0
+CNPM:CNPM/data/eval/mel/角35.wav_1722.jpg,pattern_2,角35.wav,角35.wav,6fe826a6bedadc56b2460ecd80447cfae0763a4d,g6fe826a6beda,1722
+CNPM:CNPM/data/eval/mel/角35.wav_3444.jpg,pattern_2,角35.wav,角35.wav,68e763ec13b25f7dd46da4536e6a8145d5cab06d,g68e763ec13b2,3444
+CNPM:CNPM/data/eval/mel/角41.wav_0.jpg,pattern_2,角41.wav,角41.wav,7274525176f3f6cb8ce87ac990d40c734032eab1,g7274525176f3,0
+CNPM:CNPM/data/eval/mel/角41.wav_1723.jpg,pattern_2,角41.wav,角41.wav,28f5a3baaf2c948c51e70a9116f40346e0d2dc30,g28f5a3baaf2c,1723
+CNPM:CNPM/data/eval/mel/角5.wav_0.jpg,pattern_2,角5.wav,角5.wav,4548d59e8c7074eaa041c72af1fae7967b0cfc48,g4548d59e8c70,0
+CNPM:CNPM/data/eval/mel/角5.wav_1722.jpg,pattern_2,角5.wav,角5.wav,9b8c5ea864afc05712203505e8579ed162264457,g9b8c5ea864af,1722
+CNPM:CNPM/data/eval/mel/角7.wav_3444.jpg,pattern_2,角7.wav,角7.wav,0ff82704321c894f2bbc661de20c529e846d5438,g0ff82704321c,3444
+CNPM:CNPM/data/eval/mel/角7.wav_5166.jpg,pattern_2,角7.wav,角7.wav,b62afc7565e4b2951203cd0bf0e5c9baead04045,gb62afc7565e4,5166
+CNPM:CNPM/data/eval/mel/凤求凰 - 柏常青.mp3_3444.jpg,pattern_3,凤求凰 - 柏常青.mp3,凤求凰 - 柏常青.mp3,215606a496f15505987ba3928b13f2d4e6a68468,g215606a496f1,3444
+CNPM:CNPM/data/eval/mel/凤求凰 - 柏常青.mp3_5166.jpg,pattern_3,凤求凰 - 柏常青.mp3,凤求凰 - 柏常青.mp3,7edb7f72dfb09eefae7200296b0bb1be6ce29da5,g7edb7f72dfb0,5166
+CNPM:CNPM/data/eval/mel/凤求凰 - 柏常青.mp3_6888.jpg,pattern_3,凤求凰 - 柏常青.mp3,凤求凰 - 柏常青.mp3,e8b1c40488c39349efbd7b73aa75c6c6a363a052,ge8b1c40488c3,6888
+CNPM:CNPM/data/eval/mel/凤求凰 - 柏常青.mp3_8610.jpg,pattern_3,凤求凰 - 柏常青.mp3,凤求凰 - 柏常青.mp3,5fd59ef8abb985a7ad36834312d249c20007b8f2,g5fd59ef8abb9,8610
+CNPM:CNPM/data/eval/mel/凤求凰 - 柏常青.mp3_10332.jpg,pattern_3,凤求凰 - 柏常青.mp3,凤求凰 - 柏常青.mp3,b611eeb7af1b67e017abb9b3ef6d428549e76e24,gb611eeb7af1b,10332
+CNPM:CNPM/data/eval/mel/孟姜女(古筝独奏) - 项斯华.mp3_10332.jpg,pattern_3,孟姜女(古筝独奏) - 项斯华.mp3,孟姜女(古筝独奏) - 项斯华.mp3,2fd0fc6ef4c92294d0d73485c24fe37a8a8cef03,g2fd0fc6ef4c9,10332
+CNPM:CNPM/data/eval/mel/孟姜女(古筝独奏) - 项斯华.mp3_12054.jpg,pattern_3,孟姜女(古筝独奏) - 项斯华.mp3,孟姜女(古筝独奏) - 项斯华.mp3,4f97b3db76513f8abb7a365448b4673e610e02fe,g4f97b3db7651,12054
+CNPM:CNPM/data/eval/mel/孟姜女(古筝独奏) - 项斯华.mp3_13776.jpg,pattern_3,孟姜女(古筝独奏) - 项斯华.mp3,孟姜女(古筝独奏) - 项斯华.mp3,ffb6af46bf49c2aabd3401082d3485abe2f9df50,gffb6af46bf49,13776
+CNPM:CNPM/data/eval/mel/孟姜女(古筝独奏) - 项斯华.mp3_15498.jpg,pattern_3,孟姜女(古筝独奏) - 项斯华.mp3,孟姜女(古筝独奏) - 项斯华.mp3,2d27e081e75423e39ac16131fbb89545a9a0c534,g2d27e081e754,15498
+CNPM:CNPM/data/eval/mel/小剪剪花 - 王中山.mp3_0.jpg,pattern_3,小剪剪花 - 王中山.mp3,小剪剪花 - 王中山.mp3,ac3fae52c2771d6ebac7af42c7dce7bb216ac6c1,gac3fae52c277,0
+CNPM:CNPM/data/eval/mel/小剪剪花 - 王中山.mp3_1722.jpg,pattern_3,小剪剪花 - 王中山.mp3,小剪剪花 - 王中山.mp3,b18a77a2bc507256b613bd1c88668dd85e1697ae,gb18a77a2bc50,1722
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_3444.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,105abd09decc0415f0038d6f3dcd3c954af7656e,g105abd09decc,3444
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_5166.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,63e34ef81a68c4dd8aff905b61e8b076965fde7c,g63e34ef81a68,5166
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_6888.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,e171ad52a89572f8f3cfd7cc50c9c170bd37b220,ge171ad52a895,6888
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_8610.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,045512ff39c7d30e49c42b6f21b0a8b5a7ea3aa4,g045512ff39c7,8610
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_10332.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,271f18bda23765a190893c54dd70c4aad35a0304,g271f18bda237,10332
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_12054.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,6b4e38b6cbce12bdb2bcd957fc84caa06d6d82e2,g6b4e38b6cbce,12054
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_13776.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,663fe690e262e469d2270682a126c3a82c789591,g663fe690e262,13776
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_15498.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,dc51e980c435572100cddf0bbe5b75d0ff1ccdef,gdc51e980c435,15498
+CNPM:CNPM/data/eval/mel/平湖秋月 - 群星.mp3_24108.jpg,pattern_3,平湖秋月 - 群星.mp3,平湖秋月 - 群星.mp3,f282747d6028c6823fe24768dfedeb3ae42f8e98,gf282747d6028,24108
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_0.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,97ae45fe9436cb0dd8b7a908662999711a7ac3ab,g97ae45fe9436,0
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_1722.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,af58146cec754d7508347cdf39b50f9002ff8ef2,gaf58146cec75,1722
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_10332.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,472b9538d24fa954326b43df4aba753c7f594648,g472b9538d24f,10332
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_12054.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,7b12c29f571953294e293ea3e1d98c54cd1f1148,g7b12c29f5719,12054
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_17220.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,93a4526666abf4b3dd4f03a14cc26f28c43d19c0,g93a4526666ab,17220
+CNPM:CNPM/data/eval/mel/月儿弯弯照九州(纯音乐) - 朱昌耀.wav_18942.jpg,pattern_3,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,月儿弯弯照九州(纯音乐) - 朱昌耀.wav,aac2855ee230d10f125b584de3e3260b57c404df,gaac2855ee230,18942
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_0.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,edd8c28d8352dea523d7a26347b3f40c14ad2de1,gedd8c28d8352,0
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_1722.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,f1272748157e2f3ff988c95c5c29d0263046fee2,gf1272748157e,1722
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_6888.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,31a3b298212d7cd2c12338bccbbfd9bba8a9421f,g31a3b298212d,6888
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_8610.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,75ff07f7fcfd3c21c0553b540e8160f446fb1bea,g75ff07f7fcfd,8610
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_17220.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,8243a0ccbf6e42326d832c60b09d6bfd316f7db2,g8243a0ccbf6e,17220
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_18942.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,cd7ef5dec1c37180560e90ba83bf8d06812f63a5,gcd7ef5dec1c3,18942
+CNPM:CNPM/data/eval/mel/流水行云 - 中央民族乐团.mp3_20664.jpg,pattern_3,流水行云 - 中央民族乐团.mp3,流水行云 - 中央民族乐团.mp3,c5e3a212b6620d70cd0003f1c0b35f7e9975f4d9,gc5e3a212b662,20664
+CNPM:CNPM/data/eval/mel/粤海欢歌 - 纯音乐.wav_17220.jpg,pattern_3,粤海欢歌 - 纯音乐.wav,粤海欢歌 - 纯音乐.wav,23be99f00c6e6ca911252f45176de797c19a47ae,g23be99f00c6e,17220
+CNPM:CNPM/data/eval/mel/粤海欢歌 - 纯音乐.wav_18942.jpg,pattern_3,粤海欢歌 - 纯音乐.wav,粤海欢歌 - 纯音乐.wav,1cdffc181a3d490823182343695dc7257e565cd4,g1cdffc181a3d,18942
+CNPM:CNPM/data/eval/mel/粤海欢歌 - 纯音乐.wav_20664.jpg,pattern_3,粤海欢歌 - 纯音乐.wav,粤海欢歌 - 纯音乐.wav,69f7f029f3edbd229f7be3d9da3924b9391c2622,g69f7f029f3ed,20664
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_3444.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,4e4dd91290beac224ab514dd1298ccc2850dee04,g4e4dd91290be,3444
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_5166.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,679f8145dff63748c953d66f84745ad88eda49b4,g679f8145dff6,5166
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_6888.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,2f3eee205c422b41555e2a1e4c8fcd1f84e65439,g2f3eee205c42,6888
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_8610.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,089f82250d83faa86de2c5773369ad263a11cced,g089f82250d83,8610
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_10332.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,2093ae2b7143b068f28dc497e61dc10fd35c6f4b,g2093ae2b7143,10332
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_12054.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,0d181dc67a4485e50192884e288901cf567f99e4,g0d181dc67a44,12054
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_13776.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,16740c1a1d118dbc6a0270e494aac6303bcf7fbc,g16740c1a1d11,13776
+CNPM:CNPM/data/eval/mel/西厢词 - 饶宁新.mp3_15498.jpg,pattern_3,西厢词 - 饶宁新.mp3,西厢词 - 饶宁新.mp3,2822badbfe1d167034338d9eb66d4549849b94f2,g2822badbfe1d,15498
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_6888.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,186603620db8a06b73a2695adc861d85e6b30f14,g186603620db8,6888
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_8610.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,aa8eed6b94443b787a67a17045cd5d4c924659bc,gaa8eed6b9444,8610
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_20664.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,762b4fc24b3f13a89215ae486270c44b161d6799,g762b4fc24b3f,20664
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_22386.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,cb5e3d5e0ffd7cb33f5d19ec5abe9a0cf0541f96,gcb5e3d5e0ffd,22386
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_24108.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,bd67de36e329b06b2e973a47b60af0fad4bb4696,gbd67de36e329,24108
+CNPM:CNPM/data/eval/mel/高山流水 - 赵晓霞.mp3_25830.jpg,pattern_3,高山流水 - 赵晓霞.mp3,高山流水 - 赵晓霞.mp3,89a041f1468059468dfeab3ff1da4d662decca12,g89a041f14680,25830
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_6888.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,f5cba17b1daff7f95a8e0cfb40ca7a951944da3b,gf5cba17b1daf,6888
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_8610.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,461abf5badfcd9a46fd84c679cf78e9d4f0814de,g461abf5badfc,8610
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_13776.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,66f3ae0a625052aedc62455f7fcfb155ba360b14,g66f3ae0a6250,13776
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_15498.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,96f95382762c0671536844a82559a07ef0f868d0,g96f95382762c,15498
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_17220.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,a50a6564d91c367cbb8e95f9f2efa2a011be01e2,ga50a6564d91c,17220
+CNPM:CNPM/data/eval/mel/黄鹂亮翅 - 张维良.mp3_18942.jpg,pattern_3,黄鹂亮翅 - 张维良.mp3,黄鹂亮翅 - 张维良.mp3,2631c27fbbb1ab1d43985926cc21165f835c12f4,g2631c27fbbb1,18942
+CNPM:CNPM/data/eval/mel/延边之歌 (古筝独奏) - 项斯华.mp3_0.jpg,pattern_4,延边之歌 (古筝独奏) - 项斯华.mp3,延边之歌 (古筝独奏) - 项斯华.mp3,ebaf14285c87a06877f3054396627232eaa91524,gebaf14285c87,0
+CNPM:CNPM/data/eval/mel/延边之歌 (古筝独奏) - 项斯华.mp3_1722.jpg,pattern_4,延边之歌 (古筝独奏) - 项斯华.mp3,延边之歌 (古筝独奏) - 项斯华.mp3,101c0b24611d94d6b92722b1c1482f054f9c9a7f,g101c0b24611d,1722
+CNPM:CNPM/data/eval/mel/延边之歌 (古筝独奏) - 项斯华.mp3_10332.jpg,pattern_4,延边之歌 (古筝独奏) - 项斯华.mp3,延边之歌 (古筝独奏) - 项斯华.mp3,277cc802e83c553a1a7cc2777ca4b873c1607d34,g277cc802e83c,10332
+CNPM:CNPM/data/eval/mel/敖包相会 Meet at Aobao - 华语群星.mp3_3444.jpg,pattern_4,敖包相会 Meet at Aobao - 华语群星.mp3,敖包相会 Meet at Aobao - 华语群星.mp3,a67c0cf52f9c340ffe64344884f6598577aa13da,ga67c0cf52f9c,3444
+CNPM:CNPM/data/eval/mel/敖包相会 Meet at Aobao - 华语群星.mp3_5166.jpg,pattern_4,敖包相会 Meet at Aobao - 华语群星.mp3,敖包相会 Meet at Aobao - 华语群星.mp3,0b349098d59a6c49ee4cfd7d0bf998af97bb0519,g0b349098d59a,5166
+CNPM:CNPM/data/eval/mel/敖包相会 Meet at Aobao - 华语群星.mp3_10332.jpg,pattern_4,敖包相会 Meet at Aobao - 华语群星.mp3,敖包相会 Meet at Aobao - 华语群星.mp3,63362191185039fe360ced864d61bd3e09ca73cb,g633621911850,10332
+CNPM:CNPM/data/eval/mel/敖包相会 Meet at Aobao - 华语群星.mp3_12054.jpg,pattern_4,敖包相会 Meet at Aobao - 华语群星.mp3,敖包相会 Meet at Aobao - 华语群星.mp3,943b10760371638e48152ed1d56b6821636313c4,g943b10760371,12054
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_3444.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,a49b5647362a7ed6461dbbd1c01b318d8938511b,ga49b5647362a,3444
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_5166.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,86ed3aafa46740bdb3e2502da199023b3c605afd,g86ed3aafa467,5166
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_10332.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,05929eba0cfab57a397f77f781aaefb0617dd536,g05929eba0cfa,10332
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_12054.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,56983bb2986fd8ed3440f90bfc8a88ac7dddb1be,g56983bb2986f,12054
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_17220.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,ee7470151495bfcbfbe3c4724732db3828a3e848,gee7470151495,17220
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_18942.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,391c5627722ee61b2b46fd2499dd48a1abdd9766,g391c5627722e,18942
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_30996.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,975a6cfda8cfd4154554784a69e39f2dbbcbeed7,g975a6cfda8cf,30996
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_32718.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,68ca840b83e531b1faa15c044df1188cf43f6c70,g68ca840b83e5,32718
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_34440.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,7611532f02bfd547d98cecc53afe91c03e708d7c,g7611532f02bf,34440
+CNPM:CNPM/data/eval/mel/杏花天影 - 陈增智.mp3_36162.jpg,pattern_4,杏花天影 - 陈增智.mp3,杏花天影 - 陈增智.mp3,3301d431647a81e6d403ef4b2ea72dd9b3d853aa,g3301d431647a,36162
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_3444.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,3dad8c66d7f0ae74ada7379412d521d3c575b1ed,g3dad8c66d7f0,3444
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_5166.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,2b44bfe5b29b8da200a54234c36118754b46fa02,g2b44bfe5b29b,5166
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_6888.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,a9cf15d87cd5f14a84d9786ab5bda3b06f110f40,ga9cf15d87cd5,6888
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_8610.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,8aa52059baa8d3cf06f02e5d6f70ac59a0f8b57d,g8aa52059baa8,8610
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_10332.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,0481296569210b257d8d1522725d420a086bc183,g048129656921,10332
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_12054.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,c98d4dee4e482b863738cc2ff5c7dd20edcfc63e,gc98d4dee4e48,12054
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_17220.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,5077fe51eb21d66e1f59f85e8b2acbaf2f41659a,g5077fe51eb21,17220
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_18942.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,a0b7595e3874ab307ac218201632517ae69ae133,ga0b7595e3874,18942
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_20664.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,87673ee8e1767cb2c2344ed0c37360d7ad76a99b,g87673ee8e176,20664
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_22386.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,2416f122edd94a713ebc9902e5c6ce6abab35380,g2416f122edd9,22386
+CNPM:CNPM/data/eval/mel/枉凝眉 - 刘宽忍.mp3_27552.jpg,pattern_4,枉凝眉 - 刘宽忍.mp3,枉凝眉 - 刘宽忍.mp3,e345299ef4901e8f42526a6a4aa92a61844a8000,ge345299ef490,27552
+CNPM:CNPM/data/eval/mel/林冲夜奔(1) - 郁红.mp3_6888.jpg,pattern_4,林冲夜奔(1) - 郁红.mp3,林冲夜奔(1) - 郁红.mp3,610c247845345e26876d79a81eb24eaf410a8fa1,g610c24784534,6888
+CNPM:CNPM/data/eval/mel/林冲夜奔(1) - 郁红.mp3_8610.jpg,pattern_4,林冲夜奔(1) - 郁红.mp3,林冲夜奔(1) - 郁红.mp3,763dad72960b192d21b485a3a83057bb0e1c6121,g763dad72960b,8610
+CNPM:CNPM/data/eval/mel/林冲夜奔(1) - 郁红.mp3_10332.jpg,pattern_4,林冲夜奔(1) - 郁红.mp3,林冲夜奔(1) - 郁红.mp3,ee037c491f1bccfea80a217e68166919d697328a,gee037c491f1b,10332
+CNPM:CNPM/data/eval/mel/桂枝香 - 朱润福.mp3_0.jpg,pattern_4,桂枝香 - 朱润福.mp3,桂枝香 - 朱润福.mp3,a716064710b70256caa17292d98b0a71392583fe,ga716064710b7,0
+CNPM:CNPM/data/eval/mel/桂枝香 - 朱润福.mp3_1722.jpg,pattern_4,桂枝香 - 朱润福.mp3,桂枝香 - 朱润福.mp3,ae74a263ff9f2d84e07d4e700a58283db21498c8,gae74a263ff9f,1722
+CNPM:CNPM/data/eval/mel/桂枝香 - 朱润福.mp3_3444.jpg,pattern_4,桂枝香 - 朱润福.mp3,桂枝香 - 朱润福.mp3,6cb6366ddda2865fa5cbc39e40509f186ad07103,g6cb6366ddda2,3444
+CNPM:CNPM/data/eval/mel/桂枝香 - 朱润福.mp3_5166.jpg,pattern_4,桂枝香 - 朱润福.mp3,桂枝香 - 朱润福.mp3,49b2e2da8de13fe94cc12fff139ec7c7ad846ef9,g49b2e2da8de1,5166
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_0.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,e208434c98891c99f991bd07ad674353220f4ee7,ge208434c9889,0
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_1722.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,144ead8da8658cce85b7f48bebc388b00ea0227c,g144ead8da865,1722
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_3444.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,2c085caccbd554deb6249cee71e9ffdefaff0b2e,g2c085caccbd5,3444
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_5166.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,ea4de31211151613e730a7759ab4bd603f5ad72c,gea4de3121115,5166
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_6888.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,4f058ad296f488e76125249f1c819dd3b3955af0,g4f058ad296f4,6888
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_8610.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,7c9c85d0e05568b801598002700768d501dcfa77,g7c9c85d0e055,8610
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_10332.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,a26496e5a990d8ea65525e2be63af32c49497360,ga26496e5a990,10332
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_12054.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,d25727bb42cd7891a7e162daefd2acf10fc788bd,gd25727bb42cd,12054
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_17220.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,29bd87b03321cac67f03c0374c9bc4b935db742d,g29bd87b03321,17220
+CNPM:CNPM/data/eval/mel/爱情骗子我问你 - 纯音乐.wav_18942.jpg,pattern_4,爱情骗子我问你 - 纯音乐.wav,爱情骗子我问你 - 纯音乐.wav,30422a261338fb655dbe24658abbb18f491f85f1,g30422a261338,18942
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_3444.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,f733816ebb1904808a9559ac7aa33762ef4d2f36,gf733816ebb19,3444
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_5166.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,ba1b73d84e4e0e3d2afd47e04e038fa0f01adadd,gba1b73d84e4e,5166
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_6888.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,5d2ddea5a6bff6a0fea35f87b195b6dd27e2e686,g5d2ddea5a6bf,6888
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_8610.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,72edf18e6da405e05360802aa4b84486eba5c8d7,g72edf18e6da4,8610
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_10332.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,21472f0f2d1eec127efa98c49d1432acd823144c,g21472f0f2d1e,10332
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_12054.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,4be610ed639d1e4ade240cd425734a6ea1ccae2b,g4be610ed639d,12054
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_17220.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,f39259da24b380c2af2b23f79caaf1e46b255902,gf39259da24b3,17220
+CNPM:CNPM/data/eval/mel/蒙古人 - 朝克吉勒图.mp3_18942.jpg,pattern_4,蒙古人 - 朝克吉勒图.mp3,蒙古人 - 朝克吉勒图.mp3,d2a408db5f7fe3df3a33bf21dcbf0f5e7ba20009,gd2a408db5f7f,18942
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_0.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,dd0c55e105d5ec797ab136fa7bb968851d352d9f,gdd0c55e105d5,0
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_1722.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,7d0c65ff6c721f73198397936904c4f33994c359,g7d0c65ff6c72,1722
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_6888.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,cd73910e2d9481ecefc457a672035b515dd747f0,gcd73910e2d94,6888
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_8610.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,1b1e0b21aeffa44037e82a74c8dd8aafaf90a0c3,g1b1e0b21aeff,8610
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_10332.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,c479f752de9351f9faa0db2463b8922a7f72802e,gc479f752de93,10332
+CNPM:CNPM/data/eval/mel/赶马调 - 任桂珍.mp3_12054.jpg,pattern_4,赶马调 - 任桂珍.mp3,赶马调 - 任桂珍.mp3,941dbf0392b661e6d1f6e926b7b5acc8a2435ae0,g941dbf0392b6,12054
+CNPM:CNPM/data/eval/mel/达古拉 - 朝克吉勒图.mp3_6888.jpg,pattern_4,达古拉 - 朝克吉勒图.mp3,达古拉 - 朝克吉勒图.mp3,bc983eedfd4fe1f02dfc1576b7e442439db6ab6b,gbc983eedfd4f,6888
+CNPM:CNPM/data/eval/mel/达古拉 - 朝克吉勒图.mp3_8610.jpg,pattern_4,达古拉 - 朝克吉勒图.mp3,达古拉 - 朝克吉勒图.mp3,2236a320dc8591f663306dc0d4afdf15c5e420b2,g2236a320dc85,8610
+CNPM:CNPM/data/eval/mel/达古拉 - 朝克吉勒图.mp3_10332.jpg,pattern_4,达古拉 - 朝克吉勒图.mp3,达古拉 - 朝克吉勒图.mp3,6baac15d4089de299e18fdd4ff372a0027703526,g6baac15d4089,10332
+CNPM:CNPM/data/eval/mel/达古拉 - 朝克吉勒图.mp3_12054.jpg,pattern_4,达古拉 - 朝克吉勒图.mp3,达古拉 - 朝克吉勒图.mp3,a912894d0dd6c625b37891aad749f7b656055e5d,ga912894d0dd6,12054
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_6888.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,17d14cdb68017ee027d504cec0f4e82502cb8658,g17d14cdb6801,6888
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_8610.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,62ef3df6f4340e8f1de4bf10e1e1e758ee409f67,g62ef3df6f434,8610
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_10332.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,7475800dd444d6ec0de98d766529578b9df4631a,g7475800dd444,10332
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_12054.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,eea6a9935403df647a74c31cfdc0d1cb1ced1f43,geea6a9935403,12054
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_17220.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,8e9f02a62d28f7350b709924ed0383da8ee408a5,g8e9f02a62d28,17220
+CNPM:CNPM/data/eval/mel/银河碧波 - 群星.mp3_18942.jpg,pattern_4,银河碧波 - 群星.mp3,银河碧波 - 群星.mp3,40f2969b29cceb781cd1c3d6979695fe7228d538,g40f2969b29cc,18942
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_0.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,a8ca1c4a39ffe442877bdd42f45aac67077c07a7,ga8ca1c4a39ff,0
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_1722.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,a1c56cf480f5110bca2c42724bc66258abce6a13,ga1c56cf480f5,1722
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_13776.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,c889952906efd1bd5112d0631e554bb729a45498,gc889952906ef,13776
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_15498.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,345e4b3409861ba2ac2156ac82b92e9f3d6b8fea,g345e4b340986,15498
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_24108.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,73af19dc4d622d7f1783365fa4cacc7aaab3ebd3,g73af19dc4d62,24108
+CNPM:CNPM/data/eval/mel/长相思 - 朱昌耀.mp3_25830.jpg,pattern_4,长相思 - 朱昌耀.mp3,长相思 - 朱昌耀.mp3,fb4a064f01c8eb9d5d335f2eb2664d0b2114238a,gfb4a064f01c8,25830

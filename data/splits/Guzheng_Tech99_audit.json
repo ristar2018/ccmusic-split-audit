@@ -1,0 +1,21 @@
+{
+ "slices": 99,
+ "sources": 99,
+ "slices_per_source": 1.0,
+ "classes": 1,
+ "source_slice_hist": {
+  "1": 99
+ },
+ "mode": "official_dirs",
+ "split_sizes": {
+  "train": 79,
+  "validation": 10,
+  "test": 10
+ },
+ "leak_rate": 0.0,
+ "leak_rate_mean": 0.0,
+ "n_eff": 99,
+ "effective_reduction": 1.0,
+ "note": "leak_rate=测试切片中同源切片也出现在训练集的比例；n_eff=独立源数量",
+ "dataset": "Guzheng_Tech99"
+}

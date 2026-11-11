@@ -1,0 +1,104 @@
+[
+  {
+    "key": "defferrard2016",
+    "tried": [
+      {
+        "url": "https://archives.ismir.net/ismir2017/paper/000171.pdf",
+        "http": 200,
+        "final": "https://archives.ismir.net/ismir2017/paper/000171.pdf",
+        "title": "",
+        "is_pdf": true,
+        "ok": true
+      },
+      {
+        "url": "https://archives.ismir.net/ismir2017/paper/000171.html",
+        "http": 404,
+        "ok": false
+      }
+    ],
+    "any_ok": true
+  },
+  {
+    "key": "ganin2015",
+    "tried": [
+      {
+        "url": "https://jmlr.org/papers/v17/15-239.html",
+        "http": 200,
+        "final": "https://jmlr.org/papers/v17/15-239.html",
+        "title": "Domain-Adversarial Training of Neural Networks",
+        "is_pdf": false,
+        "ok": true
+      }
+    ],
+    "any_ok": true
+  },
+  {
+    "key": "gebru2018",
+    "tried": [
+      {
+        "url": "https://dl.acm.org/doi/10.1145/3287324",
+        "http": 403,
+        "ok": false
+      },
+      {
+        "url": "https://cacm.acm.org/research/datasheets-for-datasets/",
+        "http": 403,
+        "ok": false
+      }
+    ],
+    "any_ok": false
+  },
+  {
+    "key": "li2023",
+    "tried": [
+      {
+        "url": "https://openreview.net/forum?id=c7klOsw0wbu",
+        "http": 200,
+        "final": "https://openreview.net/challenge?redirect=%2Fforum%3Fid%3Dc7klOsw0wbu",
+        "title": "Verifying your browser | OpenReview",
+        "is_pdf": false,
+        "ok": true
+      }
+    ],
+    "any_ok": true
+  },
+  {
+    "key": "choi2017",
+    "tried": [
+      {
+        "url": "https://archives.ismir.net/ismir2017/paper/000164.pdf",
+        "http": 200,
+        "final": "https://archives.ismir.net/ismir2017/paper/000164.pdf",
+        "title": "",
+        "is_pdf": true,
+        "ok": true
+      }
+    ],
+    "any_ok": true
+  },
+  {
+    "key": "lee2017",
+    "tried": [
+      {
+        "url": "https://archives.ismir.net/ismir2017/paper/000220.pdf",
+        "http": 200,
+        "final": "https://archives.ismir.net/ismir2017/paper/000220.pdf",
+        "title": "",
+        "is_pdf": true,
+        "ok": true
+      }
+    ],
+    "any_ok": true
+  },
+  {
+    "key": "won2020",
+    "tried": [
+      {
+        "url": "https://archives.ismir.net/ismir2020/paper/000210.pdf",
+        "http": 404,
+        "ok": false
+      }
+    ],
+    "any_ok": false
+  }
+]

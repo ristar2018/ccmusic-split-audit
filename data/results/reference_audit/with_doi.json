@@ -1,0 +1,240 @@
+[
+  {
+    "key": "zhou2025ccmusic",
+    "title": "CCMusic",
+    "year": 2025,
+    "authors": [
+      "Zhou",
+      "Xu",
+      "Liu",
+      "Wang",
+      "Yu",
+      "Li",
+      "Han"
+    ],
+    "doi": "10.5334/tismir.194"
+  },
+  {
+    "key": "kapoor2023leakage",
+    "title": "Leakage and the reproducibility crisis in machine-learning-based science",
+    "year": 2023,
+    "authors": [
+      "Kapoor",
+      "Narayanan"
+    ],
+    "doi": "10.1016/j.patter.2023.100804"
+  },
+  {
+    "key": "salamon2014urbansound",
+    "title": "A Dataset and Taxonomy for Urban Sound Research",
+    "year": 2014,
+    "authors": [
+      "Salamon",
+      "Jacoby",
+      "Bello"
+    ],
+    "doi": "10.1145/2647868.2655045"
+  },
+  {
+    "key": "sturm2012gtzan",
+    "title": "An analysis of the GTZAN",
+    "year": 2012,
+    "authors": [
+      "Sturm"
+    ],
+    "doi": "10.1145/2390848.2390851"
+  },
+  {
+    "key": "ji2023leakage",
+    "title": "A Critical Study on Data Leakage in Recommender System Offline Evaluation",
+    "year": 2023,
+    "authors": [
+      "Ji",
+      "Sun",
+      "Zhang",
+      "Li"
+    ],
+    "doi": "10.1145/3569930"
+  },
+  {
+    "key": "kong2022giantmidi",
+    "title": "GiantMIDI-Piano",
+    "year": 2022,
+    "authors": [
+      "Kong",
+      "Li",
+      "Chen",
+      "Wang"
+    ],
+    "doi": "10.5334/tismir.80"
+  },
+  {
+    "key": "gemmeke2017audioset",
+    "title": "Audio Set",
+    "year": 2017,
+    "authors": [
+      "Gemmeke",
+      "Ellis",
+      "Freedman",
+      "Jansen",
+      "Lawrence",
+      "Moore",
+      "Plakal",
+      "Ritter"
+    ],
+    "doi": "10.1109/icassp.2017.7952261"
+  },
+  {
+    "key": "elizalde2024clap",
+    "title": "Natural Language Supervision For General-Purpose Audio Representations",
+    "year": 2024,
+    "authors": [
+      "Elizalde",
+      "Deshmukh",
+      "Wang"
+    ],
+    "doi": "10.1109/icassp48485.2024.10448504"
+  },
+  {
+    "key": "saito2015pr",
+    "title": "The Precision-Recall Plot Is More Informative than the ROC",
+    "year": 2015,
+    "authors": [
+      "Saito",
+      "Rehmsmeier"
+    ],
+    "doi": "10.1371/journal.pone.0118432"
+  },
+  {
+    "key": "sturm2014horse",
+    "title": "A Simple Method to Determine if a Music Information Retrieval System is a “Horse”",
+    "year": 2014,
+    "authors": [
+      "Sturm"
+    ],
+    "doi": "10.1109/tmm.2014.2330697"
+  },
+  {
+    "key": "hershey2017cnn",
+    "title": "CNN",
+    "year": 2017,
+    "authors": [
+      "Hershey",
+      "Chaudhuri",
+      "Ellis",
+      "Gemmeke",
+      "Jansen",
+      "Moore",
+      "Plakal",
+      "Platt",
+      "Saurous",
+      "Seybold",
+      "Slaney",
+      "Weiss",
+      "Wilson"
+    ],
+    "doi": "10.1109/icassp.2017.7952132"
+  },
+  {
+    "key": "kong2020panns",
+    "title": "PANNs",
+    "year": 2020,
+    "authors": [
+      "Kong",
+      "Cao",
+      "Iqbal",
+      "Wang",
+      "Wang",
+      "Plumbley"
+    ],
+    "doi": "10.1109/taslp.2020.3030497"
+  },
+  {
+    "key": "salamon2017augment",
+    "title": "Deep Convolutional Neural Networks and Data Augmentation for Environmental Sound Classification",
+    "year": 2017,
+    "authors": [
+      "Salamon",
+      "Bello"
+    ],
+    "doi": "10.1109/lsp.2017.2657381"
+  },
+  {
+    "key": "downie2010mirex",
+    "title": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights",
+    "year": 2010,
+    "authors": [
+      "Downie",
+      "Ehmann",
+      "Bay",
+      "Jones"
+    ],
+    "doi": "10.1007/978-3-642-11674-2_5"
+  },
+  {
+    "key": "brookshire2024eeg",
+    "title": "Data leakage in deep learning studies of translational EEG",
+    "year": 2024,
+    "authors": [
+      "Brookshire",
+      "Kasper",
+      "Blauch",
+      "Wu",
+      "Glatt",
+      "Merrill",
+      "Gerrol",
+      "Yoder",
+      "Quirk",
+      "Lucero"
+    ],
+    "doi": "10.3389/fnins.2024.1373515"
+  },
+  {
+    "key": "alexnet2012",
+    "title": "ImageNet",
+    "year": 2017,
+    "authors": [
+      "Krizhevsky",
+      "Sutskever",
+      "Hinton"
+    ],
+    "doi": "10.1145/3065386"
+  },
+  {
+    "key": "swin2021",
+    "title": "Swin Transformer: Hierarchical Vision Transformer using Shifted Windows",
+    "year": 2021,
+    "authors": [
+      "Liu",
+      "Lin",
+      "Cao",
+      "Hu",
+      "Wei",
+      "Zhang",
+      "Lin",
+      "Guo"
+    ],
+    "doi": "10.1109/iccv48922.2021.00986"
+  },
+  {
+    "key": "piczak2015",
+    "title": "ESC",
+    "year": 2015,
+    "authors": [
+      "Piczak"
+    ],
+    "doi": "10.1145/2733373.2806390"
+  },
+  {
+    "key": "kaufman2012",
+    "title": "Leakage in data mining: Formulation, detection, and avoidance",
+    "year": 2012,
+    "authors": [
+      "Kaufman",
+      "Rosset",
+      "Perlich",
+      "Stitelman"
+    ],
+    "doi": "10.1145/2382577.2382579"
+  }
+]

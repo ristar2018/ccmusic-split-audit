@@ -1,0 +1,39 @@
+[
+  {
+    "name": "tismir_ccmusic",
+    "url": "https://transactions.ismir.net/articles/10.5334/tismir.194/",
+    "http": null,
+    "ok": false,
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+  },
+  {
+    "name": "tismir_giantmidi",
+    "url": "https://transactions.ismir.net/articles/10.5334/tismir.80/",
+    "http": null,
+    "ok": false,
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>"
+  },
+  {
+    "name": "springer_downie",
+    "url": "https://link.springer.com/chapter/10.1007/978-3-642-11674-2_5",
+    "http": 200,
+    "final": "https://link.springer.com/chapter/10.1007/978-3-642-11674-2_5?error=cookies_not_supported&code=26c81e63-6dba-4b8d-86c0-09b47480a9d2",
+    "ok": true,
+    "title": "The Music Information Retrieval Evaluation eXchange: Some Observations and Insights | Springer Natur"
+  },
+  {
+    "name": "lee_smc2017",
+    "url": "https://smcnetwork.org/node/1685",
+    "http": null,
+    "ok": false,
+    "error": "URLError: <urlopen error [Errno 11001] getaddrinfo failed>"
+  },
+  {
+    "name": "jmlr_ganin",
+    "url": "https://jmlr.org/papers/v17/15-239.html",
+    "http": 200,
+    "final": "https://jmlr.org/papers/v17/15-239.html",
+    "ok": true,
+    "title": "Domain-Adversarial Training of Neural Networks"
+  }
+]

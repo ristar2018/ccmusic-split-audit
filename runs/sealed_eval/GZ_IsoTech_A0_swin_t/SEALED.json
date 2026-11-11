@@ -1,0 +1,130 @@
+{
+  "group": "GZ_IsoTech_A0_swin_t",
+  "seeds": [
+    0
+  ],
+  "sealed_at": "2026-11-05 22:40:46",
+  "runs": {
+    "seed0": {
+      "config": {
+        "lib": "GZ_IsoTech",
+        "arm": "A0",
+        "bb": "swin_t",
+        "seed": 0,
+        "epochs": 10,
+        "batch": 64,
+        "lr": 0.0003,
+        "wd": 0.05,
+        "warmup_epochs": 1,
+        "label_smoothing": 0.1,
+        "amp": true,
+        "limit": 0,
+        "tag": "e1f2",
+        "n_train": 1738,
+        "n_val": 435,
+        "n_classes": 8,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "size": 224,
+        "normalize": "imagenet",
+        "augment": "none"
+      },
+      "val_best": {
+        "macro_f1_slice": 0.9981,
+        "epoch": 7,
+        "macro_f1_recording": 0.9981
+      },
+      "qtest": {
+        "macro_f1_slice": 0.9986,
+        "acc": 0.9982,
+        "n": 571,
+        "macro_f1_recording": 0.9986,
+        "n_recordings": 564,
+        "confusion": [
+          [
+            77,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            76,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            76,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            68,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            73,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            47,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            106,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            47
+          ]
+        ]
+      }
+    }
+  },
+  "seed_spread_qtest_slice": null
+}

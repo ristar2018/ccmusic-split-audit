@@ -1,0 +1,14 @@
+library,bb,arm,contrast,point_pt,ci_lo_pt_reproduced,ci_hi_pt_reproduced,ci_matches_old_csv,n_draws_le0,n_draws_ge0,p_addone_raw,p_legacy_clamped,holm_addone,boot
+CNPM,alexnet,A1,A1-A0,22.387,15.1229,30.556,False,0,2000,0.001,0.0005,,2000
+CNPM,alexnet,A2,A2-A0,18.0733,10.8076,26.0112,None,0,2000,0.001,0.0005,,2000
+CTIS,alexnet,A1,A1-A0,2.0169,0.8329,3.345,True,0,2000,0.001,0.0005,0.001,2000
+CTIS,alexnet,A2,A2-A0,1.2074,-0.0203,2.4364,None,56,1944,0.056972,0.056,,2000
+GZ_IsoTech,alexnet,A2,A2-A0,0.2727,-0.4248,1.1346,None,462,1544,0.462769,0.462,,2000
+bel_canto,alexnet,A1,A1-A0,8.4227,5.1752,13.8021,True,0,2000,0.001,0.0005,,2000
+bel_canto,alexnet,A2,A2-A0,7.3008,4.457,11.9805,None,0,2000,0.001,0.0005,,2000
+chest_falsetto,alexnet,A2,A2-A0,-0.7086,-3.4603,2.003,None,1408,592,0.592704,0.592,,2000
+erhu_playing_tech,alexnet,A2,A2-A0,0.2484,-1.2368,1.7501,None,728,1288,0.728636,0.728,,2000
+music_genre,alexnet,A1,A1-A0,15.2204,13.0657,17.5347,True,0,2000,0.001,0.0005,,2000
+music_genre,alexnet,A2,A2-A0,14.0558,12.1872,16.1446,None,0,2000,0.001,0.0005,,2000
+pianos,alexnet,A1,A1-A0,14.6203,11.7303,18.2391,False,0,2000,0.001,0.0005,,2000
+pianos,alexnet,A2,A2-A0,14.0749,11.2971,17.6746,None,0,2000,0.001,0.0005,,2000

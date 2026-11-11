@@ -1,0 +1,1395 @@
+{
+ "generated_at": "2026-11-11T09:32:52+0800",
+ "script": "code/round2_a1_minus_c1.py",
+ "inputs": {
+  "sealed": "runs/sealed_eval/CTIS_{A0,A1,A2,C1}_{alexnet,swin_t}/seed{0,1,2}_qtest.npz",
+  "public": [
+   "data/results/e1_delta.csv",
+   "data/results/c1/e1_delta.csv"
+  ],
+  "splits": "data/splits/v2/CTIS_{qpool,qtest,a1_train}.csv"
+ },
+ "env": {
+  "python": "D:\\XiaBao\\AIArtDetect\\envs\\fapn\\python.exe",
+  "numpy": "1.26.4"
+ },
+ "pairing_assertions": {
+  "passed": true,
+  "what": "同骨干同 seed 下 A0/A1/A2/C1 的 y 与 records 逐元素相同；跨 seed 切片集合相同；每格宏 F1（切片级/录音级）与 seed{k}.json 的 qtest 记录一致（tol 5e-4）",
+  "counts": {
+   "y_compare": 18,
+   "records_compare": 18,
+   "f1_recompute": 48
+  },
+  "detail": [
+   {
+    "check": "y/records 参照",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A0",
+    "f1_slice": 0.900587,
+    "f1_recording": 0.911574,
+    "json_slice": 0.9006,
+    "json_recording": 0.9116,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A1",
+    "f1_slice": 0.930323,
+    "f1_recording": 0.932793,
+    "json_slice": 0.9303,
+    "json_recording": 0.9328,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "A2",
+    "f1_slice": 0.920279,
+    "f1_recording": 0.923477,
+    "json_slice": 0.9203,
+    "json_recording": 0.9235,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 0,
+    "arm": "C1",
+    "f1_slice": 0.909102,
+    "f1_recording": 0.925801,
+    "json_slice": 0.9091,
+    "json_recording": 0.9258,
+    "ok": true
+   },
+   {
+    "check": "y/records 参照",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A0",
+    "f1_slice": 0.905053,
+    "f1_recording": 0.918789,
+    "json_slice": 0.9051,
+    "json_recording": 0.9188,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A1",
+    "f1_slice": 0.92473,
+    "f1_recording": 0.933567,
+    "json_slice": 0.9247,
+    "json_recording": 0.9336,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "A2",
+    "f1_slice": 0.91933,
+    "f1_recording": 0.922112,
+    "json_slice": 0.9193,
+    "json_recording": 0.9221,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 1,
+    "arm": "C1",
+    "f1_slice": 0.908585,
+    "f1_recording": 0.921718,
+    "json_slice": 0.9086,
+    "json_recording": 0.9217,
+    "ok": true
+   },
+   {
+    "check": "y/records 参照",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A0",
+    "f1_slice": 0.91767,
+    "f1_recording": 0.928888,
+    "json_slice": 0.9177,
+    "json_recording": 0.9289,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A1",
+    "f1_slice": 0.928764,
+    "f1_recording": 0.933871,
+    "json_slice": 0.9288,
+    "json_recording": 0.9339,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "A2",
+    "f1_slice": 0.919922,
+    "f1_recording": 0.920631,
+    "json_slice": 0.9199,
+    "json_recording": 0.9206,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "alexnet",
+    "seed": 2,
+    "arm": "C1",
+    "f1_slice": 0.90723,
+    "f1_recording": 0.915937,
+    "json_slice": 0.9072,
+    "json_recording": 0.9159,
+    "ok": true
+   },
+   {
+    "check": "y/records 参照",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A0",
+    "f1_slice": 0.95634,
+    "f1_recording": 0.9568,
+    "json_slice": 0.9563,
+    "json_recording": 0.9568,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A1",
+    "f1_slice": 0.964779,
+    "f1_recording": 0.965794,
+    "json_slice": 0.9648,
+    "json_recording": 0.9658,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "A2",
+    "f1_slice": 0.969059,
+    "f1_recording": 0.971229,
+    "json_slice": 0.9691,
+    "json_recording": 0.9712,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 0,
+    "arm": "C1",
+    "f1_slice": 0.956904,
+    "f1_recording": 0.954457,
+    "json_slice": 0.9569,
+    "json_recording": 0.9545,
+    "ok": true
+   },
+   {
+    "check": "y/records 参照",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A0",
+    "f1_slice": 0.950785,
+    "f1_recording": 0.957972,
+    "json_slice": 0.9508,
+    "json_recording": 0.958,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A1",
+    "f1_slice": 0.97121,
+    "f1_recording": 0.969859,
+    "json_slice": 0.9712,
+    "json_recording": 0.9699,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "A2",
+    "f1_slice": 0.972202,
+    "f1_recording": 0.974801,
+    "json_slice": 0.9722,
+    "json_recording": 0.9748,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 1,
+    "arm": "C1",
+    "f1_slice": 0.963169,
+    "f1_recording": 0.963843,
+    "json_slice": 0.9632,
+    "json_recording": 0.9638,
+    "ok": true
+   },
+   {
+    "check": "y/records 参照",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A0",
+    "n": 4605,
+    "n_recordings": 963,
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A0",
+    "f1_slice": 0.953711,
+    "f1_recording": 0.95184,
+    "json_slice": 0.9537,
+    "json_recording": 0.9518,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A1",
+    "f1_slice": 0.975735,
+    "f1_recording": 0.979243,
+    "json_slice": 0.9757,
+    "json_recording": 0.9792,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A2",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "A2",
+    "f1_slice": 0.971928,
+    "f1_recording": 0.973624,
+    "json_slice": 0.9719,
+    "json_recording": 0.9736,
+    "ok": true
+   },
+   {
+    "check": "y/records 配对",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "C1",
+    "vs": "A0",
+    "ok": true
+   },
+   {
+    "check": "F1 复算对账",
+    "bb": "swin_t",
+    "seed": 2,
+    "arm": "C1",
+    "f1_slice": 0.959426,
+    "f1_recording": 0.961536,
+    "json_slice": 0.9594,
+    "json_recording": 0.9615,
+    "ok": true
+   },
+   {
+    "check": "跨 seed 切片集合",
+    "bb": "alexnet",
+    "seed": 1,
+    "ok": true
+   },
+   {
+    "check": "跨 seed 切片集合",
+    "bb": "alexnet",
+    "seed": 2,
+    "ok": true
+   },
+   {
+    "check": "跨 seed 切片集合",
+    "bb": "swin_t",
+    "seed": 1,
+    "ok": true
+   },
+   {
+    "check": "跨 seed 切片集合",
+    "bb": "swin_t",
+    "seed": 2,
+    "ok": true
+   }
+  ]
+ },
+ "method": {
+  "metric": "macro-F1，混淆矩阵口径，空类不参与（analyze_e1.macro_f1）",
+  "levels": {
+   "slice": "全切片 argmax",
+   "recording": "同录音 probs 均值后 argmax"
+  },
+  "bootstrap": {
+   "n": 2000,
+   "cluster": "recording",
+   "rng": "default_rng(20261105)",
+   "stream": "按 sorted(lib) 逐库抽 size=(2000,n_rec)，与 analyze_e1.py:205-210 同源；CTIS 的索引矩阵与已发表 e1_delta.csv 相同",
+   "delta": "每次重抽样内逐 seed 配对求差后对 3 seed 取均值",
+   "ci": "Δ 分布的 2.5/97.5 百分位",
+   "p": "两个口径都给：boot_p=analyze_e1 现行双侧 +1（2*(k+1)/(B+1)）；boot_p_legacy=e1_delta.csv 口径 2*min(k_le0,k_ge0)/B（下限 1/B）"
+  },
+  "units": "百分点（pp）",
+  "sesoi_pp": 3.0,
+  "seeds": [
+   0,
+   1,
+   2
+  ]
+ },
+ "contrasts": [
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "A1-C1",
+   "level": "slice",
+   "delta_pp": 1.9633,
+   "ci_lo": 0.7391,
+   "ci_hi": 2.9913,
+   "seed_deltas_pp": [
+    2.1221,
+    1.6145,
+    2.1534
+   ],
+   "seed_range_pp": 0.539,
+   "boot_p": 0.001,
+   "boot_p_legacy": 0.0005,
+   "n_le0": 0,
+   "n_ge0": 2000,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "A1-C1",
+   "level": "recording",
+   "delta_pp": 1.2258,
+   "ci_lo": 0.0352,
+   "ci_hi": 2.127,
+   "seed_deltas_pp": [
+    0.6992,
+    1.1849,
+    1.7934
+   ],
+   "seed_range_pp": 1.0942,
+   "boot_p": 0.044,
+   "boot_p_legacy": 0.043,
+   "n_le0": 43,
+   "n_ge0": 1957,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "A1-C1",
+   "level": "slice",
+   "delta_pp": 1.0742,
+   "ci_lo": 0.233,
+   "ci_hi": 1.9582,
+   "seed_deltas_pp": [
+    0.7876,
+    0.8041,
+    1.6309
+   ],
+   "seed_range_pp": 0.8433,
+   "boot_p": 0.016,
+   "boot_p_legacy": 0.015,
+   "n_le0": 15,
+   "n_ge0": 1985,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "A1-C1",
+   "level": "recording",
+   "delta_pp": 1.1686,
+   "ci_lo": 0.1303,
+   "ci_hi": 2.0853,
+   "seed_deltas_pp": [
+    1.1337,
+    0.6016,
+    1.7707
+   ],
+   "seed_range_pp": 1.1691,
+   "boot_p": 0.025,
+   "boot_p_legacy": 0.024,
+   "n_le0": 24,
+   "n_ge0": 1976,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "A1-A0",
+   "level": "slice",
+   "delta_pp": 2.0169,
+   "ci_lo": 0.8329,
+   "ci_hi": 3.345,
+   "seed_deltas_pp": [
+    2.9736,
+    1.9677,
+    1.1095
+   ],
+   "seed_range_pp": 1.8641,
+   "boot_p": 0.001,
+   "boot_p_legacy": 0.0005,
+   "n_le0": 0,
+   "n_ge0": 2000,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "A1-A0",
+   "level": "recording",
+   "delta_pp": 1.366,
+   "ci_lo": 0.2617,
+   "ci_hi": 2.8279,
+   "seed_deltas_pp": [
+    2.1219,
+    1.4778,
+    0.4983
+   ],
+   "seed_range_pp": 1.6236,
+   "boot_p": 0.017,
+   "boot_p_legacy": 0.016,
+   "n_le0": 16,
+   "n_ge0": 1984,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "A1-A0",
+   "level": "slice",
+   "delta_pp": 1.6963,
+   "ci_lo": 1.2799,
+   "ci_hi": 2.8436,
+   "seed_deltas_pp": [
+    0.844,
+    2.0425,
+    2.2024
+   ],
+   "seed_range_pp": 1.3584,
+   "boot_p": 0.001,
+   "boot_p_legacy": 0.0005,
+   "n_le0": 0,
+   "n_ge0": 2000,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "A1-A0",
+   "level": "recording",
+   "delta_pp": 1.6094,
+   "ci_lo": 0.8651,
+   "ci_hi": 2.598,
+   "seed_deltas_pp": [
+    0.8994,
+    1.1887,
+    2.7403
+   ],
+   "seed_range_pp": 1.8409,
+   "boot_p": 0.001,
+   "boot_p_legacy": 0.0005,
+   "n_le0": 0,
+   "n_ge0": 2000,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "C1-A0",
+   "level": "slice",
+   "delta_pp": 0.0536,
+   "ci_lo": -0.9371,
+   "ci_hi": 1.3482,
+   "seed_deltas_pp": [
+    0.8515,
+    0.3533,
+    -1.044
+   ],
+   "seed_range_pp": 1.8954,
+   "boot_p": 0.7316,
+   "boot_p_legacy": 0.731,
+   "n_le0": 731,
+   "n_ge0": 1269,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": false,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "alexnet",
+   "contrast": "C1-A0",
+   "level": "recording",
+   "delta_pp": 0.1402,
+   "ci_lo": -0.696,
+   "ci_hi": 1.6093,
+   "seed_deltas_pp": [
+    1.4228,
+    0.2929,
+    -1.2951
+   ],
+   "seed_range_pp": 2.7179,
+   "boot_p": 0.5157,
+   "boot_p_legacy": 0.515,
+   "n_le0": 515,
+   "n_ge0": 1485,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": false,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "C1-A0",
+   "level": "slice",
+   "delta_pp": 0.6221,
+   "ci_lo": 0.1403,
+   "ci_hi": 1.8088,
+   "seed_deltas_pp": [
+    0.0564,
+    1.2384,
+    0.5715
+   ],
+   "seed_range_pp": 1.182,
+   "boot_p": 0.021,
+   "boot_p_legacy": 0.02,
+   "n_le0": 20,
+   "n_ge0": 1980,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": true,
+   "meets_sesoi": false
+  },
+  {
+   "lib": "CTIS",
+   "backbone": "swin_t",
+   "contrast": "C1-A0",
+   "level": "recording",
+   "delta_pp": 0.4408,
+   "ci_lo": -0.0627,
+   "ci_hi": 1.3757,
+   "seed_deltas_pp": [
+    -0.2343,
+    0.5871,
+    0.9696
+   ],
+   "seed_range_pp": 1.2038,
+   "boot_p": 0.076,
+   "boot_p_legacy": 0.075,
+   "n_le0": 75,
+   "n_ge0": 1925,
+   "n_slices": 4605,
+   "n_recordings": 963,
+   "ci_excludes_zero": false,
+   "meets_sesoi": false
+  }
+ ],
+ "fidelity_check": {
+  "A1-A0": {
+   "source": "data/results/e1_delta.csv",
+   "recording_point_source": "data/results/human_review/corrected_recording_delta.csv",
+   "details": {
+    "A1-A0/alexnet": {
+     "fields": {
+      "delta_slice_pt": {
+       "published": 2.02,
+       "recomputed": 2.0169,
+       "abs_diff": 0.0031,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_lo_slice_pt": {
+       "published": 0.83,
+       "recomputed": 0.8329,
+       "abs_diff": 0.0029,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_slice_pt": {
+       "published": 3.35,
+       "recomputed": 3.345,
+       "abs_diff": 0.005,
+       "tol": 0.011,
+       "match": true
+      },
+      "seed_range_pt": {
+       "published": 1.86,
+       "recomputed": 1.8641,
+       "abs_diff": 0.0041,
+       "tol": 0.011,
+       "match": true
+      },
+      "boot_p_slice": {
+       "published": 0.0005,
+       "recomputed": 0.0005,
+       "abs_diff": 0.0,
+       "tol": 0.0005,
+       "match": true,
+       "note": "e1_delta.csv 口径 2*min(k_le0,k_ge0)/B；analyze_e1 现行双侧+1 值为 0.0010"
+      },
+      "ci_lo_rec_pt": {
+       "published": 0.26,
+       "recomputed": 0.2617,
+       "abs_diff": 0.0017,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_rec_pt": {
+       "published": 2.83,
+       "recomputed": 2.8279,
+       "abs_diff": 0.0021,
+       "tol": 0.011,
+       "match": true
+      },
+      "delta_rec_pt_unw_vs_corrected": {
+       "published": 1.3660246335,
+       "recomputed": 1.366,
+       "abs_diff": 0.0,
+       "tol": 0.005,
+       "match": true,
+       "note": "以 corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值）"
+      },
+      "delta_rec_pt_legacy_in_e1_delta": {
+       "published": 1.67,
+       "recomputed": 1.366,
+       "abs_diff": 0.304,
+       "correction_pt": -0.3023056368,
+       "match": null,
+       "note": "已知修正项，不计入门禁：e1_delta.csv 保留 legacy slice-weighted 点估计，corrected_recording_delta.csv 的 correction_pt 即两者之差"
+      },
+      "per_seed_delta_pt": {
+       "published": "2.97|1.97|1.11",
+       "recomputed": "2.97|1.97|1.11",
+       "match": true
+      },
+      "per_seed_unw_pt": {
+       "published": "2.12|1.48|0.50",
+       "recomputed": "2.12|1.48|0.50",
+       "match": true,
+       "note": "录音级逐 seed 对 corrected_recording_delta.csv"
+      }
+     },
+     "all_match": true
+    },
+    "A1-A0/swin_t": {
+     "fields": {
+      "delta_slice_pt": {
+       "published": 1.7,
+       "recomputed": 1.6963,
+       "abs_diff": 0.0037,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_lo_slice_pt": {
+       "published": 1.28,
+       "recomputed": 1.2799,
+       "abs_diff": 0.0001,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_slice_pt": {
+       "published": 2.84,
+       "recomputed": 2.8436,
+       "abs_diff": 0.0036,
+       "tol": 0.011,
+       "match": true
+      },
+      "seed_range_pt": {
+       "published": 1.36,
+       "recomputed": 1.3584,
+       "abs_diff": 0.0016,
+       "tol": 0.011,
+       "match": true
+      },
+      "boot_p_slice": {
+       "published": 0.0005,
+       "recomputed": 0.0005,
+       "abs_diff": 0.0,
+       "tol": 0.0005,
+       "match": true,
+       "note": "e1_delta.csv 口径 2*min(k_le0,k_ge0)/B；analyze_e1 现行双侧+1 值为 0.0010"
+      },
+      "ci_lo_rec_pt": {
+       "published": 0.87,
+       "recomputed": 0.8651,
+       "abs_diff": 0.0049,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_rec_pt": {
+       "published": 2.6,
+       "recomputed": 2.598,
+       "abs_diff": 0.002,
+       "tol": 0.011,
+       "match": true
+      },
+      "delta_rec_pt_unw_vs_corrected": {
+       "published": 1.6094328944,
+       "recomputed": 1.6094,
+       "abs_diff": 0.0,
+       "tol": 0.005,
+       "match": true,
+       "note": "以 corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值）"
+      },
+      "delta_rec_pt_legacy_in_e1_delta": {
+       "published": 1.64,
+       "recomputed": 1.6094,
+       "abs_diff": 0.0306,
+       "correction_pt": -0.0288695867,
+       "match": null,
+       "note": "已知修正项，不计入门禁：e1_delta.csv 保留 legacy slice-weighted 点估计，corrected_recording_delta.csv 的 correction_pt 即两者之差"
+      },
+      "per_seed_delta_pt": {
+       "published": "0.84|2.04|2.20",
+       "recomputed": "0.84|2.04|2.20",
+       "match": true
+      },
+      "per_seed_unw_pt": {
+       "published": "0.90|1.19|2.74",
+       "recomputed": "0.90|1.19|2.74",
+       "match": true,
+       "note": "录音级逐 seed 对 corrected_recording_delta.csv"
+      }
+     },
+     "all_match": true
+    }
+   },
+   "all_fields_match": true
+  },
+  "C1-A0": {
+   "source": "data/results/c1/e1_delta.csv",
+   "recording_point_source": "data/results/human_review/corrected_recording_delta.csv",
+   "details": {
+    "C1-A0/alexnet": {
+     "fields": {
+      "delta_slice_pt": {
+       "published": 0.05,
+       "recomputed": 0.0536,
+       "abs_diff": 0.0036,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_lo_slice_pt": {
+       "published": -0.94,
+       "recomputed": -0.9371,
+       "abs_diff": 0.0029,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_slice_pt": {
+       "published": 1.35,
+       "recomputed": 1.3482,
+       "abs_diff": 0.0018,
+       "tol": 0.011,
+       "match": true
+      },
+      "seed_range_pt": {
+       "published": 1.9,
+       "recomputed": 1.8954,
+       "abs_diff": 0.0046,
+       "tol": 0.011,
+       "match": true
+      },
+      "boot_p_slice": {
+       "published": 0.731,
+       "recomputed": 0.731,
+       "abs_diff": 0.0,
+       "tol": 0.0005,
+       "match": true,
+       "note": "e1_delta.csv 口径 2*min(k_le0,k_ge0)/B；analyze_e1 现行双侧+1 值为 0.7316"
+      },
+      "ci_lo_rec_pt": {
+       "published": -0.7,
+       "recomputed": -0.696,
+       "abs_diff": 0.004,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_rec_pt": {
+       "published": 1.61,
+       "recomputed": 1.6093,
+       "abs_diff": 0.0007,
+       "tol": 0.011,
+       "match": true
+      },
+      "delta_rec_pt_unw_vs_corrected": {
+       "published": 0.1401825843,
+       "recomputed": 0.1402,
+       "abs_diff": 0.0,
+       "tol": 0.005,
+       "match": true,
+       "note": "以 corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值）"
+      },
+      "delta_rec_pt_legacy_in_e1_delta": {
+       "published": 0.41,
+       "recomputed": 0.1402,
+       "abs_diff": 0.2698,
+       "correction_pt": -0.2705231949,
+       "match": null,
+       "note": "已知修正项，不计入门禁：e1_delta.csv 保留 legacy slice-weighted 点估计，corrected_recording_delta.csv 的 correction_pt 即两者之差"
+      },
+      "per_seed_delta_pt": {
+       "published": "0.85|0.35|-1.04",
+       "recomputed": "0.85|0.35|-1.04",
+       "match": true
+      },
+      "per_seed_unw_pt": {
+       "published": "1.42|0.29|-1.30",
+       "recomputed": "1.42|0.29|-1.30",
+       "match": true,
+       "note": "录音级逐 seed 对 corrected_recording_delta.csv"
+      }
+     },
+     "all_match": true
+    },
+    "C1-A0/swin_t": {
+     "fields": {
+      "delta_slice_pt": {
+       "published": 0.62,
+       "recomputed": 0.6221,
+       "abs_diff": 0.0021,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_lo_slice_pt": {
+       "published": 0.14,
+       "recomputed": 0.1403,
+       "abs_diff": 0.0003,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_slice_pt": {
+       "published": 1.81,
+       "recomputed": 1.8088,
+       "abs_diff": 0.0012,
+       "tol": 0.011,
+       "match": true
+      },
+      "seed_range_pt": {
+       "published": 1.18,
+       "recomputed": 1.182,
+       "abs_diff": 0.002,
+       "tol": 0.011,
+       "match": true
+      },
+      "boot_p_slice": {
+       "published": 0.02,
+       "recomputed": 0.02,
+       "abs_diff": 0.0,
+       "tol": 0.0005,
+       "match": true,
+       "note": "e1_delta.csv 口径 2*min(k_le0,k_ge0)/B；analyze_e1 现行双侧+1 值为 0.0210"
+      },
+      "ci_lo_rec_pt": {
+       "published": -0.06,
+       "recomputed": -0.0627,
+       "abs_diff": 0.0027,
+       "tol": 0.011,
+       "match": true
+      },
+      "ci_hi_rec_pt": {
+       "published": 1.38,
+       "recomputed": 1.3757,
+       "abs_diff": 0.0043,
+       "tol": 0.011,
+       "match": true
+      },
+      "delta_rec_pt_unw_vs_corrected": {
+       "published": 0.4407921895,
+       "recomputed": 0.4408,
+       "abs_diff": 0.0,
+       "tol": 0.005,
+       "match": true,
+       "note": "以 corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值）"
+      },
+      "delta_rec_pt_legacy_in_e1_delta": {
+       "published": 0.37,
+       "recomputed": 0.4408,
+       "abs_diff": 0.0708,
+       "correction_pt": 0.0754186346,
+       "match": null,
+       "note": "已知修正项，不计入门禁：e1_delta.csv 保留 legacy slice-weighted 点估计，corrected_recording_delta.csv 的 correction_pt 即两者之差"
+      },
+      "per_seed_delta_pt": {
+       "published": "0.06|1.24|0.57",
+       "recomputed": "0.06|1.24|0.57",
+       "match": true
+      },
+      "per_seed_unw_pt": {
+       "published": "-0.23|0.59|0.97",
+       "recomputed": "-0.23|0.59|0.97",
+       "match": true,
+       "note": "录音级逐 seed 对 corrected_recording_delta.csv"
+      }
+     },
+     "all_match": true
+    }
+   },
+   "all_fields_match": true
+  },
+  "verdict": "一致：切片级 Δ/CI/seed 与 e1_delta.csv 逐字段相同；录音级 CI 相同、点估计与 corrected_recording_delta.csv 的 point_unw_pt 相同；boot_p 按 e1_delta.csv 的 2k/B 口径复现相同"
+ },
+ "transitivity_check": {
+  "what": "Δ(A1−C1) = Δ(A1−A0) − Δ(C1−A0)（点估计，pp）",
+  "passed": true,
+  "rows": [
+   {
+    "backbone": "alexnet",
+    "level": "slice",
+    "a1_c1_pp": 1.963329,
+    "a1_a0_minus_c1_a0_pp": 1.963329,
+    "abs_diff": 0.0
+   },
+   {
+    "backbone": "alexnet",
+    "level": "recording",
+    "a1_c1_pp": 1.225842,
+    "a1_a0_minus_c1_a0_pp": 1.225842,
+    "abs_diff": 0.0
+   },
+   {
+    "backbone": "swin_t",
+    "level": "slice",
+    "a1_c1_pp": 1.074201,
+    "a1_a0_minus_c1_a0_pp": 1.074201,
+    "abs_diff": 2.220446049250313e-16
+   },
+   {
+    "backbone": "swin_t",
+    "level": "recording",
+    "a1_c1_pp": 1.168641,
+    "a1_a0_minus_c1_a0_pp": 1.168641,
+    "abs_diff": 0.0
+   }
+  ]
+ },
+ "exploratory_exposure": {
+  "source": "data/splits/v2/CTIS_{qpool,qtest,a1_train}.csv",
+  "rule": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）",
+  "cross_check": {
+   "audit_script": "code/audit_review_exposure_20261108.py",
+   "audit_reported": "注入 4178 切片 / 578 暴露测试录音 / 963 测试录音",
+   "uid_based_exposed_recordings": 578
+  },
+  "injected_slices": 4178,
+  "injected_recordings": 753,
+  "test_recordings": 963,
+  "exposed_test_recordings": 578,
+  "unexposed_test_recordings": 385,
+  "paper_table_cell": "578/963 (paper/sections/10_supplement.tex:44)",
+  "rows": [
+   {
+    "lib": "CTIS",
+    "backbone": "alexnet",
+    "level": "slice",
+    "contrast": "A1-A0[exposed]",
+    "delta_pp": 4.026394888416607,
+    "ci_lo": 2.69302563592283,
+    "ci_hi": 6.135639188206538,
+    "seed_deltas": [
+     4.160810266816584,
+     3.49817285289018,
+     4.4202015455430566
+    ],
+    "seed_range": 0.9220286926528765,
+    "boot_p": 0.0009995002498750624,
+    "boot_p_legacy": 0.0005,
+    "n_le0": 0,
+    "n_ge0": 2000,
+    "n_slices": 3895,
+    "n_recordings": 578,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "alexnet",
+    "level": "recording",
+    "contrast": "A1-A0[exposed]",
+    "delta_pp": 3.810293283152459,
+    "ci_lo": 1.758089948721696,
+    "ci_hi": 5.358893463397423,
+    "seed_deltas": [
+     3.9219051505630764,
+     4.028608653385312,
+     3.480366045508987
+    ],
+    "seed_range": 0.5482426078763254,
+    "boot_p": 0.0009995002498750624,
+    "boot_p_legacy": 0.0005,
+    "n_le0": 0,
+    "n_ge0": 2000,
+    "n_slices": 3895,
+    "n_recordings": 578,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "swin_t",
+    "level": "slice",
+    "contrast": "A1-A0[exposed]",
+    "delta_pp": 2.6670068512640532,
+    "ci_lo": 1.7119767520158384,
+    "ci_hi": 3.639444734062049,
+    "seed_deltas": [
+     3.0463393541256822,
+     3.901548895883955,
+     1.0531323037825224
+    ],
+    "seed_range": 2.8484165921014326,
+    "boot_p": 0.0009995002498750624,
+    "boot_p_legacy": 0.0005,
+    "n_le0": 0,
+    "n_ge0": 2000,
+    "n_slices": 3895,
+    "n_recordings": 578,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "swin_t",
+    "level": "recording",
+    "contrast": "A1-A0[exposed]",
+    "delta_pp": 1.734501966989895,
+    "ci_lo": 0.7141433145893049,
+    "ci_hi": 2.583198157333904,
+    "seed_deltas": [
+     1.9269994632313603,
+     1.1111111111111072,
+     2.1653953266272175
+    ],
+    "seed_range": 1.0542842155161103,
+    "boot_p": 0.0009995002498750624,
+    "boot_p_legacy": 0.0005,
+    "n_le0": 0,
+    "n_ge0": 2000,
+    "n_slices": 3895,
+    "n_recordings": 578,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "alexnet",
+    "level": "slice",
+    "contrast": "A1-A0[unexposed]",
+    "delta_pp": -0.19291278402924586,
+    "ci_lo": -1.8131133078474453,
+    "ci_hi": 1.82904032787906,
+    "seed_deltas": [
+     0.14110596493683847,
+     -0.6681603361335053,
+     -0.051683980891070735
+    ],
+    "seed_range": 0.8092663010703438,
+    "boot_p": 0.9905047476261869,
+    "boot_p_legacy": 0.99,
+    "n_le0": 990,
+    "n_ge0": 1010,
+    "n_slices": 710,
+    "n_recordings": 385,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "alexnet",
+    "level": "recording",
+    "contrast": "A1-A0[unexposed]",
+    "delta_pp": 0.26793138984591014,
+    "ci_lo": -1.666561517006582,
+    "ci_hi": 1.9909323272989528,
+    "seed_deltas": [
+     1.2799333735698193,
+     0.28221285178832156,
+     -0.7583520558204104
+    ],
+    "seed_range": 2.0382854293902297,
+    "boot_p": 0.816591704147926,
+    "boot_p_legacy": 0.816,
+    "n_le0": 816,
+    "n_ge0": 1184,
+    "n_slices": 710,
+    "n_recordings": 385,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "swin_t",
+    "level": "slice",
+    "contrast": "A1-A0[unexposed]",
+    "delta_pp": 1.0964004066853383,
+    "ci_lo": 0.26814632419745726,
+    "ci_hi": 3.041470793168545,
+    "seed_deltas": [
+     -0.9897438369574463,
+     1.7338302017454787,
+     2.5451148552679825
+    ],
+    "seed_range": 3.534858692225429,
+    "boot_p": 0.01699150424787606,
+    "boot_p_legacy": 0.016,
+    "n_le0": 16,
+    "n_ge0": 1984,
+    "n_slices": 710,
+    "n_recordings": 385,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   },
+   {
+    "lib": "CTIS",
+    "backbone": "swin_t",
+    "level": "recording",
+    "contrast": "A1-A0[unexposed]",
+    "delta_pp": 0.7047459837922024,
+    "ci_lo": -0.1551110884642742,
+    "ci_hi": 2.2762562456085393,
+    "seed_deltas": [
+     -1.2051770980342602,
+     0.787012503392881,
+     2.5324025460179866
+    ],
+    "seed_range": 3.737579644052247,
+    "boot_p": 0.09195402298850575,
+    "boot_p_legacy": 0.091,
+    "n_le0": 91,
+    "n_ge0": 1909,
+    "n_slices": 710,
+    "n_recordings": 385,
+    "group_definition": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical ∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）"
+   }
+  ]
+ },
+ "notes": [
+  "A1−C1 为本轮新增对比，此前无已发表数字；A1−A0 / C1−A0 用于忠实性门禁。",
+  "忠实性：切片级与 e1_delta.csv 逐字段相同；录音级点估计以 human_review/corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值），e1_delta.csv 的 delta_rec_pt 为已取代的 legacy slice-weighted 值（correction_pt 即两者之差）。",
+  "boot_p 与 e1_delta.csv 不同是因为口径：CSV 用 2*min(k_le0,k_ge0)/B（下限 1/B），analyze_e1.py 现行为双侧 +1；两者都在 JSON 里列出，A1−C1 的显著性按 CI 判、p 仅参考。",
+  "A1/C1 的 n_train 不同（A1=25498, C1=25502），差异是注入池实现，不是评估口径差异。",
+  "分组 Δ 的宏 F1 只在组内出现的类别上取平均，两组类别宇宙不同，组间绝对值不可直接比较；组内 Δ 仍为配对差。",
+  "分组自助用独立随机流 default_rng(20261105)，与原表 CTIS 的流不同源。"
+ ],
+ "runtime_sec": 40.1
+}

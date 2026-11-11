@@ -1,0 +1,14 @@
+[
+  {
+    "name": "tismir_ccmusic",
+    "url": "https://transactions.ismir.net/articles/10.5334/tismir.194/",
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>",
+    "attempt": 3
+  },
+  {
+    "name": "tismir_giantmidi",
+    "url": "https://transactions.ismir.net/articles/10.5334/tismir.80/",
+    "error": "URLError: <urlopen error [WinError 10060] 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>",
+    "attempt": 3
+  }
+]

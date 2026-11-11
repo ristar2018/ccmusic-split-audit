@@ -1,0 +1,127 @@
+{
+  "figures": [
+    {
+      "figure": "fig1_split_units.pdf",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          4.3307
+        ],
+        "dpi": 100.0,
+        "texts": 18,
+        "markers": 0,
+        "legends": 1,
+        "font_sizes_pt": [
+          9.0,
+          9.6
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": []
+    },
+    {
+      "figure": "fig1_split_units.png",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          4.3307
+        ],
+        "dpi": 100.0,
+        "texts": 18,
+        "markers": 0,
+        "legends": 1,
+        "font_sizes_pt": [
+          9.0,
+          9.6
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": []
+    },
+    {
+      "figure": "fig2_p3_decomposition.pdf",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          3.7795
+        ],
+        "dpi": 100.0,
+        "texts": 27,
+        "markers": 16,
+        "legends": 0,
+        "font_sizes_pt": [
+          9.0,
+          9.6
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": []
+    },
+    {
+      "figure": "fig2_p3_decomposition.png",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          3.7795
+        ],
+        "dpi": 100.0,
+        "texts": 27,
+        "markers": 16,
+        "legends": 0,
+        "font_sizes_pt": [
+          9.0,
+          9.6
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": []
+    },
+    {
+      "figure": "fig4_three_arms.pdf",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          5.0394
+        ],
+        "dpi": 100.0,
+        "texts": 29,
+        "markers": 80,
+        "legends": 1,
+        "font_sizes_pt": [
+          9.0
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": [
+        "mathtext bbox over-reported; PDF word boxes sit inside: 'macro-F1 (slice level)\\nfilled: sealed pa'"
+      ]
+    },
+    {
+      "figure": "fig4_three_arms.png",
+      "facts": {
+        "figure_inches": [
+          4.7244,
+          5.0394
+        ],
+        "dpi": 100.0,
+        "texts": 29,
+        "markers": 80,
+        "legends": 1,
+        "font_sizes_pt": [
+          9.0
+        ],
+        "min_font_pt": 9.0
+      },
+      "problems": [],
+      "notes": [
+        "mathtext bbox over-reported; PDF word boxes sit inside: 'macro-F1 (slice level)\\nfilled: sealed pa'"
+      ]
+    }
+  ],
+  "figures_with_problems": 0
+}

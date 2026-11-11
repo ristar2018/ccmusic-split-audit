@@ -1,0 +1,75 @@
+{
+  "config": {
+    "lib": "CNPM",
+    "arm": "A1",
+    "bb": "swin_t",
+    "seed": 2,
+    "epochs": 10,
+    "batch": 64,
+    "lr": 0.0003,
+    "wd": 0.05,
+    "warmup_epochs": 1,
+    "label_smoothing": 0.1,
+    "amp": true,
+    "limit": 0,
+    "tag": "e1b",
+    "n_train": 1627,
+    "n_val": 409,
+    "n_classes": 5,
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "size": 224,
+    "normalize": "imagenet",
+    "augment": "none"
+  },
+  "val_best": {
+    "macro_f1_slice": 0.3379,
+    "epoch": 8,
+    "macro_f1_recording": 0.4423
+  },
+  "qtest": {
+    "macro_f1_slice": 0.7096,
+    "acc": 0.7491,
+    "n": 271,
+    "macro_f1_recording": 0.8019,
+    "n_recordings": 54,
+    "confusion": [
+      [
+        70,
+        2,
+        0,
+        7,
+        9
+      ],
+      [
+        2,
+        15,
+        8,
+        1,
+        0
+      ],
+      [
+        0,
+        2,
+        14,
+        4,
+        3
+      ],
+      [
+        20,
+        1,
+        0,
+        36,
+        3
+      ],
+      [
+        4,
+        1,
+        0,
+        1,
+        68
+      ]
+    ]
+  }
+}

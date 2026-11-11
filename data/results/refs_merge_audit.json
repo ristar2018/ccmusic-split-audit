@@ -1,0 +1,205 @@
+{
+ "n_entries": 29,
+ "entries": [
+  {
+   "key": "zhou2025ccmusic",
+   "status": "kept",
+   "from": "Zhou_2025",
+   "type": "article"
+  },
+  {
+   "key": "kapoor2023leakage",
+   "status": "kept",
+   "from": "Kapoor_2023",
+   "type": "article"
+  },
+  {
+   "key": "salamon2014urbansound",
+   "status": "kept",
+   "from": "Salamon_2014",
+   "type": "inproceedings"
+  },
+  {
+   "key": "sturm2012gtzan",
+   "status": "kept",
+   "from": "Sturm_2012",
+   "type": "inproceedings"
+  },
+  {
+   "key": "ji2023leakage",
+   "status": "kept",
+   "from": "Ji_2023",
+   "type": "article"
+  },
+  {
+   "key": "kong2022giantmidi",
+   "status": "kept",
+   "from": "Kong_2022",
+   "type": "article"
+  },
+  {
+   "key": "gemmeke2017audioset",
+   "status": "kept",
+   "from": "Gemmeke_2017",
+   "type": "inproceedings"
+  },
+  {
+   "key": "elizalde2024clap",
+   "status": "kept",
+   "from": "Elizalde_2024",
+   "type": "inproceedings"
+  },
+  {
+   "key": "saito2015pr",
+   "status": "kept",
+   "from": "Saito_2015",
+   "type": "article"
+  },
+  {
+   "key": "sturm2014horse",
+   "status": "kept",
+   "from": "Sturm_2014",
+   "type": "article"
+  },
+  {
+   "key": "hershey2017cnn",
+   "status": "kept",
+   "from": "Hershey_2017",
+   "type": "inproceedings"
+  },
+  {
+   "key": "kong2020panns",
+   "status": "kept",
+   "from": "Kong_2020",
+   "type": "article"
+  },
+  {
+   "key": "salamon2017augment",
+   "status": "kept",
+   "from": "Salamon_2017",
+   "type": "article"
+  },
+  {
+   "key": "downie2010mirex",
+   "status": "kept",
+   "from": "Downie_2010",
+   "type": "incollection"
+  },
+  {
+   "key": "defferrard2016",
+   "status": "kept",
+   "from": "defferrard2016",
+   "type": "misc"
+  },
+  {
+   "key": "ganin2014",
+   "status": "kept",
+   "from": "ganin2014",
+   "type": "misc"
+  },
+  {
+   "key": "ganin2015",
+   "status": "kept",
+   "from": "ganin2015",
+   "type": "misc"
+  },
+  {
+   "key": "gebru2018",
+   "status": "kept",
+   "from": "gebru2018",
+   "type": "misc"
+  },
+  {
+   "key": "recht2019",
+   "status": "kept",
+   "from": "recht2019",
+   "type": "misc"
+  },
+  {
+   "key": "li2023",
+   "status": "kept",
+   "from": "li2023",
+   "type": "misc"
+  },
+  {
+   "key": "choi2017",
+   "status": "kept",
+   "from": "choi2017",
+   "type": "misc"
+  },
+  {
+   "key": "lee2017",
+   "status": "kept",
+   "from": "lee2017",
+   "type": "misc"
+  },
+  {
+   "key": "won2020",
+   "status": "kept",
+   "from": "won2020",
+   "type": "misc"
+  },
+  {
+   "key": "engel2017",
+   "status": "kept",
+   "from": "engel2017",
+   "type": "misc"
+  },
+  {
+   "key": "brookshire2024eeg",
+   "status": "kept",
+   "from": "Brookshire_2024",
+   "type": "article"
+  },
+  {
+   "key": "alexnet2012",
+   "status": "kept",
+   "from": "crossref-doi",
+   "doi": "10.1145/3065386"
+  },
+  {
+   "key": "swin2021",
+   "status": "kept",
+   "from": "crossref-doi",
+   "doi": "10.1109/iccv48922.2021.00986"
+  },
+  {
+   "key": "piczak2015",
+   "status": "kept",
+   "from": "crossref-doi",
+   "doi": "10.1145/2733373.2806390"
+  },
+  {
+   "key": "kaufman2012",
+   "status": "kept",
+   "from": "crossref-doi",
+   "doi": "10.1145/2382577.2382579"
+  }
+ ],
+ "dropped": [
+  {
+   "key": "Kazemi_2018",
+   "reason": "wrong paper returned by Crossref (title score 0.928)"
+  },
+  {
+   "key": "Dave_2014",
+   "reason": "Crossref author list wrong for the MIR survey"
+  },
+  {
+   "key": "bogdanov2019",
+   "reason": "OpenAlex record has no venue; entry would be incomplete"
+  },
+  {
+   "key": "demar2006",
+   "reason": "OpenAlex record has no venue; entry would be incomplete"
+  },
+  {
+   "key": "vincentlamarre2021",
+   "reason": "OpenAlex record has no venue; entry would be incomplete"
+  },
+  {
+   "key": "choi2016",
+   "reason": "OpenAlex record has no venue; entry would be incomplete"
+  }
+ ]
+}

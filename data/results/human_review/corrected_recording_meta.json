@@ -1,0 +1,60 @@
+{
+ "arms_meta": {
+  "CNPM": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 54,
+   "n_slices": 271,
+   "n_classes": 5
+  },
+  "CTIS": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2",
+    "C1"
+   ],
+   "n_recordings": 963,
+   "n_slices": 4605,
+   "n_classes": 201
+  },
+  "bel_canto": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 40,
+   "n_slices": 979,
+   "n_classes": 4
+  },
+  "music_genre": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 337,
+   "n_slices": 3648,
+   "n_classes": 16
+  },
+  "pianos": {
+   "arms": [
+    "A0",
+    "A1",
+    "A2"
+   ],
+   "n_recordings": 135,
+   "n_slices": 1884,
+   "n_classes": 8
+  }
+ },
+ "boot": 2000,
+ "old_ci_source": "A1-A0: data/results/e1_delta.csv; A2-A0: data/results/delta_A2/e1_delta.csv (delta_rec_pt / ci_lo_rec_pt / ci_hi_rec_pt)",
+ "bug": "analyze_e1.py:189 点估计按切片数加权，:219 区间按每录音一票；两者不是同一估计量",
+ "fix": "点估计改为每录音一票；区间沿用旧表的 unweighted 版本，不重跑",
+ "conditional_note": "conditional CI = recordings resampled only, seeds held at the three trained ones; NOT a joint seed x recording bootstrap"
+}

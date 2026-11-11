@@ -1,0 +1,74 @@
+{
+  "group": "chest_falsetto_A0_swin_t",
+  "seeds": [
+    0
+  ],
+  "sealed_at": "2026-11-05 18:53:02",
+  "runs": {
+    "seed0": {
+      "config": {
+        "lib": "chest_falsetto",
+        "arm": "A0",
+        "bb": "swin_t",
+        "seed": 0,
+        "epochs": 10,
+        "batch": 64,
+        "lr": 0.0003,
+        "wd": 0.05,
+        "warmup_epochs": 1,
+        "label_smoothing": 0.1,
+        "amp": true,
+        "limit": 0,
+        "tag": "e1f_drv",
+        "n_train": 768,
+        "n_val": 190,
+        "n_classes": 4,
+        "torch": "2.11.0+cu128",
+        "cuda": "12.8",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "size": 224,
+        "normalize": "imagenet",
+        "augment": "none"
+      },
+      "val_best": {
+        "macro_f1_slice": 0.894,
+        "epoch": 10,
+        "macro_f1_recording": 0.894
+      },
+      "qtest": {
+        "macro_f1_slice": 0.8261,
+        "acc": 0.8327,
+        "n": 257,
+        "macro_f1_recording": 0.8261,
+        "n_recordings": 257,
+        "confusion": [
+          [
+            72,
+            6,
+            3,
+            2
+          ],
+          [
+            7,
+            69,
+            0,
+            6
+          ],
+          [
+            5,
+            0,
+            40,
+            1
+          ],
+          [
+            5,
+            4,
+            4,
+            33
+          ]
+        ]
+      }
+    }
+  },
+  "seed_spread_qtest_slice": null
+}

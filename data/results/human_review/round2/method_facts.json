@@ -1,0 +1,364 @@
+{
+ "root": "/mnt/d/VSCode/科研任务/音乐情感研究",
+ "A": {
+  "CTIS": {
+   "classes": 219,
+   "recordings": 4956,
+   "slices": 43054,
+   "audio_files_on_disk": 4956,
+   "audio_hash_done": true,
+   "duplicate_audio_recordings": 4
+  },
+  "music_genre": {
+   "classes": 16,
+   "recordings": 1713,
+   "slices": 36375,
+   "audio_files_on_disk": 0,
+   "audio_hash_done": false,
+   "duplicate_audio_recordings": 0
+  },
+  "pianos": {
+   "classes": 8,
+   "recordings": 668,
+   "slices": 18352,
+   "audio_files_on_disk": 668,
+   "audio_hash_done": false,
+   "duplicate_audio_recordings": 0
+  },
+  "CNPM": {
+   "classes": 5,
+   "recordings": 287,
+   "slices": 2724,
+   "audio_files_on_disk": 287,
+   "audio_hash_done": false,
+   "duplicate_audio_recordings": 0
+  },
+  "bel_canto": {
+   "classes": 4,
+   "recordings": 203,
+   "slices": 9910,
+   "audio_files_on_disk": 0,
+   "audio_hash_done": false,
+   "duplicate_audio_recordings": 0
+  },
+  "_slices_total": 110415,
+  "_pairs": []
+ },
+ "B": {
+  "CTIS": {
+   "slices": {
+    "qtest": 4605,
+    "qpool": 4178,
+    "r": 6317,
+    "c": 27405
+   },
+   "recordings": {
+    "qtest": 963,
+    "qpool": 753,
+    "r": 730,
+    "c": 3017
+   },
+   "classes": {
+    "qtest": 201,
+    "qpool": 161,
+    "r": 201,
+    "c": 201
+   },
+   "qtest_qpool_recording_overlap": 578,
+   "qtest_qpool_overlap_slices": {
+    "qtest": 3895,
+    "qpool": 3681
+   },
+   "qtest_r_c_recording_overlap": 0,
+   "hash_multi_side": 0,
+   "groups": 4682,
+   "group_size_hist": {
+    "1": 581,
+    "2": 4101
+   },
+   "pairs_split_across_sides": 0,
+   "groups_split_across_sides": 0,
+   "groups_cross_recording": 1,
+   "groups_cross_class": 0,
+   "singleton_recordings": 214,
+   "singleton_all_in_qtest": true
+  },
+  "music_genre": {
+   "slices": {
+    "qtest": 3648,
+    "qpool": 3613,
+    "r": 5457,
+    "c": 23657
+   },
+   "recordings": {
+    "qtest": 337,
+    "qpool": 340,
+    "r": 256,
+    "c": 1115
+   },
+   "classes": {
+    "qtest": 16,
+    "qpool": 16,
+    "r": 16,
+    "c": 16
+   },
+   "qtest_qpool_recording_overlap": 335,
+   "qtest_qpool_overlap_slices": {
+    "qtest": 3637,
+    "qpool": 3573
+   },
+   "qtest_r_c_recording_overlap": 0,
+   "hash_multi_side": 0,
+   "groups": 3716,
+   "group_size_hist": {
+    "1": 171,
+    "2": 3545
+   },
+   "pairs_split_across_sides": 0,
+   "groups_split_across_sides": 0,
+   "groups_cross_recording": 0,
+   "groups_cross_class": 0,
+   "singleton_recordings": 0,
+   "singleton_all_in_qtest": true
+  },
+  "pianos": {
+   "slices": {
+    "qtest": 1884,
+    "qpool": 1862,
+    "r": 2753,
+    "c": 11853
+   },
+   "recordings": {
+    "qtest": 135,
+    "qpool": 134,
+    "r": 99,
+    "c": 433
+   },
+   "classes": {
+    "qtest": 8,
+    "qpool": 8,
+    "r": 8,
+    "c": 8
+   },
+   "qtest_qpool_recording_overlap": 133,
+   "qtest_qpool_overlap_slices": {
+    "qtest": 1867,
+    "qpool": 1855
+   },
+   "qtest_r_c_recording_overlap": 0,
+   "hash_multi_side": 0,
+   "groups": 1908,
+   "group_size_hist": {
+    "1": 70,
+    "2": 1838
+   },
+   "pairs_split_across_sides": 0,
+   "groups_split_across_sides": 0,
+   "groups_cross_recording": 0,
+   "groups_cross_class": 0,
+   "singleton_recordings": 0,
+   "singleton_all_in_qtest": true
+  },
+  "CNPM": {
+   "slices": {
+    "qtest": 271,
+    "qpool": 268,
+    "r": 409,
+    "c": 1765
+   },
+   "recordings": {
+    "qtest": 54,
+    "qpool": 50,
+    "r": 43,
+    "c": 186
+   },
+   "classes": {
+    "qtest": 5,
+    "qpool": 5,
+    "r": 5,
+    "c": 5
+   },
+   "qtest_qpool_recording_overlap": 47,
+   "qtest_qpool_overlap_slices": {
+    "qtest": 251,
+    "qpool": 253
+   },
+   "qtest_r_c_recording_overlap": 0,
+   "hash_multi_side": 0,
+   "groups": 285,
+   "group_size_hist": {
+    "1": 31,
+    "2": 254
+   },
+   "pairs_split_across_sides": 0,
+   "groups_split_across_sides": 0,
+   "groups_cross_recording": 0,
+   "groups_cross_class": 0,
+   "singleton_recordings": 0,
+   "singleton_all_in_qtest": true
+  },
+  "bel_canto": {
+   "slices": {
+    "qtest": 979,
+    "qpool": 977,
+    "r": 1487,
+    "c": 6443
+   },
+   "recordings": {
+    "qtest": 40,
+    "qpool": 40,
+    "r": 30,
+    "c": 132
+   },
+   "classes": {
+    "qtest": 4,
+    "qpool": 4,
+    "r": 4,
+    "c": 4
+   },
+   "qtest_qpool_recording_overlap": 40,
+   "qtest_qpool_overlap_slices": {
+    "qtest": 979,
+    "qpool": 977
+   },
+   "qtest_r_c_recording_overlap": 0,
+   "hash_multi_side": 0,
+   "groups": 989,
+   "group_size_hist": {
+    "1": 22,
+    "2": 967
+   },
+   "pairs_split_across_sides": 0,
+   "groups_split_across_sides": 0,
+   "groups_cross_recording": 0,
+   "groups_cross_class": 0,
+   "singleton_recordings": 0,
+   "singleton_all_in_qtest": true
+  }
+ },
+ "C": {
+  "CTIS": {
+   "n_classes_in_qtest": 201,
+   "n_classes_in_e1_metrics": 201,
+   "classes_match": true,
+   "n_recordings": 963,
+   "min_recs_per_class": 1,
+   "max_recs_per_class": 21,
+   "classes_with_lt5_recordings": 89,
+   "expected_classes_missing_per_resample": 8.091,
+   "p_at_least_one_class_missing": 0.9999,
+   "n_classes_consistency": [
+    201
+   ]
+  },
+  "music_genre": {
+   "n_classes_in_qtest": 16,
+   "n_classes_in_e1_metrics": 16,
+   "classes_match": true,
+   "n_recordings": 337,
+   "min_recs_per_class": 18,
+   "max_recs_per_class": 41,
+   "classes_with_lt5_recordings": 0,
+   "expected_classes_missing_per_resample": 0.0,
+   "p_at_least_one_class_missing": 0.0,
+   "n_classes_consistency": [
+    16
+   ]
+  },
+  "pianos": {
+   "n_classes_in_qtest": 8,
+   "n_classes_in_e1_metrics": 8,
+   "classes_match": true,
+   "n_recordings": 135,
+   "min_recs_per_class": 10,
+   "max_recs_per_class": 18,
+   "classes_with_lt5_recordings": 0,
+   "expected_classes_missing_per_resample": 0.0,
+   "p_at_least_one_class_missing": 0.0,
+   "n_classes_consistency": [
+    8
+   ]
+  },
+  "CNPM": {
+   "n_classes_in_qtest": 5,
+   "n_classes_in_e1_metrics": 5,
+   "classes_match": true,
+   "n_recordings": 54,
+   "min_recs_per_class": 8,
+   "max_recs_per_class": 15,
+   "classes_with_lt5_recordings": 0,
+   "expected_classes_missing_per_resample": 0.0,
+   "p_at_least_one_class_missing": 0.0002,
+   "n_classes_consistency": [
+    5
+   ]
+  },
+  "bel_canto": {
+   "n_classes_in_qtest": 4,
+   "n_classes_in_e1_metrics": 4,
+   "classes_match": true,
+   "n_recordings": 40,
+   "min_recs_per_class": 6,
+   "max_recs_per_class": 19,
+   "classes_with_lt5_recordings": 0,
+   "expected_classes_missing_per_resample": 0.002,
+   "p_at_least_one_class_missing": 0.0021,
+   "n_classes_consistency": [
+    4
+   ]
+  }
+ },
+ "D": {
+  "passes": 189,
+  "fails": 0,
+  "panels": {
+   "CTIS": {
+    "classes": 201,
+    "recordings": 4887,
+    "slices": 42505,
+    "kbar": 8.697564968283201,
+    "qtest_slices": 4605,
+    "qtest_recs": 963
+   },
+   "music_genre": {
+    "classes": 16,
+    "recordings": 1713,
+    "slices": 36375,
+    "kbar": 21.234676007005255,
+    "qtest_slices": 3648,
+    "qtest_recs": 337
+   },
+   "pianos": {
+    "classes": 8,
+    "recordings": 668,
+    "slices": 18352,
+    "kbar": 27.473053892215567,
+    "qtest_slices": 1884,
+    "qtest_recs": 135
+   },
+   "CNPM": {
+    "classes": 5,
+    "recordings": 286,
+    "slices": 2713,
+    "kbar": 9.486013986013987,
+    "qtest_slices": 271,
+    "qtest_recs": 54
+   },
+   "bel_canto": {
+    "classes": 4,
+    "recordings": 202,
+    "slices": 9886,
+    "kbar": 48.94059405940594,
+    "qtest_slices": 979,
+    "qtest_recs": 40
+   }
+  },
+  "totals": {
+   "slices": 109831,
+   "recordings": 7756,
+   "classes": 234,
+   "qtest_slices": 11387,
+   "qtest_recordings": 1529
+  }
+ }
+}

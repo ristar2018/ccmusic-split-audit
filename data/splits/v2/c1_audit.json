@@ -1,0 +1,37 @@
+{
+  "lib": "CTIS",
+  "arm": "C1",
+  "scheme": "equal-volume injection from non-test recordings",
+  "seed": 20261105,
+  "assertions": {
+    "K1_no_test_sample_ids": true,
+    "K2_no_test_recordings": true,
+    "K3_no_test_content_hash": true,
+    "K4_injection_disjoint_from_a0": true,
+    "K4b_train_ids_unique": true,
+    "K5_per_class_equal_to_a0": true,
+    "K6_total_within_0.5pct_of_a1": true
+  },
+  "all_pass": true,
+  "detail": {
+    "n_train": 25502,
+    "n_a0_train": 25502,
+    "n_a1_train": 25498,
+    "gap_vs_a1": 0.00016,
+    "n_injected": 4177,
+    "n_dropped": 4177,
+    "injected_from": {
+      "c": 1665,
+      "r": 2512
+    },
+    "injected_recordings": 1681,
+    "injected_classes": 161,
+    "class_need_total": 4178,
+    "class_counts_match": true,
+    "n_classes": 201
+  },
+  "class_shortfall": {
+    "D0242": 1
+  },
+  "note": "Injected slices come from C remainder and R; for this arm only the R partition is partially used as a source, so C1's validation numbers are not interpretable. No arm performs model selection."
+}

@@ -1,0 +1,135 @@
+{
+ "generated_by": "code/manifest_neg.py",
+ "scope": "负对照 3 库（E1f: A0 vs A2，1 seed，2 骨干）",
+ "design_ref": "report/聚焦版实验设计方案v2.8.md §3.7 :296-310",
+ "libraries": {
+  "chest_falsetto": {
+   "library": "chest_falsetto",
+   "classes": 4,
+   "recordings": 1280,
+   "slices": 1280,
+   "kbar": 1.0,
+   "k_dist": {
+    "1": 1280
+   },
+   "per_class_recordings": {
+    "f_chest": 412,
+    "f_falsetto": 408,
+    "m_chest": 230,
+    "m_falsetto": 230
+   },
+   "min_class_recordings": 230,
+   "bad_filename_count": 0,
+   "bad_filename_examples": [],
+   "uid_parse_rate": 1.0,
+   "label_version": "chest.sexmode4.v1",
+   "duplicate_content_hash_groups": null
+  },
+  "erhu_playing_tech": {
+   "library": "erhu_playing_tech",
+   "classes": 11,
+   "recordings": 1253,
+   "slices": 1253,
+   "kbar": 1.0,
+   "k_dist": {
+    "1": 1253
+   },
+   "per_class_recordings": {
+    "detache": 95,
+    "diangong": 50,
+    "harmonic": 30,
+    "legato_slide_glissando": 164,
+    "percussive": 38,
+    "pizzicato": 111,
+    "ricochet": 66,
+    "staccato": 177,
+    "tremolo": 174,
+    "trill": 249,
+    "vibrato": 99
+   },
+   "min_class_recordings": 30,
+   "bad_filename_count": 0,
+   "bad_filename_examples": [],
+   "uid_parse_rate": 1.0,
+   "label_version": "erhu.technique11.v1",
+   "duplicate_content_hash_groups": null
+  },
+  "GZ_IsoTech": {
+   "library": "GZ_IsoTech",
+   "classes": 8,
+   "recordings": 2824,
+   "slices": 2899,
+   "kbar": 1.0266,
+   "k_dist": {
+    "1": 2778,
+    "2": 26,
+    "3": 11,
+    "4": 9
+   },
+   "per_class_recordings": {
+    "downward_portamento": 384,
+    "glissando": 358,
+    "harmonics": 379,
+    "plucks": 339,
+    "returning_portamento": 366,
+    "tremolo": 228,
+    "upward_portamento": 536,
+    "vibrato": 234
+   },
+   "min_class_recordings": 228,
+   "bad_filename_count": 0,
+   "bad_filename_examples": [],
+   "uid_parse_rate": 1.0,
+   "label_version": "guzheng.technique8.v1",
+   "duplicate_content_hash_groups": null
+  }
+ },
+ "excluded": {
+  "Guzheng_Tech99": {
+   "reason": "无逐录音类别层：99 条录音各 1 片，逐音符 IPT 有 10 类（boxian 11,860 / chanyin 1,994 / shanghua 756 / huazhi 663 / xianyin 类 208+209 / ...，共 15,838 音符），但每条录音的主技法恒为 boxian（99/99），无法构成单标签分类任务",
+   "evidence": "data/splits/v2/negcontrol/negcontrol.json + 逐 CSV 统计（2026-11-05）",
+   "consequence": "E1f 由 16 runs 降为 12 runs（3 库 × 2 骨干 × {A0,A2} × 1 seed）"
+  }
+ },
+ "checks_vs_design": {
+  "chest_falsetto": {
+   "expect": {
+    "classes": 4,
+    "recordings": 1280,
+    "slices": 1280
+   },
+   "got": {
+    "classes": 4,
+    "recordings": 1280,
+    "slices": 1280
+   },
+   "ok": true
+  },
+  "erhu_playing_tech": {
+   "expect": {
+    "classes": 11,
+    "recordings": 1253,
+    "slices": 1253
+   },
+   "got": {
+    "classes": 11,
+    "recordings": 1253,
+    "slices": 1253
+   },
+   "ok": true
+  },
+  "GZ_IsoTech": {
+   "expect": {
+    "classes": 8,
+    "recordings": 2824,
+    "slices": 2899
+   },
+   "got": {
+    "classes": 8,
+    "recordings": 2824,
+    "slices": 2899
+   },
+   "ok": true
+  }
+ }
+}

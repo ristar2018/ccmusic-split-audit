@@ -1,0 +1,17 @@
+[
+  {
+    "url": "https://zenodo.org/record/4248670",
+    "http": 410,
+    "ok": false
+  },
+  {
+    "url": "https://zenodo.org/records/4248670/files/SMCCIM_2020_paper_210.pdf?download=1",
+    "http": 404,
+    "ok": false
+  },
+  {
+    "url": "https://www.smc2020torino.it/SMC2020_proceedings.html",
+    "http": 404,
+    "ok": false
+  }
+]

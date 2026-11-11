@@ -1,0 +1,250 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""code/p3_split.py — P3 的乐器分组 3 折切分（零 GPU，只读数据根）。
+
+口径（`worklog/exp-plan/P3-预注册草案.md` v1，2026-11-05 冻结）：
+  1. 类宇宙 = `data/p3/universe_43.csv` 的 43 个技法类（剔除 6 个内容类标签后的主口径）。
+  2. 乐器名按 `data/p3/instrument_merge.csv` 的 `used=1` 行归一到 `merge_to`（212 → 204）。
+  3. 折分组 = 按乐器分组的 3 折：同一乐器的全部录音落在同一折；每条录音恰好被预测一次。
+     贪心：乐器按「切片数」降序，逐个放进当前切片数最少的一折。
+  4. 每折 f 的测试集 = 折 f 的录音；训练集 = 另外两折的录音（训练脚本按 fold 过滤）。
+  5. 主指标 = 三折 held-out 预测合并后的 pooled macro-F1（训练脚本合并，本脚本只切分）。
+
+断言（失败即停，exit 2）：
+  A1 乐器互斥且并集 = 全部乐器
+  A2 每条录音的 fold 与其乐器的 fold 一致
+  A3 每类每折 ≥1 条；缺失的 (类,折) 单列（不判失败，但必须披露）
+  A4 每类总支撑 ≥ 6
+  A5 同 recording_canonical 的重复音频同折
+
+产物：
+  data/p3/p3_splits.csv        每片一行（sample_id, recording_uid, recording_canonical,
+                               technique, instrument, instrument_canon, fold）
+  data/p3/fold_instruments.csv 乐器 → 折
+  data/p3/p3_folds.json        每折统计 + 类索引 + 断言 + split_hash
+"""
+import collections
+import csv
+import hashlib
+import io
+import json
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+import p3_universe  # noqa: E402  同目录，复用 load_rows / recording_cells / universe
+
+OUT = os.path.join(os.path.dirname(HERE), "data", "p3")
+N_FOLDS = 3
+MIN_SUPPORT = 6
+
+
+def read_csv(path):
+    with io.open(path, encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def canon_map():
+    """instrument(原名) → 归一后的乐器名。只取 used=1 的行。"""
+    m = {}
+    for r in read_csv(os.path.join(OUT, "instrument_merge.csv")):
+        if str(r.get("used", "")).strip() in ("1", "true", "True"):
+            m[r["instrument"].strip()] = r["merge_to"].strip()
+    return m
+
+
+def cell_counts(rows):
+    """(技法, 乐器) → 录音数（录音级去重，与 p3_universe 的格级口径同式）。"""
+    seen = set()
+    cnt = collections.Counter()
+    for r in rows:
+        t, i = r.get("technique", ""), r.get("instrument", "")
+        if not t or not i:
+            continue
+        k = (r["recording_uid"], t, i)
+        if k in seen:
+            continue
+        seen.add(k)
+        cnt[(t, i)] += 1
+    return cnt
+
+
+def build():
+    rows = p3_universe.load_rows()                       # CTIS 全部 43,054 片
+    rec, cells = p3_universe.recording_cells(rows)
+    universe, used = p3_universe.universe(cells, set(p3_universe.DROP))
+    classes = [r["technique"] for r in universe]
+    assert len(classes) == 43 and used == 1388, (len(classes), used)
+
+    cnt = cell_counts(rows)
+    keep_tech = set(classes)
+    keep = {k for k, n in cnt.items() if k[0] in keep_tech and n >= p3_universe.MIN_CELL}
+    sel = [r for r in rows if (r.get("technique"), r.get("instrument")) in keep]
+    n_rec = len({r["recording_uid"] for r in sel})
+    assert n_rec == used, (n_rec, used)
+
+    cmap = canon_map()
+    slices = []
+    for r in sel:
+        inst = r.get("instrument", "").strip()
+        slices.append({
+            "sample_id": r["sample_id"],
+            "recording_uid": r["recording_uid"],
+            "recording_canonical": r.get("recording_canonical") or r["recording_uid"],
+            "technique": r["technique"],
+            "instrument": inst,
+            "instrument_canon": cmap.get(inst, inst),
+        })
+    return slices, classes
+
+
+def assign_folds(slices):
+    by_inst = collections.Counter(s["instrument_canon"] for s in slices)
+    fold_inst, fold_load = {}, [0] * N_FOLDS
+    for inst, n in sorted(by_inst.items(), key=lambda kv: (-kv[1], kv[0])):
+        f = min(range(N_FOLDS), key=lambda i: (fold_load[i], i))
+        fold_inst[inst] = f + 1
+        fold_load[f] += n
+    return fold_inst, fold_load
+
+
+def _score(slices, fold_inst, cls_total):
+    """目标 = 缺失 (类,折) 格数 × 1000 + 折间切片数极差（越小越好）。"""
+    seen = collections.Counter()
+    load = [0] * N_FOLDS
+    for s in slices:
+        f = fold_inst[s["instrument_canon"]] - 1
+        load[f] += 1
+        seen[(s["technique"], f)] += 1
+    miss = sum(1 for c in cls_total for f in range(N_FOLDS) if seen[(c, f)] == 0)
+    return miss * 1000 + (max(load) - min(load)), miss, load
+
+
+def refine_folds(slices, fold_inst, cls_total, iters=4000, seed=20261105):
+    """局部搜索：随机把一个乐器挪到另一折，接受更优解。
+
+    目的：贪心只均衡切片数，会把小类全挤到同一折（首跑 20 个缺失格）。
+    这里把「缺失 (类,折) 格」放进目标，让每折尽量覆盖全部 43 类。
+    """
+    import random
+    rng = random.Random(seed)
+    cur = dict(fold_inst)
+    best = _score(slices, cur, cls_total)[0]
+    insts = list(cur)
+    for _ in range(iters):
+        inst = rng.choice(insts)
+        old = cur[inst]
+        new = rng.choice([f for f in range(1, N_FOLDS + 1) if f != old])
+        cur[inst] = new
+        sc = _score(slices, cur, cls_total)[0]
+        if sc <= best:
+            best = sc
+        else:
+            cur[inst] = old
+    return cur
+
+
+def main():
+    os.makedirs(OUT, exist_ok=True)
+    slices, classes = build()
+    fold_inst, fold_load = assign_folds(slices)
+    cls_total = collections.Counter(s["technique"] for s in slices)
+    raw_miss = _score(slices, fold_inst, cls_total)[1]
+    fold_inst = refine_folds(slices, fold_inst, cls_total)
+    fold_load = _score(slices, fold_inst, cls_total)[2]
+    for s in slices:
+        s["fold"] = str(fold_inst[s["instrument_canon"]])
+
+    ok = {}
+    inst_folds = collections.defaultdict(set)
+    for inst, f in fold_inst.items():
+        inst_folds[inst].add(f)
+    ok["A1_inst_exclusive"] = (all(len(v) == 1 for v in inst_folds.values())
+                               and set(fold_inst) == {s["instrument_canon"] for s in slices})
+    ok["A2_recording_fold_consistent"] = all(
+        fold_inst[s["instrument_canon"]] == int(s["fold"]) for s in slices)
+
+    cls_fold, cls_total = collections.Counter(), collections.Counter()
+    for s in slices:
+        cls_fold[(s["technique"], int(s["fold"]))] += 1
+        cls_total[s["technique"]] += 1
+    missing = [(c, f) for c in classes for f in range(1, N_FOLDS + 1) if cls_fold[(c, f)] == 0]
+    ok["A3_every_class_every_fold"] = not missing
+    ok["A4_class_support_ge_6"] = all(cls_total[c] >= MIN_SUPPORT for c in classes)
+
+    canon_folds = collections.defaultdict(set)
+    for s in slices:
+        canon_folds[s["recording_canonical"]].add(s["fold"])
+    ok["A5_dup_audio_same_fold"] = all(len(v) == 1 for v in canon_folds.values())
+
+    cols = ["sample_id", "recording_uid", "recording_canonical", "technique",
+            "instrument", "instrument_canon", "fold"]
+    with io.open(os.path.join(OUT, "p3_splits.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        w.writerows({k: s[k] for k in cols} for s in slices)
+
+    inst_cnt = collections.Counter(s["instrument_canon"] for s in slices)
+    with io.open(os.path.join(OUT, "fold_instruments.csv"), "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["instrument_canon", "fold", "slices"])
+        for inst, fd in sorted(fold_inst.items(), key=lambda kv: (kv[1], -inst_cnt[kv[0]])):
+            w.writerow([inst, fd, inst_cnt[inst]])
+
+    per_fold = {}
+    for fd in range(1, N_FOLDS + 1):
+        sub = [s for s in slices if int(s["fold"]) == fd]
+        per_fold[str(fd)] = {
+            "slices": len(sub),
+            "recordings": len({s["recording_uid"] for s in sub}),
+            "instruments": len({s["instrument_canon"] for s in sub}),
+            "classes_covered": len({s["technique"] for s in sub}),
+            "train_recordings": len({s["recording_uid"] for s in slices if int(s["fold"]) != fd}),
+        }
+
+    h = hashlib.sha1()
+    for s in sorted(slices, key=lambda x: x["sample_id"]):
+        h.update(("%s|%s|%s\n" % (s["sample_id"], s["recording_uid"], s["fold"])).encode())
+
+    out = {
+        "rule": "按乐器分组的 3 折（同乐器同折，贪心按切片数均衡）",
+        "n_folds": N_FOLDS,
+        "n_slices": len(slices),
+        "n_recordings": len({s["recording_uid"] for s in slices}),
+        "n_instruments": len(fold_inst),
+        "n_instruments_unmerged": len({s["instrument"] for s in slices}),
+        "classes": classes,
+        "class_to_idx": {c: i for i, c in enumerate(classes)},
+        "per_fold": per_fold,
+        "fold_load": fold_load,
+        "missing_class_fold": [{"technique": c, "fold": f} for c, f in missing],
+        "min_support": MIN_SUPPORT,
+        "assertions": ok,
+        "disclosed": {"A3_missing_class_fold_cells": len(missing)},
+        "all_pass": all(v for k, v in ok.items() if k != "A3_every_class_every_fold"),
+        "all_pass_incl_disclosed": all(ok.values()),
+        "split_hash": h.hexdigest(),
+    }
+    with io.open(os.path.join(OUT, "p3_folds.json"), "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+
+    print("切片 %d / 录音 %d / 乐器 %d（未归一 %d）/ 类 %d"
+          % (len(slices), out["n_recordings"], out["n_instruments"],
+             out["n_instruments_unmerged"], len(classes)))
+    for fd in range(1, N_FOLDS + 1):
+        d = per_fold[str(fd)]
+        print("  折%d：%5d 片 / %4d 录音 / %3d 乐器 / 覆盖 %2d 类（训练侧 %4d 录音）"
+              % (fd, d["slices"], d["recordings"], d["instruments"],
+                 d["classes_covered"], d["train_recordings"]))
+    print("缺失 (类,折) 格：%d 个%s" % (len(missing),
+          "：" + "、".join("%s@折%d" % (c, f) for c, f in missing[:12]) if missing else ""))
+    for k, v in ok.items():
+        print("  %-32s %s" % (k, "PASS" if v else "FAIL"))
+    print("split_hash %s" % out["split_hash"])
+    return 0 if out["all_pass"] else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
