@@ -86,9 +86,9 @@ level $+4.03$ $[+2.69,+6.14]$ for the 578 exposed recordings under AlexNet again
 $[-1.81,+1.83]$ for the remaining 385, and at recording level $+3.81$ $[+1.76,+5.36]$ against
 $+0.27$ $[-1.67,+1.99]$; under Swin-T the same split gives $+2.67$ $[+1.71,+3.64]$ against
 $+1.10$ $[+0.27,+3.04]$ at slice level and $+1.73$ $[+0.71,+2.58]$ against $+0.70$
-$[-0.16,+2.28]$ at recording level. The pattern is therefore suggestive but not clean: the
-subgroup without any exposed recording is small (710 slices, 385 recordings), its Swin-T
-slice-level interval excludes zero, and the two subgroups are re-clustered and resampled
+$[-0.16,+2.28]$ at recording level. The pattern is therefore suggestive, not clean. The subgroup without any exposed
+recording is small---710 slices and 385 recordings---and its Swin-T slice-level interval
+excludes zero; the two subgroups are also re-clustered and resampled
 separately, so their class universes differ and their absolute values are not comparable to each
 other or to the pooled estimate. This split was computed after the main runs and is not part of the
 internal plan.
@@ -123,8 +123,8 @@ bel canto  & Swin-T  & 19.09 & 13.06 & 0.684 \\
 The CTIS sensitivity analyses in Supplementary Material S1 retain positive slice-level
 intervals when recording clusters and trained seeds are jointly resampled. Some upper bounds
 exceed three points, including Swin-T under unstratified joint resampling. For the corrected
-recording metric, AlexNet's unstratified joint interval includes zero (approximately
-$-0.03$ to $+2.99$). These exploratory analyses do not include split-realisation variance.
+recording metric, AlexNet's unstratified joint interval includes zero, at approximately
+$-0.03$ to $+2.99$. These exploratory analyses do not include split-realisation variance.
 
 The two metric levels need not agree. In pianos the recording-level A1 contrasts are
 $+7.53$ and $+4.86$ points, substantially smaller than the slice-level $+14.62$ and $+11.36$.
@@ -316,8 +316,10 @@ instrument invariance is unattainable.
 \centering
 \caption{Cross-instrument transfer on CTIS techniques, over 43 classes, 1{,}388 recordings and
 7{,}528 slices in three folds with two seeds, pooled over the held-out folds. R-slice uses random slice-level folds and
-is the optimistic within-recording reference; R-rec groups folds by recording while retaining overlap for 110 instruments on at least two folds; L-inst withholds whole instruments; L-inst+Adv adds an adversarial instrument head on top of L-inst. Intervals are 95\%
-recording-cluster bootstrap intervals. Contrasts on the pooled slice metric: R-slice$-$L-inst
+is the optimistic within-recording reference; R-rec groups folds by recording while retaining overlap for 110 instruments on at least two folds; L-inst withholds whole instruments; L-inst+Adv adds an adversarial instrument head on top of
+L-inst. The recording-level column for R-slice aggregates slice predictions from more than one
+fold model, so it is not directly comparable with the single-model recording-level column of the
+other partitions. Intervals are 95\% recording-cluster bootstrap intervals. Contrasts on the pooled slice metric: R-slice$-$L-inst
 $+39.63\,[+36.84,+42.39]$ for AlexNet and $+34.77\,[+32.00,+38.08]$ for Swin-T; R-slice$-$R-rec
 $+2.90\,[+0.32,+5.66]$ and $+3.41\,[+0.68,+6.36]$; R-rec$-$L-inst
 $+36.73\,[+33.31,+39.89]$ and $+31.37\,[+28.32,+34.97]$; L-inst+Adv$-$L-inst $-0.36\,[-1.75,+0.91]$ for AlexNet

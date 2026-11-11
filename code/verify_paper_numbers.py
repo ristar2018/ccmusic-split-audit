@@ -595,7 +595,7 @@ def main():
                 sizes == {("A1-A0[exposed]", "3895", "578"),
                           ("A1-A0[unexposed]", "710", "385")}, str(sorted(sizes)))
     ck.in_text("exposure split denominator", "578 of the 963 CTIS test recordings")
-    ck.in_text("exposure split subgroup size", "710 slices, 385 recordings")
+    ck.in_text("exposure split subgroup size", "710 slices and 385 recordings")
 
     # class-set table rows (round-2 revision)
     for bb_name, bb in (("AlexNet", "alexnet"), ("Swin-T", "swin_t")):
@@ -656,7 +656,45 @@ def main():
             ceiling.append(float(r["macro_f1_recording"]))
     ck.identity("bel canto recording-level score saturates at 1.00",
                 max(ceiling) >= 0.9999, "%.4f" % max(ceiling))
-    ck.in_text("bel canto ceiling disclosed", "saturates at 1.00")
+    ck.in_text("bel canto ceiling disclosed",
+                "reaches 1.00 in five of the six seed-by-backbone cells")
+    ck.in_text("bel canto recording-level baselines disclosed",
+                "reaches 0.83 for AlexNet and 0.77 for Swin-T")
+    _bc = {}
+    for r in read_csv(os.path.join(RESULTS, "human_review", "corrected_recording_metrics.csv")):
+        if r["library"] == "bel_canto" and r["arm"] in ("A0", "A1"):
+            _bc.setdefault((r["bb"], r["arm"]), []).append(float(r["f1_rec_unweighted"]))
+    _m = dict((k, sum(v) / len(v)) for k, v in _bc.items())
+    ck.identity("bel canto AlexNet recording-level A0 rounds to 0.83",
+                abs(_m[("alexnet", "A0")] - 0.8295) < 5e-4, "%.4f" % _m[("alexnet", "A0")])
+    ck.identity("bel canto Swin-T recording-level A0 rounds to 0.77",
+                abs(_m[("swin_t", "A0")] - 0.7726) < 5e-4, "%.4f" % _m[("swin_t", "A0")])
+    ck.identity("bel canto AlexNet recording-level contrast +14.61",
+                delta(_m[("alexnet", "A1")], _m[("alexnet", "A0")]) == "+14.61",
+                delta(_m[("alexnet", "A1")], _m[("alexnet", "A0")]))
+    ck.identity("bel canto Swin-T recording-level contrast +22.74",
+                delta(_m[("swin_t", "A1")], _m[("swin_t", "A0")]) == "+22.74",
+                delta(_m[("swin_t", "A1")], _m[("swin_t", "A0")]))
+    _ones = sum(1 for (bb, arm), v in _bc.items() if arm == "A1"
+                for x in v if abs(x - 1.0) < 1e-9)
+    _cells = sum(len(v) for (bb, arm), v in _bc.items() if arm == "A1")
+    ck.identity("bel canto exposure arm hits 1.00 in five of six cells",
+                (_ones, _cells) == (5, 6), "%d/%d" % (_ones, _cells))
+
+    # round-3 additions: provenance and scope statements
+    ck.in_text("all five libraries release audio",
+                "all five libraries release source audio")
+    ck.in_text("audio archives obtained only for three",
+                "We obtained the audio archives of CTIS, CNPM and pianos")
+    ck.in_text("two libraries audio not obtained",
+                "Bel canto and music genre also release audio, which we did not obtain")
+    ck.in_text("canonical fold is label preserving",
+                "no canonical recording appears in two classes")
+    ck.in_text("A2 trains on about 60 percent", "about 60\\% of the original corpus")
+    ck.in_text("instrument count from merged groups",
+                "135 groups after name merging")
+    ck.in_text("recording-level column is multi-fold",
+                "aggregates slice predictions from more than one fold model")
 
     # per-class slice budget: exactly one class differs between A0 and A1
     budget = {}

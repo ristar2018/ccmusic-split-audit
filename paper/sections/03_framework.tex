@@ -22,10 +22,10 @@ actual split files.
 
 Two properties of the release shape the audit. First, the feature images are the unit of
 analysis: for the MEL family, each image is a 496$\times$369 JPEG whose file name encodes the
-recording identifier and the window index. What ships beside the images differs by collection
---- CTIS, CNPM and pianos release their source audio, while music genre and bel canto release
-the feature images only --- so the five libraries in Table~\ref{tab:panels} are not equally
-checkable against the audio. Second, the
+recording identifier and the window index. What ships beside the images also differs in what can be checked: all five libraries release
+source audio, but only in CTIS do the audio file names map unambiguously onto the evaluation
+recording identifiers, so the five libraries in Table~\ref{tab:panels} are not equally checkable
+against the audio. Second, the
 same recording contributes many images --- between 8.7 and 48.9 per recording across the five
 libraries we use, as Table~\ref{tab:panels} lists --- so the number of images per recording is large
 enough for a slice-level split to place many siblings of every test recording in training.
@@ -59,9 +59,10 @@ $Q_{\mathrm{pool}}$, while $Q_{\mathrm{test}}$ remains sealed.}
 
 We treat this as a specification question rather than an accusation. A database paper can leave an evaluation detail underspecified without establishing that its
 implemented split was defective. We therefore distinguish the stated recipe, our slice-level
-reconstruction, and the unavailable original split files. What the audit adds is the size of the gap between the
-protocol as stated and the protocol a reader would need to interpret the number as
-generalisation to unseen music.
+reconstruction, and the unavailable original split files. What the audit adds is the size of the gap between the protocol as stated and the protocol a
+reader would need to interpret the number as generalisation to unseen music. The exposure
+distribution, the capacity calculation and the four-arm contrast support that gap jointly; A2
+contributes only a slice-level approximation.
 
 \subsection{Terms}
 

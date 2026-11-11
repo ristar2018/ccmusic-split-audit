@@ -52,21 +52,21 @@ recording number and duration; CNPM by joining the file name to the dataset's ow
 \texttt{label.csv}; and bel canto by class and recording number. Parsing succeeded for
 110{,}415 of 110{,}415 slices for the identity field; the separate instrument-name field parses
 for 99.49\% of CTIS slices, and the 14 unparsed stems are reported in the manifest summary.
-Audio-level verification of these identities was possible only for CTIS, the one library whose
-audio files map unambiguously onto its evaluation recordings. CNPM, pianos and bel canto also
-ship audio, but their audio file names carry no reliable link to the evaluation recording
-identifiers, so their identities rest on the file-name rule alone; music genre ships feature
-images only. A correct parse is in any case not the same as a correct identity: the rule can
+We obtained the audio archives of CTIS, CNPM and pianos. Audio-level verification of these
+identities was possible only for CTIS, the one library whose audio file names map unambiguously
+onto its evaluation recordings; in CNPM and pianos the audio file names carry no reliable link
+to the evaluation recording identifiers, so their identities rest on the file-name rule alone.
+Bel canto and music genre also release audio, which we did not obtain. A correct parse is in any case not the same as a correct identity: the rule can
 reproduce a plausible recording identifier without proving that the released images and the
 released audio belong together.
 
 Two checks protect the mapping. First, the mapping between a CTIS recording and the numbering of
 its slices is a global counter over classes, not a per-class index; using the per-class index
 mis-assigns 218 of 219 classes, and the manifest builder recomputes the global counter before
-joining. Second, a SHA-1 sweep over all 4{,}956 CTIS files, 13.3 GB, found two identical pairs
---- the same take released under two technique names, and one take with a duplicate-download
-suffix --- which we fold to a single canonical identifier, so that no recording can sit on two
-sides of a split by accident. At the slice level CTIS holds 77 groups of identical images,
+joining. Second, a SHA-1 sweep over all 4{,}956 CTIS files, 13.3 GB, found two identical pairs --- the
+same take released under two technique names, and one take with a duplicate-download suffix ---
+which we fold to a single canonical identifier carrying one label, so that no canonical
+recording appears in two classes and none can sit on two sides of a split by accident. At the slice level CTIS holds 77 groups of identical images,
 covering 175 slices. In every one of them the same window appears under more than one recording
 name: in 51 groups those names resolve to one recording's audio after the SHA-1 folding above, and
 in 26 they resolve to two or more distinct recordings, so the group key rather than the recording

@@ -9,14 +9,15 @@ which factors explain the observed spread.
 
 Headroom constrains the scale. A library whose control arm already reaches 0.95 cannot show a large
 absolute gain, whatever the split does; CTIS loses at most 4.6 points to Swin-T and 9.2 to
-AlexNet. In bel canto the recording-level control reaches the low 0.9s and the exposure arm
-saturates at 1.00 for most seeds, so its recording-level contrast is limited by a ceiling and its
-interval is wide for that reason as well as for the small panel of 40 test recordings.
+AlexNet. In bel canto the recording-level control reaches 0.83 for AlexNet and 0.77 for Swin-T, and the
+exposure arm reaches 1.00 in five of the six seed-by-backbone cells, so its recording-level
+contrast is limited by a ceiling and its interval is wide for that reason as well as for the
+small panel of 40 test recordings.
 Rescaling by headroom, as Table~\ref{tab:headroom} does, reduces but does not remove
-the dispersion (0.219--0.873, still about four-fold): the normalised contrast is 22--37\% of the score headroom in CTIS, 38--48\% in
-CNPM, 47--68\% in bel canto, 49--68\% in music genre, and 83--87\% in pianos. Absolute points
-answer the question ``how much would the leaderboard move''; the rescaled number answers the
-question ``how large is the contrast relative to the baseline's remaining score headroom''.
+the dispersion---0.219 to 0.873, still about four-fold---so the normalised contrast is 22--37\% of the score headroom in CTIS, 38--48\% in
+CNPM, 47--68\% in bel canto, 49--68\% in music genre, and 83--87\% in pianos. Absolute points answer the question ``how much would the leaderboard move under the stated
+protocol''; the rescaled number answers the question ``how large is the contrast relative to the
+baseline's remaining score headroom''.
 Because $1-\text{macro-F1}$ is not an error count, this is a descriptive normalised
 effect size, not a division of predictions into memorisation and transfer.
 

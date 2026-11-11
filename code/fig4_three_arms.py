@@ -128,9 +128,9 @@ def main():
     self_ = selftest_scores(nc_by_lib)
 
     W = 120.0 * MM
-    H = 118.0 * MM
+    H = 128.0 * MM
     fig, axes = plt.subplots(len(LIBS), 1, figsize=(W, H))
-    fig.subplots_adjust(left=0.185, right=0.965, top=0.845, bottom=0.115, hspace=0.86)
+    fig.subplots_adjust(left=0.185, right=0.965, top=0.845, bottom=0.115, hspace=0.78)
 
     for ax, lib in zip(axes, LIBS):
         ys = {"alexnet": 1.0, "swin_t": 0.0}
@@ -163,7 +163,7 @@ def main():
                 ax.scatter(xs, y + DY_SELF, marker="s", s=MARK_SZ ** 2 * 1.4,
                            facecolors="none", edgecolors=C_SELF, linewidths=0.9, zorder=4)
 
-        ax.set_ylim(-0.92, 2.02)
+        ax.set_ylim(-0.85, 1.95)
         ax.set_yticks([1.0, 0.0])
         # The dodge puts the markers off the tick line; the label marks the row centre.
         ax.set_yticklabels(["AlexNet", "Swin-T"], fontsize=FS)

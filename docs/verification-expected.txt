@@ -7,10 +7,10 @@ Command
 
 Expected tail
 -------------
-    checks passed: 324, failed: 0
+    checks passed: 337, failed: 0
     report: data/results/paper_verify.json
 
-What the 324 checks cover
+What the 337 checks cover
 -------------------------
 1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
    re-derived from the artifact tables under data/results/ and compared with the
@@ -30,6 +30,14 @@ What the 324 checks cover
    the end-of-training losses. These are recomputed from
    data/results/library_inventory_and_convergence.json, the split files and the
    retained training logs rather than compared with a stored table.
+
+5. Revision layer. The corrected bel canto recording-level baselines and
+   contrasts are recomputed from
+   data/results/human_review/corrected_recording_metrics.csv, and the
+   provenance statements added in revision -- which libraries release audio,
+   which archives were obtained, label-preserving canonical folding, the A2
+   corpus share, the instrument group count and the multi-fold recording-level
+   column -- are required to appear in the text.
 
 What the verifier does not do
 -----------------------------

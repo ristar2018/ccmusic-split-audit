@@ -30,7 +30,7 @@ python code/verify_paper_numbers.py
 Expected last lines:
 
 ```
-checks passed: 324, failed: 0
+checks passed: 337, failed: 0
 report: data/results/paper_verify.json
 ```
 
