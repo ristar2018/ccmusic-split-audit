@@ -125,6 +125,14 @@ def main(argv=None):
             shutil.copy2(src, os.path.join(OUT, "docs", extra))
             files.append(("docs/" + extra, src))
 
+    # the repository's design plan and execution record travel with the package
+    repo_docs = os.path.join(PROJ, "_github", "ccmusic-split-audit", "docs")
+    for extra in ("design-plan.md", "execution-changes.md"):
+        src = os.path.join(repo_docs, extra)
+        if os.path.isfile(src):
+            shutil.copy2(src, os.path.join(OUT, "docs", extra))
+            files.append(("docs/" + extra, src))
+
     # the package README is authored once and copied in, so re-assembling never loses it
     readme_src = os.path.join(PROJ, "repro", "README_package.md")
     if os.path.isfile(readme_src):
