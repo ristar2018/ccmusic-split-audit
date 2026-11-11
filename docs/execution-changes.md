@@ -56,12 +56,18 @@ the qualifier leaves the sentence. `code/negtest_claim_provenance.py` reverts
 three wordings in a temporary copy and requires the expected claims to fail, so
 the gate is checked against its own failure modes.
 
-Building the ledger exposed one artifact gap and one accounting slip. The ten
-rows of the headroom table existed only in the manuscript source, with no
-artifact behind them; `code/headroom_table.py` now re-derives them from
-`e1_metrics.csv` (mean of the three A0 seeds) and `e1_delta.csv`, and the ten
-re-derived rows match the table. The packaging manifest also stated that the
-pool removes 4,178 slices, while the manuscript states 4,177 and the two
-components (1,665 from unused C content and 2,512 from R) sum to 4,177; the
-manifest now reads 4,177. The replacement count of 753 recordings was checked
-against the frozen split files and left unchanged.
+Building the ledger exposed one artifact gap. The ten rows of the headroom table
+existed only in the manuscript source, with no artifact behind them;
+`code/headroom_table.py` now re-derives them from `e1_metrics.csv` (mean of the
+three A0 seeds) and `e1_delta.csv`, and the ten re-derived rows match the table.
+
+One pair of numbers is worth stating explicitly, because the manuscript prints
+both and they differ by one. Section 5 describes the budget: remove 4,177 slices
+and replace them classwise with 1,665 slices from unused C content and 2,512
+from R, which sums to 4,177. Supplement Table 1 reports the realised count:
+4,178 pool slices are actually present in A1 training, which is the row count of
+`data/splits/v2/CTIS_qpool.csv`. The two figures answer different questions (what
+the per-class budget allocates, and what the realised pool contains), and the
+packaging manifest quotes the second. The companion counts in the same table,
+753 injected recordings and 578 of 963 exposed test recordings, were recomputed
+from `CTIS_qpool.csv` and `CTIS_qtest.csv` and match.
