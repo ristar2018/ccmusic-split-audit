@@ -7,10 +7,10 @@ Command
 
 Expected tail
 -------------
-    checks passed: 270, failed: 0
+    checks passed: 324, failed: 0
     report: data/results/paper_verify.json
 
-What the 270 checks cover
+What the 324 checks cover
 -------------------------
 1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
    re-derived from the artifact tables under data/results/ and compared with the
@@ -23,6 +23,13 @@ What the 270 checks cover
 3. Round-2 layer. A1-C1 cells and their transitivity, the exposure split, fold
    composition, the class-set table, the 43-class cross-instrument universe and
    the bel canto ceiling.
+
+4. Round-3 layer. The arm table and its four rows, the thirteen-library
+   inventory, the threshold-sensitivity sweep at 2, 3, 5 and 10 source
+   recordings, the excluded-class profile, the cross-library duplicate count and
+   the end-of-training losses. These are recomputed from
+   data/results/library_inventory_and_convergence.json, the split files and the
+   retained training logs rather than compared with a stored table.
 
 What the verifier does not do
 -----------------------------

@@ -10,7 +10,7 @@ This repository holds the analysis code, the frozen splits, the sealed test-set 
 
 | path | contents |
 | :-- | :-- |
-| `code/` | Every script: manifest and split construction (`manifest.py`, `splits_v2.py`, `negcontrol.py`), feature cache (`ccmusic_cache.py`), training (`train_e1.py`, `train_p3.py`), analysis (`analyze_e1.py`, `analyze_p3.py`, `sealed_eval_delta.py`), round-2 additions (`round2_a1_minus_c1.py`, `round2_macro_denominator.py`, `round2_data_accounting.py`), figure scripts, audits (`audit_*.py`) and the number verifier (`verify_paper_numbers.py`) |
+| `code/` | Every script: manifest and split construction (`manifest.py`, `splits_v2.py`, `negcontrol.py`), feature cache (`ccmusic_cache.py`), training (`train_e1.py`, `train_p3.py`), analysis (`analyze_e1.py`, `analyze_p3.py`, `sealed_eval_delta.py`), round-2 additions (`round2_a1_minus_c1.py`, `round2_macro_denominator.py`, `round2_data_accounting.py`), figure scripts, audits (`audit_*.py`, including `audit_cross_library_duplicates.py`), the inventory and convergence summary (`summarise_library_inventory.py`) and the number verifier (`verify_paper_numbers.py`) |
 | `data/manifest/` | Per-slice manifests (`<lib>.csv`) with recording id, class, candidate group and content hash; `summary.json` records per-library counts and the audio-hash status |
 | `data/splits/v2/` | Frozen split CSVs, one file per library and side (`<lib>_qtest.csv`, `_qpool.csv`, `_a0_train.csv`, `_a1_train.csv`, `_a2_train.csv`, `_a2_selftest.csv`, `_r.csv`, `_c.csv`), plus `_audit_summary.csv`, `assertions.json` and `feasibility.csv` |
 | `data/results/` | Metric tables and bootstrap summaries, `paper_verify.json` (verifier report) and `human_review/round2/` (A1−C1, exposure split, slice budget, fold composition, macro-denominator sensitivity) |
@@ -30,11 +30,11 @@ python code/verify_paper_numbers.py
 Expected last lines:
 
 ```
-checks passed: 270, failed: 0
+checks passed: 324, failed: 0
 report: data/results/paper_verify.json
 ```
 
-The verifier works in three layers: (1) *identity* — re-derives rounded means, deltas, sums, ratios and cost totals from the artifact tables; (2) *text* — rebuilds table rows and reported tokens from the manuscript source and requires each to appear; (3) *round-2 additions* — A1−C1 cells and their transitivity, the exposure split, fold composition, the class-set table, the 43-class universe and the bel canto ceiling. It reads the CSVs and JSONs, **not** the `.npz` predictions: the bootstrap intervals are produced by the analysis scripts from the sealed predictions, which the verifier does not re-run.
+The verifier works in four groups: (1) *identity* — re-derives rounded means, deltas, sums, ratios and cost totals from the artifact tables; (2) *text* — rebuilds table rows and reported tokens from the manuscript source and requires each to appear; (3) *round-2 additions* — A1−C1 cells and their transitivity, the exposure split, fold composition, the class-set table, the 43-class universe and the bel canto ceiling; (4) *round-3 additions* — the arm table, the thirteen-library inventory, the threshold-sensitivity sweep, the excluded-class profile, the cross-library duplicate count and the end-of-training losses, each recomputed from `data/results/library_inventory_and_convergence.json` and the split files. It reads the CSVs and JSONs, **not** the `.npz` predictions: the bootstrap intervals are produced by the analysis scripts from the sealed predictions, which the verifier does not re-run.
 
 ## Re-derive the bootstrap intervals
 
