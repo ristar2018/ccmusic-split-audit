@@ -36,6 +36,41 @@ report: data/results/paper_verify.json
 
 The verifier works in four groups: (1) *identity* — re-derives rounded means, deltas, sums, ratios and cost totals from the artifact tables; (2) *text* — rebuilds table rows and reported tokens from the manuscript source and requires each to appear; (3) *round-2 additions* — A1−C1 cells and their transitivity, the exposure split, fold composition, the class-set table, the 43-class universe and the bel canto ceiling; (4) *round-3 additions* — the arm table, the thirteen-library inventory, the threshold-sensitivity sweep, the excluded-class profile, the cross-library duplicate count and the end-of-training losses, each recomputed from `data/results/library_inventory_and_convergence.json` and the split files. It reads the CSVs and JSONs, **not** the `.npz` predictions: the bootstrap intervals are produced by the analysis scripts from the sealed predictions, which the verifier does not re-run.
 
+## Check that each prose claim is bound to its artifact cell
+
+```bash
+python code/verify_claim_provenance.py
+```
+
+Expected last line:
+
+```
+claims verified: 88, failed: 0
+```
+
+The number verifier above answers "does this printed number exist in the
+manuscript". It cannot answer "is this number attached to the right
+qualifier", and one revision failed exactly that way: the bel canto
+recording-level baseline was printed as "low 0.9s" while the artifact cell held
+0.83, and no string check could see the difference. This second gate closes that
+gap with an explicit ledger, `data/results/claim_ledger.csv`, where each row
+states an artifact file, a row selector, a column, the printed value, the prose
+phrase and the qualifier that has to surround it. All three legs are enforced:
+the cell still evaluates to the printed value, the phrase still occurs in the
+named section, and the qualifier still occurs in the same sentence. It covers
+88 claims across the results and discussion sections, including both metric
+levels, the corrected recording column, the exposure subgroups and the
+headroom-rescaled shares.
+
+The gate is tested against its own failure modes:
+
+```bash
+python code/negtest_claim_provenance.py
+```
+
+which stages a temporary copy, reverts three wordings to their earlier form and
+requires the expected claim rows to fail.
+
 ## Re-derive the bootstrap intervals
 
 ```bash

@@ -1,0 +1,11 @@
+library,library_display,backbone,backbone_display,n_seeds,baseline_slice,headroom_pt,delta_slice_pt,share_frac,share_pct
+CTIS,CTIS,alexnet,AlexNet,3,0.9078,9.22,2.02,0.219,21.9
+CTIS,CTIS,swin_t,Swin-T,3,0.9536,4.64,1.70,0.366,36.6
+music_genre,music genre,alexnet,AlexNet,3,0.6889,31.11,15.22,0.489,48.9
+music_genre,music genre,swin_t,Swin-T,3,0.7346,26.54,17.99,0.678,67.8
+pianos,pianos,alexnet,AlexNet,3,0.8237,17.63,14.62,0.829,82.9
+pianos,pianos,swin_t,Swin-T,3,0.8699,13.01,11.36,0.873,87.3
+CNPM,CNPM,alexnet,AlexNet,3,0.4066,59.34,22.39,0.377,37.7
+CNPM,CNPM,swin_t,Swin-T,3,0.4002,59.98,28.71,0.479,47.9
+bel_canto,bel canto,alexnet,AlexNet,3,0.8200,18.00,8.42,0.468,46.8
+bel_canto,bel canto,swin_t,Swin-T,3,0.8091,19.09,13.06,0.684,68.4

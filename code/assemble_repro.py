@@ -24,6 +24,7 @@ import io
 import json
 import os
 import shutil
+import subprocess
 import sys
 import time
 import zipfile
@@ -149,6 +150,23 @@ def main(argv=None):
         for e in entries:
             fh.write("%s  %s\n" % (e["sha256"], e["path"]))
 
+    verify = read_small(os.path.join("data", "results", "paper_verify.json")) or {}
+    verify_str = "%d checks passed, %d failed" % (verify.get("passes", 0), verify.get("fails", 0))
+
+    # Second gate: bind prose claims to artifact cells. Run it here so the manifest
+    # records a measured result rather than a copy of an earlier run.
+    claim_str = "not run"
+    try:
+        r = subprocess.run([sys.executable,
+                            os.path.join(PROJ, "code", "verify_claim_provenance.py")],
+                           capture_output=True, cwd=PROJ)
+        out = r.stdout.decode("utf-8", errors="replace")
+        for line in out.splitlines():
+            if line.startswith("claims verified:"):
+                claim_str = line.split(":", 1)[1].strip()
+    except Exception as exc:
+        claim_str = "not run (%s)" % exc
+
     inv = read_small(os.path.join("data", "datasets_inventory.json")) or {}
     rel_inv = (inv.get("datasets") or inv.get("libraries") or [])
     libs = []
@@ -168,7 +186,7 @@ def main(argv=None):
         "assembled_by": "code/assemble_repro.py",
         "project_root_at_assembly": PROJ,
         "contents": {
-            "paper": "LaTeX sources, sn-jnl class and style files, compiled PDFs (30/8/1 pages)",
+            "paper": "LaTeX sources, sn-jnl class and style files, compiled PDFs (31/10/1 pages)",
             "figures": "figure PDFs and PNGs as embedded in the manuscript",
             "code": "every analysis, training, audit, figure and verification script used in the study",
             "data/splits": "frozen split CSVs (per library and side) and the leak audit summary",
@@ -209,10 +227,12 @@ def main(argv=None):
              "value": "+1.21 [-0.02,+2.44] / +1.75 [+1.18,+2.70]",
              "source": "DATA/results/delta_A2/e1_delta.csv"},
             {"quantity": "injected CTIS slices / recordings / test recordings exposed",
-             "value": "4,178 / 753 / 578 of 963",
+             "value": "4,177 / 753 / 578 of 963",
              "source": "DATA/results/human_review/round2/slice_budget_by_class.csv"},
-            {"quantity": "reported-number verification", "value": "270 checks passed, 0 failed",
+            {"quantity": "reported-number verification", "value": verify_str,
              "source": "DATA/results/paper_verify.json"},
+            {"quantity": "prose claims bound to artifact cells", "value": claim_str,
+             "source": "DATA/results/claim_ledger.csv"},
         ],
         "datasets_inventory_snapshot": libs,
         "file_count": len(entries),

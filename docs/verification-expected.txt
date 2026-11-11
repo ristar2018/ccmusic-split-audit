@@ -53,3 +53,20 @@ it does not re-run the bootstrap. To re-derive the intervals, run:
 
 Each finishes in about a minute on one CPU core and reads only
 runs/sealed_eval/.
+
+The prose-claim layer
+----------------------
+A second gate, code/verify_claim_provenance.py, binds each quantitative prose
+claim to the artifact cell it comes from through data/results/claim_ledger.csv.
+Each ledger row fixes an artifact file, a row selector, a column, the printed
+value, the prose phrase and the qualifier that must surround that phrase. The
+gate fails if the cell no longer evaluates to the printed value, if the phrase
+disappears from the named section, or if the qualifier no longer appears in the
+same sentence. Expected output:
+
+claims verified: 88, failed: 0
+
+code/negtest_claim_provenance.py stages a temporary copy of the gate, reverts
+three wordings to their earlier form and requires the corresponding claims to
+fail, so the gate is checked against its own failure modes.
+
