@@ -163,7 +163,8 @@ self-test scores and seed dispersion explicitly.
 \centering
 \caption{Our reconstruction of a slice-level split, A2$-$A0; the slice-level and recording-level
 columns report the two levels. A2 trains on a random 80/10/10 split of C $\cup$ $Q^{\text{pool}}$, i.e.\ with
-same-recording mixing; its realised training count is 0.991--1.001 of A0's in every library.
+same-recording mixing; its realised training count is within one percent of A0's in every
+library.
 Intervals are conditional 95\% recording-cluster bootstrap intervals (2{,}000 resamples).
 The self-test scores are tabulated separately in Supplementary Material S1. In bel canto under
 Swin-T, A1 and A2 both reach 1.00 at the recording level in every seed while A0 averages 0.77, so
@@ -211,8 +212,7 @@ library's two-point difference to invisibility.}
 Six A0 versus A2 contrasts on the three usable K$\approx$1 libraries, each with three seeds, give
 five intervals that include zero, as Table~\ref{tab:neg} lists, and the intervals are narrow: apart from
 one cell their outer bounds lie within about four points of zero. The remaining cell, chest\_falsetto
-under Swin-T, is the only negative departure and the only interval that excludes zero
-at $-2.53$ with CI $-5.00$ to $-0.21$; its per-seed deltas are $+5.57$, $-2.62$ and $-10.54$, so its 16.1-point
+under Swin-T, is the only interval that excludes zero, at $-2.53$ with CI $-5.00$ to $-0.21$; its per-seed deltas are $+5.57$, $-2.62$ and $-10.54$, so its 16.1-point
 seed range is larger than the effect itself. The signs differ across the three trained seeds,
 so this conditional interval does not establish a stable direction across training runs. The expansion from one
 to three seeds was exploratory, not publicly preregistered. GZ\_IsoTech, the only control with multi-segment recordings, sits at $+0.26$ and $-0.22$,
@@ -229,7 +229,7 @@ so these are pipeline checks rather than evidence isolating a universal leakage 
 seeds. With one slice per recording there is no homologous content, so the exposure arm is not
 identifiable and A2 is the only arm that can differ; the contrast column therefore measures protocol
 noise rather than leakage. Five of the six intervals include zero. The remaining one is the only
-negative departure, chest\_falsetto under Swin-T at $-2.53$, and its seed range of 16.1 points shows
+interval that excludes zero, chest\_falsetto under Swin-T at $-2.53$, and its seed range of 16.1 points shows
 substantial sensitivity to the three trained seeds. The six contrasts are reported without a
 correction for multiplicity, and five intervals that include zero are not an equivalence test:
 they do not establish that the protocol contrast is zero. This does not establish the cause of the

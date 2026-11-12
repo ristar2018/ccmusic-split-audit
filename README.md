@@ -71,6 +71,39 @@ python code/negtest_claim_provenance.py
 which stages a temporary copy, reverts three wordings to their earlier form and
 requires the expected claim rows to fail.
 
+## Check that quantified claims match the table they describe
+
+```bash
+python code/verify_quantifier_claims.py
+```
+
+Expected last lines:
+
+```
+quantifier claims: 10 in the ledger, 10 true and present, 0 failed
+table captions with a quantifier: 8 checked, 2 waived
+```
+
+The two gates above compare numbers. Neither can see a caption whose numbers are right
+and whose quantifier is wrong: "both arms reach 1.00" was printed above a table whose
+A0 arm averages 0.77, and "0.991--1.001 of A0's in every library" was printed when the
+five ratios run from 0.9906 to 1.0014. This third gate binds each such sentence to the
+artifact that decides it. `data/results/quantifier_ledger.csv` has ten rows, each naming
+a source file, a predicate, the sentence as printed and the expected values; the sentence
+must still occur verbatim and the predicate must still evaluate to the expected values.
+A coverage rule then refuses any table caption that quantifies over arms or libraries
+(both, every, all, each, none, neither, no, only) without either a ledger row or a waiver
+in `data/results/quantifier_waivers.csv`. Figure captions are out of scope.
+
+It is tested against its own failure modes:
+
+```bash
+python code/negtest_quantifier_claims.py
+```
+
+which drops an artifact row, pushes one score off the ceiling, rewords a checked sentence
+and adds an unchecked caption, and requires the gate to fail each time.
+
 ## Re-derive the bootstrap intervals
 
 ```bash

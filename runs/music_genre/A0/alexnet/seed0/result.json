@@ -1,0 +1,31 @@
+{
+  "lib": "music_genre",
+  "arm": "A0",
+  "bb": "alexnet",
+  "seed": 0,
+  "epochs": 10,
+  "batch": 64,
+  "lr": 0.0003,
+  "wd": 0.05,
+  "warmup_epochs": 1,
+  "label_smoothing": 0.1,
+  "amp": true,
+  "limit": 0,
+  "tag": "e1b",
+  "n_train": 21824,
+  "n_val": 5457,
+  "n_classes": 16,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "size": 224,
+  "normalize": "imagenet",
+  "augment": "none",
+  "val_best": {
+    "macro_f1_slice": 0.7124,
+    "epoch": 9,
+    "macro_f1_recording": 0.8147
+  },
+  "elapsed_s": 277.8,
+  "train_log": "runs\\music_genre\\A0\\alexnet\\seed0\\train_log.csv"
+}

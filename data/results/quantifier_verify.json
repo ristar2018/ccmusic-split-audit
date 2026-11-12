@@ -1,0 +1,132 @@
+{
+  "ledger_rows": 10,
+  "passed": 10,
+  "failures": [],
+  "captions_checked": 8,
+  "captions_waived": 2,
+  "figure_captions_out_of_scope": 1,
+  "claims": [
+    {
+      "id": "q01",
+      "file": "paper/sections/04_materials.tex",
+      "claim": "counted_once",
+      "sentence_found": true,
+      "facts": {
+        "n_uids": 4956,
+        "n_canonical": 4954,
+        "n_pairs": 2
+      },
+      "problems": []
+    },
+    {
+      "id": "q02",
+      "file": "paper/sections/06_results.tex",
+      "claim": "threshold_all",
+      "sentence_found": true,
+      "facts": {
+        "n_primary": 2,
+        "primary_max_pt": 2.02,
+        "n_additional": 8,
+        "n_additional_meet": 8
+      },
+      "problems": []
+    },
+    {
+      "id": "q03",
+      "file": "paper/sections/06_results.tex",
+      "claim": "reach_value",
+      "sentence_found": true,
+      "facts": {
+        "arms_at_ceiling": "A1,A2",
+        "a0_mean": 0.77,
+        "n_seeds": 3
+      },
+      "problems": []
+    },
+    {
+      "id": "q04",
+      "file": "paper/sections/06_results.tex",
+      "claim": "ratio_range",
+      "sentence_found": true,
+      "facts": {
+        "n_libraries": 5,
+        "max_abs_dev": 0.0094
+      },
+      "problems": []
+    },
+    {
+      "id": "q05",
+      "file": "paper/sections/06_results.tex",
+      "claim": "zero_in_ci",
+      "sentence_found": true,
+      "facts": {
+        "n_rows": 6,
+        "n_include_zero": 5
+      },
+      "problems": []
+    },
+    {
+      "id": "q06",
+      "file": "paper/sections/06_results.tex",
+      "claim": "zero_in_ci_one",
+      "sentence_found": true,
+      "facts": {
+        "n_rows": 6,
+        "n_exclude_zero": 1,
+        "excluded": "chest_falsetto/swin_t",
+        "excluded_pt": -2.53,
+        "excluded_seed_range": 16.12
+      },
+      "problems": []
+    },
+    {
+      "id": "q07",
+      "file": "paper/sections/10_supplement.tex",
+      "claim": "fold_gap",
+      "sentence_found": true,
+      "facts": {
+        "n_val_recordings": 92,
+        "n_val_slices_fold1": 491
+      },
+      "problems": []
+    },
+    {
+      "id": "q08",
+      "file": "paper/sections/10_supplement.tex",
+      "claim": "same_numbers",
+      "sentence_found": true,
+      "facts": {
+        "n_pairs": 4,
+        "max_abs_diff": 0.0
+      },
+      "problems": []
+    },
+    {
+      "id": "q09",
+      "file": "paper/sections/10_supplement.tex",
+      "claim": "panel_keeps",
+      "sentence_found": true,
+      "facts": {
+        "panel_classes": 201,
+        "release_classes": 219,
+        "panel_recordings": 4887,
+        "release_recordings": 4954,
+        "n_other_libs_keep_all": 4
+      },
+      "problems": []
+    },
+    {
+      "id": "q10",
+      "file": "paper/sections/05_protocol.tex",
+      "claim": "budget_identical",
+      "sentence_found": true,
+      "facts": {
+        "n_diff_a0_c1": 0,
+        "n_short_a1": 1,
+        "short_class": "C0296",
+        "short_by": 4
+      },
+      "problems": []
+    }
+  ]
+}

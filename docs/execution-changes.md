@@ -173,3 +173,56 @@ check are unchanged.
 The three gates were re-run after these edits: 338 number checks, 88 ledger rows and the
 four negative-test cases all pass. Page counts are unchanged at 31 / 10 / 1, and the
 compile log carries no overfull box, undefined reference or missing character.
+
+## 9. A third gate for quantified claims
+
+The two gates above compare numbers. Neither can see a sentence whose numbers are right
+and whose quantifier is wrong, and two such sentences surfaced while this gate was being
+written.
+
+1. **Table 5, ratio range.** The caption said A2's realised training count "is
+   0.991--1.001 of A0's in every library". The five ratios are 0.9906 (CTIS), 0.9997
+   (music_genre), 0.9965 (pianos), 1.0012 (CNPM) and 1.0014 (bel_canto), so the stated
+   interval excludes both ends. It now reads "within one percent of A0's in every
+   library", which holds with the largest deviation at 0.94 per cent. Neither verifier
+   nor the claim ledger contained the string 0.991, so no earlier check had ever looked
+   at this number.
+2. **Table 6, "only negative departure".** The caption and the Section 6.5 paragraph
+   called the single cell whose interval excludes zero "the only negative departure".
+   Four of the six point estimates are negative (-1.37, -2.53, -0.22 and -0.49); only
+   one interval excludes zero. Both sentences now say "the only interval that excludes
+   zero".
+
+`code/verify_quantifier_claims.py` works in two layers. The claim layer reads
+`data/results/quantifier_ledger.csv`, ten rows of id, file, claim, sentence and params.
+The sentence has to occur verbatim, after removing whitespace, braces and math
+delimiters, in the named source file; the predicate named in the claim column is then
+recomputed from the artifacts and compared with params, which also accepts `_le` and
+`_ge` inequality keys and `_1dp` / `_2dp` rounding keys. The coverage layer walks every
+table float in the manuscript and the supplement and requires each caption containing
+both, every, all, each, none, neither, no or only to be covered by a ledger row or by a
+waiver. Two captions are waived: "all test recordings" defines the exposure ratio that
+the numeric gate already recomputes, and "shown only to document the change" qualifies
+the purpose of a column rather than a claim over arms. Figure captions are out of scope;
+one of them quantifies, and it describes a drawing rather than a table.
+
+Expected output:
+
+    quantifier claims: 10 in the ledger, 10 true and present, 0 failed
+    table captions with a quantifier: 8 checked, 2 waived
+    figure captions with a quantifier: 1, out of scope (drawings, not tables)
+
+`code/negtest_quantifier_claims.py` breaks one thing per case --- it drops an
+additional-library row so that "every additional-library point estimate does" becomes
+false, pushes one A1 recording-level score off the ceiling, rewords a checked sentence,
+and adds a table caption with a quantifier but no ledger row --- and requires the gate to
+fail with the expected kind and claim id. The clean-tree control must stay green.
+
+Running the gates inside this repository also showed that the shipped
+`data/results/paper_verify.json` still recorded 337 passes while the README and the
+live run report 338; the file has been regenerated.
+
+The four gates were re-run after these edits: 338 number checks, 88 ledger rows, 10
+quantifier claims and nine negative-test cases (four on the claim ledger, five on the
+quantifier ledger) all pass. Page counts are unchanged at 31 / 10 / 1, and the compile
+log carries no overfull box, undefined reference or missing character.

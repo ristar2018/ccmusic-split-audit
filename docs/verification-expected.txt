@@ -77,3 +77,27 @@ code/negtest_claim_provenance.py stages a temporary copy of the gate, reverts
 three wordings to their earlier form and requires the corresponding claims to
 fail, so the gate is checked against its own failure modes.
 
+The quantifier layer
+---------------------
+A third gate, code/verify_quantifier_claims.py, binds the quantified claims in table
+captions to the artifacts. A sentence whose numbers are right can still be wrong about
+which arms or libraries it quantifies over: the bel canto note said "both reach 1.00"
+in a table whose A0 arm averages 0.77, and the ratio caption said "0.991--1.001 of A0's
+in every library" when the five ratios run from 0.9906 to 1.0014.
+
+data/results/quantifier_ledger.csv holds ten rows: an id, the source file, a predicate
+name, the sentence as printed and the expected values. The gate requires the sentence to
+occur verbatim in the named file and the predicate to evaluate to the expected values on
+the artifacts; inequality keys (_le, _ge) and rounding keys (_1dp, _2dp) are accepted.
+It then walks every table float and requires each caption containing both, every, all,
+each, none, neither, no or only to be covered by a ledger row or by an explicit waiver
+in data/results/quantifier_waivers.csv. Two captions are waived. Figure captions are out
+of scope. Expected output:
+
+    quantifier claims: 10 in the ledger, 10 true and present, 0 failed
+    table captions with a quantifier: 8 checked, 2 waived
+    figure captions with a quantifier: 1, out of scope (drawings, not tables)
+
+code/negtest_quantifier_claims.py breaks one artifact row, one ceiling score, one
+sentence and one caption in turn and requires the corresponding failure, and requires
+the clean tree to pass.

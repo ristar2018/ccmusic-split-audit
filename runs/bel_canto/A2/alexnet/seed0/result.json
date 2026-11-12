@@ -1,0 +1,31 @@
+{
+  "lib": "bel_canto",
+  "arm": "A2",
+  "bb": "alexnet",
+  "seed": 0,
+  "epochs": 10,
+  "batch": 64,
+  "lr": 0.0003,
+  "wd": 0.05,
+  "warmup_epochs": 1,
+  "label_smoothing": 0.1,
+  "amp": true,
+  "limit": 0,
+  "tag": "e1c",
+  "n_train": 5933,
+  "n_val": 745,
+  "n_classes": 4,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "size": 224,
+  "normalize": "imagenet",
+  "augment": "none",
+  "val_best": {
+    "macro_f1_slice": 0.9223,
+    "epoch": 9,
+    "macro_f1_recording": 0.955
+  },
+  "elapsed_s": 111.5,
+  "train_log": "runs\\bel_canto\\A2\\alexnet\\seed0\\train_log.csv"
+}

@@ -1,0 +1,31 @@
+{
+  "lib": "pianos",
+  "arm": "A0",
+  "bb": "alexnet",
+  "seed": 0,
+  "epochs": 10,
+  "batch": 64,
+  "lr": 0.0003,
+  "wd": 0.05,
+  "warmup_epochs": 1,
+  "label_smoothing": 0.1,
+  "amp": true,
+  "limit": 0,
+  "tag": "e1b",
+  "n_train": 11012,
+  "n_val": 2753,
+  "n_classes": 8,
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "size": 224,
+  "normalize": "imagenet",
+  "augment": "none",
+  "val_best": {
+    "macro_f1_slice": 0.8115,
+    "epoch": 6,
+    "macro_f1_recording": 0.9155
+  },
+  "elapsed_s": 148.6,
+  "train_log": "runs\\pianos\\A0\\alexnet\\seed0\\train_log.csv"
+}
