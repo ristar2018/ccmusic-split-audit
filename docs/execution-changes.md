@@ -293,7 +293,7 @@ Where a comment cited a design document that lives in the private project tree a
 
 **Invariance checks.**
 
-- Numeric tokens (every `\d[\d,\.]*` match) compared as a multiset between the previous commit and the working tree, file by file. Three files differ, all by design: `figures.py` renders `39.59 万` as `395.9k` and `2.7 万` as `27k`, and six `e1_summary.md` files write `three seeds` where the Chinese said `3 seed`. Nothing else moved.
+- Numeric tokens (every `\d[\d,\.]*` match) compared as a multiset between the previous commit and the working tree, file by file. Seven files differ, all by design: `figures.py` renders `39.59 万` as `395.9k` and `2.7 万` as `27k`, and six `e1_summary.md` files write `three seeds` where the Chinese said `3 seed`. Nothing else moved.
 - `python -m compileall code` clean; `bash -n` on the four shell scripts clean; the PowerShell parser accepts both `.ps1` files.
 - The four gates re-run afterwards: 338 number checks, 88 ledger rows, 10 quantifier claims, and both negative tests still fail in the designed way.
 - Page counts are unchanged at 31 / 10 / 1, because nothing outside `code/` and the Markdown notes was touched.
