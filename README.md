@@ -6,6 +6,8 @@
 
 This repository holds the analysis code, the frozen splits, the sealed test-set predictions and the verification scripts needed to re-derive every number reported in the manuscript and its supplementary material.
 
+All code comments and documentation here are in English. Chinese strings that remain are data values — track titles, technique labels, instrument names and the column headers of the original dataset files — kept verbatim so that they still match the audio files and the frozen CSVs. `docs/execution-changes.md` §11 records what was translated and what was deliberately left alone.
+
 ## What is here
 
 | path | contents |

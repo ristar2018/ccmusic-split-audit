@@ -1,35 +1,35 @@
-"""P3 第三条基线（B1）：录音分组折 + 乐器两侧都出现。
+"""P3 third baseline (B1): recording-grouped folds with the instrument present on both sides.
 
-外审 M7 指出 P3 的 A0→A1 把两件事一起改了：
-  ① 同源泄漏（测试录音的兄弟切片进训练）—— A0 有、A1 没有；
-  ② 乐器新颖性（A1 的训练侧完全不出现测试所用乐器）—— 只有 A1 有。
-所以 A0−A1 只能读作「两者之和的上界」。本脚本补第三条基线 A1r：
+External review item M7 noted that A0→A1 in P3 changes two things at once:
+  1) homologous leakage (sibling slices of a test recording enter training) — present in A0, absent in A1;
+  2) instrument novelty (the training side of A1 never contains the instrument used at test) — present only in A1.
+So A0−A1 can only be read as an upper bound on the sum of the two. This script adds the third baseline A1r:
 
-  * 折按**录音**分组（同一条录音的全部切片同折，同源泄漏与 A0 一样被切断）；
-  * 每条录音只进一折 → 折内类分布按类分层保证每类每折 ≥1 条（可行时）；
-  * 乐器**在两侧都出现**（只要该乐器的录音数 ≥2，就尽量分到不同折）→ 乐器新颖性不再是变量。
+  * folds are grouped by **recording** (all slices of one recording share a fold, so homologous leakage is cut exactly as in A0);
+  * each recording enters one fold only → the class distribution is stratified per fold so every class keeps ≥1 recording in each fold (where feasible);
+  * an instrument appears **on both sides** (whenever it has ≥2 recordings, spread them over different folds where possible) → instrument novelty is no longer a variable.
 
-于是：
-  A0（切片随机折）      vs A1r（录音分组折） → 只改同源泄漏
-  A1r（录音分组折）     vs A1（乐器分组折）  → 只改乐器新颖性
+Hence:
+  A0 (slice-random folds)      vs A1r (recording-grouped folds) → changes homologous leakage only
+  A1r (recording-grouped folds) vs A1 (instrument-grouped folds) → changes instrument novelty only
 
-泄漏断言（任一失败即 exit 2，不写产物）：
-  L1 每条录音恰好出现在一折，切片不跨折
-  L2 同一 audio_hash（recording_canonical）的全部录音同折
-  L3 每个 (类, 折) 格的录音数：对录音数 ≥3 的类，必须三折都 ≥1
-  L4 乐器覆盖：录音数 ≥3 的乐器，至少出现在 2 折（报告实际比例与阈值）
-  L5 三折切片数极差 ≤ 15%（报告实际值）
+Leakage assertions (any failure exits 2, nothing is written):
+  L1 every recording sits in exactly one fold, no slice crosses folds
+  L2 all recordings sharing one audio_hash (recording_canonical) sit in the same fold
+  L3 recordings per (class, fold) cell: classes with ≥3 recordings must have ≥1 in all three folds
+  L4 instrument coverage: instruments with ≥3 recordings must appear in at least 2 folds (actual ratio and threshold are reported)
+  L5 spread of slice counts across the three folds ≤ 15% (actual value is reported)
 
-产物（data/p3/）：
+Artifacts (data/p3/):
   p3b_splits.csv           sample_id, recording_uid, recording_canonical, technique,
                            instrument, instrument_canon, fold_b1
-  p3b_fold_summary.csv     每折：切片数 / 录音数 / 类数 / 乐器数
-  p3b_instrument_folds.csv 每个乐器：录音数 / 切片数 / 出现折 / 是否两侧都出现
-  p3b_folds.json           assertions + split_hash + 参数
+  p3b_fold_summary.csv     per fold: slices / recordings / classes / instruments
+  p3b_instrument_folds.csv per instrument: recordings / slices / folds present / on both sides
+  p3b_folds.json           assertions + split_hash + parameters
 
-用法：
-  python code/p3_split_b1.py            # 写产物，exit 0 表示全部断言通过
-  python code/p3_split_b1.py --check    # 只跑断言与统计，不写产物
+Usage:
+  python code/p3_split_b1.py            # write artifacts, exit 0 means every assertion passed
+  python code/p3_split_b1.py --check    # run the assertions and statistics only, write nothing
 """
 
 import argparse
@@ -49,9 +49,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(os.path.dirname(HERE), "data", "p3")
 N_FOLDS = 3
 SEED = 20261105
-MIN_INSTR_RECS = 3      # 乐器「两侧都出现」的判定门槛（录音数 ≥3 才要求）
-MIN_CLASS_RECS = 3      # 类「每折 ≥1 条」的判定门槛
-MAX_LOAD_SPREAD = 0.15  # 三折切片数极差上界（占最大折的比例）
+MIN_INSTR_RECS = 3      # threshold for "instrument on both sides" (required only when it has ≥3 recordings)
+MIN_CLASS_RECS = 3      # threshold for "≥1 recording per fold" per class
+MAX_LOAD_SPREAD = 0.15  # upper bound on the spread of slice counts across folds (share of the largest fold)
 
 
 def build_slices():
@@ -60,7 +60,7 @@ def build_slices():
 
 
 def group_recordings(slices):
-    """recording_canonical → 该组的切片与录音。同音频多发布名一起进折。"""
+    """recording_canonical -> the slices and recordings of that group. Several published names of one audio enter the fold together."""
     by_grp = collections.defaultdict(list)
     for s in slices:
         by_grp[s["recording_canonical"]].append(s)
@@ -68,10 +68,10 @@ def group_recordings(slices):
 
 
 def assign_folds(slices, classes, seed=SEED):
-    """按类分层的录音级三折 + 折间负载均衡（只在同类内挪录音）。"""
+    """Recording-level three-fold stratified by class + load balance across folds (recordings are moved within a class only)."""
     rng = random.Random(seed)
     grp = group_recordings(slices)
-    # 每个 canon 组：主类（切片最多的类，平手取字典序）、切片数、录音集合
+    # per canon group: main class (the class holding most slices, ties broken lexicographically), slice count, recording set
     groups = {}
     for g, rows in grp.items():
         tech = collections.Counter(r["technique"] for r in rows)
@@ -92,13 +92,13 @@ def assign_folds(slices, classes, seed=SEED):
     load = [0] * N_FOLDS
     for cls in sorted(by_cls):
         gs = sorted(by_cls[cls], key=lambda g: (-groups[g]["n"], g))
-        start = rng.randrange(N_FOLDS)           # 每类轮换起点，避免系统性偏折
+        start = rng.randrange(N_FOLDS)           # per-class rotation start, avoids a systematic fold bias
         for i, g in enumerate(gs):
             f = (start + i) % N_FOLDS
             fold_of[g] = f + 1
             load[f] += groups[g]["n"]
 
-    # 局部搜索：只在同类内部换折，目标 = 负载极差（不破坏类分层）
+    # local search: swap folds inside one class only, objective = load spread (keeps the class stratification)
     def spread(l):
         return max(l) - min(l)
 
@@ -127,19 +127,19 @@ def assert_and_summarise(slices, groups, fold_of, classes):
         for r in meta["rows"]:
             fold[r["sample_id"]] = fold_of[g]
 
-    # L1：一条录音不得跨折
+    # L1: a recording must not cross folds
     rec_folds = collections.defaultdict(set)
     for s in slices:
         rec_folds[s["recording_uid"]].add(fold[s["sample_id"]])
     l1_bad = {k: sorted(v) for k, v in rec_folds.items() if len(v) > 1}
 
-    # L2：同 recording_canonical 的所有录音同折
+    # L2: all recordings with one recording_canonical share a fold
     canon_folds = collections.defaultdict(set)
     for s in slices:
         canon_folds[s["recording_canonical"]].add(fold[s["sample_id"]])
     l2_bad = {k: sorted(v) for k, v in canon_folds.items() if len(v) > 1}
 
-    # L3：类 × 折 支撑
+    # L3: class × fold support
     cls_recs = collections.defaultdict(lambda: collections.defaultdict(set))
     for s in slices:
         cls_recs[s["technique"]][fold[s["sample_id"]]].add(s["recording_uid"])
@@ -151,7 +151,7 @@ def assert_and_summarise(slices, groups, fold_of, classes):
                 l3_missing.append({"class": c, "fold": f, "class_recordings": cls_total[c]})
     l3_hard = [d for d in l3_missing if d["class_recordings"] >= MIN_CLASS_RECS]
 
-    # L4：乐器覆盖
+    # L4: instrument coverage
     inst_recs = collections.defaultdict(set)
     inst_folds = collections.defaultdict(set)
     inst_slices = collections.Counter()
@@ -174,7 +174,7 @@ def assert_and_summarise(slices, groups, fold_of, classes):
     l4_ratio = len(both) / len(multi) if multi else 1.0
     one_fold_multi = [i for i in multi if len(inst_folds[i]) == 1]
 
-    # L5：折负载
+    # L5: fold load
     load = collections.Counter(fold[s["sample_id"]] for s in slices)
     loads = [load[f] for f in range(1, N_FOLDS + 1)]
     spread_ratio = (max(loads) - min(loads)) / max(loads)
@@ -209,39 +209,39 @@ def assert_and_summarise(slices, groups, fold_of, classes):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--check", action="store_true", help="只跑断言与统计，不写产物")
+    ap.add_argument("--check", action="store_true", help="run the assertions and statistics only, write nothing")
     a = ap.parse_args()
 
     slices, classes = build_slices()
     fold_of, groups, _ = assign_folds(slices, classes)
     fold, ok, detail, inst_rows = assert_and_summarise(slices, groups, fold_of, classes)
 
-    print("== B1（录音分组折 + 乐器两侧都出现）")
-    print("   切片 %d / 录音 %d / 音频组 %d / 类 %d / 乐器 %d"
+    print("== B1 (recording-grouped folds + instrument on both sides)")
+    print("   slices %d / recordings %d / audio groups %d / classes %d / instruments %d"
           % (detail["n_slices"], detail["n_recordings"], detail["n_canon_groups"],
              detail["n_classes"], detail["n_instruments"]))
-    print("   折负载 %s（极差 %.1f%%）"
+    print("   fold load %s (spread %.1f%%)"
           % (detail["fold_load"], 100 * detail["load_spread_ratio"]))
-    print("   L1 跨折录音 %d；L2 跨折音频组 %d；L3 缺格 %d（其中硬失败 %d）"
+    print("   L1 recordings crossing folds %d; L2 audio groups crossing folds %d; L3 missing cells %d (hard failures %d)"
           % (detail["L1_violations"], detail["L2_violations"],
              detail["L3_missing_cells"], detail["L3_hard_violations"]))
-    print("   L4 录音≥%d 的乐器 %d 个，其中 %d 个落在 ≥2 折（%.1f%%）"
+    print("   L4 instruments with ≥%d recordings: %d, of which %d land in ≥2 folds (%.1f%%)"
           % (MIN_INSTR_RECS, detail["instruments_multi"],
              detail["instruments_in_two_folds"], 100 * detail["L4_ratio"]))
     if detail["instruments_multi_single_fold"]:
-        print("   只在单折出现的多录音乐器：%s" % detail["instruments_multi_single_fold"][:12])
+        print("   multi-recording instruments confined to a single fold: %s" % detail["instruments_multi_single_fold"][:12])
     for k, v in ok.items():
         print("   [%s] %s" % ("PASS" if v else "FAIL", k))
 
     all_pass = all(ok.values())
     if not all_pass:
-        print("!! 断言未全过，不写产物（exit 2）")
+        print("!! not all assertions passed, nothing written (exit 2)")
         for k, v in ok.items():
             if not v:
                 print("   - %s" % k)
         return 2
     if a.check:
-        print("--check：不写产物")
+        print("--check: nothing written")
         return 0
 
     os.makedirs(OUT, exist_ok=True)
@@ -310,7 +310,7 @@ def main() -> int:
     p4 = os.path.join(OUT, "p3b_folds.json")
     with io.open(p4, "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=2)
-    print("产物：%s / %s / %s / %s" % (p1, p2, p3, p4))
+    print("artifacts: %s / %s / %s / %s" % (p1, p2, p3, p4))
     print("split_hash %s" % meta["split_hash"])
     return 0
 

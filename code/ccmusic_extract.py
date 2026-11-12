@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
-"""CCMusic 数据集解压器：就地展开到 <dataset>\\data\\<顶层目录>，校验后删除压缩包。
+"""CCMusic dataset unpacker: expands in place to <dataset>\\data\\<top-level dir>, verifies, then deletes the archive.
 
-为什么这样放
-  每个数据集的官方加载脚本都按 data/audio、data/eval/chroma、data/mel、data/label
-  这类路径读文件；压缩包内部第一层恰好就是 audio/ eval/ mel/ label/ timbre/ range/。
-  因此把 zips 解到 <dataset>\\data\\ 后，目录结构与加载脚本的约定完全一致，不需要改代码。
+Why the layout is like this
+  each dataset's official loader reads data/audio, data/eval/chroma, data/mel, data/label
+  and similar paths; the first level inside the archives is exactly audio/ eval/ mel/ label/ timbre/ range/.
+  So after unzipping into <dataset>\\data\\ the tree matches the loader convention exactly, with no code change.
 
-安全阀
-  1. 先看磁盘余量（解压后体积 ≈ 压缩包内文件字节数之和）；
-  2. 解压时逐个条目计数、累计字节，和 zip 中央目录对账；
-  3. 只有"文件数 + 字节数"两项都对上，才删压缩包；对不上就保留 zip 并报错；
-  4. --keep-zips 可只解压不删；--dry-run 只看计划。
+Safety valves
+  1. check free disk first (unpacked size ≈ the sum of file sizes in the archive);
+  2. while unpacking, count entries and accumulate bytes, then reconcile against the zip central directory;
+  3. delete the archive only when both "file count" and "byte count" match; otherwise keep the zip and raise an error;
+  4. --keep-zips unpacks without deleting; --dry-run only shows the plan.
 
-用法
+Usage
   python code/ccmusic_extract.py --dry-run
-  python code/ccmusic_extract.py                    # 全部解压并删包
-  python code/ccmusic_extract.py --dataset CTIS     # 只处理一个
-  python code/ccmusic_extract.py --keep-zips        # 解压但保留 zip
+  python code/ccmusic_extract.py                    # unpack everything and delete the archives
+  python code/ccmusic_extract.py --dataset CTIS     # only one dataset
+  python code/ccmusic_extract.py --keep-zips        # unpack but keep the zips
 """
 
 from __future__ import annotations
@@ -41,7 +41,7 @@ def human(n: float) -> str:
 
 
 def find_archives(root: str, only: str | None = None) -> list[tuple[str, str]]:
-    """返回 [(dataset, zip 路径)]，只看 <dataset>/data/*.zip。"""
+    """Returns [(dataset, zip path)], looking only at <dataset>/data/*.zip."""
     out = []
     for name in sorted(os.listdir(root)):
         ddir = os.path.join(root, name, "data")
@@ -69,7 +69,7 @@ def plan(archive: str) -> dict:
 
 def extract_one(dataset: str, archive: str, root: str, dry: bool, keep: bool) -> dict:
     meta = plan(archive)
-    dest_root = os.path.join(root, dataset, "data")  # 解到 data/，顶层 audio|eval|... 自然归位
+    dest_root = os.path.join(root, dataset, "data")  # unpack into data/, so the top-level audio|eval|... lands in place
     rec = {
         "dataset": dataset,
         "archive": os.path.basename(archive),
@@ -85,7 +85,7 @@ def extract_one(dataset: str, archive: str, root: str, dry: bool, keep: bool) ->
 
     free = shutil.disk_usage(root).free
     if meta["bytes"] > free:
-        rec["status"] = f"skip 磁盘不足（需 {human(meta['bytes'])}，剩 {human(free)}）"
+        rec["status"] = f"skip not enough disk space (need {human(meta['bytes'])}, free {human(free)})"
         return rec
 
     t0 = time.time()
@@ -114,33 +114,33 @@ def extract_one(dataset: str, archive: str, root: str, dry: bool, keep: bool) ->
         seconds=round(time.time() - t0, 1),
     )
     if b_ok != meta["bytes"] or n_ok + n_skip != meta["files"]:
-        rec["status"] = f"mismatch 文件 {n_ok + n_skip}/{meta['files']}、字节 {b_ok}/{meta['bytes']}（保留 zip）"
+        rec["status"] = f"mismatch files {n_ok + n_skip}/{meta['files']}, bytes {b_ok}/{meta['bytes']} (zip kept)"
         return rec
 
     if keep:
-        rec["status"] = "ok（保留 zip）"
+        rec["status"] = "ok (zip kept)"
         return rec
 
     os.remove(archive)
-    # 顺带清掉该数据集目录下解压时可能残留的空目录
-    rec["status"] = "ok（已删 zip）"
+    # also clear any empty directories the unpack may leave behind in this dataset directory
+    rec["status"] = "ok (zip deleted)"
     return rec
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="CCMusic 数据集解压（解到 data/ 并删包）")
-    ap.add_argument("--root", default=DATASETS_ROOT, help="下载根目录")
-    ap.add_argument("--dataset", help="只处理某个数据集")
+    ap = argparse.ArgumentParser(description="CCMusic dataset unpack (into data/, archives deleted)")
+    ap.add_argument("--root", default=DATASETS_ROOT, help="download root directory")
+    ap.add_argument("--dataset", help="process only this dataset")
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--keep-zips", action="store_true", help="解压后保留压缩包")
+    ap.add_argument("--keep-zips", action="store_true", help="keep the archives after unpacking")
     args = ap.parse_args()
 
     archives = find_archives(args.root, args.dataset)
     if not archives:
-        print("没有找到待解压的压缩包")
+        print("no archives found to unpack")
         return 0
 
-    print(f"根目录：{args.root}")
+    print(f"root: {args.root}")
     total_files = total_bytes = total_zip = 0
     rows = []
     for dataset, arc in archives:
@@ -150,22 +150,22 @@ def main() -> int:
         total_zip += p["compressed"]
         print(
             f"  {dataset:18s} {os.path.basename(arc):14s} "
-            f"{p['files']:>6} 文件  {human(p['bytes']):>8} → data/{','.join(p['top'])}"
+            f"{p['files']:>6} files  {human(p['bytes']):>8} -> data/{','.join(p['top'])}"
         )
-    print(f"\n合计 {len(archives)} 个包 / {total_files} 个文件 / 解压后 {human(total_bytes)}（压缩包 {human(total_zip)}）")
-    print(f"磁盘可用 {human(shutil.disk_usage(args.root).free)}")
+    print(f"\ntotal {len(archives)} archives / {total_files} files / {human(total_bytes)} unpacked (archives {human(total_zip)})")
+    print(f"disk free {human(shutil.disk_usage(args.root).free)}")
     if args.dry_run:
-        print("\n--dry-run：什么都没动")
+        print("\n--dry-run: nothing was touched")
         return 0
 
-    print("\n开始解压 …")
+    print("\nunpacking ...")
     t0 = time.time()
     for dataset, arc in archives:
         rec = extract_one(dataset, arc, args.root, args.dry_run, args.keep_zips)
         rows.append(rec)
         print(
             f"  [{rec['status']:<28}] {dataset:18s} {rec['archive']:14s} "
-            f"新增 {rec.get('extracted', 0):>6} 跳过 {rec.get('skipped', 0):>5} "
+            f"added {rec.get('extracted', 0):>6} skipped {rec.get('skipped', 0):>5} "
             f"{rec.get('seconds', 0):>6.1f}s"
         )
 
@@ -186,11 +186,11 @@ def main() -> int:
         json.dump(prev, fh, ensure_ascii=False, indent=1)
 
     bad = [r for r in rows if not str(r["status"]).startswith("ok")]
-    print(f"\n用时 {time.time() - t0:.0f}s，记录 → {out}")
+    print(f"\nelapsed {time.time() - t0:.0f}s, records -> {out}")
     if bad:
-        print(f"!! {len(bad)} 个包未通过校验：{[b['dataset'] + '/' + b['archive'] for b in bad]}")
+        print(f"!! {len(bad)} archives failed verification: {[b['dataset'] + '/' + b['archive'] for b in bad]}")
         return 1
-    print("全部通过校验并已删除压缩包")
+    print("all archives passed verification and were deleted")
     return 0
 
 

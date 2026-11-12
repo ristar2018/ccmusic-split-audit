@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""宏平均分母口径敏感性（第二轮审核 #21.3）：同一批封存预测，三种分母口径各算一次 A1-C1 / A1-A0。
+"""Sensitivity of the macro-average denominator caliber (round 2 review #21.3): one batch of sealed predictions, A1-C1 / A1-A0 recomputed under three denominator calibers.
 
-三种口径
-  fixed    : 类别集合由全样本观测面板一次定死（sealed_eval_delta.py:143 mask），重抽样中缺席类以 0 计
-  dynamic  : 每次重抽样内重算 keep（analyze_e1.py:104 keep = 训练或预测出现过），缺席类剔除
-  fullC    : 对全部 C 个类取均值，缺席类 f1=0（sealed_eval_delta.py 点估计口径 :21-26 / :164）
+The three calibers
+  fixed    : the class set is frozen once from the full-sample observation panel (sealed_eval_delta.py:143 mask); classes absent from a resample count as 0
+  dynamic  : keep is recomputed inside every resample (analyze_e1.py:104 keep = seen in training or prediction); absent classes are dropped
+  fullC    : average over all C classes, with f1=0 for absent classes (the point-estimate caliber of sealed_eval_delta.py :21-26 / :164)
 
-只读 runs/sealed_eval/*.npz；写 data/results/human_review/round2/macro_denominator.{csv,json}
+Reads runs/sealed_eval/*.npz; writes data/results/human_review/round2/macro_denominator.{csv,json}
 """
 import csv, hashlib, json, sys
 from pathlib import Path
@@ -62,7 +62,7 @@ def score(tp, fp, fn, C, mode):
 def main():
     rows, detail = [], {}
     for bb in BBS:
-        # 配平门禁：各臂各 seed 的 y / records 必须逐元素相同
+        # balance gate: y / records must be element-wise identical across every arm and seed
         base = None
         probs = {}
         for arm in ("A0", "A1", "C1"):
@@ -71,7 +71,7 @@ def main():
                 if base is None:
                     base = (y, r)
                 elif not (np.array_equal(y, base[0]) and np.array_equal(r, base[1])):
-                    sys.exit(f"[审计失败] {LIB}/{bb}/{arm}/seed{s}: y/records 与基准不一致")
+                    sys.exit(f"[audit failed] {LIB}/{bb}/{arm}/seed{s}: y/records differ from the baseline")
                 probs[(arm, s)] = p
         y, rec = base
         C = probs[("A0", 0)].shape[1]
@@ -84,7 +84,7 @@ def main():
         np.add.at(W, (np.repeat(np.arange(N_BOOT), R), rng.integers(0, R, size=(N_BOOT, R)).ravel()), 1.0)
 
         for hi, lo in CONTRASTS:
-            # 每个 (arm,seed) 建簇×pair 计数并乘权重
+            # build the cluster x pair counts for each (arm,seed) and apply the weights
             A = {}
             codes = sorted({int(a) * C + int(p) for arm in (hi, lo) for s in SEEDS
                             for a, p in zip(y, probs[(arm, s)].argmax(1))})
@@ -93,7 +93,7 @@ def main():
                 for s in SEEDS:
                     M = counts_by_cluster(y, probs[(arm, s)].argmax(1), gidx, R, C)[:, codes]
                     A[(arm, s)] = W @ M
-            # 点估计（全样本计数）
+            # point estimate (full-sample counts)
             Pt = {}
             for arm in (hi, lo):
                 for s in SEEDS:
@@ -123,7 +123,7 @@ def main():
                 lo95, hi95 = np.percentile(d_boot * 100, [2.5, 97.5])
                 out[mode] = dict(d=float(np.mean(seed_pt)) * 100, lo=float(lo95), hi=float(hi95),
                                  sr=(max(seed_pt) - min(seed_pt)) * 100)
-            # 缺席类计数（dynamic 口径下每次重抽样剔除多少类）
+            # count absent classes (how many are dropped per resample under the dynamic caliber)
             tp, fp, fn = tpfpfn(A[(hi, 0)], codes, C)
             sup = ((tp + fn > 0) | (fp + tp > 0)).sum(1)
             out["_dropped_classes_mean"] = float((C - sup).mean())
@@ -156,7 +156,7 @@ def main():
         print(f"[{k}] C={v['_C']} nSlice={v['_n_slice']} nRec={v['_n_rec']} "
               f"dropped/mean={v['_dropped_classes_mean']:.2f} max={v['_dropped_classes_max']} "
               f"classes<5rec={v['_classes_lt5_rec']}")
-    print("写盘:", OUT_DIR / "macro_denominator.csv")
+    print("wrote:", OUT_DIR / "macro_denominator.csv")
 
 
 if __name__ == "__main__":

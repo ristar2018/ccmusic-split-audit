@@ -1,9 +1,9 @@
-# B2：负对照统一 3 seed（外审 M6 的噪声质疑）
-#   3 库（chest_falsetto / erhu_playing_tech / GZ_IsoTech）× 2 骨干 × {A0,A2} × seed0/1/2 = 36 runs
-#   落到独立 runs_b2/，不动 runs/ 里已封存的单 seed 证据（E1f 那一轮）。
-#   泄漏口径：负对照库每条录音 1 片（K̄≈1），A0/A2 都是录音级切分，训练侧不含 Q_test 录音；
-#   本脚本不新建任何切分，只换 seed。
-# 用法：pwsh -File code/run_b2.ps1 [tag]
+# B2: negative controls with a uniform 3 seeds (the noise objection raised in external review M6)
+#   3 libraries (chest_falsetto / erhu_playing_tech / GZ_IsoTech) x 2 backbones x {A0,A2} x seed0/1/2 = 36 runs
+#   Results land in a separate runs_b2/, leaving the sealed single-seed evidence of the E1f round in runs/ untouched.
+#   Leakage caliber: each recording of a negative-control library has 1 slice (K̄≈1); A0/A2 both split at recording level and the training side holds no Q_test recording;
+#   this script creates no new split, it only changes the seed.
+# Usage: pwsh -File code/run_b2.ps1 [tag]
 param([string]$Tag = "b2")
 $ErrorActionPreference = "Continue"
 Set-Location (Join-Path $PSScriptRoot "..")

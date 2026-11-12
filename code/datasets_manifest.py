@@ -1,14 +1,14 @@
-"""以 _extract.json 为唯一事实源，生成 13 个 CCMusic 数据集的到手指南。
+"""Generates the availability guide for the 13 CCMusic datasets, with _extract.json as the single source of truth.
 
-输出：
-  data/datasets_inventory.json   机器可读清单（后续实验脚本只读这一份）
-  data/datasets_inventory.csv    人读表格
+Output:
+  data/datasets_inventory.json   machine-readable inventory (later experiment scripts read only this file)
+  data/datasets_inventory.csv    human-readable table
 
-口径说明：
-  - 事实源：D:/VSCode/Datasets/_extract.json（解压记录：每个 zip 的文件数、字节、目标目录、状态）
-  - 计数：data/actual_stats.json（对磁盘的实测扫描：扩展名分布、音频时长、图像尺寸）
-  - 存在性：直接 os.path.isdir 复核，不复用任何人的说法
-  - 项目内 Datasets/ 只是元数据快照（26 个文件），单独统计，不参与"有几个库"的结论
+Conventions:
+  - Source of truth: D:/VSCode/Datasets/_extract.json (unpack log: per-zip file count, bytes, target directory, status)
+  - Counts: data/actual_stats.json (measured scan of the disk: extension distribution, audio duration, image sizes)
+  - Existence: re-checked directly with os.path.isdir, no claim from anyone is taken on trust
+  - The in-project Datasets/ is only a metadata snapshot (26 files), counted separately and kept out of the "how many libraries" conclusion
 """
 
 import json
@@ -22,21 +22,21 @@ STATS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_JSON = os.path.join(os.path.dirname(STATS), "datasets_inventory.json")
 OUT_CSV = os.path.join(os.path.dirname(STATS), "datasets_inventory.csv")
 
-# 13 个官方数据集，顺序与 ModelScope ccmmusic-database 组织页一致
+# 13 official datasets, in the same order as the ModelScope ccmmusic-database organisation page
 OFFICIAL = [
-    ("pianos", "钢琴音质", "品牌/音高/四维评分"),
-    ("music_genre", "音乐流派", "3 层 2/9/16 类"),
-    ("chest_falsetto", "真假声", "4 类"),
-    ("acapella", "无伴奏唱功", "9 维 10 分制"),
-    ("CNPM", "五声调式", "system/tonic/pattern/type"),
-    ("Guzheng_Tech99", "古筝技法", "7 类逐帧"),
-    ("instrument_timbre", "乐器音色", "61 件 16 轴"),
-    ("song_structure", "歌曲结构", "9 类功能段"),
-    ("GZ_IsoTech", "古筝片段技法", "8 类"),
-    ("bel_canto", "美声/民族", "4 类"),
-    ("erhu_playing_tech", "二胡技法", "11 类 + 4/7 类子集"),
-    ("CTIS", "民族乐器", "209 乐器 219 标签"),
-    ("timbre_range", "音色范围", "辅助"),
+    ("pianos", "piano timbre quality", "brand/pitch/four-dimension rating"),
+    ("music_genre", "music genre", "3 levels, 2/9/16 classes"),
+    ("chest_falsetto", "chest vs falsetto voice", "4 classes"),
+    ("acapella", "a cappella singing skill", "9 dimensions on a 10-point scale"),
+    ("CNPM", "pentatonic mode", "system/tonic/pattern/type"),
+    ("Guzheng_Tech99", "guzheng techniques", "7 classes, per frame"),
+    ("instrument_timbre", "instrument timbre", "61 instruments, 16 axes"),
+    ("song_structure", "song structure", "9 functional segment classes"),
+    ("GZ_IsoTech", "guzheng isolated-segment techniques", "8 classes"),
+    ("bel_canto", "bel canto / folk", "4 classes"),
+    ("erhu_playing_tech", "erhu techniques", "11 classes + 4/7-class subsets"),
+    ("CTIS", "Chinese traditional instruments", "209 instruments, 219 labels"),
+    ("timbre_range", "timbre range", "auxiliary"),
 ]
 AUDIO_EXT = {".wav", ".mp3", ".flac", ".m4a", ".ogg", ".aac"}
 IMG_EXT = {".jpg", ".jpeg", ".png"}
@@ -65,7 +65,7 @@ def classify(audio, images, present):
 
 
 def snap_stats(base):
-    """统计项目内元数据快照：目录名 -> 文件数"""
+    """Count the in-project metadata snapshot: directory name -> file count"""
     out = {}
     if not os.path.isdir(base):
         return out
@@ -154,10 +154,10 @@ def main():
             "workspace_snapshot": {
                 "path": WS_SNAP,
                 "datasets": snap,
-                "note": "仅元数据（dataset_infos.json 与少量 csv/zip），不是可用数据；不计入 present_count",
+                "note": "metadata only (dataset_infos.json plus a few csv/zip), not usable data; not counted in present_count",
             },
-            "rule": "一个数据集计入 present 当且仅当 D:/VSCode/Datasets/<name> 存在，且其解压记录文件数 >0；"
-                    "仅元数据快照不算下载完成",
+            "rule": "a dataset counts as present if and only if D:/VSCode/Datasets/<name> exists and its unpack log reports >0 files; "
+                    "a metadata-only snapshot does not count as a completed download",
         },
         "datasets": rows,
     }
@@ -174,13 +174,13 @@ def main():
                         ";".join(r["archives"]), r["extract_files"], r["disk_gb"],
                         r["audio"], r["duration_h"], r["images"], r["csv"]])
 
-    print(f"{'数据集':<18}{'状态':<12}{'文件':>8}{'体积':>9}{'音频':>6}{'时长h':>7}{'图像':>9}")
+    print(f"{'dataset':<18}{'status':<12}{'files':>8}{'size':>9}{'audio':>6}{'dur_h':>7}{'images':>9}")
     for r in rows:
         print(f"{r['dataset']:<18}{r['status']:<12}{r['extract_files']:>8}"
               f"{r['disk_gb']:>8.2f}G{r['audio']:>6}{r['duration_h']:>7.2f}{r['images']:>9}")
-    print(f"\n官方 {len(OFFICIAL)} / 到手 {len(present)} / 缺 {','.join(missing) or '无'}")
-    print(f"合计 {total_bytes / 1024 ** 3:.2f}GB, {total_files} 文件, 音频 {total_audio}, 图像 {total_img}")
-    print(f"项目内快照：{len(snap)} 个目录 / {sum(snap.values())} 个文件（仅元数据）")
+    print(f"\nofficial {len(OFFICIAL)} / present {len(present)} / missing {','.join(missing) or 'none'}")
+    print(f"total {total_bytes / 1024 ** 3:.2f}GB, {total_files} files, audio {total_audio}, images {total_img}")
+    print(f"in-project snapshot: {len(snap)} directories / {sum(snap.values())} files (metadata only)")
     print(f"-> {OUT_JSON}")
     print(f"-> {OUT_CSV}")
 

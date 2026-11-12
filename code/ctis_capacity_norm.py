@@ -1,4 +1,4 @@
-# P3 前置：归一乐器名 → 冻结属性类宇宙（格≥2 且覆盖≥3 乐器，剔除 6 个内容类标签）
+# P3 prerequisite: normalize instrument names -> freeze the attribute-class universe (cell >= 2 and covering >= 3 instruments, dropping 6 content-class labels)
 import re, json, statistics, sys
 from pathlib import Path
 from collections import Counter, defaultdict
@@ -56,7 +56,7 @@ rows_json = {"disk_wav": 4956, "rows": len(rows), "unparsed": unparsed,
              "siblings_not_covered": {s: sum(v for (l, i), v in cells.items() if l == s) for s in SIBLINGS},
              "pending": {k: v for k, v in PENDING.items()}}
 
-# 半数乐器留出（按乐器录音数降序交替分 A/B，B 为 held-out 测试侧）
+# hold out half the instruments (sort by recording count descending, alternate into A/B; B is the held-out test side)
 order = sorted(insts, key=lambda i: (-sum(v for (l, j), v in cells.items() if j == i), i))
 half = set(order[1::2])
 test = {l: sum(v for (x, i), v in cells.items() if x == l and i in half and v >= 2) for l in keep}
@@ -83,12 +83,12 @@ print("--- per class ---")
 for k, v in rows_json["per_class"]:
     print(f"{v:5d}\t{k}")
 
-# ---- 变体 B：把「演奏技巧」一并视为占位类（它不指任何具体技法）----
+# ---- variant B: treat the generic "performance technique" label as a placeholder class too (it names no concrete technique) ----
 import statistics as st
 pc_b = {k: v for k, v in pc.items() if k != "演奏技巧"}
 vals = sorted(pc_b.values())
 rows_json["variantB_no_playtech"] = {"classes": len(pc_b), "recordings": sum(vals),
     "median": st.median(vals), "min": min(vals),
-    "note": "剔除 6 个内容类 + 「演奏技巧」占位类"}
+    "note": "dropped 6 content classes + the placeholder class 「演奏技巧」"}
 OUT.write_text(json.dumps(rows_json, ensure_ascii=False, indent=1), encoding="utf-8")
 print("variantB", rows_json["variantB_no_playtech"])

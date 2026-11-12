@@ -354,7 +354,7 @@ def main():
             )
 
     # Table 5 (negative controls)
-    # B2（外审后补跑）：负对照统一三个 seed，结果落在 data/results/b2/e1_delta.csv
+    # B2 (run after external review): negative controls with three seeds; results in data/results/b2/e1_delta.csv
     B2DELTA = os.path.join(RESULTS, "b2", "e1_delta.csv")
     neg = {(r["library"], r["bb"]): r for r in read_csv(B2DELTA)
            if r["library"] in ("chest_falsetto", "erhu_playing_tech", "GZ_IsoTech")}
@@ -381,7 +381,7 @@ def main():
         "A1": "L-inst",
         "A2": "L-inst+Adv",
     }
-    # B1（外审 M7）：录音分组折基线的 pooled 均值与两条补充对比
+    # B1 (external review M7): pooled mean of the recording-grouped fold baseline plus two supplementary contrasts
     p3b_m, p3b_r = {}, {}
     for r in read_csv(os.path.join(RESULTS, "p3b_leak", "p3_metrics.csv")):
         p3b_m[(r["arm"], r["bb"])] = float(r["macro_f1_slice"])
@@ -391,7 +391,7 @@ def main():
     inst = {(r["arm"], r["bb"]): r
             for r in read_csv(os.path.join(RESULTS, "p3b_instr", "p3_delta.csv"))}
     for bb in ("alexnet", "swin_t"):
-        # 表注写的是 A0 - A1r（正数），文件里是 A1r - A0（负数）
+        # The table note reports A0 - A1r (positive); the file stores A1r - A0 (negative)
         r = leak[("A1r", bb)]
         ck.in_text(
             "table6 caption A0-A1r/%s" % bb,

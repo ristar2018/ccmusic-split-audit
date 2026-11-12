@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Q 面板容量可行性实测（v2.3 设计依据）
+"""Measured feasibility of the Q panel capacity (the empirical basis for design v2.3).
 
-回答外审致命项 1：按 §3.1 的 Q/R/C 划分，A1 的"50% 切片来自 Q_pool"在 5 个主线库上
-是否可行；若不可行，最大的可行暴露比例 α_max 与对应的训练量 v 是多少。
+Answers fatal item 1 of external review: under the Q/R/C partition of §3.1, is A1's
+"50% of slices drawn from Q_pool" feasible on the 5 main libraries; if not, what are the
+largest feasible exposure ratio α_max and the matching training volume v.
 
-口径（与 v2.2 §3.1/§3.2 对齐）
-- 类内录音随机分 Q（20%，下限 5）/ R（15%）/ C（其余）
-- 每个 Q 录音的切片按内容哈希排序后偶数位进 Q_test、奇数位进 Q_pool；
-  只要 1 片的录音整片进 Q_test，不进 Q_pool（floor(k/2)=0 自动实现）
-- m_c = 每类训练切片数 = v × S_c（v=0.6 对应 §4 的"A0/A1 取 60% 训练量"）
-- A1 的暴露比例 α 指 m_c 中来自 Q_pool 的切片占比（预设 50%）
-  → 可行性条件：α × v × S_c ≤ Q_pool_c
+Caliber (aligned with v2.2 §3.1/§3.2)
+- Within a class, recordings are split at random into Q (20%, floor of 5) / R (15%) / C (the rest)
+- For every Q recording the slices are sorted by content hash, even positions go to Q_test and odd positions to Q_pool;
+  a recording with only 1 slice goes entirely to Q_test and never to Q_pool (floor(k/2)=0 handles this automatically)
+- m_c = training slices per class = v × S_c (v=0.6 matches "A0/A1 use 60% of the training volume" in §4)
+- The exposure ratio α of A1 is the share of m_c slices coming from Q_pool (preset 50%)
+  -> feasibility condition: α × v × S_c <= Q_pool_c
 
-只读 D:\\VSCode\\Datasets；结果写 data/splits/qpanel_capacity.json。
+Read-only over D:\\VSCode\\Datasets; results are written to data/splits/qpanel_capacity.json.
 """
 import json
 import os
@@ -33,12 +34,12 @@ def stem(name):
 
 
 def src_of(name):
-    """去扩展名后再去尾部 _<n>；与 code/ccmusic_splits.py 的 source_of 同口径"""
+    """Strip the extension, then the trailing _<n>; same caliber as source_of in code/ccmusic_splits.py"""
     return TRAIL.sub("", stem(name))
 
 
 def cnpm_pattern_map():
-    """CNPM 的类在 data/label.csv 的「样式/Pattern」列；文件名做键（GBK）"""
+    """CNPM classes live in the 样式/Pattern column of data/label.csv; file names are the keys (GBK)"""
     import csv
     import io
     path = os.path.join(ROOT, "CNPM", "data", "label.csv")
@@ -53,9 +54,9 @@ def cnpm_pattern_map():
 
 
 def walk_pairs(lib):
-    """返回 {(class, source): slice_count}"""
+    """Returns {(class, source): slice_count}"""
     base = os.path.join(ROOT, lib, "data", "eval", "mel")
-    if not os.path.isdir(base):          # pianos 的特征图直接放 data/eval/<品牌>/
+    if not os.path.isdir(base):          # pianos stores its feature maps directly under data/eval/<brand>/
         base = os.path.join(ROOT, lib, "data", "eval")
     cnpm_map = cnpm_pattern_map() if lib == "CNPM" else None
     pairs = Counter()
@@ -69,9 +70,9 @@ def walk_pairs(lib):
             if lib == "CTIS":
                 cls = parts[0]                       # C0090
             elif lib == "music_genre":
-                cls = parts[-1] if parts else "?"     # 中层 9 类
+                cls = parts[-1] if parts else "?"     # 9 mid-level classes
             elif lib == "pianos":
-                cls = parts[0] if parts else "?"      # 品牌
+                cls = parts[0] if parts else "?"      # brand
             elif lib == "bel_canto":
                 cls = parts[0] if parts else "?"
             elif lib == "CNPM":
@@ -91,7 +92,7 @@ def class_tables(lib):
 
 
 def sim_qpool(ks, q):
-    """给一个类的录制切片数列表与 Q 录音数，返回 Q_pool 切片数的 (mean, p5, p95)"""
+    """Given per-recording slice counts of one class and the number of Q recordings, return (mean, p5, p95) of the Q_pool slice count"""
     n = len(ks)
     q = max(1, min(q, n))
     trials = []
@@ -115,7 +116,7 @@ def analyse(lib, v=0.6, alphas=(0.5, 0.3)):
         mean_qp, p5, p95 = sim_qpool(ks, q_c)
         qp = mean_qp
         m_c = round(v * S_c)
-        cov = sum(1 for k in ks if k >= 2) / n_c      # 有兄弟切片的录音占比（=Q_test 覆盖率上界）
+        cov = sum(1 for k in ks if k >= 2) / n_c      # share of recordings with sibling slices (= upper bound of Q_test coverage)
         row = dict(cls=cls, n_c=n_c, S_c=S_c, K_c=round(S_c / n_c, 2),
                    q_rec=q_c, q_slices_expected=qp, qp_share=round(qp / S_c, 4),
                    coverage=round(cov, 4), k1_recordings=n_c - sum(1 for k in ks if k >= 2),
@@ -151,9 +152,9 @@ def analyse(lib, v=0.6, alphas=(0.5, 0.3)):
 def main():
     out = {"_meta": {
         "date": "2026-11-04",
-        "source": "D:/VSCode/Datasets/<lib>/data/eval/mel 盘面重建 class↔source",
-        "rule": "类内录音 20%（下限 5）作 Q；Q 录音 floor(k/2) 切片进 Q_pool；m_c=v*S_c，v=0.6",
-        "note": "Q_pool 为 400 次随机抽样的均值；1 片录音不进 Q_pool",
+        "source": "class<->source rebuilt from D:/VSCode/Datasets/<lib>/data/eval/mel on disk",
+        "rule": "20% of the recordings per class (floor 5) form Q; floor(k/2) slices of each Q recording enter Q_pool; m_c=v*S_c, v=0.6",
+        "note": "Q_pool is the mean over 400 random draws; single-slice recordings never enter Q_pool",
     }}
     for lib in ("CTIS", "music_genre", "pianos", "bel_canto", "CNPM"):
         rows, agg = analyse(lib)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""从 ModelScope repo tree API 重建 code/dataset_index.json（labels/audio 预设的清单源）。"""
+"""Rebuild code/dataset_index.json from the ModelScope repo tree API (the manifest source for the labels/audio presets)."""
 import json
 import re
 import urllib.parse

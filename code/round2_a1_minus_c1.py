@@ -1,42 +1,42 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""round2_a1_minus_c1.py — CTIS 上 A1−C1 的直接配对区间（切片级/录音级），
-并复算 A1−A0 / C1−A0 与已发表 CSV 逐字段对账（忠实性门禁）。
+"""round2_a1_minus_c1.py — direct paired interval for A1−C1 on CTIS (slice level / recording level),
+plus a field-by-field reconciliation of A1−A0 / C1−A0 against the published CSVs (fidelity gate).
 
-统计口径逐条对齐 code/analyze_e1.py（不另造一套）：
-  * 宏 F1 = 混淆矩阵口径：tp=对角，fp=列和−tp，fn=行和−tp；keep = 该类在**本次（重采样）样本**里
-    出现过（行和+列和>0），空类不参与平均（analyze_e1.py:96-106）。与 sklearn
-    average='macro', zero_division=0 同口径。
-  * 切片级：pred = probs.argmax(1)；录音级：同录音 probs 均值后 argmax 一票
-    （analyze_e1.py:114-126）。
-  * 录音簇自助 2000 次：重采样单位 = 录音簇（整簇保留/剔除，不拆簇）；RNG = default_rng(20261105)；
-    按 sorted(库) 顺序、每库抽一次 size=(2000, n_rec)（analyze_e1.py:205-210），因此 CTIS 的
-    自助索引矩阵与已发表 e1_delta.csv **同源**，A1−C1 与 A1−A0 共享同一组簇索引。
-  * Δ = 每次重采样内先逐 seed 配对求差，再对 3 个 seed 取均值；Δ = F1_臂 − F1_参照，单位百分点。
-    点估计同口径（3 seed 平均的逐 seed 配对差）。
-  * 95% CI = Δ 自助分布的 2.5/97.5 百分位。
-  * boot p 两个口径都给：boot_p = analyze_e1 现行双侧 +1（2*(k+1)/(B+1)，analyze_e1.py:258-260）；
-    boot_p_legacy = 已发表 e1_delta.csv 的口径 2*min(k_le0,k_ge0)/B、下限 1/B（见函数注释）。
-  * 忠实性：切片级与 e1_delta.csv 逐字段对账；录音级 CI 对 e1_delta.csv，**点估计**对
-    human_review/corrected_recording_delta.csv 的 point_unw_pt（e1_delta.csv 的 delta_rec_pt 是已取代的
-    legacy slice-weighted 值，稿件正文已改用 point_unw）；boot_p 按 legacy 口径复算。
-  * 传递性：同一重抽样下 Δ(A1−C1) 必精确等于 Δ(A1−A0) − Δ(C1−A0)（脚本内断言）。
-  * seed 极差 = 逐 seed Δ 的 max−min（只报数，不把 3 seed 当独立样本检验）。
-  * 配对完整性（本脚本第 2 节）：同骨干同 seed 下 A0/A1/A2/C1 的 y 与 records 必须逐元素相同；
-    跨 seed 的 y/records 也必须相同；每格宏 F1 必须与 seed{k}.json 的 qtest 记录一致（tol 5e-4）。
+Every statistical convention follows code/analyze_e1.py line by line (no second implementation):
+  * macro F1 = confusion-matrix convention: tp=diagonal, fp=column sum−tp, fn=row sum−tp; keep = the class is present
+    in **this (resampled) sample** (row sum + column sum > 0); empty classes are excluded from the average (analyze_e1.py:96-106). Same
+    convention as sklearn average='macro', zero_division=0.
+  * slice level: pred = probs.argmax(1); recording level: average probs within a recording, then one argmax vote
+    (analyze_e1.py:114-126).
+  * recording-cluster bootstrap, 2000 replicates: resampling unit = recording cluster (whole cluster kept or dropped, never split); RNG = default_rng(20261105);
+    drawn once per library in sorted(lib) order, size=(2000, n_rec) (analyze_e1.py:205-210), so the CTIS
+    bootstrap index matrix is **the same stream** as the published e1_delta.csv, and A1−C1 shares one set of cluster indices with A1−A0.
+  * Δ = per-seed paired difference within each replicate, then averaged over the 3 seeds; Δ = F1_arm − F1_reference, in percentage points.
+    The point estimate uses the same convention (per-seed paired differences averaged over 3 seeds).
+  * 95% CI = the 2.5/97.5 percentiles of the bootstrap distribution of Δ.
+  * boot p is reported under both conventions: boot_p = analyze_e1's current two-sided +1 (2*(k+1)/(B+1), analyze_e1.py:258-260);
+    boot_p_legacy = the published e1_delta.csv convention 2*min(k_le0,k_ge0)/B with floor 1/B (see the function docstring).
+  * Fidelity: slice level is reconciled field by field against e1_delta.csv; recording-level CI against e1_delta.csv and the **point estimate** against
+    point_unw_pt of human_review/corrected_recording_delta.csv (delta_rec_pt in e1_delta.csv is the superseded
+    legacy slice-weighted value; the manuscript text uses point_unw); boot_p is recomputed under the legacy convention.
+  * Transitivity: within one resample, Δ(A1−C1) must equal Δ(A1−A0) − Δ(C1−A0) exactly (asserted in the script).
+  * seed spread = max−min of the per-seed Δ (reported only; the 3 seeds are not treated as independent samples in a test).
+  * Pairing integrity (section 2 of this script): under one backbone and seed, the y and records of A0/A1/A2/C1 must match element by element;
+    y/records must also match across seeds; each macro F1 must agree with the qtest record in seed{k}.json (tol 5e-4).
 
-探索性分组（第 5 节）：按「测试录音是否出现在 A1 注入池」二分。注入暴露清单不另算，直接取冻结切分
-  data/splits/v2/CTIS_{qpool,qtest,a1_train}.csv：a1_train 中 sample_id ∈ qpool 的行 = 实际注入切片，
-  其 recording_canonical 与 qtest 的 recording_canonical 取交集 = 暴露测试录音（与 npz 的 records 列
-  同名同值，脚本内断言；用 recording_uid 得到的交集数相同）。该口径与
-  code/audit_review_exposure_20261108.py 相同，且与 paper/sections/10_supplement.tex 表
-  tab:realised-injection 的 578/963 对得上（脚本内断言）。分组 Δ 的簇自助在组内重新抽簇，
-  使用独立随机流 default_rng(20261105)（与原表的流不同源，仅组内可解释）。
+ Exploratory grouping (section 5): split by whether a test recording appears in the A1 injection pool. The exposure list is not recomputed; it is read from the frozen splits
+   data/splits/v2/CTIS_{qpool,qtest,a1_train}.csv: rows of a1_train whose sample_id ∈ qpool are the slices actually injected;
+   the intersection of their recording_canonical with that of qtest gives the exposed test recordings (same name and
+   same values as the npz records column, asserted in the script; using recording_uid gives the same intersection size). This convention matches
+   code/audit_review_exposure_20261108.py and agrees with the 578/963 of table
+   tab:realised-injection in paper/sections/10_supplement.tex (asserted in the script). The cluster bootstrap for group Δ resamples clusters within the group,
+   using an independent stream default_rng(20261105) (not the same stream as the original table; interpretable within groups only).
 
-只读：runs/sealed_eval/**、data/splits/v2/**、data/results/{e1_delta.csv,c1/e1_delta.csv}。
-只写：data/results/human_review/round2/a1_minus_c1.{csv,json}。
+Reads: runs/sealed_eval/**, data/splits/v2/**, data/results/{e1_delta.csv,c1/e1_delta.csv}.
+Writes: data/results/human_review/round2/a1_minus_c1.{csv,json}.
 
-用法：python code/round2_a1_minus_c1.py
+ Usage: python code/round2_a1_minus_c1.py
 """
 import csv
 import json
@@ -49,7 +49,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
-import analyze_e1 as ae  # noqa: E402  复用其 load_npz / macro_f1 / conf_slice / per_recording / discover
+import analyze_e1 as ae  # noqa: E402  reuse its load_npz / macro_f1 / conf_slice / per_recording / discover
 
 RUNS = os.path.join(ROOT, "runs", "sealed_eval")
 SPLITS = os.path.join(ROOT, "data", "splits", "v2")
@@ -77,10 +77,10 @@ def die(msg):
 
 
 def macro_f1_batch(conf):
-    """(B,C,C) 混淆矩阵 → (B,) 宏F1；与 ae.macro_f1 逐元素同口径（空类剔除）。"""
+    """(B,C,C) confusion matrices -> (B,) macro F1; element-wise the same convention as ae.macro_f1 (empty classes dropped)."""
     tp = np.diagonal(conf, axis1=1, axis2=2).astype(np.float64)
-    fp = conf.sum(axis=1) - tp          # 列和（pred=j 的总数，含 tp）
-    fn = conf.sum(axis=2) - tp          # 行和（true=i 的总数，含 tp）
+    fp = conf.sum(axis=1) - tp          # column sum (all cases with pred=j, tp included)
+    fn = conf.sum(axis=2) - tp          # row sum (all cases with true=i, tp included)
     den = 2 * tp + fp + fn
     with np.errstate(invalid="ignore", divide="ignore"):
         f1 = np.where(den > 0, 2 * tp / den, np.nan)
@@ -90,7 +90,7 @@ def macro_f1_batch(conf):
 
 
 def batch_f1_slice(pred, y, nc, W):
-    """切片级自助：W (B,n) 为每切片的簇重数权重。"""
+    """Slice-level bootstrap: W (B,n) holds the cluster multiplicity weight of each slice."""
     flat = y * nc + pred
     out = np.empty(W.shape[0])
     for st in range(0, W.shape[0], CHUNK):
@@ -103,7 +103,7 @@ def batch_f1_slice(pred, y, nc, W):
 
 
 def batch_f1_rec(rec_y, rec_pred, nc, mult):
-    """录音级自助：mult (B,R) 为每录音簇的重数权重。"""
+    """Recording-level bootstrap: mult (B,R) holds the multiplicity weight of each recording cluster."""
     flat = rec_y * nc + rec_pred
     out = np.empty(mult.shape[0])
     for st in range(0, mult.shape[0], CHUNK):
@@ -116,17 +116,17 @@ def batch_f1_rec(rec_y, rec_pred, nc, mult):
 
 
 def boot_p(d):
-    """双侧百分位 p，加 1 校正（analyze_e1.py:258-260 现行实现）：2*(k+1)/(B+1)。"""
+    """Two-sided percentile p with the +1 correction (analyze_e1.py:258-260, current implementation): 2*(k+1)/(B+1)."""
     smaller = min(int(np.count_nonzero(d <= 0)), int(np.count_nonzero(d >= 0)))
     return min(1.0, 2.0 * (smaller + 1) / (d.size + 1))
 
 
 def boot_p_legacy(d):
-    """已发表 e1_delta.csv 的 boot_p 口径：2*min(#<=0,#>=0)/B，下限 1/B。
+    """boot_p convention of the published e1_delta.csv: 2*min(#<=0,#>=0)/B, floored at 1/B.
 
-    依据：human_review/slice_p_addone.csv 的 n_draws_le0 与 p_legacy_clamped 反推
-    （k=0 -> 2*0/2000 被下限 1/2000=0.0005 兜住；k=56 -> 0.056；k=462 -> 0.462；
-    k=731 -> 0.731；k=20 -> 0.02），与 e1_delta.csv 四个 CTIS 单元逐一吻合。
+    Basis: back-solved from n_draws_le0 and p_legacy_clamped in human_review/slice_p_addone.csv
+    (k=0 -> 2*0/2000 caught by the floor 1/2000=0.0005; k=56 -> 0.056; k=462 -> 0.462;
+    k=731 -> 0.731; k=20 -> 0.02), matching all four CTIS cells of e1_delta.csv one by one.
     """
     k = min(int(np.count_nonzero(d <= 0)), int(np.count_nonzero(d >= 0)))
     return max(1.0 / d.size, min(1.0, 2.0 * k / d.size))
@@ -143,7 +143,7 @@ def main():
     ae.RUNS = RUNS
     data = ae.discover()
 
-    # ================= 1. 配对完整性断言 =================
+    # ================= 1. pairing-integrity assertions =================
     checks = []
     n_y = n_r = n_f1 = 0
     for bb in BBS:
@@ -152,11 +152,11 @@ def main():
             for arm in ARMS:
                 p = os.path.join(RUNS, "CTIS_%s_%s" % (arm, bb), "seed%d_qtest.npz" % s)
                 if not os.path.isfile(p):
-                    die("缺封存文件 %s" % p)
+                    die("missing sealed file %s" % p)
                 probs, y, rec = ae.load_npz(p)
                 if ref is None:
                     ref = (y, rec, arm)
-                    checks.append({"check": "y/records 参照", "bb": bb, "seed": s, "arm": arm,
+                    checks.append({"check": "y/records reference", "bb": bb, "seed": s, "arm": arm,
                                    "n": int(y.size), "n_recordings": int(np.unique(rec).size),
                                    "ok": True})
                 else:
@@ -165,12 +165,12 @@ def main():
                     n_y += 1
                     n_r += 1
                     if not ok_y:
-                        die("%s/seed%d: %s 的 y 与 %s 不逐元素相同" % (bb, s, arm, ref[2]))
+                        die("%s/seed%d: y of %s does not match %s element by element" % (bb, s, arm, ref[2]))
                     if not ok_r:
-                        die("%s/seed%d: %s 的 records 与 %s 不逐元素相同" % (bb, s, arm, ref[2]))
-                    checks.append({"check": "y/records 配对", "bb": bb, "seed": s, "arm": arm,
+                        die("%s/seed%d: records of %s do not match %s element by element" % (bb, s, arm, ref[2]))
+                    checks.append({"check": "y/records pairing", "bb": bb, "seed": s, "arm": arm,
                                    "vs": ref[2], "ok": True})
-                # 指标复算对账（对 seed{k}.json 的 qtest 记录）
+                # metric recomputation reconciled against the qtest record in seed{k}.json
                 nc = int(y.max()) + 1
                 f1s = ae.macro_f1(ae.conf_slice(y, probs.argmax(1), nc))[0]
                 rec_y, rec_pred, _ = ae.per_recording(probs, y, np.unique(rec, return_inverse=True)[1],
@@ -180,31 +180,31 @@ def main():
                                                   "seed%d.json" % s), encoding="utf-8").read())["qtest"]
                 n_f1 += 2
                 if abs(f1s - st["macro_f1_slice"]) > 5e-4 or abs(f1r - st["macro_f1_recording"]) > 5e-4:
-                    die("%s/%s/seed%d: 复算 F1 (%.6f/%.6f) 与 seed json (%.6f/%.6f) 不符"
+                    die("%s/%s/seed%d: recomputed F1 (%.6f/%.6f) disagrees with seed json (%.6f/%.6f)"
                         % (bb, arm, s, f1s, f1r, st["macro_f1_slice"], st["macro_f1_recording"]))
-                checks.append({"check": "F1 复算对账", "bb": bb, "seed": s, "arm": arm,
+                checks.append({"check": "F1 recomputation", "bb": bb, "seed": s, "arm": arm,
                                "f1_slice": round(f1s, 6), "f1_recording": round(f1r, 6),
                                "json_slice": st["macro_f1_slice"],
                                "json_recording": st["macro_f1_recording"], "ok": True})
-    # 跨 seed：切片集合必须稳定
+    # across seeds: the slice set must be stable
     for bb in BBS:
         for s in SEEDS[1:]:
             _, y0, r0 = ae.load_npz(os.path.join(RUNS, "CTIS_A0_%s" % bb, "seed0_qtest.npz"))
             _, y, r = ae.load_npz(os.path.join(RUNS, "CTIS_A0_%s" % bb, "seed%d_qtest.npz" % s))
             if not (np.array_equal(y, y0) and np.array_equal(r, r0)):
-                die("%s: seed%d 与 seed0 的切片集合/顺序漂移" % (bb, s))
-            checks.append({"check": "跨 seed 切片集合", "bb": bb, "seed": s, "ok": True})
-    print("[断言] 配对完整性 PASS：%d 个 y 比对 + %d 个 records 比对 + %d 项 F1 复算对账"
+                die("%s: slice set/order of seed%d drifts from seed0" % (bb, s))
+            checks.append({"check": "cross-seed slice set", "bb": bb, "seed": s, "ok": True})
+    print("[assert] pairing integrity PASS: %d y comparisons + %d records comparisons + %d F1 recomputations"
           % (n_y, n_r, n_f1))
 
-    # ================= 2. 重放 analyze_e1 的自助随机流 =================
+    # ================= 2. replay the analyze_e1 bootstrap stream =================
     rng = np.random.default_rng(BOOT_SEED)
     boot, pt = {}, {}   # (arm,bb,seed) -> (f1s_boot, f1r_boot) / (f1s, f1r)
     y_ref = rec_ref = None
     nrec = None
     for lib in sorted(data):
         per_arm = data[lib]
-        if ("A0", "alexnet") not in per_arm:      # analyze_e1:155-158 同一跳库条件，保证流对齐
+        if ("A0", "alexnet") not in per_arm:      # same library-skip condition as analyze_e1:155-158, keeps the stream aligned
             continue
         z0 = sorted(per_arm[("A0", "alexnet")])[0]
         _, y_l, r_l = ae.load_npz(per_arm[("A0", "alexnet")][z0])
@@ -216,30 +216,30 @@ def main():
             continue
         y_ref, rec_ref, nrec = y_l, r_l, nrec_l
         nc = int(y_ref.max()) + 1
-        W = mult[:, rec_idx]                       # (B, n) 切片级簇权重
+        W = mult[:, rec_idx]                       # (B, n) slice-level cluster weights
 
         for (arm, bb), seeds in sorted(per_arm.items()):
             for s in sorted(seeds):
                 probs, y, rec = ae.load_npz(seeds[s])
                 if not (np.array_equal(y, y_ref) and np.array_equal(rec, rec_ref)):
-                    die("CTIS/%s/%s/seed%d 与 A0 参照切片顺序不一致" % (arm, bb, s))
+                    die("CTIS/%s/%s/seed%d slice order disagrees with the A0 reference" % (arm, bb, s))
                 rec_y_s, rec_pred_s, _ = ae.per_recording(probs, y, rec_idx, nrec, nc)
                 pred = probs.argmax(1)
                 pt[(arm, bb, s)] = (ae.macro_f1(ae.conf_slice(y, pred, nc))[0],
                                     ae.macro_f1(ae.conf_slice(rec_y_s, rec_pred_s, nc))[0])
                 boot[(arm, bb, s)] = (batch_f1_slice(pred, y, nc, W),
                                       batch_f1_rec(rec_y_s, rec_pred_s, nc, mult))
-        # 批式实现与标量实现的一致性（抽 3 个重抽样核对）
+        # batched vs scalar implementation agreement (3 replicates sampled and checked)
         for (arm, bb, s) in [(k) for k in boot if k[0] == "A0" and k[1] == "alexnet"]:
             probs, y, _ = ae.load_npz(per_arm[(arm, bb)][s])
             flat = y * nc + probs.argmax(1)
             for b in (0, 7, 999):
                 c = np.bincount(flat, weights=W[b], minlength=nc * nc).reshape(nc, nc)
                 if abs(ae.macro_f1(c)[0] - boot[(arm, bb, s)][0][b]) > 1e-12:
-                    die("批式/标量宏F1 实现不一致 (%s/%s/seed%d, b=%d)" % (arm, bb, s, b))
-        print("[断言] 自助实现一致：CTIS 簇自助索引已按 analyze_e1 随机流重放，切片级批式=标量")
+                    die("batched/scalar macro F1 disagree (%s/%s/seed%d, b=%d)" % (arm, bb, s, b))
+        print("[assert] bootstrap implementations agree: CTIS cluster indices replayed from the analyze_e1 stream, batched = scalar at slice level")
 
-    # ================= 3. 对比 A1−C1 / A1−A0 / C1−A0 =================
+    # ================= 3. contrasts A1−C1 / A1−A0 / C1−A0 =================
     def contrast(num, ref, bb):
         seeds = sorted(set(k[2] for k in boot if k[0] == num and k[1] == bb)
                        & set(k[2] for k in boot if k[0] == ref and k[1] == bb))
@@ -263,7 +263,7 @@ def main():
         for num, ref in (("A1", "C1"), ("A1", "A0"), ("C1", "A0")):
             contrasts[("%s-%s" % (num, ref), bb)] = contrast(num, ref, bb)
 
-    # 传递性自检：同一重抽样、同一 seed 配对下，Δ(A1−C1) 必精确等于 Δ(A1−A0) − Δ(C1−A0)
+    # transitivity self-check: within one resample and one seed pairing, Δ(A1−C1) must equal Δ(A1−A0) − Δ(C1−A0) exactly
     tri = []
     for bb in BBS:
         for lv in ("slice", "recording"):
@@ -273,16 +273,16 @@ def main():
                         "a1_a0_minus_c1_a0_pp": round(b, 6), "abs_diff": abs(a - b)})
     assert all(t["abs_diff"] < 1e-9 for t in tri), tri
 
-    # ================= 4. 忠实性门禁：与已发表 CSV 逐字段比对 =================
-    # 口径说明（2026-11-11 复核）：
-    #  (a) 切片级 Δ/CI/seed 极差/逐 seed Δ —— 直接对 e1_delta.csv（c1/e1_delta.csv）。
-    #  (b) 录音级 CI —— 对 e1_delta.csv 的 ci_lo_rec_pt/ci_hi_rec_pt（簇自助分位，未受影响）；
-    #      录音级**点估计**则对 human_review/corrected_recording_delta.csv 的 point_unw_pt：
-    #      e1_delta.csv 里的 delta_rec_pt 是已登记的 legacy slice-weighted 点估计
-    #      （= corrected_recording_delta.csv 的 legacy_point_sw_pt），稿件正文已改用 point_unw。
-    #      因此 legacy 差异单列为信息项，不计入门禁。
-    #  (c) boot_p —— e1_delta.csv 用 2*min(k_le0,k_ge0)/B、下限 1/B（见 boot_p_legacy 注释），
-    #      与 analyze_e1.py 现行的双侧+1 口径不同；门禁按 CSV 口径比对，JSON 两个值都给。
+    # ================= 4. fidelity gate: field-by-field comparison with the published CSVs =================
+    # Convention notes (reviewed 2026-11-11):
+    #  (a) slice-level Δ/CI/seed spread/per-seed Δ — compared directly with e1_delta.csv (c1/e1_delta.csv).
+    #  (b) recording-level CI — against ci_lo_rec_pt/ci_hi_rec_pt of e1_delta.csv (cluster-bootstrap quantiles, unaffected);
+    #      the recording-level **point estimate** against point_unw_pt of human_review/corrected_recording_delta.csv:
+    #      delta_rec_pt in e1_delta.csv is the registered legacy slice-weighted point estimate
+    #      (= legacy_point_sw_pt of corrected_recording_delta.csv); the manuscript text now uses point_unw.
+    #      The legacy difference is therefore listed as an informational item and not counted in the gate.
+    #  (c) boot_p — e1_delta.csv uses 2*min(k_le0,k_ge0)/B floored at 1/B (see the boot_p_legacy docstring),
+    #      which differs from the current two-sided +1 convention of analyze_e1.py; the gate compares the CSV convention and the JSON reports both values.
     CORR = os.path.join(ROOT, "data", "results", "human_review", "corrected_recording_delta.csv")
     corr_rows = {(r["library"], r["bb"], r["contrast"]): r for r in read_csv_dicts(CORR)}
 
@@ -314,21 +314,21 @@ def main():
             put("ci_hi_slice_pt", float(pub["ci_hi_slice_pt"]), mine["slice"]["ci_hi"], 0.011)
             put("seed_range_pt", float(pub["seed_range_pt"]), mine["slice"]["seed_range"], 0.011)
             put("boot_p_slice", float(pub["boot_p_slice"]), mine["slice"]["boot_p_legacy"], 5e-4,
-                "e1_delta.csv 口径 2*min(k_le0,k_ge0)/B；analyze_e1 现行双侧+1 值为 %.4f"
+                "e1_delta.csv convention 2*min(k_le0,k_ge0)/B; the current analyze_e1 two-sided +1 value is %.4f"
                 % mine["slice"]["boot_p"])
             put("ci_lo_rec_pt", float(pub["ci_lo_rec_pt"]), mine["recording"]["ci_lo"], 0.011)
             put("ci_hi_rec_pt", float(pub["ci_hi_rec_pt"]), mine["recording"]["ci_hi"], 0.011)
             put("delta_rec_pt_unw_vs_corrected", float(corr["point_unw_pt"]),
                 mine["recording"]["delta_pp"], 5e-3,
-                "以 corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值）")
+                "point_unw_pt of corrected_recording_delta.csv is authoritative (the manuscript text uses this value)")
             fdet["delta_rec_pt_legacy_in_e1_delta"] = {
                 "published": float(pub["delta_rec_pt"]),
                 "recomputed": round(mine["recording"]["delta_pp"], 4),
                 "abs_diff": round(abs(float(pub["delta_rec_pt"]) - mine["recording"]["delta_pp"]), 4),
                 "correction_pt": float(corr["correction_pt"]),
                 "match": None,
-                "note": "已知修正项，不计入门禁：e1_delta.csv 保留 legacy slice-weighted 点估计，"
-                        "corrected_recording_delta.csv 的 correction_pt 即两者之差"}
+                "note": "known correction, not counted in the gate: e1_delta.csv keeps the legacy slice-weighted point estimate,"
+                        " and correction_pt of corrected_recording_delta.csv is the difference between the two"}
             ps_mine = "|".join("%.2f" % v for v in mine["slice"]["seed_deltas"])
             same = ps_mine == pub["per_seed_delta_pt"]
             fdet["per_seed_delta_pt"] = {"published": pub["per_seed_delta_pt"],
@@ -338,7 +338,7 @@ def main():
             same_r = psr_mine == corr["per_seed_unw_pt"]
             fdet["per_seed_unw_pt"] = {"published": corr["per_seed_unw_pt"],
                                        "recomputed": psr_mine, "match": bool(same_r),
-                                       "note": "录音级逐 seed 对 corrected_recording_delta.csv"}
+                                       "note": "recording level, per seed, against corrected_recording_delta.csv"}
             ok = ok and same_r
             det["%s/%s" % (arm_pair, bb)] = {"fields": fdet, "all_match": bool(ok)}
             ok_all = ok_all and ok
@@ -349,38 +349,38 @@ def main():
     fidelity = {"A1-A0": cmp_block(PUB_A1A0, "A1-A0"),
                 "C1-A0": cmp_block(PUB_C1A0, "C1-A0")}
     fidelity["verdict"] = (
-        "一致：切片级 Δ/CI/seed 与 e1_delta.csv 逐字段相同；录音级 CI 相同、点估计与 "
-        "corrected_recording_delta.csv 的 point_unw_pt 相同；boot_p 按 e1_delta.csv 的 2k/B 口径复现相同"
+        "consistent: slice-level Δ/CI/seed identical field by field with e1_delta.csv; recording-level CI identical, point estimate identical to "
+        "point_unw_pt of corrected_recording_delta.csv; boot_p reproduced under the 2k/B convention of e1_delta.csv"
         if fidelity["A1-A0"]["all_fields_match"] and fidelity["C1-A0"]["all_fields_match"]
-        else "存在不一致字段：先查本脚本实现，不得改已发表数字")
+        else "fields disagree: check this script's implementation first; the published numbers must not be changed")
 
-    # ================= 5. 探索性分组：A1 注入池暴露 vs 未暴露 =================
+    # ================= 5. exploratory grouping: exposed to the A1 injection pool vs not =================
     test_rows = read_csv_dicts(os.path.join(SPLITS, "CTIS_qtest.csv"))
     pool_rows = read_csv_dicts(os.path.join(SPLITS, "CTIS_qpool.csv"))
     a1_rows = read_csv_dicts(os.path.join(SPLITS, "CTIS_a1_train.csv"))
     pool_ids = {r["sample_id"] for r in pool_rows}
     injected = [r for r in a1_rows if r["sample_id"] in pool_ids]
-    # 暴露口径与 code/audit_review_exposure_20261108.py、npz 的 records 列一致：用 recording_canonical
+    # exposure convention agrees with code/audit_review_exposure_20261108.py and the npz records column: recording_canonical is used
     inj_recs = {r["recording_canonical"] for r in injected}
     test_recs = {r["recording_canonical"] for r in test_rows}
-    assert not ({r["sample_id"] for r in test_rows} & pool_ids), "qpool 与 qtest 的 sample_id 相交"
-    assert set(rec_ref.tolist()) == test_recs, "npz 的 records 与 qtest recording_canonical 不一致"
+    assert not ({r["sample_id"] for r in test_rows} & pool_ids), "sample_id overlap between qpool and qtest"
+    assert set(rec_ref.tolist()) == test_recs, "npz records disagree with qtest recording_canonical"
     uid_x = {r["recording_uid"] for r in injected} & {r["recording_uid"] for r in test_rows}
     exposed = inj_recs & test_recs
-    assert len(exposed) == 578, "暴露录音数应为 578（code/audit_review_exposure_20261108.py 实测）"
+    assert len(exposed) == 578, "exposed recordings should be 578 (measured by code/audit_review_exposure_20261108.py)"
     group_info = {"source": "data/splits/v2/CTIS_{qpool,qtest,a1_train}.csv",
-                  "rule": "a1_train 中 sample_id ∈ qpool 的行=实际注入切片；其 recording_canonical "
-                          "∩ qtest recording_canonical 为暴露录音（与 npz records 列同名同值，已断言）",
+                   "rule": "rows of a1_train with sample_id ∈ qpool are the slices actually injected; their recording_canonical "
+                           "∩ qtest recording_canonical gives the exposed recordings (same name and values as the npz records column, asserted)",
                   "cross_check": {"audit_script": "code/audit_review_exposure_20261108.py",
-                                  "audit_reported": "注入 4178 切片 / 578 暴露测试录音 / 963 测试录音",
+                                   "audit_reported": "4178 slices injected / 578 exposed test recordings / 963 test recordings",
                                   "uid_based_exposed_recordings": len(uid_x)},
                   "injected_slices": len(injected), "injected_recordings": len(inj_recs),
                   "test_recordings": len(test_recs), "exposed_test_recordings": len(exposed),
                   "unexposed_test_recordings": len(test_recs - exposed),
                   "paper_table_cell": "578/963 (paper/sections/10_supplement.tex:44)"}
     if not (len(exposed) == 578 and len(test_recs) == 963 and len(injected) == 4178):
-        group_info["warn"] = "与 supplementary 表 578/963、4178 切片不一致，分组结果降级为未核验"
-        print("[警告] 暴露清单与补充表数字不一致：%d/%d, injected=%d"
+        group_info["warn"] = "disagrees with the supplementary table (578/963, 4178 slices); group results downgraded to unverified"
+        print("[warn] exposure list disagrees with the supplementary table: %d/%d, injected=%d"
               % (len(exposed), len(test_recs), len(injected)))
 
     recs_all, rec_idx_all = np.unique(rec_ref, return_inverse=True)
@@ -433,11 +433,11 @@ def main():
                                  "group_definition": group_info["rule"]})
     group_info["rows"] = grp_rows
     _g = {(r["contrast"], r["level"]): r for r in grp_rows}
-    print("[分组] exposed %d rec / %d slices | unexposed %d rec / %d slices"
+    print("[group] exposed %d rec / %d slices | unexposed %d rec / %d slices"
           % (len(exposed), _g[("A1-A0[exposed]", "slice")]["n_slices"],
              len(test_recs - exposed), _g[("A1-A0[unexposed]", "slice")]["n_slices"]))
 
-    # ================= 6. 落盘 =================
+    # ================= 6. write out =================
     rows = []
 
     def emit(contrast_name, bb, level, m, n_slices, n_recs):
@@ -480,21 +480,21 @@ def main():
         "env": {"python": sys.executable, "numpy": np.__version__},
         "pairing_assertions": {
             "passed": True,
-            "what": "同骨干同 seed 下 A0/A1/A2/C1 的 y 与 records 逐元素相同；跨 seed 切片集合相同；"
-                    "每格宏 F1（切片级/录音级）与 seed{k}.json 的 qtest 记录一致（tol 5e-4）",
+            "what": "under one backbone and seed the y and records of A0/A1/A2/C1 match element by element; the slice set is identical across seeds;"
+                    " every macro F1 cell (slice/recording level) agrees with the qtest record in seed{k}.json (tol 5e-4)",
             "counts": {"y_compare": n_y, "records_compare": n_r, "f1_recompute": n_f1},
             "detail": checks},
         "method": {
-            "metric": "macro-F1，混淆矩阵口径，空类不参与（analyze_e1.macro_f1）",
-            "levels": {"slice": "全切片 argmax", "recording": "同录音 probs 均值后 argmax"},
+            "metric": "macro-F1, confusion-matrix convention, empty classes excluded (analyze_e1.macro_f1)",
+            "levels": {"slice": "argmax over all slices", "recording": "mean probs within a recording, then argmax"},
             "bootstrap": {"n": BOOT, "cluster": "recording", "rng": "default_rng(%d)" % BOOT_SEED,
-                          "stream": "按 sorted(lib) 逐库抽 size=(2000,n_rec)，与 analyze_e1.py:205-210 同源；"
-                                    "CTIS 的索引矩阵与已发表 e1_delta.csv 相同",
-                          "delta": "每次重抽样内逐 seed 配对求差后对 3 seed 取均值",
-                          "ci": "Δ 分布的 2.5/97.5 百分位",
-                          "p": "两个口径都给：boot_p=analyze_e1 现行双侧 +1（2*(k+1)/(B+1)）；"
-                               "boot_p_legacy=e1_delta.csv 口径 2*min(k_le0,k_ge0)/B（下限 1/B）"},
-            "units": "百分点（pp）",
+                          "stream": "drawn once per library in sorted(lib) order, size=(2000,n_rec), the same stream as analyze_e1.py:205-210;"
+                                    " the CTIS index matrix is identical to the published e1_delta.csv",
+                          "delta": "per-seed paired differences within each replicate, averaged over the 3 seeds",
+                          "ci": "2.5/97.5 percentiles of the Δ distribution",
+                          "p": "both conventions reported: boot_p = analyze_e1 current two-sided +1 (2*(k+1)/(B+1));"
+                               " boot_p_legacy = e1_delta.csv convention 2*min(k_le0,k_ge0)/B (floor 1/B)"},
+            "units": "percentage points (pp)",
             "sesoi_pp": SESOI,
             "seeds": list(SEEDS),
         },
@@ -515,35 +515,35 @@ def main():
                       for c in ("A1-C1", "A1-A0", "C1-A0") for bb in BBS
                       for lv in ("slice", "recording")],
         "fidelity_check": fidelity,
-        "transitivity_check": {"what": "Δ(A1−C1) = Δ(A1−A0) − Δ(C1−A0)（点估计，pp）",
+        "transitivity_check": {"what": "Δ(A1−C1) = Δ(A1−A0) − Δ(C1−A0) (point estimates, pp)",
                                "passed": True, "rows": tri},
         "exploratory_exposure": group_info,
         "notes": [
-            "A1−C1 为本轮新增对比，此前无已发表数字；A1−A0 / C1−A0 用于忠实性门禁。",
-            "忠实性：切片级与 e1_delta.csv 逐字段相同；录音级点估计以 human_review/"
-            "corrected_recording_delta.csv 的 point_unw_pt 为准（稿件正文用此值），"
-            "e1_delta.csv 的 delta_rec_pt 为已取代的 legacy slice-weighted 值（correction_pt 即两者之差）。",
-            "boot_p 与 e1_delta.csv 不同是因为口径：CSV 用 2*min(k_le0,k_ge0)/B（下限 1/B），"
-            "analyze_e1.py 现行为双侧 +1；两者都在 JSON 里列出，A1−C1 的显著性按 CI 判、p 仅参考。",
-            "A1/C1 的 n_train 不同（A1=25498, C1=25502），差异是注入池实现，不是评估口径差异。",
-            "分组 Δ 的宏 F1 只在组内出现的类别上取平均，两组类别宇宙不同，组间绝对值不可直接比较；"
-            "组内 Δ 仍为配对差。",
-            "分组自助用独立随机流 default_rng(%d)，与原表 CTIS 的流不同源。" % BOOT_SEED,
+            "A1−C1 is a contrast added in this round with no previously published value; A1−A0 / C1−A0 serve the fidelity gate.",
+            "Fidelity: slice level identical field by field with e1_delta.csv; the recording-level point estimate follows human_review/"
+            "corrected_recording_delta.csv's point_unw_pt (the manuscript text uses this value);"
+            " the delta_rec_pt in e1_delta.csv is the superseded legacy slice-weighted value (correction_pt is the difference between the two).",
+            "boot_p differs from e1_delta.csv because of the convention: the CSV uses 2*min(k_le0,k_ge0)/B (floor 1/B), while"
+            " analyze_e1.py is now two-sided +1; both are listed in the JSON, significance for A1−C1 is judged by CI and p is informative only."
+            " A1 and C1 have different n_train (A1=25498, C1=25502); the gap comes from how the injection pool was realised, not from an evaluation-convention difference."
+            " The macro F1 of a group Δ averages only over classes present in that group; the two groups have different class universes, so absolute values are not comparable across them;"
+            " within a group Δ is still a paired difference.",
+            "The group bootstrap uses an independent stream default_rng(%d), not the same stream as the original CTIS table." % BOOT_SEED,
         ],
         "runtime_sec": round(time.time() - t0, 1),
     }
     with open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=1)
 
-    # ================= 7. 控制台摘要 =================
+    # ================= 7. console summary =================
     print("\n%-8s %-10s %-20s %8s  %-18s %-18s %6s %6s %7s %7s" % (
         "backbone", "level", "contrast", "delta", "95%CI", "per-seed", "rng", "nRec", "p+1", "p_leg"))
     for r in rows:
         print("%-8s %-10s %-20s %+8.2f  [%+6.2f,%+6.2f]  %-18s %6.2f %6d %7.4f %7.4f" % (
             r["backbone"], r["level"], r["contrast"], r["delta_pp"], r["ci_lo"], r["ci_hi"],
             r["seed_deltas"], r["seed_range"], r["n_recordings"], r["boot_p"], r["boot_p_legacy"]))
-    print("\n[门禁] %s" % fidelity["verdict"])
-    print("写盘: %s | %s" % (OUT_CSV, OUT_JSON))
+    print("\n[gate] %s" % fidelity["verdict"])
+    print("written: %s | %s" % (OUT_CSV, OUT_JSON))
     return 0
 
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""生成 4 张交付表 + 请求计划。数据未取到时只写表头与来源/缺口，不填占位数字。"""
+"""Build the four delivery tables plus the request plan. Where the data could not be fetched, write only the header, the source and the gap; never fill in a placeholder number."""
 import csv, json, pathlib, hashlib
 D = pathlib.Path("data"); L = pathlib.Path("data/nbs-tourism/logs")
 
@@ -51,4 +51,4 @@ for ind, zb in (("国内游客","<A0R..>"), ("国内旅游收入","<A0R..>"), ("
         plan.append([f"{db}:{zb}", ind, lvl, db, zb, api, f"https://data.stats.gov.cn/easyquery.htm?cn={cn}&zb={zb}"])
 with (L/"plan.csv").open("w", newline="", encoding="utf-8-sig") as f:
     cw=csv.writer(f); cw.writerow(PLAN); cw.writerows(plan)
-print("plan.csv rows=", len(plan), "| zb 码待 tree 解析后回填")
+print("plan.csv rows=", len(plan), "| indicator codes to be filled in after the tree is parsed")

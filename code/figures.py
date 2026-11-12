@@ -162,28 +162,28 @@ def fig1():
     audit = json.load(open(os.path.join(RES, "audit.json"), encoding="utf-8"))
     leak = json.load(open(os.path.join(RES, "audit2.json"), encoding="utf-8"))
     cv = Canvas(1600, 1080)
-    cv.text((40, 24), "图1  emo163 标签表的结构性问题：规模、多标签、歌单粒度与官方划分泄漏", 19, bold=True)
+    cv.text((40, 24), "Figure 1  Structural problems of the emo163 label table: scale, multi-label, playlist granularity, split leakage", 19, bold=True)
     counts = [audit["label_counts"][n] / 1000 for n in NAMES]
     vbar_chart(cv, (30, 66, 800, 540), NAMES, counts,
-               "(a) 12 类情感标签的行数（千条，合计 39.59 万）", color=BLUE, fmt="{:.1f}")
+               "(a) rows per 12-class emotion label (thousands; 395.9k in total)", color=BLUE, fmt="{:.1f}")
     hist = audit["labels_per_song_hist"]
     ks = [str(k) for k in range(1, 13)]
     vals = [hist.get(str(k), 0) / 1000 for k in range(1, 13)]
     bar_chart(cv, (820, 66, 1580, 540), ks, vals,
-              "(b) 同一首歌被赋予的标签个数分布（千首）", color=ORANGE, fmt="{:.0f}")
+              "(b) number of labels assigned to the same song (thousands of songs)", color=ORANGE, fmt="{:.0f}")
     sizes = json.load(open(os.path.join(RES, "playlist_sizes.json"), encoding="utf-8"))["sizes"]
     bins = [(1, 5), (6, 10), (11, 25), (26, 50), (51, 100), (101, 200), (201, 500), (501, 2000)]
     labels = [f"{a}–{b}" if b < 2000 else f"{a}+" for a, b in bins]
     cnt = [sum(1 for s0 in sizes if a <= s0 <= b) for a, b in bins]
     bar_chart(cv, (30, 566, 800, 1036), labels, cnt,
-              "(c) 歌单规模（每歌单歌曲数）分布，中位数 31 首", color=TEAL, fmt="{:.0f}")
+              "(c) playlist size (songs per playlist), median 31 songs", color=TEAL, fmt="{:.0f}")
     base = leak["official_split_baselines"]
-    labels2 = ["均匀猜测", "多数类", "歌单ID查表"]
+    labels2 = ["Uniform guess", "Majority class", "Playlist-ID lookup"]
     vals2 = [8.3, base["majority_acc"] * 100, base["playlist_lookup_acc"] * 100]
     bar_chart(cv, (820, 566, 1580, 1036), labels2, vals2,
-              "(d) 官方随机划分下的“作弊”基线（测试集准确率 %）", color=RED, fmt="{:.1f}",
+              "(d) 'cheating' baselines under the official random split (test accuracy %)", color=RED, fmt="{:.1f}",
               ymax=100)
-    cv.text((890, 610), "注：“歌单ID查表”只用歌单编号到训练集里查标签，不使用任何音频特征。",
+    cv.text((890, 610), "Note: 'Playlist-ID lookup' only looks labels up in the training set by playlist ID; it uses no audio features.",
             10.5, fill=GREY)
     cv.save(os.path.join(FIG, "fig1_overview.png"))
 
@@ -195,9 +195,9 @@ def fig2():
     M = [[co["jaccard"][a][b] if co["jaccard"][a][b] is not None else 1.0 for b in order]
          for a in order]
     cv = Canvas(1120, 880)
-    cv.text((40, 24), "图2  12 类标签的共现结构（按聚类合并顺序重排）", 19, bold=True)
+    cv.text((40, 24), "Figure 2  Co-occurrence structure of the 12 labels (reordered by cluster-merge order)", 19, bold=True)
     heatmap(cv, (30, 56, 1100, 856), M, order,
-            "同一首歌同时落在两个标签下的 Jaccard 系数（对角=1）", 0.05, 0.27)
+            "Jaccard coefficient between the two labels of the same song (diagonal = 1)", 0.05, 0.27)
     cv.save(os.path.join(FIG, "fig2_structure.png"))
 
 
@@ -205,27 +205,27 @@ def fig3():
     ev = json.load(open(os.path.join(RES, "eval_zip2.json"), encoding="utf-8"))
     mins = ev["audio_minutes_per_label"]
     cv = Canvas(1600, 540)
-    cv.text((40, 22), "图3  校验子集（eval.zip）：38.4 小时、约 716 首、12 类各约 60 首", 18, bold=True)
+    cv.text((40, 22), "Figure 3  Validation subset (eval.zip): 38.4 h, about 716 songs, about 60 songs per class", 18, bold=True)
     vbar_chart(cv, (30, 60, 790, 520), NAMES, [mins[n] for n in NAMES],
-               "(a) 每类音频时长（分钟；建集时上限 192 分钟/类）", color=PURPLE, fmt="{:.0f}")
+               "(a) audio duration per class (minutes; capped at 192 min per class when the set was built)", color=PURPLE, fmt="{:.0f}")
     stats = ev["segment_count_stats"]
-    cv.text((860, 84), "(b) 校验子集的构成要点", 15, bold=True)
+    cv.text((860, 84), "(b) composition of the validation subset", 15, bold=True)
     lines = [
-        f"5 秒片段总数（每类频谱各一支）：{ev['mel_images']:,}",
-        f"可辨识歌曲数：约 {ev['estimated_songs']} 首（{ev['total_audio_minutes']:.1f} 分钟）",
-        f"每首片段数：中位 {stats['median']}，均值 {stats['mean']}，范围 {stats['min']}–{stats['max']}",
-        f"歌曲时长：中位 {ev['duration_stats_sec']['median']} 秒，"
-        f"范围 {ev['duration_stats_sec']['min']}–{ev['duration_stats_sec']['max']} 秒",
-        f"图像：496×369 RGB、JPEG，平均 {ev['avg_jpeg_bytes'] / 1024:.0f} KB/张",
-        "mel 与 cqt 名称不完全配对：各 113 个片段只有单侧频谱",
-        "文件名不含歌曲 ID：图像无法与标签表按歌曲对齐",
+        f"5-second segments in total (one per spectrogram type): {ev['mel_images']:,}",
+        f"identifiable songs: about {ev['estimated_songs']} ({ev['total_audio_minutes']:.1f} min)",
+        f"segments per song: median {stats['median']}, mean {stats['mean']}, range {stats['min']}–{stats['max']}",
+        f"song duration: median {ev['duration_stats_sec']['median']} s,"
+        f"range {ev['duration_stats_sec']['min']}–{ev['duration_stats_sec']['max']} s",
+        f"images: 496×369 RGB, JPEG, {ev['avg_jpeg_bytes'] / 1024:.0f} KB each on average",
+        "mel and cqt names do not pair up exactly: 113 segments carry only one of the two spectrograms",
+        "file names carry no song ID: images cannot be aligned to the label table by song",
     ]
     y = 130
     for ln in lines:
         cv.text((870, y), "· " + ln, 12)
         y += 28
-    cv.text((870, y + 16), "含义：片段级样本量约 2.7 万条，但歌曲级只有约 716 首；", 12, fill=GREY)
-    cv.text((870, y + 44), "做歌曲级推断时，准确率的 95% 置信区间约 ±3.6 个百分点。", 12, fill=GREY)
+    cv.text((870, y + 16), "Implication: about 27k segment-level samples but only about 716 songs;", 12, fill=GREY)
+    cv.text((870, y + 44), "for song-level inference the 95% CI of accuracy is about ±3.6 percentage points.", 12, fill=GREY)
     cv.save(os.path.join(FIG, "fig3_eval_subset.png"))
 
 
@@ -269,17 +269,17 @@ def grouped_bar(cv, box, categories, series, title, fmt="{:.1f}", ymax=None):
 
 def fig4():
     cv = Canvas(1560, 730)
-    cv.text((36, 18), "图4  三协议下的基线塌陷，以及发布去重对图信号的影响", 27, bold=True)
+    cv.text((36, 18), "Figure 4  Baseline collapse under three protocols, and the effect of release dedup on the graph signal", 27, bold=True)
     grouped_bar(cv, (30, 60, 760, 690),
-                ["官方随机", "按歌曲分组", "按歌单分组"],
-                [("歌单ID查表", [87.79, 88.51, None], RED),
-                 ("多数类", [10.72, 10.70, 10.14], BLUE)],
-                "(a) 零音频基线的测试准确率（%）", ymax=100)
+                ["official random", "grouped by song", "grouped by playlist"],
+                [("Playlist-ID lookup", [87.79, 88.51, None], RED),
+                 ("Majority class", [10.72, 10.70, 10.14], BLUE)],
+                "(a) test accuracy of the zero-audio baselines (%)", ymax=100)
     grouped_bar(cv, (800, 60, 1530, 690),
-                ["边保留率", "同质性", "标签传播 top-1"],
-                [("真实图（平台侧）", [100.0, 37.0, 99.9], TEAL),
-                 ("按(歌曲,标签)去重后", [11.3, 0.0, 0.1], ORANGE)],
-                "(b) 合成语料：同一发布流程前后的三个量（%）", ymax=100)
+                ["edge retention", "homophily", "label propagation top-1"],
+                [("real graph (platform side)", [100.0, 37.0, 99.9], TEAL),
+                 ("after (song,label) dedup", [11.3, 0.0, 0.1], ORANGE)],
+                "(b) synthetic corpus: the same three quantities before and after the release pipeline (%)", ymax=100)
     cv.save(os.path.join(FIG, "fig4_protocol_collapse.png"))
 
 

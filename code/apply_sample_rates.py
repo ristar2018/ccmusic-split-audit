@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""把 data/sample_rates.json 的复核结果写回 data/actual_stats.json 的 sr / channels。
+"""Write the re-checked values from data/sample_rates.json back into sr / channels in data/actual_stats.json.
 
-只改这两个字段（原值全是 {"0": n}，soundfile 取采样率失败的残留），其余字段不动；
-写前备份到 _archive/actual_stats-2026-11-04-before-sr.json。
+Only these two fields change (every original value was {"0": n}, left over from soundfile failures); all other fields are untouched.
+A backup is written to _archive/actual_stats-2026-11-04-before-sr.json before writing.
 """
 import io, json, shutil, os
 from collections import Counter
@@ -28,7 +28,7 @@ for ds, row in sorted(stats.items()):
     row["channels"] = src["channel_counts"]
     row["sr_audit"] = {
         "date": "2026-11-04",
-        "method": "文件头解析（wav/RIF fmt+data、flac/STREAMINFO、mp3/首帧头+Xing），不解码",
+        "method": "header parsing (wav/RIFF fmt+data, flac/STREAMINFO, mp3 first frame header + Xing); no decoding",
         "source": "data/sample_rates.json",
         "probed": src["probed"],
         "unparsed": src["fails"],
@@ -36,7 +36,7 @@ for ds, row in sorted(stats.items()):
     changed.append((ds, old_sr, row["sr"], src["probed"], src["fails"]))
 
 if missing:
-    print("!! 有音频但无复核数据:", missing)
+    print("!! audio present but no re-check data:", missing)
 
 if not os.path.exists(BAK):
     shutil.copyfile(STATS, BAK)
@@ -45,14 +45,14 @@ if not os.path.exists(BAK):
 io.open(STATS, "w", encoding="utf-8", newline="\n").write(
     json.dumps(stats, ensure_ascii=False, indent=2) + "\n")
 
-print("更新 %d 库的 sr/channels：" % len(changed))
+print("updated sr/channels for %d libraries:" % len(changed))
 all_sr = Counter()
 for ds, old, new, probed, fails in changed:
     print("  %-19s %-28s -> %-46s probed=%d fails=%d" % (ds, json.dumps(old), json.dumps(new), probed, fails))
     for k, v in new.items():
         all_sr[int(k)] += v
-print("\n全库采样率分布（按文件数）：")
+print("\nSample-rate distribution over all libraries (by file count):")
 tot = sum(all_sr.values())
 for k in sorted(all_sr):
-    print("  %6d Hz : %6d 文件 (%.1f%%)" % (k, all_sr[k], 100.0 * all_sr[k] / tot))
-print("  合计 %d 文件" % tot)
+    print("  %6d Hz : %6d files (%.1f%%)" % (k, all_sr[k], 100.0 * all_sr[k] / tot))
+print("  total %d files" % tot)

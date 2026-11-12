@@ -1,67 +1,67 @@
-# P3 预注册草案 v0.2（CTIS 技法 × 乐器：跨乐器泛化与乐器捷径诊断）
+# P3 pre-registration draft v0.2 (CTIS technique × instrument: cross-instrument generalisation and instrument-shortcut diagnosis)
 
-状态：**草案 v0.2，2026-11-05，未冻结**。相对 `worklog/exp-plan/P3-预注册草案.md`（v0.1）的改动：补乐器名归一并落合并表、用样本清单复核类宇宙、逐格对账 §7.2（三处不可复现）、把剔除规则写成可预注册句子。**注意**：本轮会话对 `worklog/` 只读（写入被沙箱拒绝），故草案暂落 `data/p3/`，冻结前请人把它并入 `worklog/exp-plan/`。
+Status: **draft v0.2, 2026-11-05, not frozen**. Changes relative to `worklog/exp-plan/P3-预注册草案.md` (v0.1): added instrument-name normalisation with a persisted merge table, re-checked the class universe against the sample manifest, reconciled §7.2 cell by cell (three items not reproducible), and rewrote the exclusion rule as pre-registrable sentences. **Note**: this session had `worklog/` read-only (writes refused by the sandbox), so the draft sits in `data/p3/` for now; before freezing, someone must fold it into `worklog/exp-plan/`.
 
-复算入口（只读，均可重跑）：
-- `code/p3_universe_norm.py` → `data/p3/P3_universe_norm.json`、`data/p3/universe_norm_43.csv`
-- `code/ctis_inst_norm.py` → `data/splits/ctis_inst_norm.json`（合并表逐条留痕）
-- 基线 `code/p3_universe.py` → `data/p3/P3_universe.json`（本轮复核未改其口径）
+Recomputation entry points (read-only, all rerunnable):
+- `code/p3_universe_norm.py` → `data/p3/P3_universe_norm.json`, `data/p3/universe_norm_43.csv`
+- `code/ctis_inst_norm.py` → `data/splits/ctis_inst_norm.json` (every merge traced in the table)
+- baseline `code/p3_universe.py` → `data/p3/P3_universe.json` (this round's re-check did not change its basis)
 
-## 1 数据对账（源：`data/manifest/CTIS.csv`）
+## 1 Data reconciliation (source: `data/manifest/CTIS.csv`)
 
-| 项 | 数 |
+| Item | Count |
 | :-- | --: |
-| 切片行 | 43,054 |
-| 录音（`recording_uid` 去重） | 4,956 |
-| 有 instrument 且有 technique 的录音 | 4,940 |
-| 丢（属性缺失） | 16 |
-| 原始乐器名 | 212 |
-| 技法标签串 | 386 |
-| 归一后乐器 | **201** |
+| Slice rows | 43,054 |
+| Recordings (`recording_uid` de-duplicated) | 4,956 |
+| Recordings with both instrument and technique | 4,940 |
+| Dropped (missing attribute) | 16 |
+| Raw instrument names | 212 |
+| Technique label strings | 386 |
+| Instruments after normalisation | **201** |
 
-**口径声明（重要）**：类宇宙只认清单的 `technique` 列，不认「从文件名直接切 token」。两条路实测不一致（386 vs 329 个标签串，直接切文件名会多出一个 368 条的 `演奏技巧` 兜底类），差额来自清单的解析规则。正文引用必须写明"以 manifest 的 technique 列为准"，否则审稿人按文件名复算会得到另一套数。
+**Basis declaration (important)**: the class universe recognises only the manifest's `technique` column, not "tokens cut straight from the file name". The two paths disagree in measurement (386 vs 329 label strings; cutting the file name directly adds a `演奏技巧` fallback class of 368), the difference coming from the manifest's parsing rules. The body text must state "the manifest's technique column is authoritative", otherwise a reviewer recomputing from file names will get a different set of numbers.
 
-## 2 乐器名归一（22 个原始名 → 11 个规范名，638 条录音；212 → 201）
+## 2 Instrument-name normalisation (22 raw names → 11 canonical names, 638 recordings; 212 → 201)
 
-**L1 机械规范化**（不涉语义，12 名 / 395 条）：去调名（`G调梆笛→梆笛`、`A调曲笛→曲笛`、`G调新笛→新笛`、`F调巴乌→巴乌`、`壮剧马骨胡 D调→壮剧马骨胡`、`扬剧主胡 D调/F调→扬剧主胡`）、去代际（`高腔赣胡 第2代→高腔赣胡`）、去序号（`尖子号2→尖子号`）、去连字符（`莱芜梆子-梆胡→莱芜梆子梆胡`）、空白与全半角统一（`滇葫（小二胡）`）。
+**L1 mechanical normalisation** (no semantics involved, 12 names / 395 recordings): strip the key designation (`G调梆笛→梆笛`, `A调曲笛→曲笛`, `G调新笛→新笛`, `F调巴乌→巴乌`, `壮剧马骨胡 D调→壮剧马骨胡`, `扬剧主胡 D调/F调→扬剧主胡`), strip the generation (`高腔赣胡 第2代→高腔赣胡`), strip the ordinal (`尖子号2→尖子号`), strip the hyphen (`莱芜梆子-梆胡→莱芜梆子梆胡`), unify whitespace and full/half-width forms (`滇葫（小二胡）`).
 
-**L2 同物合并**（需判断，10 名 / 243 条）：版本标记 `（传统）/（改良）/（新）` 并入基名——`盖板(传统)+盖板(新)→盖板`、`奚琴(传统)+奚琴(改良)→奚琴`、`中音奚琴(改良)→中音奚琴`、`陇剧陇胡(传统)+(改良)→陇剧陇胡`、`短箫(传统)→短箫`、`伽倻琴(改良)→伽倻琴`；别称 `雅筝→雅托嘎`（雅托嘎即蒙古筝）；腔调限定 `扬剧主胡（小西皮）→扬剧主胡`（小西皮是唱腔，不是乐器）。
+**L2 same-object merging** (requires judgement, 10 names / 243 recordings): version markers `（传统）/（改良）/（新）` folded into the base name — `盖板(传统)+盖板(新)→盖板`, `奚琴(传统)+奚琴(改良)→奚琴`, `中音奚琴(改良)→中音奚琴`, `陇剧陇胡(传统)+(改良)→陇剧陇胡`, `短箫(传统)→短箫`, `伽倻琴(改良)→伽倻琴`; alias `雅筝→雅托嘎` (雅托嘎 is the Mongolian zither); register qualifier `扬剧主胡（小西皮）→扬剧主胡` (小西皮 is a vocal style, not an instrument).
 
-**PENDING 不合并（8 条，待人工拍板）**：`萧`（疑「箫」异写，盘面无「箫」）、`中虎`（疑「中胡」误写，中胡另 36 条）、`二馨`、`福[新]`/`禄[新]`/`寿[新]`（疑三星鼓新版）、`铙`（与「铙钹」是否同器）、`南音三弦`（是否三弦地方变体）。
+**PENDING, not merged (8 entries, awaiting a human decision)**: `萧` (probably a variant writing of "箫", which is absent from the disk), `中虎` (probably a miswriting of "中胡", which has another 36 entries), `二馨`, `福[新]`/`禄[新]`/`寿[新]` (probably new versions of the three-star drum), `铙` (whether the same instrument as "铙钹"), `南音三弦` (whether a regional variant of the sanxian).
 
-## 3 类宇宙冻结规则（可预注册原文）
+## 3 Freezing rule for the class universe (pre-registrable text)
 
-> 令 n(t,i) 为录音级「技法 t × 乐器 i」格内的录音数（`recording_uid` 去重，切片不计数），
-> I(t) = { i : n(t,i) ≥ 2 }。技法 t 进入类宇宙当且仅当 **|I(t)| ≥ 3** 且 **t ∉ E**；
-> E = {音阶, 空弦音, 筒音, 单音, 乐曲片段, 特有演奏技法}（见 §5）。
-> 方法段报告的样本量一律为**格内口径** Σ_{t∈L} Σ_{i∈I(t)} n(t,i)，不是类内总线。
+> Let n(t,i) be the number of recordings in the recording-level cell "technique t × instrument i" (`recording_uid` de-duplicated, slices not counted),
+> I(t) = { i : n(t,i) ≥ 2 }. Technique t enters the class universe if and only if **|I(t)| ≥ 3** and **t ∉ E**;
+> E = {音阶, 空弦音, 筒音, 单音, 乐曲片段, 特有演奏技法} (see §5).
+> The sample size reported in the method section is always the **in-cell basis** Σ_{t∈L} Σ_{i∈I(t)} n(t,i), not the class-level total.
 
-## 4 冻结结果
+## 4 Frozen result
 
-| 项 | 数 |
+| Item | Count |
 | :-- | --: |
-| 类数 | **43** |
-| 可用录音（格内口径） | **1,388** |
-| 每类中位 / 最小 | **10 / 6** |
-| 格数（n ≥ 2 的 类×乐器 单元） | 581 |
-| 类内 n < 10 的类 | 20（其中 n = 6 的 18 类，全部贴在下限上） |
+| Classes | **43** |
+| Usable recordings (in-cell basis) | **1,388** |
+| Median / minimum per class | **10 / 6** |
+| Cells (class×instrument units with n ≥ 2) | 581 |
+| Classes with in-class n < 10 | 20 (of which 18 have n = 6, all sitting on the lower bound) |
 
-阈值扫描（归一后、未剔内容类，等价基线口径）：
+Threshold sweep (after normalisation, content classes not yet excluded, equivalent to the baseline basis):
 
-| 口径 | 类数 | 可用录音 | 每类中位 | 最小 | 格数 |
+| Basis | Classes | Usable recordings | Median per class | Minimum | Cells |
 | :-- | --: | --: | --: | --: | --: |
-| 格≥1 且 ≥2 乐器 | 116 | 4,446 | 6 | 2 | 1,159 |
-| 格≥2 且 ≥2 乐器 | 95 | 4,271 | 6 | 4 | 1,004 |
-| 格≥3 且 ≥2 乐器 | 20 | 3,029 | 29 | 6 | 397 |
-| 格≥5 且 ≥2 乐器 | 10 | 2,548 | 37.5 | 12 | 273 |
-| 格≥1 且 ≥3 乐器 | 63 | 4,208 | 8 | 4 | 1,053 |
-| **格≥2 且 ≥3 乐器** | **49** | **4,039** | **12** | **6** | 912 |
-| 格≥3 且 ≥3 乐器 | 14 | 2,963 | 59.5 | 14 | 385 |
-| 格≥5 且 ≥3 乐器 | 7 | 2,495 | 142 | 23 | 267 |
+| cell≥1 and ≥2 instruments | 116 | 4,446 | 6 | 2 | 1,159 |
+| cell≥2 and ≥2 instruments | 95 | 4,271 | 6 | 4 | 1,004 |
+| cell≥3 and ≥2 instruments | 20 | 3,029 | 29 | 6 | 397 |
+| cell≥5 and ≥2 instruments | 10 | 2,548 | 37.5 | 12 | 273 |
+| cell≥1 and ≥3 instruments | 63 | 4,208 | 8 | 4 | 1,053 |
+| **cell≥2 and ≥3 instruments** | **49** | **4,039** | **12** | **6** | 912 |
+| cell≥3 and ≥3 instruments | 14 | 2,963 | 59.5 | 14 | 385 |
+| cell≥5 and ≥3 instruments | 7 | 2,495 | 142 | 23 | 267 |
 
-43 类明细（类 | 录音）：
+Details of the 43 classes (class | recordings):
 
-| 类 | 录音 |
+| Class | Recordings |
 | :-- | --: |
 | 打音 | 191 |
 | 滑音 | 167 |
@@ -107,50 +107,50 @@
 | 长轮 | 6 |
 | 弹挑 | 6 |
 
-## 5 剔除规则（预注册文字）
+## 5 Exclusion rule (pre-registration text)
 
-> 剔除 6 个**内容/演奏形态类**标签，理由是它们描述音高材料或演奏形态而非演奏动作：
-> 音阶（1,222）、空弦音（679）、筒音（466）、单音（63）、乐曲片段（31）、特有演奏技法（190）。
-> 判据 = 标签名精确匹配；6 个名字在清单里**全部存在**（`dropped_missing` = 空）。
-> 同族但字面不同的 `跨弦音阶`/`单弦音阶`/`轻六音阶`/`筒音D`/`音程` 不列入名单，实测均未过 |I(t)| ≥ 3 门槛，故不入宇宙。
+> Exclude 6 **content / playing-form** labels, on the grounds that they describe pitch material or playing form rather than a playing action:
+> 音阶 (1,222), 空弦音 (679), 筒音 (466), 单音 (63), 乐曲片段 (31), 特有演奏技法 (190).
+> Criterion = exact label-name match; all 6 names **exist** in the manifest (`dropped_missing` = empty).
+> Same-family but literally different `跨弦音阶`/`单弦音阶`/`轻六音阶`/`筒音D`/`音程` are not on the list; measured, none of them passes the |I(t)| ≥ 3 threshold, so none enters the universe.
 
-剔除前 49 类 / 4,039 条 → 剔除后 **43 类 / 1,388 条**（中位 10、最小 6）。
+Before exclusion 49 classes / 4,039 recordings → after exclusion **43 classes / 1,388 recordings** (median 10, minimum 6).
 
-## 6 与设计稿 §7.2 表逐格对齐
+## 6 Cell-by-cell alignment with the §7.2 table in the design draft
 
-| §7.2 行 | 设计稿 v2.8 `:547-549` | 本轮实测（归一并后） | 判定 |
+| §7.2 row | Design draft v2.8 `:547-549` | Measured this round (after merge normalisation) | Verdict |
 | :-- | :-- | :-- | :-- |
-| 格 ≥5 全部技法串 | 5 类 / 2,445 | 格≥5 且 ≥2 乐器：10 类 / 2,548；格≥5 且 ≥3 乐器：7 类 / 2,495 | **不可复现**（无任何档给出 5 类 / 2,445） |
-| 格 ≥2 且 ≥3 乐器 | 49 / 4,037 / 12（6）/ 测试 2,043（6、4） | **49 / 4,039 / 12（6）** | 类数、中位、最小对齐；录音 +2（归一并）；测试列不可复现 |
-| 剔 6 内容类（主口径） | 43 / 1,388 / 10（6）/ 测试 715（6、4） | **43 / 1,388 / 10（6）** | 四项全对齐；测试列不可复现 |
+| cell ≥5, all technique strings | 5 classes / 2,445 | cell≥5 and ≥2 instruments: 10 classes / 2,548; cell≥5 and ≥3 instruments: 7 classes / 2,495 | **not reproducible** (no setting gives 5 classes / 2,445) |
+| cell ≥2 and ≥3 instruments | 49 / 4,037 / 12 (6) / test 2,043 (6, 4) | **49 / 4,039 / 12 (6)** | class count, median and minimum align; recordings +2 (merge normalisation); the test column is not reproducible |
+| 6 content classes excluded (main basis) | 43 / 1,388 / 10 (6) / test 715 (6, 4) | **43 / 1,388 / 10 (6)** | all four items align; the test column is not reproducible |
 
-三处需要处理：
-1. **第一行 5 类 / 2,445 无对应口径**，建议改成"格≥5 且 ≥2 乐器 = 10 类 / 2,548"或直接删掉这一行（它原本的作用是证明"严格阈值后只剩内容类"，用 10 类/7 类同样成立，但必须重看这 10 类的名字再写结论）。
-2. **测试列（2,043 / 715）不可复现**：两种自然的"半数乐器"分法分别给 659（按录音数降序交替，中位 4、最小 0、10 类 <4）和 666/722（字母序交替）。这一列本就不该进主表——§7.2 `:558` 已写明主指标用三折 pooled（每类测试支撑 = 全部 1,388 条），半留出只是备查。
-3. **归一对主口径零影响**（43 类名单、1,388、逐类计数全同；仅"格≥2 且 ≥3 乐器"档的可用录音 4,037→4,039）。所以归一可以放心做，但**在正文里必须报归一后的乐器数 201**，不能继续写 212。
+Three things need handling:
+1. **The first row's 5 classes / 2,445 has no corresponding setting**; change it to "cell≥5 and ≥2 instruments = 10 classes / 2,548" or drop the row outright (its original role was to show that "only content classes survive a strict threshold", which 10 classes / 7 classes serve equally, but the names of those 10 classes must be re-read before writing the conclusion).
+2. **The test column (2,043 / 715) is not reproducible**: the two natural "half the instruments" splits give 659 (alternating by descending recording count; median 4, minimum 0, 10 classes with <4) and 666/722 (alternating in alphabetical order). This column should never have entered the main table — §7.2 `:558` already states that the main metric uses three-fold pooled (per-class test support = all 1,388 recordings), and the half-holdout is for reference only.
+3. **Normalisation has zero effect on the main basis** (the 43-class list, 1,388 and the per-class counts are all identical; only the usable recordings of the "cell≥2 and ≥3 instruments" setting move 4,037→4,039). So the normalisation can be done safely, but **the body text must report 201 instruments after normalisation** and must stop writing 212.
 
-## 7 敏感性
+## 7 Sensitivity
 
-- 类内 n < 10 的 20 类单列明细表，不进主表均值；n = 6 的 18 类在预注册里声明"仅作敏感性/描述性"。
-- 技术标签串未做同义归并（`扫`(6) vs `扫弦`(12)、`滚奏`(18) 等）：按 §7.2 风险⑤ 以文件名字符串为准，但解读 macro-F1 时要说明"同一技法被拆成两类会压低分数"。
-- 骨架/配方沿用 §7.2 与 v0.1：AlexNet + Swin-T，224×224，ImageNet init，10 epoch，AdamW 3e-4 / wd 0.05，cosine + warmup 1，LS 0.1，batch 64，AMP，seed 2。
+- The 20 classes with in-class n < 10 get a separate detail table and do not enter the main-table means; the 18 classes with n = 6 are declared in the pre-registration as "sensitivity/descriptive only".
+- Technique label strings were not merged by synonymy (`扫`(6) vs `扫弦`(12), `滚奏`(18) etc.): per risk ⑤ in §7.2 the file-name string is authoritative, but when interpreting macro-F1 it must be stated that "one technique split into two classes depresses the score".
+- Backbone/recipe follow §7.2 and v0.1: AlexNet + Swin-T, 224×224, ImageNet init, 10 epoch, AdamW 3e-4 / wd 0.05, cosine + warmup 1, LS 0.1, batch 64, AMP, seed 2.
 
-## 8 未决与风险（冻结前必须处理）
+## 8 Open questions and risks (must be handled before freezing)
 
-① 8 条 PENDING 乐器（§2）——合并表已留痕，改一行即可复算；若 `福[新]/禄[新]/寿[新]` 确为三星鼓新版，会影响 3 个格。
-② §7.2 第一行与两个测试列的数字（§6）：正文引用前必须改掉或删除，否则按 json 复算对不上。
-③ 解析口径必须写死为 manifest 的 `technique` 列（§1），并在方法附录给出该列的生成规则；否则 386 vs 329 的差额无法解释。
-④ `演奏技巧` 兜底类（从文件名直接切 token 时会出现，368 条）在 manifest 口径下**不存在**——这既是好消息也是警告：一旦重生成 manifest，类宇宙会变，冻结后不得换源。
+① 8 PENDING instruments (§2) — the merge table is traced, so changing one row allows recomputation; if `福[新]/禄[新]/寿[新]` really are new versions of the three-star drum, 3 cells are affected.
+② The numbers in the first row of §7.2 and in the two test columns (§6): they must be changed or deleted before the body cites them, otherwise recomputation from the json will not match.
+③ The parsing basis must be pinned to the manifest's `technique` column (§1), with the generation rule for that column given in the method appendix; otherwise the 386 vs 329 difference cannot be explained.
+④ The `演奏技巧` fallback class (which appears when tokens are cut straight from the file name, 368 entries) **does not exist** under the manifest basis — that is both good news and a warning: regenerating the manifest changes the class universe, and the source must not be swapped after freezing.
 
-## 9 复算与断言
+## 9 Recomputation and assertions
 
 ```
-python code/ctis_inst_norm.py      # 212 → 201，22 对合并，638 条
-python code/p3_universe_norm.py    # 43 类 / 1,388 条 / 中位 10 / 最小 6
+python code/ctis_inst_norm.py      # 212 → 201, 22 merged pairs, 638 recordings
+python code/p3_universe_norm.py    # 43 classes / 1,388 recordings / median 10 / minimum 6
 ```
-断言：`recordings(4,956) = with_attrs(4,940) + 16`；`sum(cells) == 4,940`；剔除前 49/4,039、剔除后 43/1,388；`dropped_missing == []`。
+Assertions: `recordings(4,956) = with_attrs(4,940) + 16`; `sum(cells) == 4,940`; before exclusion 49/4,039, after exclusion 43/1,388; `dropped_missing == []`.
 
-## 10 变更记录
+## 10 Change log
 
-- v0.2（2026-11-05）：补乐器名归一合并表（212→201）、manifest 口径复核（43/1,388/10/6 复现）、§7.2 逐格对账（第一行与测试列不可复现）、剔除规则改写成可预注册三段式。
-- v0.1：`worklog/exp-plan/P3-预注册草案.md`（划分/臂/指标/决策规则，未含归一与对账）。
+- v0.2 (2026-11-05): added the instrument-name normalisation merge table (212→201), re-checked the manifest basis (43/1,388/10/6 reproduced), reconciled §7.2 cell by cell (first row and test columns not reproducible), and rewrote the exclusion rule as pre-registrable three-part prose.
+- v0.1: `worklog/exp-plan/P3-预注册草案.md` (splits/arms/metrics/decision rules, without normalisation and reconciliation).

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""清点 D:\\VSCode\\Datasets 里解压后的真实数据：音频时长、采样率、特征图尺寸、标签行数。
+"""Inventory the extracted data under D:\\VSCode\\Datasets: audio duration, sample rate, feature-map size, label rows.
 
-产出 data/actual_stats.json，供 README 与研究计划引用真实数字（而不是照抄卡片）。
-用法：python code/ccmusic_stats.py [--root D:\\VSCode\\Datasets]
+Writes data/actual_stats.json so the README and the research plan can cite measured numbers instead of model-card claims.
+Usage: python code/ccmusic_stats.py [--root D:\\VSCode\\Datasets]
 """
 
 from __future__ import annotations
@@ -41,7 +41,7 @@ def audio_stat(path: str) -> tuple[float, int, int] | None:
             return info.frames / info.samplerate, info.samplerate, info.channels
     except Exception:  # noqa: BLE001
         pass
-    try:  # mp3 兜底：audioread/ mutagen 都没有时，至少给个 None
+    try:  # mp3 fallback: when neither audioread nor mutagen is available, return None rather than crash
         import subprocess
         import re
 
@@ -129,14 +129,14 @@ def main() -> int:
             f"sr={list(rec['sr'])[:3]} img={rec['img_sizes'][:1]}"
         )
         if no_dur:
-            print(f"                   !! {no_dur} 个音频读不出时长")
+            print(f"                   !! {no_dur} audio files with unreadable duration")
 
     dst_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
     os.makedirs(dst_dir, exist_ok=True)
     dst = os.path.join(dst_dir, "actual_stats.json")
     with open(dst, "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
-    print(f"\n写入 {dst}")
+    print(f"\nwrote {dst}")
     return 0
 
 

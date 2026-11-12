@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""一次性探针：只看结构（只打印标量/键名，避免打印混淆矩阵）。"""
+"""One-off probe: structure only (prints scalars and key names, never the confusion matrix)."""
 import json
 from pathlib import Path
 import numpy as np

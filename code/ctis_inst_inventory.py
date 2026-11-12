@@ -1,4 +1,4 @@
-# 只读 D:/VSCode/Datasets/CTIS，产出乐器/标签的原始库存清单（归一化前的基线）
+# Read-only over D:/VSCode/Datasets/CTIS; emits the raw inventory of instruments/labels (pre-normalization baseline)
 import re, json, sys
 from pathlib import Path
 from collections import Counter

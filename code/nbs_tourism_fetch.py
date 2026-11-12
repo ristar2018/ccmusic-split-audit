@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""国家统计局 easyquery 采集：年度全国(hgnd) + 分省年度(fsnd)。只落原始响应，不改数。"""
+"""National Bureau of Statistics easyquery harvesting: annual national (hgnd) + annual by province (fsnd). Raw responses only, no data edits."""
 import json, hashlib, time, sys, pathlib, datetime
 import requests
 BASE = "https://data.stats.gov.cn/easyquery.htm"
@@ -30,7 +30,7 @@ def save(tag, r):
     return rec
 
 if __name__ == "__main__":
-    for db, tid in (("hgnd", "A0R"), ("fsnd", "E0105")):   # A0R=旅游章节, E0105=分省年度
+    for db, tid in (("hgnd", "A0R"), ("fsnd", "E0105")):   # A0R=tourism chapter, E0105=annual by province
         for i in range(3):
             try:
                 r = tree(db, tid); print(db, r.status_code, len(r.content)); save(f"tree_{db}", r); break

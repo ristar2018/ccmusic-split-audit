@@ -10,27 +10,27 @@ def l1(s: str) -> str:
     return s.strip()
 
 L2 = {
-    "扬剧主胡（小西皮）": ("扬剧主胡", "腔调限定词：小西皮为扬剧唱腔，非独立乐器"),
-    "雅筝": ("雅托嘎", "别称：雅托嘎即蒙古筝/雅筝"),
-    "伽倻琴（改良）": ("伽倻琴", "版本标记：改良型与原型同属伽倻琴"),
-    "奚琴（传统）": ("奚琴", "版本标记"),
-    "奚琴（改良）": ("奚琴", "版本标记"),
-    "中音奚琴（改良）": ("中音奚琴", "版本标记"),
-    "盖板（新）": ("盖板", "版本标记"),
-    "盖板（传统）": ("盖板", "版本标记"),
-    "陇剧陇胡（传统）": ("陇剧陇胡", "版本标记"),
-    "陇剧陇胡（改良）": ("陇剧陇胡", "版本标记"),
-    "短箫（传统）": ("短箫", "版本标记"),
+    "扬剧主胡（小西皮）": ("扬剧主胡", "tone-style qualifier: 小西皮 is a Yangju vocal style, not a separate instrument"),
+    "雅筝": ("雅托嘎", "alias: 雅托嘎 is the Mongolian zither, i.e. 雅筝"),
+    "伽倻琴（改良）": ("伽倻琴", "version marker: the improved type belongs with the prototype"),
+    "奚琴（传统）": ("奚琴", "version marker"),
+    "奚琴（改良）": ("奚琴", "version marker"),
+    "中音奚琴（改良）": ("中音奚琴", "version marker"),
+    "盖板（新）": ("盖板", "version marker"),
+    "盖板（传统）": ("盖板", "version marker"),
+    "陇剧陇胡（传统）": ("陇剧陇胡", "version marker"),
+    "陇剧陇胡（改良）": ("陇剧陇胡", "version marker"),
+    "短箫（传统）": ("短箫", "version marker"),
 }
 PENDING = {
-    "萧": "疑为「箫」异写；盘面无「箫」，保持独立",
-    "中虎": "疑为「中胡」误写（中胡另 36 条），语义未证不并",
-    "二馨": "疑为「二弦/二胡」误写，未证不并",
-    "福[新]": "疑为「宜春三星鼓 福鼓」新版，不并",
-    "禄[新]": "疑为「宜春三星鼓 禄鼓」新版，不并",
-    "寿[新]": "疑为「宜春三星鼓 寿鼓」新版，不并",
-    "铙": "与「铙钹」是否同器存疑，不并",
-    "南音三弦": "是否「三弦」地方变体存疑，不并",
+    "萧": "probably a variant spelling of 「箫」; no 「箫」 anywhere in the inventory, kept separate",
+    "中虎": "probably a mis-spelling of 「中胡」 (which has 36 further entries); unproven, so not merged",
+    "二馨": "probably a mis-spelling of 「二弦」 or 「二胡」; unproven, so not merged",
+    "福[新]": "probably the new version of 「宜春三星鼓 福鼓」; not merged",
+    "禄[新]": "probably the new version of 「宜春三星鼓 禄鼓」; not merged",
+    "寿[新]": "probably the new version of 「宜春三星鼓 寿鼓」; not merged",
+    "铙": "whether it is the same instrument as 「铙钹」 is unproven; not merged",
+    "南音三弦": "whether it is a regional variant of 「三弦」 is unproven; not merged",
 }
 L2N = {l1(k): v for k, v in L2.items()}
 
@@ -45,4 +45,4 @@ def canon_reason(raw: str):
     c = canon(raw)
     if c == raw:
         return ""
-    return L2N[a][1] if a in L2N else "L1 机械规范化：空白/标点全半角/调名/代际/序号"
+    return L2N[a][1] if a in L2N else "L1 mechanical canonicalization: whitespace / full-half-width punctuation / key names / generation / index"

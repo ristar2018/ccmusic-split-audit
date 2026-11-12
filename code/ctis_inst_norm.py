@@ -1,4 +1,4 @@
-# 乐器名归一（合并表）：L1 机械规范化 + L2 同物合并；只读 D:/VSCode/Datasets/CTIS
+# Instrument-name normalization (merge table): L1 mechanical canonicalization + L2 same-object merge; read-only over D:/VSCode/Datasets/CTIS
 import re, json, sys
 from pathlib import Path
 from collections import Counter

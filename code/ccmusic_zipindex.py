@@ -1,16 +1,16 @@
-"""远程读取 zip 目录（不下载整个包），产出条目清单 / 切片计数 / 源 ID 统计。
+"""Read a remote zip directory (without downloading the whole package) and emit the entry list / slice counts / source-ID statistics.
 
-用途：P1 需要知道每个数据集 eval.zip 里到底有多少切片、每条源录音被切成几片。
-music_genre 的 eval.zip 有 4 GB，CTIS 的 3 GB——为了数条目而全量下载是浪费。
-zip 的中央目录（central directory）在文件末尾，用 HTTP Range 只取几 MB 即可。
+Purpose: P1 needs to know how many slices each dataset's eval.zip really holds and how many slices each source recording is cut into.
+The music_genre eval.zip is 4 GB and the CTIS one is 3 GB -- downloading them in full just to count entries would be wasteful.
+The zip central directory sits at the end of the file, so a few MB of HTTP Range requests are enough.
 
-用法：
+Usage:
     python code/ccmusic_zipindex.py --dataset erhu_playing_tech --file data/eval.zip
-    python code/ccmusic_zipindex.py --project p1          # 逐个取 7 个 eval 包 + 2 个对照组
-    python code/ccmusic_zipindex.py --dataset music_genre --file data/eval.zip --full   # 落盘完整名单
+    python code/ccmusic_zipindex.py --project p1          # fetch the 7 eval packages + 2 control groups one by one
+    python code/ccmusic_zipindex.py --dataset music_genre --file data/eval.zip --full   # persist the full name list
 
-输出：data/index/<dataset>__<file>.json
-      {entries: N, features: {...}, classes: {...}, sources: {...}, names(可选)}
+Output: data/index/<dataset>__<file>.json
+      {entries: N, features: {...}, classes: {...}, sources: {...}, names (optional)}
 """
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ FEATURES = ("mel", "cqt", "chroma")
 
 
 class HttpFile(io.RawIOBase):
-    """只读、可 seek 的远程文件；按块缓存，减少请求数。"""
+    """Read-only, seekable remote file; caches by block to cut the number of requests."""
 
     def __init__(self, url: str, block: int = 1 << 20):
         super().__init__()
@@ -44,7 +44,7 @@ class HttpFile(io.RawIOBase):
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         with urllib.request.urlopen(req, timeout=60, context=CTX) as r:
             self.size = int(r.headers["Content-Length"])
-            self.url = r.geturl()          # 跟随 302 到 CDN
+            self.url = r.geturl()          # follow the 302 to the CDN
 
     def readable(self) -> bool:
         return True
@@ -87,7 +87,7 @@ class HttpFile(io.RawIOBase):
             left -= len(chunk)
         return b"".join(out)
 
-    def readinto(self, b) -> int:  # zipfile 可能走这里
+    def readinto(self, b) -> int:  # zipfile may come through here
         data = self.read(len(b))
         b[:len(data)] = data
         return len(data)
@@ -101,7 +101,7 @@ def source_id(name: str) -> str:
     stem = os.path.splitext(os.path.basename(name))[0]
     if "__" in stem:                       # erhu: detache__detache_01_chroma
         return stem.split("__", 1)[1]
-    m = re.match(r"^([0-9a-f]{32})", stem)  # music_genre 等：md5 前缀
+    m = re.match(r"^([0-9a-f]{32})", stem)  # music_genre and friends: md5 prefix
     if m:
         return m.group(1)
     m = re.match(r"^(\d+)_", stem)          # chest_falsetto: 0001_m_chest_0
@@ -111,7 +111,7 @@ def source_id(name: str) -> str:
 
 
 def feature_of(name: str) -> str:
-    """特征名可能出现在文件名后缀，也可能在目录名里（pianos/CTIS 用目录）。"""
+    """The feature name may appear as a file-name suffix or in the directory name (pianos/CTIS use directories)."""
     stem = os.path.splitext(os.path.basename(name))[0]
     for f in FEATURES:
         if stem.endswith(f):
@@ -143,9 +143,9 @@ def index(dataset: str, path: str, full: bool = False) -> dict:
     elif any(feats.get(f) for f in FEATURES):
         anchor = max(FEATURES, key=lambda f: feats.get(f, 0))
     else:
-        anchor = "other"                      # 文件名里没有特征标记（如 pianos）
+        anchor = "other"                      # no feature marker in the file name (e.g. pianos)
     anchor_names = [n for n in names if feature_of(n) == anchor]
-    # 源键 = 类别目录 + 源 ID：不同类别下可能出现相同数字编号（如 pianos 的 009）
+    # source key = class directory + source ID: different classes may reuse the same numeric id (e.g. 009 in pianos)
     keys = [f"{class_of(n)}::{source_id(n)}" for n in anchor_names]
     src = Counter(keys)
     cls = Counter(class_of(n) for n in anchor_names)
@@ -181,11 +181,11 @@ PROJECT_P1 = {
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="远程读取 CCMusic zip 目录")
+    ap = argparse.ArgumentParser(description="read a CCMusic zip directory remotely")
     ap.add_argument("--dataset")
     ap.add_argument("--file")
     ap.add_argument("--project", choices=["p1"])
-    ap.add_argument("--full", action="store_true", help="保存完整名单（P1 分组需要）")
+    ap.add_argument("--full", action="store_true", help="save the full name list (needed by P1 grouping)")
     args = ap.parse_args()
 
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -195,14 +195,14 @@ def main() -> int:
         try:
             res = index(dataset, path, full=args.full)
         except Exception as exc:  # noqa: BLE001
-            print(f"[失败] {dataset}/{path}: {str(exc)[:120]}")
+            print(f"[fail] {dataset}/{path}: {str(exc)[:120]}")
             continue
         out = os.path.join(OUT_DIR, f"{dataset}__{path.replace('/', '_')}.json")
         with open(out, "w", encoding="utf-8") as fh:
             json.dump(res, fh, ensure_ascii=False, indent=1)
-        print(f"{dataset:18s} {path:14s} 条目 {res['entries_total']:6d}  锚定({res['anchor_feature']}) "
-              f"切片 {res['slices']:6d}  源 {res['sources']:5d}  K={res['slices_per_source']:5.2f}  "
-              f"类 {res['class_count']}")
+        print(f"{dataset:18s} {path:14s} entries {res['entries_total']:6d}  anchor({res['anchor_feature']}) "
+              f"slices {res['slices']:6d}  sources {res['sources']:5d}  K={res['slices_per_source']:5.2f}  "
+              f"classes {res['class_count']}")
     return 0
 
 

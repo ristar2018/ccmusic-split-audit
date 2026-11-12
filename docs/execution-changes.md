@@ -78,7 +78,7 @@ A reader report on the submitted draft raised 25 points. Nineteen were accepted
 as stated, five were accepted with a correction to the premise, one was accepted
 in part, and one was rejected with evidence; the assessment and the disposition
 of each point are recorded in the project tree under
-`report/审稿意见/human-2026-11-12/`. The changes that touch a reported number or
+`report/human-review-2026-11-12/`. The changes that touch a reported number or
 a factual attribution are listed here.
 
 * **Abstract.** The journal requires a structured abstract of 150--250 words.
@@ -265,3 +265,35 @@ extra entries pushed the last one onto a page of its own, so `\bibsep` is set to
 The four gates were re-run afterwards and are unchanged: 338 number checks, 88 ledger
 rows, 10 quantifier claims, nine negative-test cases. Page counts are 31 / 10 / 1 and
 the compile log has no overfull box, no undefined reference and no missing character.
+
+## 11. English-only pass over code and documentation
+
+Everything a reader can open here is now in English: module docstrings, block and inline comments, console messages, and the explanatory Markdown. The pass was meant to be purely lexical, and was checked rather than assumed.
+
+**What changed.** 2,226 lines carrying Chinese in 88 files became 181 lines in 28 files:
+
+| Area | Files | Chinese lines before | after |
+| :-- | --: | --: | --: |
+| `code/*.py` | 68 | 1,751 | 119 |
+| `code/*.sh` | 4 | 28 | 0 |
+| `code/*.ps1` | 2 | 11 | 0 |
+| `*.md` (result summaries, round-2 notes, P3 pre-registration draft) | 14 | 436 | 62 |
+
+Each file kept its line count, so the line references cited elsewhere (`splits_v2.py:415`, `analyze_e1.py:189`) still resolve.
+
+**What is still Chinese, and why.** In every remaining case the Chinese text is the datum rather than a description of it.
+
+1. Track titles, class names and instrument names in `data/splits/**/*.csv`, `data/p3/*.csv`, `data/manifest/*.json` and `runs*/**.json`. Strings such as `C0296/【唢呐】演奏技法 垫音 第二遍` are identifiers: matched against WAV file names, joined across tables, counted by the gates. Translating them would change the data.
+2. The same strings where code compares against them: the `【…】` delimiters in `manifest.py`'s `CTIS_RE`, the `第…遍` suffix tests, `PLACEHOLDER = "没音频"`, the six content-class labels in `p3_universe.py` and `p3_universe_norm.py`, the `演奏技法` prefix sets, the `[A-G]调` / `第\d+代` normalisation regexes in `ctis_normlib.py`, and the CNPM GBK column headers `样式/Pattern`, `文件名/File Name`, `时长/Length` used as dictionary keys.
+3. The 13 `cn` fields in `ccmusic_facts.py`, which sit beside `en` and are written to `facts.json` and to the `cn_name` column; and the `ccmusic_figures.py` legend literals `切片随机` / `按曲目` / `按片段`, which are compared at line 74.
+4. Paths the scripts actually open: `D:\VSCode\科研任务\音乐情感研究\…`, `report/fig/…`, `report/tables/…`, `report/emo163_调研分析报告.md`, and the private-tree source named in `assemble_repro.py`. A path in a comment is free to rename; a path in an `open()` call is not.
+5. Prose already frozen inside run artifacts — `data/splits/v2/assertions.json`, `data/splits/v2/class_universe.csv`, `data/results/cost.json`, `data/results/human_review/compute_ledger.json`, `data/…/ctis_inst_norm.json`. These are the recorded output of the runs they document, and this repository has kept run artifacts byte-identical throughout. Editing their `note` fields by hand would make the record disagree with what the scripts wrote, which is a worse defect than a Chinese sentence in a JSON field. Reruns will emit the English wording, because the code that produces it is translated; the `reason` column of `class_universe.csv` and the `judgements` block of `assertions.json` are the two places where a rerun will visibly differ from the committed copy.
+
+Where a comment cited a design document that lives in the private project tree and is not shipped here (`report/聚焦版实验设计方案v2.8.md`, `worklog/exp-plan/P3-预注册草案.md`), the citation now reads as a description with its anchors intact — "design note v2.8 §3.7 :296-310" — instead of a path that resolves to nothing. The review directory cited in `method_disclosure.md` and mapped in `assemble_repro.py` now uses one spelling, `report/human-review-<date>/`.
+
+**Invariance checks.**
+
+- Numeric tokens (every `\d[\d,\.]*` match) compared as a multiset between the previous commit and the working tree, file by file. Three files differ, all by design: `figures.py` renders `39.59 万` as `395.9k` and `2.7 万` as `27k`, and six `e1_summary.md` files write `three seeds` where the Chinese said `3 seed`. Nothing else moved.
+- `python -m compileall code` clean; `bash -n` on the four shell scripts clean; the PowerShell parser accepts both `.ps1` files.
+- The four gates re-run afterwards: 338 number checks, 88 ledger rows, 10 quantifier claims, and both negative tests still fail in the designed way.
+- Page counts are unchanged at 31 / 10 / 1, because nothing outside `code/` and the Markdown notes was touched.

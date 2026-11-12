@@ -1,14 +1,14 @@
-"""CTIS A1-A0 封存预测：种子 × 类分层录音自助敏感性分析（审稿意见 B2 / B4 / B10 核验用）。
+"""CTIS A1-A0 sealed predictions: seed x class-stratified recording bootstrap sensitivity analysis (for verifying reviewer points B2 / B4 / B10).
 
-只读 `runs/sealed_eval/`，不写任何训练产物，不覆盖既有 CSV；结果落 `data/results/human_review/`。
+Reads only `runs/sealed_eval/`; writes no training artefacts and overwrites no existing CSV; results go to `data/results/human_review/`.
 
-四个重抽样方案，全部在**同一批抽到的录音**上配对计算 A1 与 A0（与正文口径一致）：
-  L  legacy      录音无分层重抽样，种子固定           → 复现正文口径
-  S  stratified  按真实类别分层重抽样，种子固定        → 审稿人 B4 建议
-  SS stratified + 种子重抽样（3 个有放回）            → 审稿人 B2 建议
-  LS legacy      + 种子重抽样（3 个有放回）
+Four resampling schemes, all pairing A1 and A0 on **the same drawn recordings** (same convention as the paper):
+  L  legacy      unstratified recording resampling, seed fixed        -> reproduces the paper's convention
+  S  stratified  resampling stratified by true class, seed fixed       -> reviewer B4's suggestion
+  SS stratified + seed resampling (3 draws with replacement)           -> reviewer B2's suggestion
+  LS legacy     + seed resampling (3 draws with replacement)
 
-指标：切片级 macro-F1（主）与录音级 macro-F1（稳健性）。Δ = f(A1) − f(A0)。
+Metrics: slice-level macro-F1 (primary) and recording-level macro-F1 (robustness). Δ = f(A1) − f(A0).
 """
 import argparse
 import csv
@@ -38,7 +38,7 @@ def load(arm, bb, seed):
 
 
 def macro_f1_from_conf(conf):
-    """conf (B, nc, nc) → macro-F1 (B,)；空类（该次样本里没出现）不参与。"""
+    """conf (B, nc, nc) -> macro-F1 (B,); empty classes (absent from that draw) do not participate."""
     tp = np.einsum("bii->bi", conf)
     row = conf.sum(2)
     col = conf.sum(1)
@@ -51,7 +51,7 @@ def macro_f1_from_conf(conf):
 
 
 class Metric:
-    """把 (nrec, nc) 的「每个录音的预测计数」矩阵变成加权 macro-F1 的批量计算器。"""
+    """Turns the (nrec, nc) "per-recording prediction count" matrix into a batched weighted macro-F1 calculator."""
 
     def __init__(self, M, true_idx, nc):
         self.M = M                    # (nrec, nc) float64
@@ -60,7 +60,7 @@ class Metric:
         self.groups = [np.where(true_idx == c)[0] for c in range(nc)]
 
     def f1(self, W):
-        """W (B, nrec) 录音权重 → (B,) macro-F1。"""
+        """W (B, nrec) recording weights -> (B,) macro-F1."""
         B = W.shape[0]
         tp = np.zeros((B, self.nc))
         row = np.zeros((B, self.nc))
@@ -100,14 +100,14 @@ def weights_stratified(rng, true_idx, nc, B):
     return W
 
 
-SESOI_PT = SESOI  # 3 点
+SESOI_PT = SESOI  # 3 points
 
 
 def summarise(d_frac, observed_frac):
-    """输入为比例的配对 Δ；输出统一换成「点」。
+    """Input is a paired Δ in proportions; the output is uniformly converted to "points".
 
-    point 用观测到的配对 Δ（三个种子的均值），不是重抽样分布的中心；
-    CI 用重抽样分位数；p 记录原始值与分辨率下限是否触发钳位。
+    point uses the observed paired Δ (mean over the three seeds), not the centre of the resampling distribution;
+    the CI uses resampling quantiles; p records whether the raw value and the resolution floor triggered a clamp.
     """
     d = np.asarray(d_frac, dtype=np.float64) * 100.0
     lo, hi = np.percentile(d, [2.5, 97.5])
@@ -145,7 +145,7 @@ def main():
     rng = np.random.default_rng(a.seed)
     B = a.boot
 
-    # ---------- 参照面板：以 A0/alexnet/seed0 定义切片顺序 ----------
+    # ---------- reference panel: slice order defined by A0/alexnet/seed0 ----------
     _, y_ref, rec_ref = load("A0", "alexnet", 0)
     n = y_ref.size
     nc = int(y_ref.max()) + 1
@@ -155,18 +155,18 @@ def main():
     for r, c in enumerate(y_ref):
         true_idx[rec_idx[r]] = c
 
-    # 配对断言：所有臂/骨干/种子必须逐切片同序、同标签、同录音
+    # pairing assertions: every arm/backbone/seed must agree slice by slice on order, label and recording
     for bb in BBS:
         for arm in ARMS:
             for s in SEEDS:
                 _, y, rc = load(arm, bb, s)
-                assert y.size == n, (bb, arm, s, "切片数不一致")
-                assert np.array_equal(y, y_ref), (bb, arm, s, "标签不一致")
-                assert np.array_equal(rc, rec_ref), (bb, arm, s, "录音序列不一致")
+                assert y.size == n, (bb, arm, s, "slice count mismatch")
+                assert np.array_equal(y, y_ref), (bb, arm, s, "label mismatch")
+                assert np.array_equal(rc, rec_ref), (bb, arm, s, "recording sequence mismatch")
 
-    print("[%5.1fs] 面板 %d 切片 / %d 录音 / %d 类（201 类占位）" % (time.time() - t0, n, nrec, nc))
+    print("[%5.1fs] panel %d slices / %d recordings / %d classes (201-class placeholder)" % (time.time() - t0, n, nrec, nc))
 
-    # ---------- 每 (arm, bb, seed) 的两种预测计数矩阵 ----------
+    # ---------- the two prediction-count matrices per (arm, bb, seed) ----------
     M_slice, M_rec, M_rec_sw = {}, {}, {}
     for bb in BBS:
         for arm in ARMS:
@@ -175,24 +175,24 @@ def main():
                 pred = probs.argmax(1)
                 M_slice[(arm, bb, s)] = np.zeros((nrec, nc))
                 np.add.at(M_slice[(arm, bb, s)], (rec_idx, pred), 1.0)
-                # 录音级：同录音概率均值后一票
+                # recording level: average the probabilities within a recording, then one vote
                 acc = np.zeros((nrec, nc))
                 np.add.at(acc, rec_idx, probs)
                 cnt = np.bincount(rec_idx, minlength=nrec).astype(np.float64)
                 rec_pred = (acc / np.maximum(cnt, 1)[:, None]).argmax(1)
                 onehot = np.zeros((nrec, nc))
-                onehot[np.arange(nrec), rec_pred] = 1.0   # 每录音一票（正确口径，配 :219 的 CI）
+                onehot[np.arange(nrec), rec_pred] = 1.0   # one vote per recording (correct convention, matching the CI at :219)
                 M_rec[(arm, bb, s)] = onehot
                 onehot_sw = np.zeros((nrec, nc))
-                onehot_sw[np.arange(nrec), rec_pred] = cnt  # 旧点估计口径（w=rec_n），仅用于对照
+                onehot_sw[np.arange(nrec), rec_pred] = cnt  # old point-estimate convention (w=rec_n), for reference only
                 M_rec_sw[(arm, bb, s)] = onehot_sw
-    print("[%5.1fs] 预测矩阵就绪" % (time.time() - t0))
+    print("[%5.1fs] prediction matrices ready" % (time.time() - t0))
 
-    # ---------- 四套抽样权重 ----------
+    # ---------- four sets of sampling weights ----------
     W_leg = weights_legacy(np.random.default_rng(a.seed + 1), nrec, B)
     W_str = weights_stratified(np.random.default_rng(a.seed + 2), true_idx, nc, B)
     seed_draws = np.random.default_rng(a.seed + 3).integers(0, len(SEEDS), size=(B, len(SEEDS)))
-    print("[%5.1fs] 权重就绪（legacy 行和 %d，stratified 行和 %d）"
+    print("[%5.1fs] weights ready (legacy row sum %d, stratified row sum %d)"
           % (time.time() - t0, int(W_leg[0].sum()), int(W_str[0].sum())))
 
     out = {"lib": LIB, "boot": B, "rng_seed": a.seed, "sesoi_pt": SESOI,
@@ -206,7 +206,7 @@ def main():
                 for s in SEEDS:
                     f1[(arm, bb, s)] = Metric(MM[(arm, bb, s)], true_idx, nc)
 
-            # 点估计（不重抽样）= 全 1 权重
+            # point estimate (no resampling) = all-ones weights
             W1 = np.ones((1, nrec))
             point = {}
             for s in SEEDS:
@@ -223,7 +223,7 @@ def main():
                              for s in SEEDS], axis=0)
                 res[name] = summarise(d, obs)
 
-            # 种子重抽样：第 b 次抽 3 个（有放回）种子，取这 3 个的均值
+            # seed resampling: draw 3 seeds (with replacement) on the b-th draw, then average those 3
             for name, W in (("stratified_seedboot", W_str), ("legacy_seedboot", W_leg)):
                 per_s = {s: (f1[("A1", bb, s)].f1(W) - f1[("A0", bb, s)].f1(W)) for s in SEEDS}
                 acc = np.take_along_axis(
@@ -232,15 +232,15 @@ def main():
                 res[name] = summarise(d, obs)
 
             out["by_backbone"].setdefault(bb, {})[tag] = res
-            print("[%5.1fs] %s/%s 完成" % (time.time() - t0, tag, bb))
+            print("[%5.1fs] %s/%s done" % (time.time() - t0, tag, bb))
 
-    # ---------- 只重抽种子（3 个值上的 3 次有放回均值）----------
+    # ---------- resample the seeds only (3 draws with replacement, averaged, over the 3 values) ----------
     for bb in BBS:
         per_s_pt = np.array([out["by_backbone"][bb]["slice"]["per_seed_delta_pt"][s] for s in SEEDS])
         d = per_s_pt[seed_draws].mean(1) / 100.0
         out["by_backbone"][bb]["seedonly"] = summarise(d, per_s_pt.mean() / 100.0)
 
-    # ---------- 落盘 ----------
+    # ---------- write out ----------
     json.dump(out, open(os.path.join(a.out, "ctis_seed_stratified_bootstrap.json"), "w",
                         encoding="utf-8"), ensure_ascii=False, indent=1, default=str)
     csv_path = os.path.join(a.out, "ctis_seed_stratified_bootstrap.csv")
@@ -268,7 +268,7 @@ def main():
                               "frac_draws_above_sesoi", "n_le0"):
                         row[k] = "%.10g" % float(x[k])
                     w.writerow(row)
-    print("[%5.1fs] 写出 %s" % (time.time() - t0, a.out))
+    print("[%5.1fs] wrote %s" % (time.time() - t0, a.out))
     return 0
 
 

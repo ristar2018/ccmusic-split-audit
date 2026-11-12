@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
-"""neg_qpanel.py — 三个负对照库的容量表（schema 与 data/splits/qpanel_capacity.json 一致）
+"""neg_qpanel.py -- capacity table for the three negative-control libraries (schema identical to data/splits/qpanel_capacity.json)
 
-为什么需要：`code/splits_v2.py` 的 Q 抽签与 α 硬判要读 qpanel（每类 n_c / S_c / q_slices_expected /
-qp_p5 / qp_p95 / m_c）。主样本五库的 qpanel 由 `code/qpanel_capacity.py` 生成；负对照库不在那份
-事实源里，所以在这里按**同一套公式**重算并单独落 `data/splits/qpanel_neg.json`，
-不改动 qpanel_capacity.json（它是主样本的口径真源）。
+Why this exists: the Q draw and the hard α test in `code/splits_v2.py` read qpanel (n_c / S_c / q_slices_expected /
+qp_p5 / qp_p95 / m_c per class). The qpanel of the five main-sample libraries is produced by `code/qpanel_capacity.py`;
+the negative-control libraries are not in that source of truth, so they are recomputed here with **the same formulas**
+and written separately to `data/splits/qpanel_neg.json`, leaving qpanel_capacity.json untouched
+(it is the caliber source of truth for the main sample).
 
-公式（与 code/qpanel_capacity.py 逐条对齐）
-  q_c   = min(max(5, round(0.20·n_c)), max(1, n_c − 1))
-  qpool = 400 次随机抽 q_c 条录音的 Σ floor(k_i/2)（random.Random(20261104)）：均值 / p5 / p95
-  m_c   = round(0.60·S_c)
+Formulas (aligned line by line with code/qpanel_capacity.py)
+  q_c   = min(max(5, round(0.20*n_c)), max(1, n_c - 1))
+  qpool = sum of floor(k_i/2) over 400 random draws of q_c recordings (random.Random(20261104)): mean / p5 / p95
+  m_c   = round(0.60*S_c)
   alpha_max = qpool_mean / m_c
 
-K̄≈1 的库上 qpool_mean 恒为 0（每条录音只有 1 片，floor(1/2)=0），这正是负对照的立论：
-Q_pool = 0 ⇒ α_c = 0 ⇒ A1 与 A0 数学等价，只跑 A0 vs A2。
+On libraries with K̄≈1 qpool_mean is always 0 (each recording has a single slice, floor(1/2)=0), which is exactly the
+argument of the negative control: Q_pool = 0 => α_c = 0 => A1 and A0 are mathematically equivalent, so only A0 vs A2 is run.
 """
 import collections
 import json
@@ -84,7 +85,7 @@ def main():
         qp_all = sum(c["q_slices_expected"] for c in classes)
         by_lib[lib] = {
             "library": lib, "v": V, "seed": SEED, "draws": DRAWS,
-            "source": "data/manifest/%s.csv（负对照，schema 对齐 code/qpanel_capacity.py）" % lib,
+            "source": "data/manifest/%s.csv (negative control, schema aligned with code/qpanel_capacity.py)" % lib,
             "classes": classes,
             "all": {"classes": len(classes), "n_c": n_all, "S_c": s_all,
                     "K": round(s_all / n_all, 4) if n_all else None,
@@ -94,7 +95,7 @@ def main():
                     "zero_exposure_classes": sum(1 for c in classes if c["q_slices_expected"] < 0.5)},
         }
         a = by_lib[lib]["all"]
-        print("[%s] %d 类 / %d 录音 / %d 片 / K̄ %.4f / qpool 期望 %.2f 片 / α_max %.4f"
+        print("[%s] %d classes / %d recordings / %d slices / K̄ %.4f / qpool expected %.2f slices / α_max %.4f"
               % (lib, a["classes"], a["n_c"], a["S_c"], a["K"], a["qp"], a["alpha_max"]), flush=True)
 
     with open(OUT, "w", encoding="utf-8") as f:

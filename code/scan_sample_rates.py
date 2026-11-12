@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""复核 13 库音频采样率与时长：纯 Python 读文件头，不解码、不起子进程。
+"""Recheck audio sample rate and duration across the 13 libraries: pure Python header reads, no decoding, no subprocesses.
 
-- wav/riff：手工解析 fmt + data chunk（支持 PCM 整数、IEEE float 0x0003、WAVE_FORMAT_EXTENSIBLE、mp3-in-wav）
-- flac：解析 STREAMINFO（20 bit 采样率 + 36 bit 总样本数）
-- mp3：跳过 ID3v2、解析首帧头取采样率；有 Xing/Info 用帧数算时长，否则按码率估
-输出 data/sample_rates.json，并与 data/datasets_inventory.json 逐库对账。
+- wav/riff: parse the fmt + data chunks by hand (PCM integer, IEEE float 0x0003, WAVE_FORMAT_EXTENSIBLE, mp3-in-wav)
+- flac: parse STREAMINFO (20-bit sample rate + 36-bit total sample count)
+- mp3: skip ID3v2 and read the sample rate from the first frame header; use the frame count when Xing/Info is present, otherwise estimate from the bitrate
+Writes data/sample_rates.json and reconciles it library by library against data/datasets_inventory.json.
 """
 import io, json, os, struct
 from collections import Counter, defaultdict
@@ -70,7 +70,7 @@ def flac_info(path):
                 b = body
                 sr = (b[10] << 12) | (b[11] << 4) | (b[12] >> 4)
                 total = ((b[13] & 0x0F) << 32) | int.from_bytes(b[14:18], "big")
-                ch = ((b[12] >> 1) & 0x07) + 1  # STREAMINFO 存 channels-1
+                ch = ((b[12] >> 1) & 0x07) + 1  # STREAMINFO stores channels-1
                 return sr, total / float(sr), ch, "flac"
             if last:
                 raise ValueError("no streaminfo")
@@ -180,9 +180,9 @@ def main():
     total_files = sum(r["files"] for r in result.values())
     total_h = round(sum(r["duration_h"] for r in result.values()), 2)
     inv_h = round(sum(r.get("duration_h", 0) for r in inv["datasets"]), 2)
-    print("\n合计音频 %d 文件（inventory %d）/ 时长 %.2f h（inventory %.2f h）"
+    print("\ntotal audio %d files (inventory %d) / duration %.2f h (inventory %.2f h)"
           % (total_files, inv["_meta"]["total_audio"], total_h, inv_h))
-    print("\n逐库对账（扫描 vs inventory）：")
+    print("\nper-library reconciliation (scan vs inventory):")
     for ds, r in sorted(result.items()):
         ia = inv_rows.get(ds, {}).get("audio")
         ih = inv_rows.get(ds, {}).get("duration_h")
@@ -190,14 +190,14 @@ def main():
               % (ds, r["probed"], ia, r["duration_h"], ih or 0,
                  "OK" if ia == r["probed"] and abs((r["duration_h"] or 0) - (ih or 0)) <= 0.05 else "DIFF"))
     if fails_all:
-        print("\n未解析 %d 个，样例：" % len(fails_all))
+        print("\n%d unparsed, examples:" % len(fails_all))
         for f in fails_all[:8]:
             print("   ", f)
 
     payload = {
         "_meta": {
             "generated_at": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "method": "纯文件头解析：wav/via RIFF fmt+data、flac/STREAMINFO、mp3/首帧头+Xing；不解码、不调 ffprobe",
+            "method": "pure header parsing: wav via RIFF fmt+data, flac/STREAMINFO, mp3/first frame header + Xing; no decoding, no ffprobe",
             "root": ROOT,
             "total_files": total_files,
             "total_duration_h": total_h,
@@ -208,7 +208,7 @@ def main():
     }
     io.open(OUT, "w", encoding="utf-8", newline="\n").write(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
-    print("\n写出:", OUT)
+    print("\nwritten:", OUT)
 
 
 if __name__ == "__main__":

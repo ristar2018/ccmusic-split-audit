@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""设计审核用计算：机时核算 + 最小可检测效应（MDE）+ 类频次统计。
+"""Design-review arithmetic: GPU-hour accounting + minimum detectable effect (MDE) + class-frequency statistics.
 
-不训练任何模型，只用实测吞吐、切片数与泄漏审计结果做算术。
-输出 results/design/design_audit.json 与若干 CSV。
+No model is trained; this is arithmetic over the measured throughput, the slice counts and the leakage-audit results.
+Writes results/design/design_audit.json plus a few CSVs.
 
-用法：
-    python code/design_audit.py            # 全部
-    python code/design_audit.py budget     # 只算机时
-    python code/design_audit.py mde        # 只算 MDE
+Usage:
+    python code/design_audit.py            # everything
+    python code/design_audit.py budget     # GPU hours only
+    python code/design_audit.py mde        # MDE only
 """
 import argparse
 import csv
@@ -19,23 +19,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = r"D:\VSCode\Datasets"
 OUT = os.path.join(ROOT, "results", "design")
 
-# 实测吞吐（img/s，224²，AMP fp16，bs 32/64）——来自 fapn 实测，见计划文档 §6.1
+# measured throughput (img/s, 224², AMP fp16, bs 32/64) — from the fapn measurement, see design note §6.1
 THROUGHPUT = {"alexnet": 339.0, "vgg19_bn": 167.0, "swin_t": 341.0}
 
-# 各库 mel 切片数（= data/eval/<feature> 下的图片数；pianos 只有一种特征）
+# mel slice count per library (= number of images under data/eval/<feature>; pianos has a single feature)
 SLICES = {
     "CTIS": 43054, "music_genre": 36375, "pianos": 18352, "bel_canto": 9910,
     "GZ_IsoTech": 2899, "CNPM": 2724, "chest_falsetto": 1280,
     "erhu_playing_tech": 1253, "Guzheng_Tech99": 99,
 }
-# 有 cqt/chroma 三套特征的库
+# libraries that have all three feature sets: mel, cqt, chroma
 MULTI_FEATURE = ["CTIS", "music_genre", "CNPM", "bel_canto", "chest_falsetto", "GZ_IsoTech"]
 
 EPOCHS = 10
 
 
 def per_config_hours(datasets, backbones, epochs=EPOCHS, repeats=1):
-    """跑完给定库 × 给定骨干各 1 次（repeats 个配置，如 3 种子 × 2 协议）需多少 GPU·h。"""
+    """GPU·h needed to run every given library × every given backbone once (repeats configurations, e.g. 3 seeds × 2 protocols)."""
     imgs = sum(SLICES[d] for d in datasets) * epochs
     hours = {}
     for b in backbones:
@@ -45,41 +45,41 @@ def per_config_hours(datasets, backbones, epochs=EPOCHS, repeats=1):
 
 def budget():
     rows = []
-    # ---- v1.0 的网格：9 库 × 3 骨干 × (3 seed × 2 协议) = 18 配置 ----
+    # ---- v1.0 grid: 9 libraries × 3 backbones × (3 seeds × 2 protocols) = 18 configurations ----
     mel_all = list(SLICES)
     h = per_config_hours(mel_all, list(THROUGHPUT), repeats=18)
-    rows.append(("v1.0 E1 主网格（mel，9 库 × 3 骨干 × 6 配置）", sum(h.values())))
-    # CQT 追加（CNPM、CTIS）
+    rows.append(("v1.0 E1 main grid (mel, 9 libraries × 3 backbones × 6 configurations)", sum(h.values())))
+    # CQT add-on (CNPM, CTIS)
     h = per_config_hours(["CTIS", "CNPM"], list(THROUGHPUT), repeats=18)
-    rows.append(("v1.0 E1 CQT 追加（同上 18 配置）", sum(h.values())))
-    # 等量对照（P-orig 抽样到 P-source 规模，3 骨干 × 3 种子 = 9 配置）
+    rows.append(("v1.0 E1 CQT add-on (same 18 configurations)", sum(h.values())))
+    # equal-budget control (P-orig subsampled to the P-source scale, 3 backbones × 3 seeds = 9 configurations)
     h = per_config_hours(mel_all, list(THROUGHPUT), repeats=9)
-    rows.append(("v1.0 E1 同数据量对照（9 配置）", sum(h.values())))
-    # P-proxy（4 个 K≈1 库 × 3 骨干 × 3 种子 = 9 配置）
+    rows.append(("v1.0 E1 equal-budget control (9 configurations)", sum(h.values())))
+    # P-proxy (4 libraries with K≈1 × 3 backbones × 3 seeds = 9 configurations)
     proxy = ["GZ_IsoTech", "chest_falsetto", "erhu_playing_tech", "Guzheng_Tech99"]
     h = per_config_hours(proxy, list(THROUGHPUT), repeats=9)
-    rows.append(("v1.0 E1 P-proxy（4 库 × 9 配置）", sum(h.values())))
+    rows.append(("v1.0 E1 P-proxy (4 libraries × 9 configurations)", sum(h.values())))
     v10 = sum(v for _, v in rows)
 
-    # ---- v1.1 的分层网格 ----
+    # ---- v1.1 tiered grid ----
     tier1 = ["CTIS", "music_genre", "pianos", "bel_canto", "CNPM"]
     tier2 = ["GZ_IsoTech", "chest_falsetto", "erhu_playing_tech"]
     v11 = []
-    # T1：3 骨干 × {orig,source} × 2 种子 = 12 配置
+    # T1: 3 backbones × {orig,source} × 2 seeds = 12 configurations
     h = per_config_hours(tier1, list(THROUGHPUT), repeats=12)
-    v11.append(("T1 五个主力库：3 骨干 × 2 协议 × 2 种子（12 配置）", sum(h.values())))
-    # T2：2 骨干（alexnet, swin_t）× 2 协议 × 2 种子 = 8 配置
+    v11.append(("T1 five main libraries: 3 backbones × 2 protocols × 2 seeds (12 configurations)", sum(h.values())))
+    # T2: 2 backbones (alexnet, swin_t) × 2 protocols × 2 seeds = 8 configurations
     h = per_config_hours(tier2, ["alexnet", "swin_t"], repeats=8)
-    v11.append(("T2 三个薄库：2 骨干 × 2 协议 × 2 种子（8 配置）", sum(h.values())))
-    # 特征对照：2 骨干 × 2 协议 × 1 种子 = 4 配置，CQT+chroma 各一轮
+    v11.append(("T2 three thin libraries: 2 backbones × 2 protocols × 2 seeds (8 configurations)", sum(h.values())))
+    # feature control: 2 backbones × 2 protocols × 1 seed = 4 configurations, one round each for CQT and chroma
     h = per_config_hours(["CTIS", "music_genre", "CNPM"], ["alexnet", "swin_t"], repeats=4)
-    v11.append(("T3 特征对照 CQT（CTIS/music_genre/CNPM，4 配置）", 2 * sum(h.values())))
-    # P-proxy：2 骨干 × 3 种子 = 6 配置
+    v11.append(("T3 feature control CQT (CTIS/music_genre/CNPM, 4 configurations)", 2 * sum(h.values())))
+    # P-proxy: 2 backbones × 3 seeds = 6 configurations
     h = per_config_hours(proxy, ["alexnet", "swin_t"], repeats=6)
-    v11.append(("T4 P-proxy（4 库 × 6 配置）", sum(h.values())))
-    # 等量对照：2 骨干 × 2 协议 × 2 种子 = 8 配置（只对 Δ 最大的 3 个库做）
+    v11.append(("T4 P-proxy (4 libraries × 6 configurations)", sum(h.values())))
+    # equal-budget control: 2 backbones × 2 protocols × 2 seeds = 8 configurations (only the 3 libraries with the largest Δ)
     h = per_config_hours(["CTIS", "music_genre", "bel_canto"], ["alexnet", "swin_t"], repeats=8)
-    v11.append(("T5 同数据量对照（3 库，8 配置）", sum(h.values())))
+    v11.append(("T5 equal-budget control (3 libraries, 8 configurations)", sum(h.values())))
     v11_total = sum(v for _, v in v11)
 
     out = {
@@ -93,26 +93,26 @@ def budget():
 
 def _mde_points(p, k, n_sources, rho=0.5, seed_pt=0.4, n_seeds=2,
                 alpha=0.05, power=0.80):
-    """配对比较的最小可检测效应（百分点），同时给出"伪独立"CI 的收窄倍数。
+    """Minimum detectable effect of a paired comparison (percentage points), plus the shrinkage factor of the "pseudo-independent" CI.
 
-    三项误差源：
-      1) 测试集抽样（按源聚簇）：n_sources 个源，每个源 k 片，源内正确率相关 ρ；
-      2) 训练随机性：不同种子之间的指标标准差 seed_pt（百分点，经验取 0.4）；
-      3) 配对比较本身消掉了各臂共享的那部分方差。
-    返回 (MDE_配对, CI_源簇半宽, CI_伪独立半宽)。
+    Three error sources:
+      1) test-set sampling (clustered by source): n_sources sources with k slices each, within-source accuracy correlation ρ;
+      2) training randomness: the metric standard deviation across seeds, seed_pt (percentage points, 0.4 empirically);
+      3) the paired comparison itself cancels the share of variance common to the arms.
+    Returns (MDE_paired, CI_source-cluster half-width, CI_pseudo-independent half-width).
     """
     z = 1.959964 + 0.8416212
     var_p = p * (1 - p)
-    # 准确率 CI：按源聚簇（ρ 为源内相关）vs 假装每片独立
+    # accuracy CI: clustered by source (ρ = within-source correlation) vs pretending every slice is independent
     ci_src = 1.959964 * math.sqrt(2 * var_p * (1 + (k - 1) * rho) / n_sources / k)
     ci_naive = 1.959964 * math.sqrt(2 * var_p / (n_sources * k))
-    # 配对 Δ：源内共享部分被抵消，只剩逐源二项噪声 + 种子噪声
+    # paired Δ: the within-source shared part cancels, leaving per-source binomial noise + seed noise
     se_pair = math.sqrt(2 * var_p / k / n_sources + (seed_pt / 100.0) ** 2 / n_seeds)
     return z * se_pair * 100.0, ci_src * 100.0, ci_naive * 100.0
 
 
 def _mcnemar_mde(n, p_disc=0.20, alpha=0.05, power=0.80):
-    """配对二分类（McNemar）：给定不一致率与样本量，能检出的最小差（百分点）。"""
+    """Paired binary comparison (McNemar): the smallest difference (percentage points) detectable for a given discordance rate and sample size."""
     se = math.sqrt(p_disc / n)
     return (1.959964 + 0.8416212) * se * 100.0
 
@@ -155,7 +155,7 @@ def mde():
 
 
 def class_histograms():
-    """CTIS 类频次 + 长尾分组（用于检验 E4 的 few 组假设）。"""
+    """CTIS class frequencies + long-tail grouping (used to test the E4 few-group hypothesis)."""
     base = os.path.join(DATA, "CTIS", "data", "audio")
     counts = {}
     if os.path.isdir(base):
@@ -189,25 +189,25 @@ def main():
     out = {}
     if args.what in ("all", "budget"):
         out["budget"] = budget()
-        print("== 机时 ==")
+        print("== GPU hours ==")
         for k in ("v1_0", "v1_1"):
-            print(f"[{k}] 合计 {out['budget'][k]['total']} GPU·h")
+            print(f"[{k}] total {out['budget'][k]['total']} GPU·h")
             for it in out["budget"][k]["items"]:
                 print(f"   {it['gpu_h']:6.1f}  {it['name']}")
     if args.what in ("all", "mde"):
         out["mde"] = mde()
-        print("\n== 最小可检测效应（百分点）==")
+        print("\n== minimum detectable effect (percentage points) ==")
         for r in out["mde"]["per_dataset"]:
             print(f"   {r['dataset']:18s} n_src={r['sources']:5d} K={r['K']:6.2f} "
-                  f"配对MDE={r['mde_paired_pt']:5.2f}  CI: 源簇±{r['ci_src_pt']:4.2f} vs 伪独立±{r['ci_naive_pt']:4.2f} "
+                  f"paired MDE={r['mde_paired_pt']:5.2f}  CI: source cluster±{r['ci_src_pt']:4.2f} vs pseudo-independent±{r['ci_naive_pt']:4.2f} "
                   f"({r['ci_inflation']}×)")
         for k, v in out["mde"]["paired_mcnemar"].items():
             print(f"   {k:34s} McNemar MDE={v} pt")
     if args.what in ("all", "hist"):
         out["ctis_hist"] = class_histograms()
         h = out["ctis_hist"]
-        print(f"\n== CTIS 类频次 == {h['n_classes']} 类 / {h['n_files']} 条，"
-              f"median={h['median']} min={h['min']} max={h['max']}，分组 {h['groups']}")
+        print(f"\n== CTIS class frequencies == {h['n_classes']} classes / {h['n_files']} files,"
+              f"median={h['median']} min={h['min']} max={h['max']}, groups {h['groups']}")
     with open(os.path.join(OUT, "design_audit.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
     if "ctis_hist" in out:
@@ -221,7 +221,7 @@ def main():
             w = csv.DictWriter(f, fieldnames=list(out["mde"]["per_dataset"][0]))
             w.writeheader()
             w.writerows(out["mde"]["per_dataset"])
-    print(f"\n写出 {os.path.join(OUT, 'design_audit.json')}")
+    print(f"\nwrote {os.path.join(OUT, 'design_audit.json')}")
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ for split in ("train","test"):
     res[split]=dict(mel_segs=sum(mb.values()),mel_bases=len(mb),audio=sum(ab.values()),
         K_dist={str(k):v for k,v in sorted(K.items())},extra=sum(mb.values())-len(mb),
         multi=sum(1 for v in mb.values() if v>1),maxK=max(mb.values()))
-# 三个表征是否同 base 集
+# do the three representations share one base set
 sets={}
 for rep in ("mel","chroma","cqt"):
     s=set()
@@ -25,7 +25,7 @@ for rep in ("mel","chroma","cqt"):
     sets[rep]=s
 res["rep_base_sets"]={r:len(s) for r,s in sets.items()}
 res["rep_sets_equal"]=len(set(map(frozenset,sets.values())))==1
-# 时长：纯文件头解析
+# duration: header parsing only
 def dur(p):
     with open(p,"rb") as f:
         h=f.read(12)
@@ -58,7 +58,7 @@ json.dump(res,open("data/splits/gz_isotech.json","w"),ensure_ascii=False,indent=
 print(json.dumps(res,ensure_ascii=False,indent=1))
 
 
-# 多段/单段录音时长对照（验证「长录音切段」机制）
+# multi-segment vs single-segment duration contrast (checks the long-recording segmentation mechanism)
 K=collections.Counter()
 for split in ("train","test"):
     for dp,_,fs in os.walk(f"{ROOT}/eval/mel/{split}"):
@@ -72,7 +72,7 @@ md=[x for x in md if x]; sd=[x for x in sd if x]
 res["seg_mech"]=dict(multi_n=len(md),multi_median_s=round(statistics.median(md),2),
     single_n=len(sd),single_median_s=round(statistics.median(sd),2),
     K_mult=dict(collections.Counter(K[b] for b in idx if K[b]>1)))
-# 三套表征 base 集是否逐一对应、录制会话前缀
+# whether the three representation base sets correspond one-to-one, and recording-session prefixes
 sess=collections.Counter()
 for dp,_,fs in os.walk(f"{ROOT}/audio/test"):
     for f in fs:

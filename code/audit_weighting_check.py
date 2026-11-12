@@ -1,12 +1,12 @@
-"""A/B 检查：同一随机流下，录音级 CI 的两种加权是否给出同一区间。
+"""A/B check: under one random stream, do the two weightings of the recording-level CI give the same interval?
 
-目的：给「`analyze_e1.py:219` 用的是哪种权重」一个**可复核但不宣称逐位复现**的旁证。
-  - 判定权重的决定性证据是代码语义：`mult[b] = bincount(draw)` 是整数计数，被抽中一次的录音
-    贡献 1，所以：219 的分布按「每录音一票」加权，是 unweighted。
-  - 本脚本只做旁证：在同一随机流下算两种权重的端点，看哪一种更接近已发表值
-    [0.26, 2.83] / [0.87, 2.60]。注意我无法保证与 analyze_e1 的抽样流完全一致，
-    所以「接近」只能当旁证，**不能**当逐位复现。
-只读；结果写 data/results/human_review/weighting_check.json。
+Goal: corroborating evidence, **checkable but not claimed to be bit-exact**, for which weighting `analyze_e1.py:219` uses.
+  - The decisive evidence for the weighting is the code semantics: `mult[b] = bincount(draw)` is an integer count,
+    so a recording drawn once contributes 1; hence the :219 distribution is weighted one vote per recording, i.e. unweighted.
+  - This script only corroborates: under the same random stream it computes the endpoints of both weightings and asks
+    which one is closer to the published values [0.26, 2.83] / [0.87, 2.60]. Note that exact agreement with the
+    analyze_e1 stream cannot be guaranteed, so "close" is corroboration only, **not** a bit-exact reproduction.
+Read-only; writes data/results/human_review/weighting_check.json.
 """
 import json
 import os
@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUNS = os.path.join(ROOT, "runs", "sealed_eval")
 OUT = os.path.join(ROOT, "data", "results", "human_review")
 B = 2000
-SEED_STREAM = 20261105          # 与 audit_recording_metric.py 相同
+SEED_STREAM = 20261105          # same as audit_recording_metric.py
 PUBLISHED = {"alexnet": (0.26, 2.83), "swin_t": (0.87, 2.60)}
 
 
@@ -66,14 +66,14 @@ def main():
     nrec = len(recs)
     nc = int(max(y.max(), probs.shape[1] - 1)) + 1
 
-    # 一次抽 (B, nrec) 矩阵再按行 bincount —— 与 analyze_e1/audit_recording_metric 的抽样流一致；
-    # 若改成 for 循环逐次抽 size=nrec，随机流不同，区间会偏离几百分之一。
+    # draw one (B, nrec) matrix then bincount each row -- matches the stream of analyze_e1/audit_recording_metric;
+    # drawing size=nrec inside a for loop instead changes the stream and shifts the interval by a fraction of a percent.
     rng = np.random.default_rng(SEED_STREAM)
     pick = rng.integers(0, nrec, size=(B, nrec))
     mult = np.stack([np.bincount(row, minlength=nrec) for row in pick]).astype(float)
 
     out = {"stream": "default_rng(%d), recordings drawn with replacement, B=%d" % (SEED_STREAM, B),
-           "note": "corroboration only: same stream, two weightings; 端点接近不能证明逐位一致",
+           "note": "corroboration only: same stream, two weightings; close endpoints do not prove bit-exact agreement",
            "arms": {}}
     for bb in ("alexnet", "swin_t"):
         per = {}
@@ -88,7 +88,7 @@ def main():
             per[arm] = d
         res = {}
         for tag, k in (("sliceweighted_cnt", 0), ("unweighted_onevote", 1)):
-            # 取 A1 与该骨干 A0 的差，按三种子平均（与正文同法）
+            # take A1 minus A0 for this backbone, averaged over the three seeds (as in the main text)
             d0 = []
             for s in (0, 1, 2):
                 p0, y0, _ = load("A0", bb, s)

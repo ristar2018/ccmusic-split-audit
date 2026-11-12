@@ -1,10 +1,10 @@
-# P3 pooled 结果（2000 次录音簇自助）
+# P3 pooled results (2000 recording-cluster bootstrap resamples)
 
-主指标 pooled macro-F1（三折合并），基准臂 = A0。
+Primary metric: pooled macro-F1 over the three folds; reference arm = A0.
 
-## 点估计
+## Point estimates
 
-| 臂 | 骨干 | 切片级 | 录音级 | seed 极差 |
+| arm | backbone | slice-level | recording-level | seed range |
 | :-- | :-- | --: | --: | --: |
 | A0 | alexnet | 0.8446 | 0.8797 | 0.015 |
 | A0 | swin_t | 0.8772 | 0.9041 | 0.008 |
@@ -15,20 +15,20 @@
 | A2 | alexnet | 0.4447 | 0.4714 | 0.005 |
 | A2 | swin_t | 0.5012 | 0.5467 | 0.017 |
 
-## 配对 Δ（百分点）
+## Paired Δ (percentage points)
 
-| 臂 − 基准 | 骨干 | Δ 切片级 [95% CI] | Δ 录音级 [95% CI] | p | 确认性 |
+| arm − reference | backbone | Δ slice-level [95% CI] | Δ recording-level [95% CI] | p | confirmatory |
 | :-- | :-- | --: | --: | --: | :-- |
 | A1 − A0 | alexnet | -39.63 [-42.38, -36.84] | -38.81 [-42.50, -35.76] | 0.0000 | — |
 | A1 − A0 | swin_t | -34.77 [-38.08, -32.00] | -33.66 [-38.12, -30.65] | 0.0000 | — |
 | A1r − A0 | alexnet | -2.90 [-5.66, -0.32] | -1.58 [-4.95, +1.33] | 0.0280 | — |
 | A1r − A0 | swin_t | -3.40 [-6.36, -0.68] | -2.43 [-5.63, +0.61] | 0.0220 | — |
-| A2 − A0 | alexnet | -39.99 [-42.72, -37.42] | -40.84 [-44.91, -37.92] | 0.0000 | 是 |
-| A2 − A0 | swin_t | -37.60 [-40.87, -34.90] | -35.75 [-40.07, -32.72] | 0.0000 | 是 |
+| A2 − A0 | alexnet | -39.99 [-42.72, -37.42] | -40.84 [-44.91, -37.92] | 0.0000 | yes |
+| A2 − A0 | swin_t | -37.60 [-40.87, -34.90] | -35.75 [-40.07, -32.72] | 0.0000 | yes |
 
-## 乐器身份探针（冻结特征上的线性分类器）
+## Instrument-identity probe (linear classifier on frozen features)
 
-| 臂 | 骨干 | seed | AUC(macro OvR) | top1 | 折数 |
+| arm | backbone | seed | AUC (macro OvR) | top1 | folds |
 | :-- | :-- | --: | --: | --: | --: |
 | A0 | alexnet | 0 | 0.9383 | 0.5567 | 3 |
 | A0 | alexnet | 1 | 0.9264 | 0.5533 | 3 |

@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
-"""round2_method_facts.py — 只读核算，为 method_disclosure.md 提供可复算数字。
+"""round2_method_facts.py -- read-only accounting that supplies recomputable numbers for method_disclosure.md.
 
-覆盖四类事实（全部来自已落盘产物，不重跑训练/自助法）：
-  A) 每库身份核对可用的音频/录音/切片数（data/manifest/*.json + datasets_inventory.json）
-  B) 两臂分配事实：qtest/qpool 录音重叠、跨侧同 hash、组规模、跨类同 hash
-     （data/splits/v2/<lib>_{qtest,qpool,r,c}.csv）
-  C) 类集合与自助缺类：e1_metrics.csv 的 n_classes 与 Q_test 出现类是否一致；
-     逐类录音数 → 一次录音簇重抽样里该类完全缺席的概率（解析式，不抽样）
-  D) 数值验证脚本规模（data/results/paper_verify.json）
+Covers four kinds of fact (all from artifacts already on disk; no training or bootstrap is re-run):
+  A) per library, the audio/recording/slice counts available to the identity check (data/manifest/*.json + datasets_inventory.json)
+  B) how the two arms are allocated: qtest/qpool recording overlap, identical hashes across sides, group sizes,
+     identical hashes across classes (data/splits/v2/<lib>_{qtest,qpool,r,c}.csv)
+  C) class sets and classes missing from the bootstrap: whether n_classes in e1_metrics.csv matches the classes present in Q_test;
+     recordings per class -> the probability that a class is entirely absent from one recording-cluster resample
+     (closed form, no sampling)
+  D) the scale of the number-verification script (data/results/paper_verify.json)
 
-只读：不写 data/ 产物。默认打印；--json 给出落盘路径时才写一份 JSON 到
-data/results/human_review/round2/（该目录允许写入）。
+Read-only: writes nothing under data/. Prints by default; a JSON file is written to
+data/results/human_review/round2/ only when --json gives a path (that directory is writable).
 
-用法（Windows 上 fapn python 的 subprocess 被沙箱拒绝，本脚本不用 subprocess）：
+Usage (subprocess is blocked by the sandbox under fapn python on Windows, so this script avoids it):
     python code/round2_method_facts.py --root .
-    python3 code/round2_method_facts.py --root .   # WSL 下亦可
+    python3 code/round2_method_facts.py --root .   # also works under WSL
 """
 
 import argparse
@@ -39,7 +40,7 @@ def load_json(path):
 
 
 def side_facts(root, lib):
-    """B：两侧录音重叠、同 hash 跨侧、组规模、跨录音/跨类组。"""
+    """B: recording overlap across the two sides, identical hashes across sides, group sizes, groups crossing recordings/classes."""
     rows = {s: load_csv(root / "data" / "splits" / "v2" / ("%s_%s.csv" % (lib, s)))
             for s in SIDES}
     rec = {s: {r["recording_canonical"] for r in rows[s]} for s in SIDES}
@@ -60,8 +61,8 @@ def side_facts(root, lib):
                 hash_sides[r["content_hash"]].add(s)
     hash_multi = {h: sorted(v) for h, v in hash_sides.items() if len(v) > 1}
 
-    # 按 splits_v2.py:258-288 的规则重建组：Q 内每条录音按 slice_index 排序，
-    # 相邻两片（偶数位与后一片）并集；再按同一 label 内相同 content_hash 并集。
+    # rebuild the groups as in splits_v2.py:258-288: inside Q each recording is ordered by slice_index,
+    # adjacent pairs (an even position and the next slice) are unioned; then identical content_hash within one label is unioned.
     parent = {}
 
     def find(x):
@@ -112,7 +113,7 @@ def side_facts(root, lib):
     cross_lab = sum(1 for v in comp.values() if len({r["label"] for r in v}) > 1)
     side_split = sum(1 for v in comp.values() if len({r["_side"] for r in v}) > 1)
 
-    # 整条录音在 Q 内的总片数（qtest+qpool 即该录音全部 Q 片）
+    # total slices per recording inside Q (qtest+qpool is every Q slice of that recording)
     per_rec_slices = Counter(r["recording_canonical"]
                              for s in ("qtest", "qpool") for r in rows[s])
     singleton = {k for k, v in per_rec_slices.items() if v == 1}
@@ -138,7 +139,7 @@ def side_facts(root, lib):
 
 
 def class_facts(root, lib, qtest_rows, n_classes_csv):
-    """C：Q_test 的类集合、逐类录音数、重抽样缺类概率。"""
+    """C: the class set of Q_test, recordings per class, probability that a class is missing from a resample."""
     labels = [r["label"] for r in qtest_rows]
     uniq = sorted(set(labels))
     per_cls = Counter()
@@ -166,8 +167,8 @@ def class_facts(root, lib, qtest_rows, n_classes_csv):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--root", default=".", help="项目根目录")
-    ap.add_argument("--json", default="", help="可选：结果 JSON 落盘路径（须在 round2 目录内）")
+    ap.add_argument("--root", default=".", help="project root")
+    ap.add_argument("--json", default="", help="optional: path for the result JSON (must be inside the round2 directory)")
     a = ap.parse_args()
     root = Path(a.root).resolve()
 
@@ -217,8 +218,8 @@ def main():
     out["D"] = {"passes": pv.get("passes"), "fails": pv.get("fails"),
                 "panels": pv.get("panels"), "totals": pv.get("totals")}
 
-    # ---------- 打印
-    print("== A 身份核对可用面 ==")
+    # ---------- printing
+    print("== A surface available to the identity check ==")
     print("lib | classes | recordings | slices | audio_on_disk | audio_hash_done | dup_audio_recs")
     for lib in MAIN_LIBS:
         d = out["A"][lib]
@@ -227,29 +228,29 @@ def main():
             d["audio_files_on_disk"], d["audio_hash_done"], d["duplicate_audio_recordings"]))
     print("slices_total = %d" % slices_sum)
 
-    print("\n== B 两臂分配（qtest/qpool/r/c） ==")
+    print("\n== B allocation of the two arms (qtest/qpool/r/c) ==")
     for lib in MAIN_LIBS:
         b = out["B"][lib]
         print("[%s] slices=%s recs=%s classes=%s" % (lib, b["slices"], b["recordings"], b["classes"]))
-        print("    qtest∩qpool 录音=%d（qtest 片 %d / qpool 片 %d）；qtest∩(r∪c) 录音=%d" % (
+        print("    qtest∩qpool recordings=%d (qtest slices %d / qpool slices %d); qtest∩(r∪c) recordings=%d" % (
             b["qtest_qpool_recording_overlap"], b["qtest_qpool_overlap_slices"]["qtest"],
             b["qtest_qpool_overlap_slices"]["qpool"], b["qtest_r_c_recording_overlap"]))
-        print("    同 hash 跨侧=%d；组数=%d 规模分布=%s；跨录音组=%d；跨类组=%d；跨侧组=%d；相邻对被拆=%d；单记录=%d 全在 qtest=%s" % (
+        print("    same hash across sides=%d; groups=%d size hist=%s; groups crossing recordings=%d; groups crossing classes=%d; groups split across sides=%d; adjacent pairs split=%d; singleton recordings=%d all in qtest=%s" % (
             b["hash_multi_side"], b["groups"], b["group_size_hist"],
             b["groups_cross_recording"], b["groups_cross_class"],
             b["groups_split_across_sides"], b["pairs_split_across_sides"],
             b["singleton_recordings"], b["singleton_all_in_qtest"]))
 
-    print("\n== C 类集合与重抽样缺类 ==")
+    print("\n== C class sets and classes missing from a resample ==")
     for lib in MAIN_LIBS:
         c = out["C"][lib]
-        print("[%s] n_classes(qtest)=%d n_classes(e1_metrics)=%s 一致=%s | recs=%d 每类 %d–%d 片录音 | <5 录音的类=%d | E[缺类/次]=%.3f P(≥1 类缺)=%.4f" % (
+        print("[%s] n_classes(qtest)=%d n_classes(e1_metrics)=%s match=%s | recs=%d per class %d-%d recordings | classes with <5 recordings=%d | E[classes missing per resample]=%.3f P(>=1 class missing)=%.4f" % (
             lib, c["n_classes_in_qtest"], c["n_classes_in_e1_metrics"], c["classes_match"],
             c["n_recordings"], c["min_recs_per_class"], c["max_recs_per_class"],
             c["classes_with_lt5_recordings"], c["expected_classes_missing_per_resample"],
             c["p_at_least_one_class_missing"]))
 
-    print("\n== D 验证脚本 ==")
+    print("\n== D verification script ==")
     print("paper_verify.json: passes=%s fails=%s" % (out["D"]["passes"], out["D"]["fails"]))
     print("panels totals=%s" % json.dumps(out["D"]["totals"], ensure_ascii=False))
 

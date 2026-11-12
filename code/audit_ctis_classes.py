@@ -1,10 +1,10 @@
 """CTIS class-universe audit: canonical recording counts before/after placeholder removal.
 
-只读统计，不重划分。复现 splits_v2.py 的两条口径：
-  1) 每类录音数 < 5 不能做录音级切分（论文 219 -> 206）；
-  2) recording_uid 含 "没音频" 的 placeholder 整条丢弃（论文再掉 5 类 -> 201）。
+Read-only statistics; no re-splitting. Reproduces the two rules of splits_v2.py:
+  1) a class with fewer than 5 recordings cannot be split at recording level (paper: 219 -> 206);
+  2) any recording_uid containing the "没音频" placeholder is dropped entirely (paper: 5 more classes -> 201).
 
-输出：data/results/human_review/ctis_class_drops.csv（逐类）与同名 .json（汇总）。
+Writes data/results/human_review/ctis_class_drops.csv (per class) and the same-name .json (summary).
 """
 import csv
 import json
@@ -95,10 +95,10 @@ def main():
     print(json.dumps({k: v for k, v in summary.items()
                       if k not in ("dropped_min5_detail", "dropped_placeholder_detail")},
                      ensure_ascii=False, indent=1))
-    print("\n-- 掉于 min5（前）--")
+    print("\n-- dropped by the min-5 rule (before) --")
     for r in drop_min:
         print("  %s n_rec=%d ph=%d" % (r["label"], r["n_rec_source"], r["n_placeholder_rec"]))
-    print("\n-- 掉于 placeholder（后）--")
+    print("\n-- dropped by the placeholder rule (after) --")
     for r in drop_ph:
         print("  %s n_rec=%d -> %d  ph=%d  %s"
               % (r["label"], r["n_rec_source"], r["n_rec_after_placeholder"],

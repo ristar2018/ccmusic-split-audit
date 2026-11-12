@@ -1,31 +1,31 @@
-"""C1：无关录音注入对照（外审 M1 的归因缺口）。
+"""C1: injection control with unrelated recordings (the attribution gap raised by external review M1).
 
-问题（M1）：A1 相对 A0 一次改了三件事 —— 暴露（测试录音的兄弟切片）、录音多样性、
-切片分布，所以 Δ1 不能单独归给同源泄漏。要拆开，需要一个**体积相同、标签分布相同、
-但内容与测试录音无关**的注入臂：
+Problem (M1): going from A0 to A1 changes three things at once — exposure (sibling slices of the test recordings), recording diversity,
+and the slice distribution, so Δ1 cannot be attributed to same-source leakage alone. Splitting them apart needs an injection arm with
+**the same volume and the same label distribution, but content unrelated to the test recordings**:
 
-    A0 : m_c 片，全部来自 C（无 Q_pool）
-    C1 : 从 A0 的训练集里按类抽掉 |Q_pool_c| 片，再按类补进同样片数 ——
-         补进来的片子只来自**非测试录音**（C 的剩余 + R 分区）
-    A1 : 从 A0 的训练集里按类抽掉 |Q_pool_c| 片，再补进 Q_pool（测试录音的兄弟切片）
+    A0 : m_c slices, all from C (no Q_pool)
+    C1 : drop |Q_pool_c| slices per class from the A0 training set, then add back the same number per class —
+         the added slices come only from **non-test recordings** (the C remainder + the R partition)
+    A1 : drop |Q_pool_c| slices per class from the A0 training set, then add Q_pool (sibling slices of the test recordings)
 
-于是 C1 与 A1 唯一的差别是注入内容的来源（非测试 vs 测试录音），体积与类别平衡相同；
-C1 与 A0 的差别只是「同类别的非测试内容换了换」，预期 ≈0，恰好是一个内部零对照。
+So C1 and A1 differ only in where the injected content comes from (non-test vs test recordings), with identical volume and class balance;
+C1 and A0 differ only by "same-class non-test content swapped in", expected ≈0 — an internal negative control.
 
-泄漏断言（任一失败即 exit 2，不写产物）：
-  K1 注入片与 Q_test 的 sample_id 无交集
-  K2 注入片与 Q_test 的 recording_uid 无交集（真·非测试录音）
-  K3 注入片的 content_hash 与 Q_test 的 content_hash 无交集
-  K4 注入片与 A0 训练集无交集；C1 训练集内部 sample_id 唯一
-  K5 每类训练片数与 A0 逐类相同（体积与类别平衡都保住）
-  K6 总训练片数与 A1 相差 ≤0.5%
+Leakage assertions (any failure exits 2, nothing is written):
+  K1 injected slices share no sample_id with Q_test
+  K2 injected slices share no recording_uid with Q_test (genuinely non-test recordings)
+  K3 injected slices share no content_hash with Q_test
+  K4 injected slices are disjoint from the A0 training set; sample_ids inside the C1 training set are unique
+  K5 per-class training counts equal A0 class by class (volume and class balance both preserved)
+  K6 total training count within 0.5% of A1
 
-已知代价（写在这里以免后人误读）：注入源里 R 分区占多数时，C1 臂的 R 侧验证会被污染，
-因此该臂只报封存的 Q_test；三臂都不做任何选型（固定 10 epoch、取最后一轮权重）。
+Known cost (recorded here so nobody misreads it later): when the injection source is mostly the R partition, the R-side validation of the C1 arm is contaminated,
+so that arm reports the sealed Q_test only; no arm performs any model selection (fixed 10 epochs, last-epoch weights).
 
-用法：
-  python code/c1_inject.py            # 写 data/splits/v2/CTIS_c1_train.csv + c1_audit.json
-  python code/c1_inject.py --check    # 只跑断言与统计
+Usage:
+  python code/c1_inject.py            # writes data/splits/v2/CTIS_c1_train.csv + c1_audit.json
+  python code/c1_inject.py --check    # run the assertions and statistics only
 """
 
 import argparse
@@ -42,7 +42,7 @@ PROJ = os.path.dirname(HERE)
 SPLITS = os.path.join(PROJ, "data", "splits", "v2")
 LIB = "CTIS"
 SEED = 20261105
-MAX_TOTAL_GAP = 0.005   # 与 A1 的总体积差上界
+MAX_TOTAL_GAP = 0.005   # upper bound on the total-volume gap against A1
 
 
 def read_csv(path):
@@ -67,10 +67,10 @@ def build(d, seed=SEED):
     test_recs = {r["recording_uid"] for r in qtest}
     test_hashes = {r["content_hash"] for r in qtest if r.get("content_hash")}
 
-    # 每类要注入多少片 = Q_pool 的逐类计数
+    # slices to inject per class = per-class counts in Q_pool
     need = collections.Counter(r["label"] for r in qpool)
 
-    # 候选注入池：C 与 R 中、不在 A0 训练集、且录音不是测试录音的切片
+    # candidate injection pool: slices in C and R that are not in the A0 training set and whose recording is not a test recording
     a0_sids = {r["sample_id"] for r in a0}
     cand = []
     for name in ("c", "r"):
@@ -86,7 +86,7 @@ def build(d, seed=SEED):
     for r in cand:
         by_cls[r["label"]].append(r)
 
-    # 逐类按录音轮流取，避免注入片集中在少数几条录音上
+    # round-robin over recordings per class, so the injected slices do not concentrate in a few recordings
     injected, shortfall = [], {}
     for cls, k in sorted(need.items()):
         pool = by_cls.get(cls, [])
@@ -117,7 +117,7 @@ def build(d, seed=SEED):
         if len(take) < k:
             shortfall[cls] = k - len(take)
 
-    # 从 A0 里按类抽掉同样片数：优先从切片多的录音里抽，尽量不抽空录音
+    # drop the same number per class from A0: prefer recordings with many slices, avoid emptying a recording
     inj_cnt = collections.Counter(r["label"] for r in injected)
     a0_by_cls = collections.defaultdict(list)
     for r in a0:
@@ -130,7 +130,7 @@ def build(d, seed=SEED):
             by_rec[r["recording_uid"]].append(r)
         recs = sorted(by_rec, key=lambda x: (-len(by_rec[x]), x))
         taken = 0
-        # 一轮一条录音，保证每条录音最多被抽到只剩 1 片
+        # one slice per recording per round, so each recording keeps at least 1 slice
         while taken < k:
             progressed = False
             for rec in recs:
@@ -142,7 +142,7 @@ def build(d, seed=SEED):
                     progressed = True
             if not progressed:
                 break
-        if taken < k:      # 兜底：允许把录音抽空
+        if taken < k:      # fallback: emptying a recording is allowed
             for rec in recs:
                 while by_rec[rec] and taken < k:
                     drop.append(by_rec[rec].pop())
@@ -152,7 +152,7 @@ def build(d, seed=SEED):
 
     drop_sids = {r["sample_id"] for r in drop}
     c1 = [r for r in a0 if r["sample_id"] not in drop_sids] + injected
-    # 输出用与其它切分一致的列
+    # output uses the same columns as the other splits
     cols = ["sample_id", "label", "recording_uid", "recording_canonical",
             "content_hash", "candidate_group", "slice_index"]
     rows = [{c: r.get(c, "") for c in cols} for r in c1]
@@ -209,22 +209,22 @@ def main() -> int:
     rows, injected, drop, need, shortfall = build(d)
     ok, detail = audit(rows, injected, drop, need, d)
 
-    print("== C1（无关录音注入对照）")
-    print("   A0 %d 片 → C1 %d 片（注入 %d / 抽掉 %d），A1 %d 片"
+    print("== C1 (injection control with unrelated recordings)")
+    print("   A0 %d slices -> C1 %d slices (injected %d / dropped %d), A1 %d slices"
           % (detail["n_a0_train"], detail["n_train"], detail["n_injected"],
              detail["n_dropped"], detail["n_a1_train"]))
-    print("   注入来源 %s，来自 %d 条非测试录音、%d 个类"
+    print("   injection source %s, from %d non-test recordings, %d classes"
           % (detail["injected_from"], detail["injected_recordings"], detail["injected_classes"]))
     if shortfall:
-        print("   !! 注入不足的类 %d 个（总缺 %d 片）" % (len(shortfall), sum(shortfall.values())))
+        print("   !! %d classes under-filled (%d slices short in total)" % (len(shortfall), sum(shortfall.values())))
     for k, v in ok.items():
         print("   [%s] %s" % ("PASS" if v else "FAIL", k))
     all_pass = all(ok.values())
     if not all_pass:
-        print("!! 断言未全过，不写产物（exit 2）")
+        print("!! not all assertions passed, nothing written (exit 2)")
         return 2
     if a.check:
-        print("--check：不写产物")
+        print("--check: nothing written")
         return 0
 
     p = os.path.join(SPLITS, "%s_c1_train.csv" % LIB)
@@ -249,7 +249,7 @@ def main() -> int:
     }
     with io.open(os.path.join(SPLITS, "c1_audit.json"), "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=2)
-    print("产物：%s" % p)
+    print("output: %s" % p)
     print("        %s" % os.path.join(SPLITS, "c1_audit.json"))
     return 0
 

@@ -1,13 +1,14 @@
-"""切片级 p 值的 add-one 重标（审稿意见 B10 追加项）。
+"""Add-one rescaling of the slice-level p-values (review comment B10, follow-up item).
 
-只做两件事，**不重跑、不替换既有切片级 CI**：
-  1. 按 `code/analyze_e1.py` 的原始随机流（`default_rng(20261105)`、按库名字母序每库抽一次、`boot=2000`）
-     复算切片级 Δ 的自助分布，并**验证** 2.5/97.5 分位数与 `data/results/e1_delta.csv` 一致
-     （一致即证明拿到的是同一批抽样，而不是新抽的一套）；
-  2. 在这批抽样上给 add-one p 值：p = 2·(1+min(#{Δ*≤0}, #{Δ*≥0})) / (B+1)，
-     并按确认性族（CTIS × 两骨干 × A1−A0）算 Holm。
+Two things only, with **no re-run and no replacement of the existing slice-level CIs**:
+  1. Replay the original random stream of `code/analyze_e1.py` (`default_rng(20261105)`, one draw per library in
+     alphabetical order, `boot=2000`) to recompute the bootstrap distribution of the slice-level delta, and **verify**
+     that the 2.5/97.5 percentiles match `data/results/e1_delta.csv` (a match proves these are the same resamples,
+     not a fresh set);
+  2. Report add-one p-values on that set of resamples: p = 2*(1+min(#{delta*<=0}, #{delta*>=0})) / (B+1),
+     with a Holm correction over the confirmatory family (CTIS x two backbones x A1-A0).
 
-输出：data/results/human_review/slice_p_addone.{csv,json}。不写回 e1_delta.csv / e1_holm.json。
+Writes data/results/human_review/slice_p_addone.{csv,json}; never writes back to e1_delta.csv / e1_holm.json.
 """
 import argparse
 import csv
@@ -55,7 +56,7 @@ def main():
     arms = [x.strip() for x in a.arms.split(",") if x.strip()]
     os.makedirs(OUT, exist_ok=True)
 
-    # ---- 按 analyze_e1 的目录解析顺序建立 data 映射
+    # ---- build the data mapping in the directory order analyze_e1 resolves
     data = {}
     for name in os.listdir(RUNS):
         path = os.path.join(RUNS, name)
@@ -73,7 +74,7 @@ def main():
         data.setdefault(lib, {}).setdefault((arm, bb), {})[bb] = seeds
         data[lib].setdefault((arm, bb), {})[bb] = seeds
 
-    # 旧 CSV 的 CI，用于验证「同一批抽样」
+    # CI from the old CSV, used to verify "same set of resamples"
     old = {}
     with open(os.path.join(RES, "e1_delta.csv"), encoding="utf-8") as f:
         for r in csv.DictReader(f):
@@ -162,7 +163,7 @@ def main():
                 print("%-11s %-8s %-3s pt %+6.2f ci [%+6.2f,%+6.2f] old_match=%s  add-one p=%.4f (legacy %.4f)"
                       % (lib, bb, arm, pt, lo, hi, match, p_add, rows[-1]["p_legacy_clamped"]))
 
-    # ---- Holm：确认性族 = CTIS × {alexnet, swin_t} × A1−A0
+    # ---- Holm: confirmatory family = CTIS x {alexnet, swin_t} x A1-A0
     fam = [r for r in rows if r["library"] == "CTIS" and r["arm"] == "A1"]
     fam_sorted = sorted(fam, key=lambda r: r["p_addone_raw"])
     m = len(fam_sorted)
@@ -181,7 +182,7 @@ def main():
     with open(json_p, "w", encoding="utf-8") as f:
         json.dump({"rows": rows, "boot": a.boot, "seed": a.seed,
                    "family_definition": "CTIS × {alexnet, swin_t} × A1−A0",
-                   "note": "CI 仅用于验证随机流与 e1_delta.csv 一致；不替换既有 CI"},
+                   "note": "the CI only verifies that the random stream matches e1_delta.csv; existing CIs are not replaced"},
                   f, ensure_ascii=False, indent=1, default=str)
     print("\nwrote", csv_p)
     print("wrote", json_p)

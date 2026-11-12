@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""探针 2：npz records 与切分 CSV 的 recording 键能否对齐；统计暴露组规模。"""
+"""Probe 2: whether the npz records keys align with the recording keys in the split CSV; sizes the exposed group."""
 import csv
 from pathlib import Path
 import numpy as np

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""A1 vs A0 封存评测：录音簇自助 2000 次 → 切片级/录音级 Δ 的 95%CI、3 seed 极差、SESOI(3pp) 判定、缺失组申报。
+"""A1 vs A0 sealed evaluation: 2000 recording-cluster bootstraps -> 95% CI of the slice-level and recording-level deltas, seed range over 3 seeds, SESOI (3pp) verdict, missing-group disclosure.
 
-分组目录：runs/sealed_eval/<lib>_<arm>_<bb>/   （lib/bb 可含 '_'：bel_canto / swin_t）
-  分组身份取自 SEALED.json -> runs.seed0.config 的 lib/arm/bb，并回验 dirname == f"{lib}_{arm}_{bb}"；
-  不做 split('_')。seed{k}_qtest.npz: probs(n,C) / y(n,) / records(n,)=录音簇。
-指标：slice 级 = 全切片宏F1；recording 级 = 每簇 prob 均值 argmax 后宏F1（与 seed{k}.json 的 qtest 对齐）。
-自助：以录音簇为重采样单位，两臂与 3 个 seed 共用同一组簇索引（配对），Δ=F1_A1-F1_A0，单位百分点。
+Group directories: runs/sealed_eval/<lib>_<arm>_<bb>/   (lib/bb may contain '_': bel_canto / swin_t)
+  Group identity comes from SEALED.json -> runs.seed0.config lib/arm/bb, cross-checked against dirname == f"{lib}_{arm}_{bb}";
+  no split('_'). seed{k}_qtest.npz: probs(n,C) / y(n,) / records(n,) = recording cluster.
+Metrics: slice level = macro-F1 over all slices; recording level = argmax of the per-cluster mean prob, then macro-F1 (aligned with qtest in seed{k}.json).
+Bootstrap: the recording cluster is the resampling unit; both arms and the 3 seeds share one set of cluster indices (paired); delta = F1_A1 - F1_A0 in percentage points.
 """
 import argparse, hashlib, json, sys
 from pathlib import Path
@@ -27,7 +27,7 @@ def macro_f1(pred, y, C):
 
 
 def brick(Mr, codes, C, mask):
-    """Mr: (R,K) 簇×pair 计数。返回 f(W)->(B,) 的宏F1 向量。"""
+    """Mr: (R,K) cluster x pair counts. Returns f(W)->(B,) giving the macro-F1 vector."""
     K = Mr.shape[1]
     tc = np.zeros((1, 1))
 
@@ -56,13 +56,13 @@ def discover(root):
     for d in sorted(p for p in root.iterdir() if p.is_dir()):
         sp = d / "SEALED.json"
         if not sp.is_file():
-            stray.append((d.name, "非封存分组（无 SEALED.json，如 pending/）"))
+            stray.append((d.name, "not a sealed group (no SEALED.json, e.g. pending/)"))
             continue
         sg = json.loads(sp.read_text(encoding="utf-8"))
         cfg = sg["runs"]["seed0"]["config"]
         key = (cfg["lib"], cfg["arm"], cfg["bb"])
         if d.name != "_".join(key):
-            stray.append((d.name, "目录名与 config %s/%s/%s 不一致" % key))
+            stray.append((d.name, "directory name disagrees with config %s/%s/%s" % key))
         groups[key] = (d, sg)
     pd = root / "pending"
     if pd.is_dir():
@@ -74,7 +74,7 @@ def discover(root):
                 if cj:
                     c = json.loads(cj[0].read_text(encoding="utf-8"))["config"]
                     tag = "%s/%s/%s" % (c["lib"], c["arm"], c["bb"])
-                stray.append(("pending/" + x.name, "未封存 cfg=%s seeds=%s" % (tag, ss)))
+                stray.append(("pending/" + x.name, "unsealed cfg=%s seeds=%s" % (tag, ss)))
     return groups, stray
 
 
@@ -92,7 +92,7 @@ def main():
     arms = ["A0", "A1"]
     for k in sorted(groups):
         if k[1] not in arms:
-            stray.append(("_".join(k), "臂 %s 不在 A0/A1 比较网格，未纳入（仅登记）" % k[1]))
+            stray.append(("_".join(k), "arm %s is not in the A0/A1 comparison grid; not included (registered only)" % k[1]))
     libs = sorted({k[0] for k in groups}); bbs = sorted({k[2] for k in groups})
     seeds = sorted({int(s) for d, _ in groups.values()
                     for s in json.loads((d / "SEALED.json").read_text(encoding="utf-8"))["seeds"]})
@@ -101,33 +101,33 @@ def main():
         for b in bbs:
             for m in arms:
                 if (l, m, b) not in groups:
-                    miss.append((l, m, b, "", "整组缺失")); continue
+                    miss.append((l, m, b, "", "whole group missing")); continue
                 d, _ = groups[(l, m, b)]
                 for s in seeds:
                     for f in ("seed%d.json" % s, "seed%d_qtest.npz" % s):
                         if not (d / f).is_file():
-                            miss.append((l, m, b, s, "缺 " + f))
+                            miss.append((l, m, b, s, "missing " + f))
 
     rows, notes = [], []
     for l in libs:
         for b in bbs:
             if (l, "A0", b) not in groups or (l, "A1", b) not in groups:
-                notes.append("%s/%s: 缺臂" % (l, b)); continue
+                notes.append("%s/%s: arm missing" % (l, b)); continue
             have = [s for s in seeds
                     if (groups[(l, "A0", b)][0] / ("seed%d_qtest.npz" % s)).is_file()
                     and (groups[(l, "A1", b)][0] / ("seed%d_qtest.npz" % s)).is_file()]
             if not have:
-                notes.append("%s/%s: 0 个完整 seed" % (l, b)); continue
+                notes.append("%s/%s: 0 complete seeds" % (l, b)); continue
             probs, y, rec = {0: {}, 1: {}}, None, None
             for s in have:
                 p0, y0, r0 = load_npz(groups[(l, "A0", b)][0] / ("seed%d_qtest.npz" % s))
                 p1, y1, r1 = load_npz(groups[(l, "A1", b)][0] / ("seed%d_qtest.npz" % s))
                 if not (np.array_equal(y0, y1) and np.array_equal(r0, r1)):
-                    sys.exit("[审计失败] %s/%s/seed%d: 两臂 y/records 未对齐" % (l, b, s))
+                    sys.exit("[audit failed] %s/%s/seed%d: y/records of the two arms are not aligned" % (l, b, s))
                 if y is None:
                     y, rec = y0, r0
                 elif not (np.array_equal(y, y0) and np.array_equal(rec, r0)):
-                    sys.exit("[审计失败] %s/%s: 跨 seed 切片集合漂移" % (l, b))
+                    sys.exit("[audit failed] %s/%s: the slice set drifts across seeds" % (l, b))
                 probs[0][s], probs[1][s] = p0, p1
                 C = p0.shape[1]
                 for arm, pp in (("A0", p0), ("A1", p1)):
@@ -135,7 +135,7 @@ def main():
                                     .read_text(encoding="utf-8"))["qtest"]
                     val = macro_f1(pp.argmax(1), y0, C)
                     if abs(val - st["macro_f1_slice"]) > 5e-4:
-                        sys.exit("[审计失败] %s/%s/%s/seed%d: 复算 slice 宏F1 %.4f != %.4f"
+                        sys.exit("[audit failed] %s/%s/%s/seed%d: recomputed slice macro-F1 %.4f != %.4f"
                                  % (l, b, arm, s, val, st["macro_f1_slice"]))
             C = probs[0][have[0]].shape[1]
             rid, gidx = np.unique(rec, return_inverse=True)
@@ -183,10 +183,10 @@ def main():
 
             def flag(d, lo, hi):
                 if lo > args.sesoi or hi < -args.sesoi:
-                    return "超SESOI(CI整体越界)"
+                    return "exceeds SESOI (whole CI beyond)"
                 if abs(d) >= args.sesoi:
-                    return "点估计超SESOI,CI跨界"
-                return "未超SESOI"
+                    return "point estimate exceeds SESOI, CI crosses it"
+                return "within SESOI"
 
             rows.append(dict(
                 lib=l, bb=b, n_slice=len(y), n_rec=R, n_seed=len(have),
@@ -226,14 +226,14 @@ def main():
     for r in rows:
         print("  %s/%s: slice=%s | rec=%s" % (r["lib"], r["bb"], r["flag_slice"], r["flag_rec"]))
     if miss:
-        print("\n[缺失] %d 格：" % len(miss))
+        print("\n[missing] %d cells:" % len(miss))
         for m in miss:
             print("  ", "/".join(map(str, m)))
     else:
-        print("\n[缺失] 期望网格内无缺失")
+        print("\n[missing] nothing missing inside the expected grid")
     for nm, why in stray:
-        print("[注意] %s: %s" % (nm, why))
-    print("\n写盘: %s | %s" % (args.out, args.missing_out))
+        print("[note] %s: %s" % (nm, why))
+    print("\nwrote: %s | %s" % (args.out, args.missing_out))
 
 
 if __name__ == "__main__":

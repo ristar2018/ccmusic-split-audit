@@ -1,8 +1,8 @@
-# E1 结果摘要（C1 − A0）
+# E1 summary (C1 − A0)
 
-簇自助 2000 次（整录音簇有放回抽样，同一套索引贯穿同库所有臂与骨干）；Δ 单位为百分点；seed 极差是同 seed 配对的 Δ 在 3 seed 间的极差。
+Recording-cluster bootstrap, 2000 resamples (whole recording clusters drawn with replacement, one index set shared by every arm and backbone in a library); Δ in percentage points; the seed range is the spread of the same-seed paired Δ across the three seeds.
 
-| 库 | 臂 | 骨干 | Δ 切片级 [95% CI] | Δ 录音级 [95% CI] | seed 极差 | 过 SESOI(3pt) |
+| library | arm | backbone | Δ slice-level [95% CI] | Δ recording-level [95% CI] | seed range | above SESOI (3pt) |
 | :-- | :-- | :-- | --: | --: | --: | :-- |
-| CTIS | C1 | alexnet | +0.05 [-0.94, +1.35] | +0.41 [-0.70, +1.61] | 1.9 | 否 |
-| CTIS | C1 | swin_t | +0.62 [+0.14, +1.81] | +0.37 [-0.06, +1.38] | 1.18 | 否 |
+| CTIS | C1 | alexnet | +0.05 [-0.94, +1.35] | +0.41 [-0.70, +1.61] | 1.9 | no |
+| CTIS | C1 | swin_t | +0.62 [+0.14, +1.81] | +0.37 [-0.06, +1.38] | 1.18 | no |

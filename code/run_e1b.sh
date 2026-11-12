@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# E1b：A0 vs A1，5 库 × 2 骨干 × 3 seed = 60 runs。
-# 用法：bash code/run_e1b.sh [tag]
-# 每 run 一个日志 logs/e1b_<tag>_<lib>_<arm>_<bb>.log；总进度写 logs/e1b_<tag>_driver.log
+# E1b: A0 vs A1, 5 libraries x 2 backbones x 3 seeds = 60 runs.
+# Usage: bash code/run_e1b.sh [tag]
+# One log per run: logs/e1b_<tag>_<lib>_<arm>_<bb>.log; overall progress goes to logs/e1b_<tag>_driver.log
 set -u
 cd "$(dirname "$0")/.." || exit 1
 PY="D:/XiaBao/AIArtDetect/envs/fapn/python.exe"
@@ -22,7 +22,7 @@ for lib in CTIS music_genre pianos CNPM bel_canto; do
       t1=$(date +%s)
       echo "[$n/20] $lib $arm $bb rc=$rc $(( (t1-t0)/60 ))min  $(date '+%H:%M:%S')" | tee -a "$DRV"
       if [ $rc -ne 0 ]; then
-        echo "!! 失败，日志尾部：" | tee -a "$DRV"
+        echo "!! failed, log tail:" | tee -a "$DRV"
         tail -5 "$log" | tee -a "$DRV"
       fi
     done

@@ -1,18 +1,19 @@
-"""negcontrol.py — 四个 K̄≈1 库的零效应负对照（report/聚焦版实验设计方案v2.8.md §3.7 :296-310）。
+"""negcontrol.py -- zero-effect negative controls for the four libraries with K̄≈1 (design note v2.8 §3.7 :296-310).
 
-口径：
-1) K̄_c=1 ⇒ Q_pool_c = floor(K̄_c/2) = 0，α_c = Q_pool_c/m_c ≡ 0；A1 与 A0 数学等价，故负对照只跑 A0 vs A2。
-2) GZ_IsoTech 的 46 条长录音（75 个额外片段，train 34→61 / test 12→14）不进 Q_pool：按类 K̄_c 仍为 1（:309），
-   额外片段只由 Monte Carlo 期望池单独报告（mc_pool_mean），不改 α 口径。
-3) 数字全部取自盘面：扫描切片 → 按 LIB_RULES 聚录音 → 实测 K 分布 → 400 次 MC。
-4) 断言 26 条，任一不符 → 打印失败项并 exit(1)。
+Caliber:
+1) K̄_c=1 ⇒ Q_pool_c = floor(K̄_c/2) = 0 and α_c = Q_pool_c/m_c ≡ 0; A1 and A0 are then mathematically equivalent,
+   so the negative controls run A0 vs A2 only.
+2) The 46 long recordings of GZ_IsoTech (75 extra segments, train 34->61 / test 12->14) do not enter Q_pool: per-class K̄_c stays 1 (:309),
+   and the extra segments are reported separately through the Monte Carlo expected pool (mc_pool_mean) without changing the α caliber.
+3) Every number is taken from disk: scan slices -> aggregate recordings by LIB_RULES -> measured K distribution -> 400 MC draws.
+4) 26 assertions; any mismatch prints the failing items and exits 1.
 """
 import os, re, json, random, collections, sys
 
 ROOT = r"D:/VSCode/Datasets"
 OUT = "data/splits/v2/negcontrol"
 SEED, DRAWS, Q_SHARE, M_SHARE = 20261105, 400, 0.20, 0.60
-DESIGN = {  # §3.7 表 :298-303
+DESIGN = {  # §3.7 table :298-303
     "chest_falsetto":   {"slices": 1280, "recordings": 1280, "k": 1.0000},
     "erhu_playing_tech": {"slices": 1253, "recordings": 1253, "k": 1.0000},
     "Guzheng_Tech99":   {"slices": 99,   "recordings": 99,   "k": 1.0000},
@@ -32,7 +33,7 @@ def _walk_jpg(base):
 
 
 def scan(lib):
-    """返回 [(path, recording_key, cls, split)]；每库一条独立规则，按目录名判 split。"""
+    """Returns [(path, recording_key, cls, split)]; one rule per library, split decided by directory name."""
     rows = []
     if lib == "chest_falsetto":
         base = _p(lib, "data", "eval", "mel")
@@ -92,7 +93,7 @@ def mc_pool(rec_counter, q):
 
 
 def official_overlap(lib):
-    """官方 split 之间是否零重叠（按录音 key）。"""
+    """Whether the official splits are disjoint (by recording key)."""
     if lib == "GZ_IsoTech":
         base = _p(lib, "data", "audio")
         sets = {s: {re.sub(r"\d+$", "", os.path.splitext(f)[0]) for _, _, fs in os.walk(os.path.join(base, s)) for f in fs if f.endswith(".wav")} for s in ("train", "test") if os.path.isdir(os.path.join(base, s))}
@@ -107,7 +108,7 @@ def official_overlap(lib):
 
 def main():
     out = {"generated_by": "code/negcontrol.py",
-           "design_ref": "report/聚焦版实验设计方案v2.8.md §3.7 :296-310",
+           "design_ref": "design note v2.8 §3.7 :296-310",
            "seed": SEED, "draws": DRAWS, "q_share": Q_SHARE, "m_share": M_SHARE,
            "libraries": {}, "assertions": []}
     A = out["assertions"]
@@ -137,36 +138,36 @@ def main():
             for r, c in long_recs.items():
                 sp = {x[3] for x in rows if x[1] == r}.pop()
                 by_split[sp]["rows"] += 1
-                by_split[sp]["segments"] += c - 1   # 记额外段数（设计口径 train 61 / test 14）
+                by_split[sp]["segments"] += c - 1   # count the extra segments (design caliber: train 61 / test 14)
             gz_rows = {"rows": len(long_recs), "extra_segments": sum(c - 1 for c in long_recs.values()),
                        "by_split": {k: dict(v) for k, v in sorted(by_split.items())}}
         out["libraries"][lib] = {"slices": slices, "recordings": n_rec, "k": round(kbar, 4),
                                  "k_dist": {str(k): v for k, v in sorted(kd.items())},
-                                 "q_panel_q": q, "m_c_total": int(slices * M_SHARE),   # 库级 m_c = 0.60×S（设计稿 §3.2）
+                                 "q_panel_q": q, "m_c_total": int(slices * M_SHARE),   # library-level m_c = 0.60*S (design note §3.2)
                                  "qpool_total": qpool_total, "alpha_total": round(alpha_total, 6),
                                  "mc_pool_mean": round(mc_mean, 4), "mc_pool_p95": mc_p95,
-                                 # 设计口径（K̄_c//2，:306 的 K̄=1 理想化）；单次真实抽签的期望另记
+                                 # design caliber (K̄_c//2, the K̄=1 idealization of :306); the expectation of one real draw is recorded separately
                                  "alpha_mc_mean": round(alpha_mc_mean, 6),
                                  "alpha_mc_p95": round(alpha_mc_p95, 6),
                                  "official_overlap": ov, "qpanel": qpanel}
 
-        add(lib + "_slices", "切片数与设计稿 §3.7 一致", d["slices"], slices, slices == d["slices"])
-        add(lib + "_recordings", "录音数与设计稿 §3.7 一致", d["recordings"], n_rec, n_rec == d["recordings"])
-        add(lib + "_k", "K̄ 与设计稿一致（±0.0005）", d["k"], round(kbar, 4), abs(kbar - d["k"]) <= 0.0005)
+        add(lib + "_slices", "slice count matches design note §3.7", d["slices"], slices, slices == d["slices"])
+        add(lib + "_recordings", "recording count matches design note §3.7", d["recordings"], n_rec, n_rec == d["recordings"])
+        add(lib + "_k", "K̄ matches the design note (+-0.0005)", d["k"], round(kbar, 4), abs(kbar - d["k"]) <= 0.0005)
         add(lib + "_kdist_sum", "Σ k_dist == recordings", n_rec, sum(kd.values()), sum(kd.values()) == n_rec)
-        add(lib + "_qpool_zero", "Q_pool 合计 = 0（K̄=1 → floor(1/2)）", 0, qpool_total, qpool_total == 0)
-        add(lib + "_alpha_zero", "α 合计 = 0（A1≡A0，不跑 A1）", 0.0, round(alpha_total, 6), alpha_total == 0.0)
-        add(lib + "_alpha_mc_under_1pct", "单次真实抽签的期望 α ≤ 1%（多段录音只带来可忽略暴露）",
+        add(lib + "_qpool_zero", "Q_pool total = 0 (K̄=1 -> floor(1/2))", 0, qpool_total, qpool_total == 0)
+        add(lib + "_alpha_zero", "α total = 0 (A1≡A0, A1 is not run)", 0.0, round(alpha_total, 6), alpha_total == 0.0)
+        add(lib + "_alpha_mc_under_1pct", "expected α of one real draw <= 1% (multi-segment recordings add negligible exposure)",
             0.01, round(alpha_mc_mean, 6), alpha_mc_mean <= 0.01)
 
     gz = out["libraries"]["GZ_IsoTech"]
-    add("GZ_kdist_exact", "GZ k_dist 精确 = {1:2778,2:26,3:11,4:9}",
+    add("GZ_kdist_exact", "GZ k_dist exact = {1:2778,2:26,3:11,4:9}",
         {"1": 2778, "2": 26, "3": 11, "4": 9}, gz["k_dist"], gz["k_dist"] == {"1": 2778, "2": 26, "3": 11, "4": 9})
     exp_long = {"rows": 46, "extra_segments": 75, "train": 61, "test": 14}
     act_long = {"rows": gz_rows["rows"], "extra_segments": gz_rows["extra_segments"],
                 "train": gz_rows["by_split"].get("train", {}).get("segments"),
                 "test": gz_rows["by_split"].get("test", {}).get("segments")}
-    add("GZ_long_records", "GZ 长录音 46 行 / 多 75 段（train 61、test 14）", exp_long, act_long, act_long == exp_long)
+    add("GZ_long_records", "GZ long recordings: 46 rows / 75 extra segments (train 61, test 14)", exp_long, act_long, act_long == exp_long)
 
     out["gz_long_recordings"] = gz_rows
     out["domain"] = {lib: ("synth" if lib == "chest_falsetto" else "real") for lib in DESIGN}
@@ -186,7 +187,7 @@ def main():
     bad = [a for a in A if not a["ok"]]
     for a in bad:
         print("!! FAIL %s | expected=%s actual=%s" % (a["id"], a["expected"], a["actual"]))
-    print("断言 %d 条，失败 %d 条，all_pass=%s" % (len(A), len(bad), out["all_pass"]))
+    print("%d assertions, %d failed, all_pass=%s" % (len(A), len(bad), out["all_pass"]))
     sys.exit(0 if not bad else 1)
 
 

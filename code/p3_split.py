@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""code/p3_split.py — P3 的乐器分组 3 折切分（零 GPU，只读数据根）。
+"""code/p3_split.py — instrument-grouped 3-fold split for P3 (no GPU, reads the data root only).
 
-口径（`worklog/exp-plan/P3-预注册草案.md` v1，2026-11-05 冻结）：
-  1. 类宇宙 = `data/p3/universe_43.csv` 的 43 个技法类（剔除 6 个内容类标签后的主口径）。
-  2. 乐器名按 `data/p3/instrument_merge.csv` 的 `used=1` 行归一到 `merge_to`（212 → 204）。
-  3. 折分组 = 按乐器分组的 3 折：同一乐器的全部录音落在同一折；每条录音恰好被预测一次。
-     贪心：乐器按「切片数」降序，逐个放进当前切片数最少的一折。
-  4. 每折 f 的测试集 = 折 f 的录音；训练集 = 另外两折的录音（训练脚本按 fold 过滤）。
-  5. 主指标 = 三折 held-out 预测合并后的 pooled macro-F1（训练脚本合并，本脚本只切分）。
+Convention (P3 pre-registration draft, v1, frozen 2026-11-05):
+  1. Class universe = the 43 technique classes in `data/p3/universe_43.csv` (the primary convention after dropping the 6 content-class labels).
+  2. Instrument names are normalised to `merge_to` using the `used=1` rows of `data/p3/instrument_merge.csv` (212 → 204).
+  3. Fold grouping = 3 folds grouped by instrument: all recordings of one instrument land in the same fold; each recording is predicted exactly once.
+     Greedy: instruments in descending slice count, each placed into the fold that currently holds the fewest slices.
+  4. Test set of fold f = the recordings of fold f; training set = the recordings of the other two folds (the training script filters by fold).
+  5. Main metric = pooled macro-F1 over the merged held-out predictions of the three folds (the training script merges; this script only splits).
 
-断言（失败即停，exit 2）：
-  A1 乐器互斥且并集 = 全部乐器
-  A2 每条录音的 fold 与其乐器的 fold 一致
-  A3 每类每折 ≥1 条；缺失的 (类,折) 单列（不判失败，但必须披露）
-  A4 每类总支撑 ≥ 6
-  A5 同 recording_canonical 的重复音频同折
+Assertions (stop on failure, exit 2):
+  A1 instruments are mutually exclusive and their union = all instruments
+  A2 each recording's fold matches the fold of its instrument
+  A3 at least 1 slice per class per fold; missing (class, fold) cells are listed separately (not a failure, but must be disclosed)
+  A4 total support per class >= 6
+  A5 duplicate audio sharing a recording_canonical lands in the same fold
 
-产物：
-  data/p3/p3_splits.csv        每片一行（sample_id, recording_uid, recording_canonical,
-                               technique, instrument, instrument_canon, fold）
-  data/p3/fold_instruments.csv 乐器 → 折
-  data/p3/p3_folds.json        每折统计 + 类索引 + 断言 + split_hash
+Artefacts:
+  data/p3/p3_splits.csv        one row per slice (sample_id, recording_uid, recording_canonical,
+                               technique, instrument, instrument_canon, fold)
+  data/p3/fold_instruments.csv instrument -> fold
+  data/p3/p3_folds.json        per-fold statistics + class index + assertions + split_hash
 """
 import collections
 import csv
@@ -34,7 +34,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-import p3_universe  # noqa: E402  同目录，复用 load_rows / recording_cells / universe
+import p3_universe  # noqa: E402  same directory; reuses load_rows / recording_cells / universe
 
 OUT = os.path.join(os.path.dirname(HERE), "data", "p3")
 N_FOLDS = 3
@@ -47,7 +47,7 @@ def read_csv(path):
 
 
 def canon_map():
-    """instrument(原名) → 归一后的乐器名。只取 used=1 的行。"""
+    """instrument (original name) -> normalised instrument name. Only used=1 rows are taken."""
     m = {}
     for r in read_csv(os.path.join(OUT, "instrument_merge.csv")):
         if str(r.get("used", "")).strip() in ("1", "true", "True"):
@@ -56,7 +56,7 @@ def canon_map():
 
 
 def cell_counts(rows):
-    """(技法, 乐器) → 录音数（录音级去重，与 p3_universe 的格级口径同式）。"""
+    """(technique, instrument) -> number of recordings (deduplicated at recording level, same form as the p3_universe cell convention)."""
     seen = set()
     cnt = collections.Counter()
     for r in rows:
@@ -72,7 +72,7 @@ def cell_counts(rows):
 
 
 def build():
-    rows = p3_universe.load_rows()                       # CTIS 全部 43,054 片
+    rows = p3_universe.load_rows()                       # all 43,054 CTIS slices
     rec, cells = p3_universe.recording_cells(rows)
     universe, used = p3_universe.universe(cells, set(p3_universe.DROP))
     classes = [r["technique"] for r in universe]
@@ -111,7 +111,7 @@ def assign_folds(slices):
 
 
 def _score(slices, fold_inst, cls_total):
-    """目标 = 缺失 (类,折) 格数 × 1000 + 折间切片数极差（越小越好）。"""
+    """Objective = number of missing (class, fold) cells x 1000 + spread of slice counts across folds (lower is better)."""
     seen = collections.Counter()
     load = [0] * N_FOLDS
     for s in slices:
@@ -123,10 +123,10 @@ def _score(slices, fold_inst, cls_total):
 
 
 def refine_folds(slices, fold_inst, cls_total, iters=4000, seed=20261105):
-    """局部搜索：随机把一个乐器挪到另一折，接受更优解。
+    """Local search: randomly move one instrument to another fold, keep the move when the objective improves.
 
-    目的：贪心只均衡切片数，会把小类全挤到同一折（首跑 20 个缺失格）。
-    这里把「缺失 (类,折) 格」放进目标，让每折尽量覆盖全部 43 类。
+    Purpose: the greedy pass only balances slice counts and squeezes small classes into one fold (20 missing cells on the first run).
+    Here the "missing (class, fold) cells" term goes into the objective so each fold covers as many of the 43 classes as possible.
     """
     import random
     rng = random.Random(seed)
@@ -209,7 +209,7 @@ def main():
         h.update(("%s|%s|%s\n" % (s["sample_id"], s["recording_uid"], s["fold"])).encode())
 
     out = {
-        "rule": "按乐器分组的 3 折（同乐器同折，贪心按切片数均衡）",
+        "rule": "3 folds grouped by instrument (same instrument, same fold; greedy balancing by slice count)",
         "n_folds": N_FOLDS,
         "n_slices": len(slices),
         "n_recordings": len({s["recording_uid"] for s in slices}),
@@ -230,16 +230,16 @@ def main():
     with io.open(os.path.join(OUT, "p3_folds.json"), "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
 
-    print("切片 %d / 录音 %d / 乐器 %d（未归一 %d）/ 类 %d"
+    print("slices %d / recordings %d / instruments %d (unmerged %d) / classes %d"
           % (len(slices), out["n_recordings"], out["n_instruments"],
              out["n_instruments_unmerged"], len(classes)))
     for fd in range(1, N_FOLDS + 1):
         d = per_fold[str(fd)]
-        print("  折%d：%5d 片 / %4d 录音 / %3d 乐器 / 覆盖 %2d 类（训练侧 %4d 录音）"
+        print("  fold%d: %5d slices / %4d recordings / %3d instruments / %2d classes covered (%4d training recordings)"
               % (fd, d["slices"], d["recordings"], d["instruments"],
                  d["classes_covered"], d["train_recordings"]))
-    print("缺失 (类,折) 格：%d 个%s" % (len(missing),
-          "：" + "、".join("%s@折%d" % (c, f) for c, f in missing[:12]) if missing else ""))
+    print("missing (class, fold) cells: %d%s" % (len(missing),
+          ": " + ", ".join("%s@fold%d" % (c, f) for c, f in missing[:12]) if missing else ""))
     for k, v in ok.items():
         print("  %-32s %s" % (k, "PASS" if v else "FAIL"))
     print("split_hash %s" % out["split_hash"])

@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""机时核对：从驱动日志与 run 产物汇总实际 GPU 墙钟，对比设计稿的 10.6 GPU·h 估算。
+"""Compute audit: aggregate measured GPU wall clock from driver logs and run artifacts, against the 10.6 GPU-h estimate in the design note.
 
-数据来源（都是落盘事实，不重算训练）：
-  1. logs/e1b_driver.log / e1f_driver.log —— `[n/N] <lib> <arm> <bb> rc=<rc> <m>min <HH:MM:SS>`
-  2. logs/e1c_driver.log —— 同上（A2 臂，由 run_arms.sh 驱动）
-  3. runs_p3/**/fold*_result.json 的 `elapsed_s` —— P3 单折训练墙钟
+Sources (all on-disk facts; no training is re-run):
+  1. logs/e1b_driver.log / e1f_driver.log -- `[n/N] <lib> <arm> <bb> rc=<rc> <m>min <HH:MM:SS>`
+  2. logs/e1c_driver.log -- same format (A2 arm, driven by run_arms.sh)
+  3. `elapsed_s` in runs_p3/**/fold*_result.json -- P3 single-fold training wall clock
 
-输出 data/results/cost.json 与一张 Markdown 表；有缺口时显式列出，不做外推。
+Writes data/results/cost.json and a Markdown table; gaps are listed explicitly, never extrapolated.
 
-用法：python code/cost_audit.py
+Usage: python code/cost_audit.py
 """
 import glob
 import json
@@ -52,7 +52,7 @@ def main():
 
     def agg(rows, label):
         if not rows:
-            return {"label": label, "runs": 0, "gpu_h": 0.0, "ok": 0, "failed": 0, "note": "日志缺失"}
+            return {"label": label, "runs": 0, "gpu_h": 0.0, "ok": 0, "failed": 0, "note": "log missing"}
         gpu_h = sum(r["minutes"] for r in rows) / 60.0
         return {"label": label, "runs": len(rows), "gpu_h": round(gpu_h, 2),
                 "ok": sum(1 for r in rows if r["rc"] == 0),
@@ -62,29 +62,32 @@ def main():
     p3_h = sum(r["elapsed_s"] for r in p3) / 3600.0
     p3_group_h = len({(r["arm"], r["bb"], r["seed"]) for r in p3}) and p3_h
     summary = {
-        "E1b": agg(e1, "E1b A0/A1 五库×2骨干×3seed"),
-        "E1c": agg(e1c, "E1c A2 五库×2骨干×3seed"),
-        "E1f": agg(e1f, "E1f 负对照 3库×2骨干×{A0,A2}×seed0"),
-        "P3": {"label": "P3 三折×三臂×2骨干×2seed（训练墙钟，含折内评估前）",
+        "E1b": agg(e1, "E1b A0/A1, 5 libraries x 2 backbones x 3 seeds"),
+        "E1c": agg(e1c, "E1c A2, 5 libraries x 2 backbones x 3 seeds"),
+        "E1f": agg(e1f, "E1f negative control, 3 libraries x 2 backbones x {A0,A2} x seed0"),
+        "P3": {"label": "P3 three folds x three arms x 2 backbones x 2 seeds (training wall clock, before in-fold evaluation)",
                "runs": len(p3), "folds_done": len(p3),
                "gpu_h": round(p3_h, 2),
                "expected_folds": 36 * 3},
         "design_estimate_gpu_h": 10.6,
-        "note": ("E1b/E1c/E1f 的分钟数来自驱动日志（含每 run 的测试与封存）；P3 来自 fold 级 elapsed_s，"
-                 "不含探针与自助分析。两者都与设计稿的「10.6 GPU·h」不同口径：设计稿按 339–341 片/s 的吞吐估，"
-                 "实测吞吐更低（I/O + 小库的固定开销），故实跑机时更高——报告里应写实测值并说明口径。"),
+        "note": ("E1b/E1c/E1f minutes come from the driver logs (each run includes testing and sealing); "
+                 "P3 comes from fold-level elapsed_s and excludes probes and bootstrap analyses. "
+                 "Neither matches the caliber of the 10.6 GPU-h figure in the design note: that note assumed "
+                 "339-341 slices/s, whereas measured throughput is lower (I/O plus fixed overhead on the small "
+                 "libraries), so the measured machine time is higher; the report should quote the measured values "
+                 "and state the caliber."),
     }
     total = summary["E1b"]["gpu_h"] + summary["E1c"]["gpu_h"] + summary["E1f"]["gpu_h"] + summary["P3"]["gpu_h"]
     summary["total_measured_gpu_h"] = round(total, 2)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump(summary, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
 
-    print("实验        runs  完成  失败  实测 GPU·h")
+    print("experiment  runs  done  fail  measured GPU-h")
     for k in ("E1b", "E1c", "E1f", "P3"):
         s = summary[k]
         print("%-10s %5s %5s %5s %10s" % (k, s.get("runs", "-"), s.get("ok", s.get("folds_done", "-")),
                                           s.get("failed", "-"), s.get("gpu_h", "-")))
-    print("合计实测 %.2f GPU·h（设计稿估算 10.6）" % total)
+    print("total measured %.2f GPU-h (design-note estimate 10.6)" % total)
     print("[out] data/results/cost.json")
 
 

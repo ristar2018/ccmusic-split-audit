@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-"""manifest_neg.py — 三个 K̄≈1 负对照库的 sample_manifest（E1f 前置）
+"""manifest_neg.py -- sample_manifest for the three K̄≈1 negative-control libraries (E1f prerequisite)
 
-字段与 code/manifest.py 完全一致（直接复用其 COLUMNS），主样本五库的 manifest 不受影响。
+Fields are identical to code/manifest.py (its COLUMNS are reused directly); the manifests of the five main-sample libraries are untouched.
 
-覆盖（设计稿 §3.7 :296-310）：
+Coverage (design note §3.7 :296-310):
   chest_falsetto     1,280 片 / 1,280 录音 / K̄=1.00  mel: data/eval/mel/<序号>_<m|f>_<chest|falsetto>_<片位>.jpg
   erhu_playing_tech  1,253 片 / 1,253 录音 / K̄=1.00  mel: data/eval/<技法>__<录音>_mel.jpg（扁目录）
   GZ_IsoTech         2,899 片 / 2,824 录音 / K̄=1.03  mel: data/eval/mel/<split>/<技法>/<录音>_<段>.jpg
 
-Guzheng_Tech99 **不进本清单**（数据侧无逐录音类别层）：
-  该库 99 条录音各 1 片，逐音符 IPT 标注可得（10 类 / 15,838 音符），但每条录音的
-  主技法恒为 boxian（99/99），盘面没有「每条录音一个类别」的标签；K̄=1 且无类别的库
-  构不成分类任务。证据在 data/manifest/summary_neg.json 的 excluded 段。
-  → E1f 由设计稿的 16 runs 降为 12 runs（3 库 × 2 骨干 × {A0,A2} × 1 seed）。
+Guzheng_Tech99 **is excluded from this manifest** (the data side has no per-recording class layer):
+  the library holds 99 recordings with 1 slice each, and per-note IPT labels exist (10 classes / 15,838 notes), but the
+  dominant technique of every recording is boxian (99/99) and the disk has no "one class per recording" label; a library with
+  K̄=1 and no classes cannot form a classification task. The evidence is in the excluded section of data/manifest/summary_neg.json.
+  -> E1f drops from the 16 runs of the design note to 12 runs (3 libraries x 2 backbones x {A0,A2} x 1 seed).
 
-用法
-  python code/manifest_neg.py            # 三库全量
+Usage
+  python code/manifest_neg.py            # all three libraries
   python code/manifest_neg.py --lib chest_falsetto --limit 400
 """
 import argparse
@@ -28,7 +28,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from manifest import COLUMNS, sha1_file  # noqa: E402  字段与哈希口径与主样本完全一致
+from manifest import COLUMNS, sha1_file  # noqa: E402  fields and hash caliber identical to the main sample
 
 ROOT = r"D:/VSCode/Datasets"
 OUTDIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -106,7 +106,7 @@ def build_erhu(limit):
     base = os.path.join(ROOT, "erhu_playing_tech", "data", "eval")
     rows, bad = [], []
     for dp, f in walk_jpg(base):
-        if not f.lower().endswith("_mel.jpg"):   # 只取 mel 通道，chroma/cqt 不进主线
+        if not f.lower().endswith("_mel.jpg"):   # mel channel only; chroma/cqt stay out of the main line
             continue
         if "__" not in f:
             bad.append(f)
@@ -132,7 +132,7 @@ def build_gziso(limit):
         if not m:
             bad.append(f)
             continue
-        uid = "%s/%s" % (split, m.group("base"))   # 同一条长录音的多段共享 uid（这正是 K>1 的来源）
+        uid = "%s/%s" % (split, m.group("base"))   # segments of one long recording share a uid (this is exactly where K>1 comes from)
         rows.append(row("GZ_IsoTech", os.path.join(dp, f), tech, uid, int(m.group("seg")),
                         label_name=tech, top=split, mid=tech))
         if limit and len(rows) >= limit:
@@ -180,8 +180,8 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     libs = [x.strip() for x in a.lib.split(",") if x.strip()]
     summary = {"generated_by": "code/manifest_neg.py",
-               "scope": "负对照 3 库（E1f: A0 vs A2，1 seed，2 骨干）",
-               "design_ref": "report/聚焦版实验设计方案v2.8.md §3.7 :296-310",
+               "scope": "3 negative-control libraries (E1f: A0 vs A2, 1 seed, 2 backbones)",
+               "design_ref": "design note v2.8 §3.7 :296-310",
                "libraries": {}, "excluded": {}, "checks_vs_design": {}}
     bad_any = False
     for lib in libs:
@@ -204,15 +204,15 @@ def main():
             summary["checks_vs_design"][lib] = {"expect": e, "got": {
                 k: st[k] for k in ("classes", "recordings", "slices")}, "ok": ok}
             bad_any = bad_any or not ok
-        print("[%s] %d 片 / %d 录音 / %d 类 / K̄ %.4f / 坏名 %d → %s"
+        print("[%s] %d slices / %d recordings / %d classes / K̄ %.4f / bad names %d -> %s"
               % (lib, st["slices"], st["recordings"], st["classes"], st["kbar"] or 0,
                  st["bad_filename_count"], path), flush=True)
     summary["excluded"]["Guzheng_Tech99"] = {
-        "reason": "无逐录音类别层：99 条录音各 1 片，逐音符 IPT 有 10 类（boxian 11,860 / "
-                  "chanyin 1,994 / shanghua 756 / huazhi 663 / xianyin 类 208+209 / ...，共 15,838 音符），"
-                  "但每条录音的主技法恒为 boxian（99/99），无法构成单标签分类任务",
-        "evidence": "data/splits/v2/negcontrol/negcontrol.json + 逐 CSV 统计（2026-11-05）",
-        "consequence": "E1f 由 16 runs 降为 12 runs（3 库 × 2 骨干 × {A0,A2} × 1 seed）",
+        "reason": "no per-recording class layer: 99 recordings with 1 slice each, per-note IPT has 10 classes (boxian 11,860 / "
+                  "chanyin 1,994 / shanghua 756 / huazhi 663 / xianyin classes 208+209 / ..., 15,838 notes in total), "
+                  "but the dominant technique of every recording is boxian (99/99), so no single-label classification task is possible",
+        "evidence": "data/splits/v2/negcontrol/negcontrol.json + per-CSV statistics (2026-11-05)",
+        "consequence": "E1f drops from 16 runs to 12 runs (3 libraries x 2 backbones x {A0,A2} x 1 seed)",
     }
     sp = os.path.join(a.out, "summary_neg.json")
     with io.open(sp, "w", encoding="utf-8") as f:

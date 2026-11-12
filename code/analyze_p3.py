@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
-"""P3 分析：三折 pooled 指标 → 臂间配对 Δ（录音簇自助）+ 探针 AUC 对照。
+"""P3 analysis: three-fold pooled metrics -> paired Δ between arms (recording-cluster bootstrap) + probe AUC comparison.
 
-口径依据 worklog/exp-plan/P3-预注册草案.md（v1 冻结稿）：
-  - 主指标 = 三折 held-out 预测**合并**后的 pooled macro-F1（切片级为主、录音级并列）。
-  - 确认性族 1 项 = A1 vs A2 的 pooled macro-F1 差（Holm 不需要，单条）。
-  - A0 vs A1 只报点估计与 CI，标「捷径贡献上界」，不进确认性族。
-  - 诊断指标 = 冻结特征上乐器身份线性探针 AUC（A0 vs A2），配合 A1 作参照。
+Conventions per the P3 pre-registration draft (v1, frozen):
+  - Main metric = pooled macro-F1 over the **merged** held-out predictions of the three folds (slice-level primary, recording-level alongside).
+  - Confirmatory family has 1 item = the pooled macro-F1 difference A1 vs A2 (no Holm correction needed, single test).
+  - A0 vs A1 is reported as a point estimate and CI only, labelled "upper bound on the shortcut contribution", not in the confirmatory family.
+  - Diagnostic = linear probe AUC for instrument identity on frozen features (A0 vs A2), with A1 as the reference arm.
 
-自助法：按**录音簇**重采样 2000 次，同一份被抽到的录音索引贯穿所有臂与骨干
-（这是唯一的配对方式——A0 用切片级随机折、A1/A2 用留乐器折，切片顺序不同，
-但三折合并后覆盖的切片集合与录音集合相同）。
+Bootstrap: 2000 resamples by **recording cluster**, the same drawn recording indices spanning every arm and backbone
+(this is the only way to pair them — A0 uses slice-level random folds, A1/A2 use leave-instrument-out folds, so slice order differs,
+but after merging the three folds the slice set and the recording set covered are the same).
 
-用法：
+Usage:
   python code/analyze_p3.py --arms A0,A1 --base A1 --boot 2000
-输出：data/results/p3/{p3_metrics.csv, p3_delta.csv, p3_probe.csv, p3_summary.md}
+Output: data/results/p3/{p3_metrics.csv, p3_delta.csv, p3_probe.csv, p3_summary.md}
 """
 import argparse
 import csv
@@ -28,12 +28,12 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUNS = os.path.join(HERE, "runs_p3")
 OUT = os.path.join(HERE, "data", "results", "p3")
 LIBS = ["CTIS"]
-ARM_BASE = "A1"          # 预注册：主结论以「留乐器」A1 为参照
+ARM_BASE = "A1"          # pre-registered: the main conclusion uses the leave-instrument-out A1 as reference
 FOLDS = [1, 2, 3]
 
 
 def macro_f1(y, pred, n_classes):
-    """逐类 F1 后取平均；只统计「真值或预测至少出现一次」的类。"""
+    """Average the per-class F1; only classes that appear in the truth or the prediction are counted."""
     f1s = []
     for c in range(n_classes):
         tp = int(((pred == c) & (y == c)).sum())
@@ -48,7 +48,7 @@ def macro_f1(y, pred, n_classes):
 
 
 def load_run(arm, bb, seed):
-    """读三折 npz 并合并；返回 (probs, y, records) 或 None。"""
+    """Read the three fold npz files and merge them; returns (probs, y, records) or None."""
     d = os.path.join(RUNS, arm, bb, "seed%d" % seed)
     ps, ys, rs = [], [], []
     for f in FOLDS:
@@ -63,14 +63,14 @@ def load_run(arm, bb, seed):
 
 
 def recording_index(records):
-    """录音 → 列的索引数组，并按录音名字典序固定顺序（各臂共用同一簇索引）。"""
+    """recording -> column index array, ordered by recording name (every arm shares one cluster index)."""
     uniq = sorted(set(records.tolist()))
     pos = {r: i for i, r in enumerate(uniq)}
     return uniq, np.array([pos[r] for r in records], dtype=np.int64)
 
 
 def per_recording(prob, y, rec_idx, n_rec, n_classes):
-    """同录音概率平均后一票。"""
+    """Average the probabilities within a recording, then take one vote."""
     sums = np.zeros((n_rec, n_classes), dtype=np.float64)
     np.add.at(sums, rec_idx, prob)
     pred = sums.argmax(1)
@@ -90,14 +90,14 @@ def main():
     ap.add_argument("--base", default=ARM_BASE)
     ap.add_argument("--boot", type=int, default=2000)
     ap.add_argument("--seed", type=int, default=20261105)
-    ap.add_argument("--out", default="", help="输出目录；缺省 data/results/p3")
+    ap.add_argument("--out", default="", help="output directory; defaults to data/results/p3")
     a = ap.parse_args()
     arms = [s.strip() for s in a.arms.split(",") if s.strip()]
     base = a.base
     out_dir = a.out or OUT
     os.makedirs(out_dir, exist_ok=True)
 
-    # ---- 盘点 ----
+    # ---- inventory ----
     runs = defaultdict(dict)          # (arm,bb) -> seed -> (prob,y,rec)
     for p in sorted(glob.glob(os.path.join(RUNS, "*", "*", "seed*", "fold1.npz"))):
         arm, bb, sd = p.split(os.sep)[-4:-1]
@@ -106,10 +106,10 @@ def main():
         if got is not None:
             runs[(arm, bb)][seed] = got
     if not runs:
-        raise SystemExit("没有找到 runs_p3/ 下的三折产物")
+        raise SystemExit("no three-fold output found under runs_p3/")
     n_classes = int(max(v[1].max() for d in runs.values() for v in d.values())) + 1
 
-    # ---- 类别名 ----
+    # ---- class names ----
     cls_names = {}
     fu = os.path.join(HERE, "data", "p3", "p3_folds.json")
     if os.path.exists(fu):
@@ -117,7 +117,7 @@ def main():
         inv = {v: k for k, v in j.get("class_to_idx", {}).items()}
         cls_names = inv
 
-    # 录音簇的公共顺序：取所有臂/骨干/seed 的并集（三折合并后应完全相同）
+    # common order of recording clusters: the union over all arms/backbones/seeds (identical once the folds are merged)
     all_recs = set()
     for d in runs.values():
         for prob, y, rec in d.values():
@@ -125,7 +125,7 @@ def main():
     uniq = sorted(all_recs)
     pos = {r: i for i, r in enumerate(uniq)}
     n_rec = len(uniq)
-    print("[clusters] %d 个录音" % n_rec)
+    print("[clusters] %d recordings" % n_rec)
 
     rng = np.random.default_rng(a.seed)
     picks = [rng.integers(0, n_rec, n_rec) for _ in range(a.boot)]
@@ -134,7 +134,7 @@ def main():
     for arm, bb in sorted(runs):
         d = runs[(arm, bb)]
         seeds = sorted(d)
-        # 点估计
+        # point estimate
         s_slice, s_rec = [], []
         for s in seeds:
             prob, y, rec = d[s]
@@ -146,7 +146,7 @@ def main():
         pt_slice = float(np.mean(s_slice))
         pt_rec = float(np.mean(s_rec))
 
-        # 自助：每次重采样内先逐 seed 算 F1 再对 seed 取均值
+        # bootstrap: within each resample compute F1 per seed, then average over seeds
         boot_slice, boot_rec = np.zeros(a.boot), np.zeros(a.boot)
         cached = []
         for s in seeds:
@@ -182,7 +182,7 @@ def main():
         if arm != base and key in runs:
             bd = runs[key]
             bs = sorted(set(bd) & set(seeds))
-            # 每 seed 预先把「切片级预测 / 录音级聚合」都摊好，自助里只做加权
+            # per seed, lay out the slice-level predictions and the recording-level aggregates up front; the bootstrap only reweights
             prep = []
             for s in bs:
                 pa, ya, ra = d[s]
@@ -226,12 +226,12 @@ def main():
             print("[delta] %s − %s | %s : %+.2f [%+.2f, %+.2f]  (rec %+.2f [%+.2f, %+.2f])"
                   % (arm, base, bb, pt * 100, lo * 100, hi * 100, pt_r * 100, lo_r * 100, hi_r * 100))
 
-        # ---- 探针 ----
+        # ---- probe ----
         for s in seeds:
             pj = os.path.join(RUNS, arm, bb, "seed%d" % s)
             aucs, tops = [], []
             for f in FOLDS:
-                # 优先读 p3_probe.py 回填的新口径探针（训练侧 8:2 评估）
+                # prefer the new-convention probe back-filled by p3_probe.py (8:2 evaluation on the training side)
                 fp = os.path.join(pj, "fold%d_probe.json" % f)
                 if os.path.exists(fp):
                     pr = json.load(open(fp, encoding="utf-8"))
@@ -257,31 +257,31 @@ def main():
             w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
             w.writeheader()
             w.writerows(rows)
-        print("[out] %s (%d 行)" % (os.path.relpath(path, HERE), len(rows)))
+        print("[out] %s (%d rows)" % (os.path.relpath(path, HERE), len(rows)))
 
     dump(os.path.join(out_dir, "p3_metrics.csv"), rows_m)
     dump(os.path.join(out_dir, "p3_delta.csv"), rows_d)
     dump(os.path.join(out_dir, "p3_probe.csv"), rows_p)
 
-    # ---- 摘要 ----
-    lines = ["# P3 pooled 结果（%d 次录音簇自助）" % a.boot, "",
-             "主指标 pooled macro-F1（三折合并），基准臂 = %s。" % base, "",
-             "## 点估计", "", "| 臂 | 骨干 | 切片级 | 录音级 | seed 极差 |", "| :-- | :-- | --: | --: | --: |"]
+    # ---- summary ----
+    lines = ["# P3 pooled results (%d recording-cluster bootstraps)" % a.boot, "",
+             "Main metric pooled macro-F1 (three folds merged), reference arm = %s." % base, "",
+             "## Point estimates", "", "| arm | backbone | slice-level | recording-level | seed spread |", "| :-- | :-- | --: | --: | --: |"]
     for r in rows_m:
         lines.append("| %s | %s | %.4f | %.4f | %.3f |" % (r["arm"], r["bb"], r["macro_f1_slice"],
                                                            r["macro_f1_recording"], r["seed_spread_slice"]))
     if rows_d:
-        lines += ["", "## 配对 Δ（百分点）", "",
-                  "| 臂 − 基准 | 骨干 | Δ 切片级 [95% CI] | Δ 录音级 [95% CI] | p | 确认性 |",
+        lines += ["", "## Paired Δ (percentage points)", "",
+                  "| arm − base | backbone | Δ slice-level [95% CI] | Δ recording-level [95% CI] | p | confirmatory |",
                   "| :-- | :-- | --: | --: | --: | :-- |"]
         for r in rows_d:
             lines.append("| %s − %s | %s | %+.2f [%+.2f, %+.2f] | %+.2f [%+.2f, %+.2f] | %.4f | %s |"
                          % (r["arm"], r["base"], r["bb"], r["delta_slice"], r["ci_lo"], r["ci_hi"],
                             r["delta_rec"], r["rec_ci_lo"], r["rec_ci_hi"], r["p_boot"],
-                            "是" if r["confirmatory"] else "—"))
+                            "yes" if r["confirmatory"] else "—"))
     if rows_p:
-        lines += ["", "## 乐器身份探针（冻结特征上的线性分类器）", "",
-                  "| 臂 | 骨干 | seed | AUC(macro OvR) | top1 | 折数 |", "| :-- | :-- | --: | --: | --: | --: |"]
+        lines += ["", "## Instrument-identity probe (linear classifier on frozen features)", "",
+                  "| arm | backbone | seed | AUC(macro OvR) | top1 | folds |", "| :-- | :-- | --: | --: | --: | --: |"]
         for r in rows_p:
             lines.append("| %s | %s | %d | %s | %s | %d |" % (r["arm"], r["bb"], r["seed"],
                                                                r["probe_auc_mean"], r["probe_top1_mean"], r["folds"]))

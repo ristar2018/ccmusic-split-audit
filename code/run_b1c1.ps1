@@ -1,8 +1,8 @@
-# B1 + C1（外审 M7 / M1 的两个补充实验）
-#   C1：CTIS 无关录音注入对照 -> 2 骨干 x 3 seed = 6 runs（写 runs/，与其它 CTIS 臂同目录）
-#   B1：P3 录音分组折基线 A1r -> 2 骨干 x 2 seed x 3 折 = 12 runs（写 runs_p3/）
-#   两者串行跑，避免单卡争抢。
-# 用法：powershell -NoProfile -ExecutionPolicy Bypass -File code/run_b1c1.ps1 [tag]
+# B1 + C1 (the two supplementary experiments requested in external review M7 / M1)
+#   C1: CTIS unrelated-recording injection control -> 2 backbones x 3 seeds = 6 runs (written to runs/, same directory as the other CTIS arms)
+#   B1: P3 recording-grouped fold baseline A1r -> 2 backbones x 2 seeds x 3 folds = 12 runs (written to runs_p3/)
+#   The two run serially to avoid contention on a single GPU.
+# Usage: powershell -NoProfile -ExecutionPolicy Bypass -File code/run_b1c1.ps1 [tag]
 param([string]$Tag = "b1c1")
 Set-Location (Join-Path $PSScriptRoot "..")
 $py = "D:/XiaBao/AIArtDetect/envs/fapn/python.exe"

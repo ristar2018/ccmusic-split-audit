@@ -1,29 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""round2_macrodens.py — 宏平均分母口径的敏感性（CTIS，切片级 + 录音级，只读既有封存产物）。
+"""round2_macrodens.py — sensitivity of the macro-average denominator convention (CTIS, slice-level + recording-level, reads existing sealed outputs only).
 
-背景：两个脚本对「重抽样里缺席的类」处理不同——
-  * code/analyze_e1.py:96-106 `macro_f1(conf)`：每次调用重算 keep = 行和+列和>0（第 104 行），
-    缺席类**剔除**（动态 keep）。bootstrap 内逐次重抽样调用该函数（analyze_e1.py:215-218），
-    故 e1_delta.csv 的 CI 是动态 keep。
-  * code/sealed_eval_delta.py:143 `mask = np.bincount(y, minlength=C) > 0` 只在**全测试集**上算一次，
-    第 45 行 `f1[:, mask].mean(1)` 对每个重抽样沿用同一 mask；缺席类在该重抽样里
-    tp=fp=fn=0 → F1=0 计入分母（固定 mask / 固定分母）。
-  * `code/round2_a1_minus_c1.py` 走的是动态 keep：其 `macro_f1_batch`（第 79-90 行）在
-    第 87 行逐重抽样重算 keep，第 89 行 nanmean 只对出现的类取平均；主循环第 230 行调用。
+Background: two scripts treat "classes absent from a resample" differently —
+  * code/analyze_e1.py:96-106 `macro_f1(conf)`: recomputes keep = row sum + column sum > 0 on every call (line 104),
+    dropping absent classes (**dynamic keep**). The bootstrap calls that function on each resample (analyze_e1.py:215-218),
+    so the CIs in e1_delta.csv use dynamic keep.
+  * code/sealed_eval_delta.py:143 `mask = np.bincount(y, minlength=C) > 0` is computed once over the **whole test set**,
+    and line 45 `f1[:, mask].mean(1)` reuses that same mask for every resample; an absent class in that resample
+    has tp=fp=fn=0 → F1=0 counted in the denominator (**fixed mask / fixed denominator**).
+  * `code/round2_a1_minus_c1.py` uses dynamic keep: its `macro_f1_batch` (lines 79-90) recomputes keep
+    per resample on line 87, and the nanmean on line 89 averages only over classes that occur; the main loop calls it on line 230.
 
-本脚本把两种口径放在**同一组录音簇自助索引**（重放 analyze_e1 的 default_rng(20261105) 流，
-与 e1_delta.csv 同源）上逐格对比：CTIS × {alexnet, swin_t} × {A1−A0, A1−C1} × {切片级, 录音级}，
-2000 次。切片级与录音级的 Δ 定义同 round2_a1_minus_c1.py：每次重抽样内逐 seed 配对差，
-再对 3 seed 取均值；95% CI = 2.5/97.5 百分位；单位 pp。
+This script compares the two conventions cell by cell on **the same set of recording-cluster bootstrap indices** (replaying
+analyze_e1's default_rng(20261105) stream, the same source as e1_delta.csv): CTIS × {alexnet, swin_t} × {A1−A0, A1−C1} × {slice-level, recording-level},
+2000 resamples. Δ at slice and recording level is defined as in round2_a1_minus_c1.py: per-seed paired difference inside each resample,
+then averaged over the 3 seeds; 95% CI = 2.5/97.5 percentiles; units pp.
 
-输出：
-  data/results/human_review/round2/macrodens_sensitivity.csv           （切片级，8 行）
-  data/results/human_review/round2/macrodens_sensitivity_recording.csv（录音级，8 行）
-  data/results/human_review/round2/macrodens_sensitivity.json          （明细 + 署名口径对账）
+Output:
+  data/results/human_review/round2/macrodens_sensitivity.csv           (slice-level, 8 rows)
+  data/results/human_review/round2/macrodens_sensitivity_recording.csv (recording-level, 8 rows)
+  data/results/human_review/round2/macrodens_sensitivity.json          (detail + attribution reconciliation)
 
-只读：runs/sealed_eval/CTIS_*/seed*_qtest.npz、data/results/e1_delta.csv。
-用法：python code/round2_macrodens.py
+Reads only: runs/sealed_eval/CTIS_*/seed*_qtest.npz, data/results/e1_delta.csv.
+Usage: python code/round2_macrodens.py
 """
 import csv
 import io
@@ -35,8 +35,8 @@ import time
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import analyze_e1 as ae                     # noqa: E402  宏F1/切分/自助随机流的真源
-import round2_a1_minus_c1 as r2             # noqa: E402  批式实现与 legacy p 复用
+import analyze_e1 as ae                     # noqa: E402  source of truth for macro-F1 / splits / bootstrap RNG stream
+import round2_a1_minus_c1 as r2             # noqa: E402  reuse of the batched implementation and the legacy p
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUNS = os.path.join(ROOT, "runs", "sealed_eval")
@@ -56,7 +56,7 @@ COLS = ["library", "bb", "contrast", "scheme", "point", "ci_lo", "ci_hi", "width
 
 
 def masked_f1_batch(conf, mask):
-    """(B,C,C) 混淆矩阵 → (B,) 宏F1，固定分母：缺席类 F1=0 计入平均（brick 口径）。"""
+    """(B,C,C) confusion matrix -> (B,) macro-F1, fixed denominator: an absent class gets F1=0 and stays in the mean (brick convention)."""
     tp = np.diagonal(conf, axis1=1, axis2=2).astype(np.float64)
     fp = conf.sum(axis=1) - tp
     fn = conf.sum(axis=2) - tp
@@ -66,7 +66,7 @@ def masked_f1_batch(conf, mask):
 
 
 def batch_conf(pred, y, nc, W):
-    """(B,nc,nc) 混淆矩阵：W (B,n) 为每条样本的簇重数（切片级 W=切片权重，录音级 W=簇重数）。"""
+    """(B,nc,nc) confusion matrix: W (B,n) holds each sample's cluster multiplicity (slice level W=slice weight, recording level W=cluster multiplicity)."""
     flat = y * nc + pred
     out = np.empty((W.shape[0], nc * nc))
     for st in range(0, W.shape[0], 200):
@@ -82,12 +82,12 @@ def main():
     ae.RUNS = RUNS
     data = ae.discover()
 
-    # ---- 重放 analyze_e1 的随机流，取 CTIS 的簇重数（切片级/录音级共用）----
+    # ---- replay analyze_e1's RNG stream and take the CTIS cluster multiplicities (shared by slice and recording level) ----
     rng = np.random.default_rng(SEED)
     mult = None
     for lib in sorted(data):
         per_arm = data[lib]
-        if ("A0", "alexnet") not in per_arm:        # 与 analyze_e1.py:155-158 同条件
+        if ("A0", "alexnet") not in per_arm:        # same condition as analyze_e1.py:155-158
             continue
         z0 = sorted(per_arm[("A0", "alexnet")])[0]
         _, y_l, r_l = ae.load_npz(per_arm[("A0", "alexnet")][z0])
@@ -96,16 +96,16 @@ def main():
         if lib != "CTIS":
             continue
         mult = np.stack([np.bincount(p, minlength=recs.size) for p in pick])
-        W = mult[:, rec_idx]                        # (B, n) 切片级簇权重
+        W = mult[:, rec_idx]                        # (B, n) slice-level cluster weights
         y_ref, rec_ref, nrec = y_l, r_l, recs.size
-        rec_idx_ref = rec_idx                       # 后续库的 np.unique 会覆盖 rec_idx，先钉住
+        rec_idx_ref = rec_idx                       # np.unique for later libraries overwrites rec_idx, so pin it first
     if mult is None:
-        sys.exit("未找到 CTIS 封存产物")
+        sys.exit("no CTIS sealed output found")
     nc = int(y_ref.max()) + 1
 
-    mask_s = np.bincount(y_ref, minlength=nc) > 0      # 切片级固定 mask（sealed_eval_delta.py:143）
-    # 录音级固定 mask：由录音级标签分布决定（与 brick 对录音级计数同口径）
-    print("[口径] nc=%d，切片级 mask 覆盖 %d 类，录音簇=%d"
+    mask_s = np.bincount(y_ref, minlength=nc) > 0      # slice-level fixed mask (sealed_eval_delta.py:143)
+    # recording-level fixed mask: fixed by the recording-level label distribution (same convention as the brick recording counts)
+    print("[convention] nc=%d, slice-level mask covers %d classes, recording clusters=%d"
           % (nc, int(mask_s.sum()), nrec))
 
     rows = {"slice": [], "recording": []}
@@ -178,7 +178,7 @@ def main():
                          cell["fixed_mask"]["width"], cell["width_diff_pp"], cell["flip"]))
             detail["levels"]["%s|%s-%s" % (bb, num, ref)] = cell_all
 
-    # ---- 署名口径：A1−A0 切片级 CI 与已发表 e1_delta.csv 对账，确认发表值是动态 keep ----
+    # ---- attribution: reconcile the A1−A0 slice-level CI against the published e1_delta.csv, confirming the published values use dynamic keep ----
     pub = {}
     with io.open(PUB_A1A0, encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
@@ -206,9 +206,9 @@ def main():
             w.writerows(rows[level])
     with io.open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(detail, f, ensure_ascii=False, indent=2)
-    print("[署名] 已发表 A1−A0 切片 CI 与 dynamic_keep 逐位相同：%s"
+    print("[attribution] published A1−A0 slice CI identical to dynamic_keep bit for bit: %s"
           % {k: v["matches_dynamic"] for k, v in detail["attribution"].items()})
-    print("写盘: %s | %s" % (OUT_SLICE, OUT_REC))
+    print("wrote: %s | %s" % (OUT_SLICE, OUT_REC))
 
 
 if __name__ == "__main__":

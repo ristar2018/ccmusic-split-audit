@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""生成聚焦版方案的三臂设计示意图（Pillow，无 matplotlib）。"""
+"""Render the three-arm design schematic of the focused design note (Pillow only, no matplotlib)."""
 import os
 from PIL import Image, ImageDraw, ImageFont
 
@@ -29,9 +29,9 @@ F_SMALL = f(17)
 F_CAP = f(18)
 
 PANELS = [
-    (40, "A0  干净 · 匹配", "训练集不含目标录音的任何切片", None),
-    (640, "A1  暴露 · 匹配", "训练集含目标录音的兄弟切片", "切片数与录音数与 A0 相同"),
-    (1240, "A2  默认协议", "切片随机 80/10/10", None),
+    (40, "A0  clean · matched", "training set holds no slice of the target recording", None),
+    (640, "A1  exposed · matched", "training set holds sibling slices of the target recording", "same slice and recording counts as A0"),
+    (1240, "A2  default protocol", "slices split at random 80/10/10", None),
 ]
 PW, PH, PY = 580, 400, 150
 
@@ -42,7 +42,7 @@ for px, title, sub, note in PANELS:
     if note:
         d.text((px + 24, PY - 34), note, font=F_SMALL, fill=(150, 92, 30))
 
-# 卡片几何
+# card geometry
 CARD_W, CARD_H = 118, 250
 CARD_Y = PY + 96
 SQ, GAP = 34, 14
@@ -64,31 +64,31 @@ def card(px, idx, cells, target=False, label=None):
     d.text((x + CARD_W / 2, CARD_Y + CARD_H + 26), label, font=F_SMALL, fill=MUTED, anchor="mm")
 
 
-# A0：3 个干净录音 + 1 个目标录音（2 测试 + 2 未用）
-card(40, 0, ["train"] * 5, label="录音 C1")
-card(40, 1, ["train"] * 5, label="录音 C2")
-card(40, 2, ["train"] * 3, label="录音 C3")
+# A0: 3 clean recordings + 1 target recording (2 test + 2 unused)
+card(40, 0, ["train"] * 5, label="recording C1")
+card(40, 1, ["train"] * 5, label="recording C2")
+card(40, 2, ["train"] * 3, label="recording C3")
 card(40, 3, ["test", "test", "pool", "pool", "pool"], target=True, label="Q1")
 
-# A1：2 个干净录音（各 5 片）+ 1 个目标录音（3 训练 + 2 测试），训练切片与录音数同 A0
-card(640, 0, ["train"] * 5, label="录音 C1")
-card(640, 1, ["train"] * 5, label="录音 C2")
+# A1: 2 clean recordings (5 slices each) + 1 target recording (3 train + 2 test); training slice and recording counts match A0
+card(640, 0, ["train"] * 5, label="recording C1")
+card(640, 1, ["train"] * 5, label="recording C2")
 card(640, 2, ["train", "train", "train", "test", "test"], target=True, label="Q1")
 
-# A2：切片随机划分，同一录音的训练/测试切片混排
-card(1240, 0, ["train", "train", "test", "train", "train"], label="录音 1")
-card(1240, 1, ["train", "test", "train", "train", "test"], label="录音 2")
-card(1240, 2, ["test", "train", "train", "train", "train"], label="录音 3")
+# A2: slices split at random, train/test slices of the same recording interleaved
+card(1240, 0, ["train", "train", "test", "train", "train"], label="recording 1")
+card(1240, 1, ["train", "test", "train", "train", "test"], label="recording 2")
+card(1240, 2, ["test", "train", "train", "train", "train"], label="recording 3")
 card(1240, 3, ["train", "train", "test", "train", "pool"], target=True, label="Q1")
 
-# 顶部说明
-d.text((40, 34), "三臂设计：同一测试面板 Q_test，只改训练集与测试面板的源关系", font=F_TITLE, fill=INK)
-d.text((40, 80), "m_c = 每类训练切片数，n_c = 每类训练录音数；A0 与 A1 在这两个量上逐类相等",
+# top caption
+d.text((40, 34), "Three-arm design: one shared test panel Q_test; only the source relation between training set and test panel changes", font=F_TITLE, fill=INK)
+d.text((40, 80), "m_c = training slices per class, n_c = training recordings per class; A0 and A1 are equal class by class on both",
        font=F_SMALL, fill=MUTED)
 
-# 图例
+# legend
 lx, ly = 40, PY + PH + 54
-items = [("训练切片", TRAIN), ("Q_test 测试切片", TEST), ("Q_pool 未用切片", (255, 255, 255)), ("橙框 = 目标录音 Q", None)]
+items = [("train slice", TRAIN), ("Q_test test slice", TEST), ("Q_pool unused slice", (255, 255, 255)), ("orange box = target recording Q", None)]
 for text, color in items:
     if color is not None:
         d.rounded_rectangle([lx, ly, lx + 26, ly + 26], radius=5, fill=color, outline=EDGE, width=2)
@@ -97,8 +97,8 @@ for text, color in items:
     d.text((lx + 36, ly + 13), text, font=F_SMALL, fill=INK, anchor="lm")
     lx += 36 + d.textlength(text, font=F_SMALL) + 46
 
-d.text((40, H - 44), "每个面板：测试集恒为 Q_test（偶数哈希切片）；A1 用 Q_pool（奇数哈希切片）等量替换 A0 的干净训练切片；"
-                     "A2 的训练与自测按切片随机划分，另在 Q_test 上评测以与其他臂可比。",
+d.text((40, H - 44), "Each panel: the test set is always Q_test (even-hash slices); A1 replaces an equal number of A0 clean training slices with Q_pool (odd-hash) slices; "
+                     "A2 splits training and self-test at random by slice and is also evaluated on Q_test so that it is comparable with the other arms.",
        font=F_CAP, fill=MUTED)
 
 os.makedirs("report/fig", exist_ok=True)

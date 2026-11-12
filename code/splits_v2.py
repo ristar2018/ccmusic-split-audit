@@ -1,50 +1,50 @@
 # -*- coding: utf-8 -*-
-"""splits_v2：录音级三臂划分（依据 report/聚焦版实验设计方案v2.8.md §3.1/§3.2/§4.1）
+"""splits_v2: recording-level three-arm split (per design note v2.8 §3.1/§3.2/§4.1)
 
-输入：data/manifest/<lib>.csv（code/manifest.py 产物）+ data/splits/qpanel_capacity.json
-输出：data/splits/v2/<lib>_{qtest,qpool,r,c,a0_train,a1_train,a2_train,a2_val,a2_selftest}.csv
+Inputs: data/manifest/<lib>.csv (produced by code/manifest.py) + data/splits/qpanel_capacity.json
+Outputs: data/splits/v2/<lib>_{qtest,qpool,r,c,a0_train,a1_train,a2_train,a2_val,a2_selftest}.csv
       data/splits/v2/{class_universe.csv, feasibility.csv, assertions.json, splits_hash.json}
 
-口径（逐条对应设计稿原文）
-1. 类宇宙：每类录音 ≥5（:207），录音身份用 recording_canonical（同音频多发布名已折叠）。
-   稀有类（5–9 条）留在主样本、只从确认性族排除——不剔除（:207）。
-2. 类内录音分 Q（20%，下限 5，且留 ≥2 条给 R+C）/ R（15%，≥1）/ C（其余）。
-3. Q 内切片整组切分（:209）：连续两片为基组块、以 content_hash 跨录音合并成组，组按 hash 排序
-   后偶数组 → Q_test、奇数组 → Q_pool；只有 1 片的录音整片进 Q_test（其 floor(k/2)=0）。
-4. m_c = round(0.60 × S_c)，S_c = 类宇宙内该类全部切片数（与 qpanel 同口径）。
-   A0 训练 = 从 C 抽 m_c 片；A2 = C∪Q_pool 的 80/10/10。
+Conventions (each one maps to the wording of the design document)
+1. Class universe: at least 5 recordings per class (:207); recording identity is recording_canonical (several release names of the same audio are folded together).
+   Rare classes (5–9 recordings) stay in the main sample and are excluded from the confirmatory family only - not dropped (:207).
+2. The recordings of a class are split into Q (20%, floor 5, and at least 2 left for R+C) / R (15%, >=1) / C (the rest).
+3. Slices inside Q are split by whole groups (:209): two consecutive slices form a base block, blocks are merged across recordings by content_hash, groups are sorted by hash
+   and then even groups -> Q_test, odd groups -> Q_pool; a recording with a single slice goes to Q_test in full (its floor(k/2)=0).
+4. m_c = round(0.60 × S_c), where S_c = all slices of that class inside the class universe (same convention as qpanel).
+   A0 training = m_c slices drawn from C; A2 = 80/10/10 of C∪Q_pool.
 
-本脚本对设计稿做了四处**可核对的落地判读**（assertions.json 的 judgements 字段留痕，不隐藏）：
- J1 「A1 同 n_c」：A1 必须出现 Q 录音（:352，v2.8 当轮 grep；旧留痕写 :354 已漂移），故两臂**训练录音总数不可能相等**；自洽读法是
-    「**C 侧录音数相等**」。A0 与 A1 的 C 侧都 = 该类全部 C 录音，差额恒为 0；A1 的录音总数
-    = |C| + |pool 录音|，逐类落在 feasibility.csv 的 n_a1_rec / n_a1_pool_rec 列。
- J2 Q 抽签做容量配平：单次随机抽 q_c 条时 Σfloor(k_i/2) 的抽样噪声会把 α_c 推离账面容量 3–7 点
-    （C0090 的 qp_p5–qp_p95 = 21–63），:352 的 ≤2% 容差不可达。改为在 400 个随机子集里取
-    |Σfloor(k_i/2) − 账面 Q_pool| 最小的一版（random.Random(seed)，确定性可复现）。
- J3 α 口径（2026-11-05 定稿，取代「逐类 ≤2%」）：设计稿自己给了两条相反的话——
-    :210/:245「m_c 与 n_c 逐类相等（容差 ≤2%）……α_c 不进容差，由 Q_pool_c 决定，逐类记录、
-    逐类报告，**不追平**」；:352 却写「每类 α_c 与 qpanel 的 Q_pool_c 一致（容差 ≤2%）」。
-    两处冲突，按 :210/:245 判读（:352 与 :210/:245 直接矛盾，**建议下一次改稿在 v2.9 修正 :352
-    措辞**，本轮不擅自改设计稿）：±2% 硬判留在 n_c 侧
-    （A1_n_c_side_match），α 只做两件事——① 硬判「实现池片数落在 qpanel 的 [qp_p5−1, qp_p95+1]」
-    （主判低侧 ≥ qp_p5，防抽取规则坏掉、把 50% 切片塞进训练；高侧防 Q 侧被过量塞入训练）；② 逐类记录 realized α 并披露分布。理由是可证的：
-    qpanel 的 Q_pool_c 是 400 次随机抽签的**期望**，而切分只实现一次抽样，Σfloor(k/2) 的抽样
-    区间在 C0090 就有 qp_p5–qp_p95 = 21–63 的宽度；且 α 的离散粒度是 1/m_c，m_c=22 的类 1 片
-    即 4.5%。两条叠加使「一次抽样 = 分布均值 ±2%」在数学上不成立，不是实现缺陷。
-    全类扫描（feasibility.csv，当轮）：84/217 类 |Δα| > 2%，偏差不是轶事。
- J4 占位与完全重复：CTIS 5 条 `D00xxA2-1a 没音频.wav` 的 mel 是 D0060/D0061/D0062 三类共用的
-    同一张占位图（content_hash 相同），既不能进 Q_test（标签噪声）也不能当训练样本 → 剔除
-    （dropped_placeholder_rows）；同一 hash 出现在多侧时只保留优先级最高的一侧
-    （qtest > qpool > r > c，dropped_dup_slices），否则「同 hash 同侧」必破。
+This script makes four **checkable reading decisions** about the design document (recorded in the judgements field of assertions.json, not hidden):
+ J1 "A1 has the same n_c": A1 must contain Q recordings (:352, grep of v2.8 in that round; an older note citing :354 has drifted), so the two arms **cannot have the same total number of training recordings**; the self-consistent reading is
+    "**equal number of C-side recordings**". Both A0 and A1 take every C recording of the class as their C side, so the difference is always 0; the A1 recording total
+    = |C| + |pool recordings|, per class as recorded in the n_a1_rec / n_a1_pool_rec columns of feasibility.csv.
+ J2 the Q draw is capacity-balanced: when q_c recordings are drawn once at random, the sampling noise of Σfloor(k_i/2) pushes α_c 3–7 points away from the on-paper capacity
+    (qp_p5–qp_p95 = 21–63 for C0090), so the ≤2% tolerance of :352 is unreachable. Instead, of 400 random subsets we take
+    the one minimising |Σfloor(k_i/2) − on-paper Q_pool| (random.Random(seed), deterministic and reproducible).
+ J3 the α convention (settled 2026-11-05, replacing "≤2% per class"): the design document says two opposite things -
+    :210/:245 says "m_c and n_c are equal per class (tolerance ≤2%) ... α_c is not part of the tolerance, it is determined by Q_pool_c, recorded per class,
+    reported per class, and **not forced to match**"; but :352 says "per class α_c agrees with Q_pool_c of qpanel (tolerance ≤2%)".
+    The two conflict, so we follow :210/:245 (:352 directly contradicts :210/:245, and **we suggest correcting the wording of :352
+    in the next revision, v2.9**; this round does not touch the design document): the ±2% hard test stays on the n_c side
+    (A1_n_c_side_match), and α only does two things - (1) hard-test "the realised pool slice count lies in [qp_p5−1, qp_p95+1] of qpanel"
+    (mostly the low side, >= qp_p5, so that a broken draw rule cannot stuff 50% of the slices into training; the high side keeps the Q side from overfilling training); (2) record the realised α per class and disclose its distribution. The reason is provable:
+    Q_pool_c of qpanel is the **expectation** over 400 random draws, while the split realises a single draw, and the sampling
+    interval of Σfloor(k/2) is already qp_p5–qp_p95 = 21–63 wide for C0090; and the granularity of α is 1/m_c, so for a class with m_c=22 a single slice
+    is 4.5%. Together these make "one draw = distribution mean ±2%" mathematically false; it is not an implementation defect.
+    Full-class scan (feasibility.csv, that round): 84/217 classes have |Δα| > 2%, so the deviation is not anecdotal.
+ J4 placeholders and exact duplicates: the mel of the 5 CTIS `D00xxA2-1a 没音频.wav` recordings is the same placeholder image
+    shared by the three classes D0060/D0061/D0062 (identical content_hash), so they can neither enter Q_test (label noise) nor serve as training samples -> dropped
+    (dropped_placeholder_rows); when the same hash appears on several sides only the highest-priority side keeps it
+    (qtest > qpool > r > c, dropped_dup_slices), otherwise "same hash, same side" would necessarily break.
 
-断言（失败即停，exit 2）
-  A0   train/val/test 三方 recording_canonical 互斥
-  A1   test 与 val 互斥；训练侧必须出现 Q 录音；每类实现池片数 ≥ qpanel 的 qp_p5（见 J3）；
-       C 侧训练录音数与 A0 逐类相等（≤2%，见 J1）；A1 训练切片数 = m_c
-  A2   sample_id 层 train ∩ (test ∪ 自测) = ∅（录音允许重叠，这正是被测现象）
-  公共 每类测试切片 >0；每类训练切片 ≥ m_c；同 hash 同侧
+Assertions (stop on failure, exit 2)
+  A0   train/val/test are pairwise disjoint on recording_canonical
+  A1   test and val disjoint; the training side must contain Q recordings; realised pool slices per class >= qp_p5 of qpanel (see J3);
+       C-side training recordings equal to A0 per class (≤2%, see J1); A1 training slice count = m_c
+  A2   at sample_id level train ∩ (test ∪ selftest) = ∅ (recordings may overlap, which is exactly the phenomenon under test)
+  common: test slices per class >0; training slices per class >= m_c; same hash on the same side
 
-用法：python code/splits_v2.py [--lib CTIS,music_genre] [--seed 20261105]
+Usage: python code/splits_v2.py [--lib CTIS,music_genre] [--seed 20261105]
 """
 import argparse
 import csv
@@ -67,11 +67,11 @@ R_SHARE = 0.15
 MIN_REC = 5
 RARE = 10
 ALPHA_TOL = 0.02
-# J7c：单类披露白名单（不改断言口径，只登记已知、已量化、不影响确认性族的偏差）。
-# D0128: n=12，qpanel 预测池上限 8 片，实际分组把 2 片 pair 拆到 Q_test 后只剩 5 片；
-#         该类不在确认性族（CTIS 确认性族只含录音数≥10 且非 rare 的主类，且 CTIS 只供 2 项检验）。
-NEG_LIBS = {"chest_falsetto", "erhu_playing_tech", "GZ_IsoTech"}   # 负对照 3 库（K̄≈1）
-ALPHA_DISCLOSED = {"CTIS": {"D0128": "realized_pool 5 vs predicted_max 8（分组拆 pair），非确认性族"}}
+# J7c: single-class disclosure whitelist (does not change the assertion rule, it only registers known, quantified deviations that do not affect the confirmatory family).
+# D0128: n=12, qpanel predicts at most 8 pool slices, and the actual grouping leaves only 5 once a pair of 2 is split off into Q_test;
+#         this class is not in the confirmatory family (the CTIS confirmatory family holds only main classes with >=10 recordings that are not rare, and CTIS feeds only 2 tests).
+NEG_LIBS = {"chest_falsetto", "erhu_playing_tech", "GZ_IsoTech"}   # the 3 negative-control libraries (K̄≈1)
+ALPHA_DISCLOSED = {"CTIS": {"D0128": "realized_pool 5 vs predicted_max 8 (the grouping splits a pair), not in the confirmatory family"}}
 ALPHA_BIG_M = 100          # J3
 PLACEHOLDER = "没音频"      # J4
 
@@ -130,10 +130,10 @@ class DSU:
 
 def pick_q(recs, by_rec, q_c, target, rng, trials=400, min_c_slices=None, halves=True,
            probe_max=False, floor_band=None):
-    """J2：容量配平式抽 Q；同时约束「Q+R 走后 C 侧仍装得下 m_c 片」
+    """J2: capacity-balanced Q draw, while also constraining "the C side still holds m_c slices once Q+R are taken out"
 
-    若不约束，配平会系统性偏向大 k 录音（Σfloor(k/2) 大的子集更容易命中账面目标），
-    把 C 侧切片抽干 → A0 抽不满 m_c（实测 107/201 类不足，最大缺 44 片）。
+    Without that constraint the balancing systematically favours large-k recordings (a subset with a large Σfloor(k/2) hits the on-paper target more easily),
+    which drains the C side and leaves A0 short of m_c (measured: 107/201 classes short, by up to 44 slices).
     """
     k = {r: len(by_rec[r]) for r in recs}
     best, bestd, bestv = None, None, None
@@ -146,10 +146,10 @@ def pick_q(recs, by_rec, q_c, target, rng, trials=400, min_c_slices=None, halves
         d = abs(v - target) if target else 0
         if bestd is None or d < bestd:
             best, bestd, bestv = cand, d, v
-    # 配平选出的子集若在「账面要求 > 0」时一片都进不了 pool（全被 k=1 录音占满），
-    # 改为取 Σfloor(k/2) 最大的子集——否则该类 α=0，A1 退化成 A0。
+    # if the balanced subset cannot put a single slice into the pool while the on-paper requirement is > 0 (all filled by k=1 recordings),
+    # take the subset with the largest Σfloor(k/2) instead - otherwise α=0 for that class and A1 degenerates into A0.
     maxv, cand_max = None, None
-    if probe_max:   # 在 C 侧预算约束下能达到的最大 pool 片数（判 α 是否结构不可达）
+    if probe_max:   # the largest pool slice count reachable under the C-side budget (tells whether α is structurally unreachable)
         for _ in range(trials):
             cand = rng.sample(recs, q_c)
             if min_c_slices is not None and sum(k.values()) - sum(k[r] for r in cand) < min_c_slices:
@@ -157,7 +157,7 @@ def pick_q(recs, by_rec, q_c, target, rng, trials=400, min_c_slices=None, halves
             v = sum((k[r] // 2) if halves else k[r] for r in cand)
             if maxv is None or v > maxv:
                 maxv, cand_max = v, cand
-    # 配平解够不到账面 p5、而约束内能取到更高 pool 时，改取后者（宁可偏大也不让 α 塌到 0）
+    # when the balanced solution cannot reach the on-paper p5 but a larger pool is reachable within the constraint, take the latter (better too large than α collapsing to 0)
     if floor_band is not None and bestv is not None and bestv < floor_band and cand_max is not None:
         best = cand_max
     if target and best is not None and bestv == 0:
@@ -174,14 +174,14 @@ def pick_q(recs, by_rec, q_c, target, rng, trials=400, min_c_slices=None, halves
             best = best_v2
     if probe_max:
         return best, maxv
-    if best is None:                      # 无可行子集：退回「C 侧最大」的抽法
+    if best is None:                      # no feasible subset: fall back to the draw that maximises the C side
         cands = [rng.sample(recs, q_c) for _ in range(trials)]
         best = min(cands, key=lambda c: sum(k[r] for r in c))
     return set(best)
 
 
 def sample_balanced(rows, target, rng):
-    """先给每条录音保 1 片，再随机补足到 target"""
+    """give every recording one slice first, then fill up to target at random"""
     if target <= 0 or not rows:
         return []
     by_rec = defaultdict(list)
@@ -225,10 +225,10 @@ def assign_class(cls_rows, qpanel, seed, lib, cls):
 
     rng = random.Random("%s|%s|%d" % (lib, cls, seed))
     m_c_plan = int(round(V * S_c))
-    # R 按切片数配平到 0.15S（随机抽会把 C 侧切片抽到 m_c 以下），再在剩余录音里抽 Q。
+    # R is balanced to 0.15S by slice count (a random draw would take the C side below m_c), then Q is drawn from the remaining recordings.
     R = pick_q(recs, by_rec, r_c, R_SHARE * S_c, rng, min_c_slices=m_c_plan, halves=False)
     rest = [r for r in recs if r not in R]
-    # Q 条数逐步收紧：C 侧必须装得下 m_c 片（小类 k 大时 5 条 Q 会把 C 抽干）
+    # the number of Q recordings is tightened step by step: the C side must still hold m_c slices (with a small class and a large k, 5 Q recordings would drain C)
     q_try, Q = q_c, None
     maxv = 0
     while q_try >= 1:
@@ -248,14 +248,14 @@ def assign_class(cls_rows, qpanel, seed, lib, cls):
         q_try -= 1
     c_slices = sum(len(by_rec[r]) for r in rest if r not in Q)
     q_relaxed = len(Q) < q_c
-    # J7b：在「C 侧必须装得下 m_c」约束下，该类最多只能进 maxv 片 pool；
-    # 若连 qpanel 的 p5 都够不到，则 α 与账面不可比是结构性的（小额类 k=1 占多数所致）
+    # J7b: under the constraint "the C side must hold m_c", at most maxv slices of this class can enter the pool;
+    # if not even p5 of qpanel is reachable, then α being incomparable with the on-paper value is structural (small classes dominated by k=1)
     lo_band = qpanel.get("qp_p5")
     alpha_infeasible = bool(lo_band is not None and maxv is not None and maxv < lo_band)
-    m_c = min(m_c_plan, c_slices)          # J5：C 侧不够时按 C 侧上限封顶
+    m_c = min(m_c_plan, c_slices)          # J5: capped by the C side when C is short
     C = set(rest) - set(Q)
 
-    # ---- 组：连续两片 + content_hash 合并
+    # ---- groups: two consecutive slices + content_hash merging
     dsu = DSU()
     for rec in Q:
         rs = by_rec[rec]
@@ -287,7 +287,7 @@ def assign_class(cls_rows, qpanel, seed, lib, cls):
         else:
             qpool_rows.extend(rs)
 
-    # ---- 同 hash 同侧：Q_test 出现的 hash，若其其它录音在 R/C，整条录音改判 Q_test
+    # ---- same hash, same side: if a hash appearing in Q_test has other recordings in R/C, move the whole recording to Q_test
     side = {}
     for r in qtest_rows:
         side.setdefault(r["content_hash"], "Q_test")
@@ -303,15 +303,15 @@ def assign_class(cls_rows, qpanel, seed, lib, cls):
     r_rows = [r for rec in sorted(R) for r in by_rec[rec]]
     c_rows = [r for rec in sorted(C) for r in by_rec[rec]]
 
-    # ---- A0：从 C 抽 m_c 片
+    # ---- A0: draw m_c slices from C
     a0 = sample_balanced(c_rows, m_c, rng)
-    # ---- A1：全部 Q_pool + C 侧补 m_c − |pool|（J1：C 侧录音数与 A0 天然相等）
+    # ---- A1: all of Q_pool + m_c − |pool| topped up from the C side (J1: the C-side recording count equals that of A0 by construction)
     pool = qpool_rows
     budget = m_c - len(pool)
     a1_c = sample_balanced(c_rows, max(0, budget), rng)
     a1 = pool + a1_c
 
-    # ---- A2：C ∪ Q_pool 的 80/10/10
+    # ---- A2: 80/10/10 of C ∪ Q_pool
     pool_union = c_rows + pool
     rng.shuffle(pool_union)
     n2 = len(pool_union)
@@ -341,7 +341,7 @@ def assign_class(cls_rows, qpanel, seed, lib, cls):
 
 
 def trim_global_dups(acc, lib):
-    """J4：同一 content_hash 出现在多侧时只保留优先级最高的一侧（先定侧，再过滤）"""
+    """J4: when the same content_hash appears on several sides, keep only the highest-priority side (fix the side first, then filter)"""
     pri = {"qtest": 0, "qpool": 1, "r": 2, "c": 3}
     side = {}
     for k in ("qtest", "qpool", "r", "c"):
@@ -349,7 +349,7 @@ def trim_global_dups(acc, lib):
             h = r["content_hash"]
             if h and (h not in side or pri[k] < pri[side[h]]):
                 side[h] = k
-    # 各键允许来自哪些基侧（a0/a1/a2 由 c 与 qpool 派生，不能按键名直接比）
+    # which base sides each key may come from (a0/a1/a2 derive from c and qpool, so the key name cannot be compared directly)
     allowed = {"qtest": {"qtest"}, "qpool": {"qpool"}, "r": {"r"}, "c": {"c"},
                "a0_train": {"c"}, "a1_train": {"c", "qpool"},
                "a2_train": {"c", "qpool"}, "a2_val": {"c", "qpool"},
@@ -374,23 +374,23 @@ def main():
     a = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
     qp_all = json.load(open(QPANEL, encoding="utf-8"))
-    # 负对照 3 库的容量表单独落盘（不改 qpanel_capacity.json 这个主样本事实源）：
-    # 只有在本文件里缺该库时才合并，主样本五库仍走原口径。
+    # the capacity tables of the 3 negative-control libraries are written separately (qpanel_capacity.json, the main-sample source of truth, is left alone):
+    # they are merged only where this file lacks the library, and the five main-sample libraries still follow the original convention.
     if os.path.exists(QPANEL_NEG):
         for k, v in json.load(open(QPANEL_NEG, encoding="utf-8")).items():
             qp_all.setdefault(k, v)
 
     universe, feas = [], []
     assertions = {"libraries": {}, "judgements": {
-        "J1": "A1 同 n_c 取「C 侧录音数相等」读法：A1 必须含 Q 录音，两臂训练录音总数不可能相等",
-        "J2": "Q 抽签在 400 个随机子集里取 Σfloor(k/2) 最接近账面 Q_pool 的一版（容量配平）",
-        "J3": "α 不进容差（取代「逐类 ≤2%」，按设计稿 :210/:245 定稿；:352 的「一致（容差 ≤2%）」与其直接矛盾，登记待 v2.9 改措辞）：披露带宽 max(0.02, 1.5/m_c) 仅记录不判死；硬判为实现池片数 ∈ [qp_p5−1, qp_p95+1]；±2% 硬判只留 n_c 侧（A1_n_c_side_match）",
-        "J4": "剔除「没音频」占位录音；同 hash 跨侧切片只留一侧（qtest>qpool>r>c）",
+        "J1": "J1 reads \"A1 has the same n_c\" as \"equal number of C-side recordings\": A1 must contain Q recordings, so the two arms cannot have the same total number of training recordings",
+        "J2": "of 400 random subsets the Q draw takes the one whose Σfloor(k/2) is closest to the on-paper Q_pool (capacity balancing)",
+        "J3": "α is not part of the tolerance (replacing \"≤2% per class\", settled per :210/:245 of the design document; the \"agrees (tolerance ≤2%)\" of :352 directly contradicts it and is registered for rewording in v2.9): the disclosure band max(0.02, 1.5/m_c) is recorded but not failed; the hard test is realised pool slices ∈ [qp_p5−1, qp_p95+1]; the ±2% hard test remains only on the n_c side (A1_n_c_side_match)",
+        "J4": "drop the \"没音频\" (\"no audio\") placeholder recordings; slices sharing a hash across sides keep only one side (qtest>qpool>r>c)",
     }}
     hashes = {}
 
     for lib in [x.strip() for x in a.lib.split(",") if x.strip()]:
-        print("[%s] 划分 ..." % lib, flush=True)
+        print("[%s] splitting ..." % lib, flush=True)
         rows, dropped = load(lib)
         qp = {c["cls"]: c for c in qp_all.get(lib, {}).get("classes", [])}
         by_cls = defaultdict(list)
@@ -406,7 +406,7 @@ def main():
             kept = n_rec >= MIN_REC
             universe.append({"library": lib, "class": cls, "n_recordings": n_rec, "kept": kept,
                              "rare": bool(kept and n_rec < RARE),
-                             "reason": "" if kept else "录音数 < %d" % MIN_REC})
+                             "reason": "" if kept else "recordings < %d" % MIN_REC})
             if not kept:
                 continue
             res = assign_class(cr, qp.get(cls, {}), a.seed, lib, cls)
@@ -421,7 +421,7 @@ def main():
             write(os.path.join(OUT, "%s_%s.csv" % (lib, k)), acc[k])
         hashes[lib] = split_hash(acc)
 
-        # ---------------- 断言
+        # ---------------- assertions
         t_rec = {r["recording_canonical"] for r in acc["qtest"]}
         v_rec = {r["recording_canonical"] for r in acc["r"]}
         a0_rec = {r["recording_canonical"] for r in acc["a0_train"]}
@@ -434,17 +434,17 @@ def main():
         a1_alpha_mat, a1_alpha_disc = [], []
         for s in cls_stats:
             if s["alpha_qpanel"] is None:
-                a1_alpha_mat.append({"class": s["cls"], "reason": "qpanel 无该类"})
+                a1_alpha_mat.append({"class": s["cls"], "reason": "class absent from qpanel"})
                 continue
-            # J7：α 的可比对象是「抽签分布」而非其均值——qpanel 的 q_slices_expected 是
-            # 400 次随机抽 q_c 条录音的期望，单次实现只可能落在 qp_p5–qp_p95 带内。
-            # 故硬判用「实现池片数 ∈ [p5−1, p95+1]」，±2% 只作披露指标。
+            # J7: α must be compared against the "draw distribution", not its mean - q_slices_expected of qpanel is
+            # the expectation over 400 random draws of q_c recordings, and a single realisation can only fall inside the qp_p5–qp_p95 band.
+            # Hence the hard test uses "realised pool slices ∈ [p5−1, p95+1]", and ±2% is a disclosure indicator only.
             d = abs(s["alpha"] - s["alpha_qpanel"])
-            tol = max(ALPHA_TOL, 1.5 / s["m_c"])      # J3：1 片 ≈ 1/m_c 的 α 粒度
+            tol = max(ALPHA_TOL, 1.5 / s["m_c"])      # J3: one slice ≈ 1/m_c of α granularity
             lo, hi = s["pool_lo"], s["pool_hi"]
             in_band = None if lo is None else (lo - 1 <= s["qpool_slices"] <= hi + 1)
             if s["alpha_infeasible"]:
-                in_band = True   # 结构性不可达，单列披露，不计硬失败
+                in_band = True   # structurally unreachable: disclosed separately, not counted as a hard failure
             if in_band is False and s["cls"] in ALPHA_DISCLOSED.get(lib, {}):
                 a1_alpha_disc.append({"class": s["cls"], "pool": s["qpool_slices"],
                                       "band": [lo, hi], "reason": ALPHA_DISCLOSED[lib][s["cls"]]})
@@ -456,8 +456,8 @@ def main():
                     "pool_max": s["pool_max"], "alpha_infeasible": s["alpha_infeasible"],
                     "rare": s["rare"], "q_relaxed": s["q_relaxed"],
                     "m_c_capped": s["m_c_capped"]}
-            # J6：Q 条数被迫收紧（q < 计划 q_c）或 m_c 被封顶的类，α 与账面天然不可比，
-            # 单列 relaxed 桶（这类全部是 n_rec ≤ 16 的小类，不进确认性族）
+            # J6: for classes whose Q count had to be tightened (q < planned q_c) or whose m_c was capped, α is inherently incomparable with the on-paper value,
+            # so they go into a separate relaxed bucket (all of them small classes with n_rec ≤ 16, outside the confirmatory family)
             if in_band is False:
                 (a1_alpha_disc if (s["rare"] or s["q_relaxed"] or s["m_c_capped"])
                  else a1_alpha_mat).append(item)
@@ -477,31 +477,31 @@ def main():
             "A0_disjoint": not a0_fail,
             "A1_test_val_disjoint": not (t_rec & v_rec),
             "A1_train_has_q": len(a1_rec & t_rec) > 0,
-            "A1_alpha_material": not a1_alpha_mat,      # 硬判：实现池落在 qpanel p5–p95 带外
+            "A1_alpha_material": not a1_alpha_mat,      # hard test: the realised pool falls outside the qpanel p5–p95 band
             "A1_alpha_2pct_report": {"violations": sum(1 for s in cls_stats
                                      if s["alpha_qpanel"] and abs(s["alpha"] - s["alpha_qpanel"])
                                      > max(ALPHA_TOL, 1.5 / s["m_c"])),
-                                     "note": "单次抽签 vs 400 次期望，仅披露不判死（J7）"},
+                                     "note": "one draw vs the 400-draw expectation, disclosed only and not failed (J7)"},
             "A1_alpha_rare_reported": True,
             "A1_slice_budget": not a1_short,
             "A0_slice_budget": not a0_short,
             "A2_sample_disjoint": not (a2_sid & (t_sid | a2_self)),
-            # 设计稿 :210/:245：m_c 与 n_c 逐类相等（容差 ≤2%）指 C 侧训练录音数；
-            # A1 额外注入 Q 录音是设计本意（:219），不参与 n_c 相等判定（J1）
+            # design document :210/:245: "m_c equals n_c per class (tolerance ≤2%)" refers to the C-side training recording count;
+            # injecting extra Q recordings into A1 is intended by the design (:219) and takes no part in the n_c equality test (J1)
             "A1_n_c_side_match": all(abs(s["n_a0_rec"] - s["n_c_side"])
                                      <= max(1, 0.02 * s["n_c_side"]) for s in cls_stats),
             "per_class_test_ge1": all(s["qtest_slices"] > 0 for s in cls_stats),
             "hash_same_side": not hash_multi,
         }
-        # 负对照（§3.7 :308）：K̄≈1 ⇒ Q_pool=0 ⇒ A1 与 A0 数学等价，E1f 只跑 A0 vs A2。
-        # 因此 A1 专属断言在这些库上没有判定对象，标 "na"（既不是 pass 也不是 fail）。
+        # negative control (§3.7 :308): K̄≈1 => Q_pool=0 => A1 and A0 are mathematically equivalent, and E1f runs A0 vs A2 only.
+        # Hence the A1-specific assertions have nothing to decide on these libraries and are marked "na" (neither pass nor fail).
         neg_note = ""
         if lib in NEG_LIBS:
             for k in ("A1_train_has_q", "A1_slice_budget", "A1_n_c_side_match",
                       "A1_alpha_material", "A1_alpha_rare_reported"):
                 ok[k] = "na"
-            neg_note = ("K̄≈1：Q_pool=0，A1≡A0，E1f 只跑 A0 vs A2（设计稿 §3.7 :308）；"
-                        "A1_* 断言标 na，A0/A2/预算/同侧仍硬判")
+            neg_note = ("K̄≈1: Q_pool=0, A1≡A0, E1f runs A0 vs A2 only (design document §3.7 :308); "
+                        "the A1_* assertions are marked na, while A0/A2/budget/same-side are still hard-tested")
         vals = [v for v in ok.values() if v != "na"]
         assertions["libraries"][lib] = {
             "ok": ok, "all_pass": all(vals), "neg_lib": lib in NEG_LIBS, "neg_note": neg_note,
@@ -533,7 +533,7 @@ def main():
             "dropped_dup_slices": dropped_dups,
             "bounds": {"alpha_tol": ALPHA_TOL, "alpha_big_m": ALPHA_BIG_M},
         }
-        print("  %s: %d 类 / qtest %d / qpool %d / r %d / c %d / 丢重 %d | 断言 %s"
+        print("  %s: %d classes / qtest %d / qpool %d / r %d / c %d / duplicates dropped %d | assertions %s"
               % (lib, len(cls_stats), len(acc["qtest"]), len(acc["qpool"]), len(acc["r"]),
                  len(acc["c"]), dropped_dups, assertions["libraries"][lib]["all_pass"]),
               flush=True)
@@ -563,7 +563,7 @@ def main():
               ensure_ascii=False, indent=1)
 
     allpass = all(v["all_pass"] for v in assertions["libraries"].values())
-    print("assertions → %s  全部通过=%s" % (os.path.join(OUT, "assertions.json"), allpass))
+    print("assertions → %s  all pass=%s" % (os.path.join(OUT, "assertions.json"), allpass))
     return 0 if allpass else 2
 
 

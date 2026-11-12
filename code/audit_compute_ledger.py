@@ -1,7 +1,7 @@
-"""算力台账全审计（审稿意见 C7）：把 cost.json 没算进来的 run 全部找出来。
+"""Full audit of the compute ledger (review comment C7): find every run that cost.json does not count.
 
-只读：`logs/*.log`、`runs*/`、`data/results/cost.json`；输出 `data/results/human_review/compute_ledger.{json,csv}`。
-不做外推：分钟数只取驱动日志里写下的整数分钟，缺日志就标 missing。
+Read-only over `logs/*.log`, `runs*/`, `data/results/cost.json`; writes `data/results/human_review/compute_ledger.{json,csv}`.
+No extrapolation: minutes are only the integer minutes written into the driver logs; a missing log is flagged as missing.
 """
 import glob
 import json
@@ -85,7 +85,7 @@ def main():
         rows = []
         for f in files:
             rows += parse(os.path.join(LOGS, f))
-        # 去重：同一 (lib,arm,bb) 在多份日志里重复出现时保留最后一条非 skip
+        # de-duplication: when the same (lib,arm,bb) appears in several logs, keep the last non-skipped row
         best = {}
         for r in rows:
             key = (r["lib"], r["arm"], r["bb"], r.get("seed", ""))
@@ -109,7 +109,7 @@ def main():
         }
         if ledger["families"][fam]["zero_minute_runs"]:
             ledger["flags"].append(
-                "%s: %d 个 run 的驱动日志分钟数为 0（取整），机时被低估"
+                "%s: %d runs logged 0 minutes in the driver log (rounding); machine time is underestimated"
                 % (fam, ledger["families"][fam]["zero_minute_runs"]))
 
     for root in ("runs", "runs_chk", "runs_b2", "runs_p3"):
@@ -146,7 +146,7 @@ def main():
         "E0_smoke": ledger["families"]["E0_smoke"]["gpu_h_from_logs"],
     }
     ledger["cost_json"] = cost
-    # 分项相加才是修正值：cost_json_total 的 P3 分项本身就比实测小，不能拿旧总分再加增量
+    # only the sum of the components is the corrected value: the P3 component in cost_json_total is already below the measured value, so the old total cannot be used as a base for the increment
     b1rows = ledger["families"]["B1C1_probe_and_C1"]["detail"]
     c1_min = sum(r["minutes"] for r in b1rows if r["arm"] == "C1" and not r["skipped"])
     a1r_min = sum(r["minutes"] for r in b1rows if r["arm"] == "A1r" and not r["skipped"])
@@ -173,10 +173,10 @@ def main():
                            ("E1c_A2_random_split", "B2_negative_controls", "P3_cross_instrument")},
             "supplementary": {k: round(components[k], 4) for k in ("C1_attribution", "A1r_probes")},
             "abandoned_unquantified": [
-                "logs/e1f_chest_falsetto_A2_alexnet.log 为 0 字节（一次失败尝试，无耗时记录）",
-                "logs/ 下无 lambda=0.1 试验的任何日志，失败试跑无法定量",
+                "logs/e1f_chest_falsetto_A2_alexnet.log is 0 bytes (one failed attempt, no timing recorded)",
+                "no log at all under logs/ for the lambda=0.1 trial; the failed attempt cannot be quantified",
             ],
-            "excluded_but_known": ["E0 smoke（e0_ctis_a0_alexnet.log）", "B2 负对照重跑的墙钟（驱动日志取整为 0）"],
+            "excluded_but_known": ["E0 smoke (e0_ctis_a0_alexnet.log)", "wall clock of the B2 negative-control rerun (driver log rounds to 0)"],
         },
         "runs_not_counted": {
             "C1": ledger["families"]["B1C1_probe_and_C1"]["runs"],
@@ -184,10 +184,10 @@ def main():
             "p3_folds_vs_expected": [ledger["p3"]["total_folds"], cost["P3"]["expected_folds"]],
         },
     }
-    ledger["flags"].append("cost.json 只含 E1b/E1c/E1f/P3 四族，C1（runs_chk）与 A1r 探针（b1c1）未记账")
-    ledger["flags"].append("E1f 的 10 runs 里有 %d 行是 SKIP（已完成），实际 12 组"
+    ledger["flags"].append("cost.json covers only the four families E1b/E1c/E1f/P3; C1 (runs_chk) and the A1r probes (b1c1) are not accounted")
+    ledger["flags"].append("of the 10 lines logged for E1f, %d are SKIP (already done); 12 groups in total"
                            % ledger["families"]["E1f_negcontrol"]["skipped_already_done"])
-    ledger["flags"].append("P3 记账 %d folds，expected_folds 标 108（36 组×3 折），口径不一致"
+    ledger["flags"].append("P3 accounts for %d folds while expected_folds says 108 (36 groups x 3 folds); the calibers disagree"
                            % ledger["p3"]["total_folds"])
 
     json.dump(ledger, open(os.path.join(OUT, "compute_ledger.json"), "w", encoding="utf-8"),

@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""code/train_p3.py — P3：按乐器的 3 折交叉 + 乐器对抗（GRL）。
+"""code/train_p3.py — P3: instrument-grouped 3-fold cross-validation + instrument adversarial head (GRL).
 
-预注册口径见 `worklog/exp-plan/P3-预注册草案.md`（v1 冻结稿）与 `data/p3/p3_folds.json`。
+The pre-registration wording lives in the P3 pre-registration draft (v1, frozen) and in `data/p3/p3_folds.json`.
 
-三臂（同一批 7,528 片 / 1,388 录音 / 43 类）：
-  A0  随机**切片级** 3 折（同一录音的兄弟切片跨折 → 上界，等于 P1 的 A2 逻辑）
-  A1  `p3_splits.csv` 的乐器分组折（同乐器同折 → 真实跨乐器泛化，主结论）
-  A2  A1 + 表征层乐器对抗头（GRL，λ 0→1、预热 2 epoch，辅助损失按 1/sqrt(n_c) 重加权）
+Three arms (the same 7,528 slices / 1,388 recordings / 43 classes):
+  A0  random **slice-level** 3 folds (sibling slices of one recording cross folds → upper bound, the same logic as A2 in P1)
+  A1  the instrument-grouped folds of `p3_splits.csv` (one instrument stays in one fold → genuine cross-instrument generalisation, the main result)
+  A2  A1 + a representation-level instrument adversarial head (GRL, λ 0→1, 2-epoch warm-up, auxiliary loss reweighted by 1/sqrt(n_c))
 
-每折：训练 = 另两折，另从训练侧按录音留 10% 做选型；held-out 折只在最后评一次。
-主指标：三折 held-out 预测**合并**后算 pooled macro-F1（切片级 + 录音级）。
+Per fold: train on the other two folds, plus a 10% recording-level hold-out from the training side for model selection; the held-out fold is scored once, at the end.
+Main metric: pooled macro-F1 over the **merged** held-out predictions of the three folds (slice level + recording level).
 
-产物：runs_p3/<arm>/<bb>/seed<N>/{fold<f>_log.csv, fold<f>.npz, result.json, pooled.json}
-      fold<f>.npz 键：probs(float16) / y / records
-用法：
-  python code/train_p3.py --arms A1 --bbs alexnet --seeds 0 --folds 1 --epochs 2   # 冒烟
+Artifacts: runs_p3/<arm>/<bb>/seed<N>/{fold<f>_log.csv, fold<f>.npz, result.json, pooled.json}
+      fold<f>.npz keys: probs(float16) / y / records
+Usage:
+  python code/train_p3.py --arms A1 --bbs alexnet --seeds 0 --folds 1 --epochs 2   # smoke test
   python code/train_p3.py --arms A0,A1,A2 --bbs alexnet,swin_t --seeds 0,1
 """
 import argparse
@@ -46,10 +46,10 @@ SEEDS = [0, 1]
 N_FOLDS = 3
 GRL_WARMUP_EPOCHS = 2
 NUM_WORKERS = 0
-LAM_MAX = 0.02     # 对抗强度上限：λ=1 推爆 loss（1e6），λ=0.1 直接塌缩（探针 top1=0、pooled F1 0.21）
-AMP = True         # --fp32 关掉（GRL + fp16 组合在 43 类小样本上数值不稳，见 worklog 记录）
-INST_W = None      # 乐器辅助损失类权重，main() 里按 1/sqrt(n_c) 计算
-AUX_W = 0.2        # 辅助损失总权重（对抗项只做正则，不与主损失同权）
+LAM_MAX = 0.02     # adversarial-strength ceiling: λ=1 blows the loss up (1e6), λ=0.1 collapses outright (probe top1=0, pooled F1 0.21)
+AMP = True         # --fp32 turns it off (GRL + fp16 is numerically unstable on 43 small classes, see the worklog note)
+INST_W = None      # class weights of the instrument auxiliary loss, computed as 1/sqrt(n_c) in main()
+AUX_W = 0.2        # total weight of the auxiliary loss (the adversarial term only regularises, it is not weighted like the main loss)
 
 
 def read_csv(path):
@@ -65,7 +65,7 @@ def load_p3():
     insts = sorted({r["instrument_canon"] for r in rows})
     inst_of = {c: i for i, c in enumerate(insts)}
     idx = {r["sample_id"]: int(r["row"]) for r in read_csv(os.path.join(CACHE, LIB + "_index.csv"))}
-    # B1（外审 M7）：录音分组折 + 乐器两侧都出现，用于 A1r 臂
+    # B1 (external review item M7): recording-grouped folds with the instrument on both sides, used by the A1r arm
     b1_path = os.path.join(P3, "p3b_splits.csv")
     b1 = {}
     if os.path.exists(b1_path):
@@ -77,13 +77,13 @@ def load_p3():
         r["fold"] = int(r["fold"])
         if b1:
             if r["sample_id"] not in b1:
-                raise SystemExit("p3b_splits.csv 缺少样本：" + r["sample_id"])
+                raise SystemExit("p3b_splits.csv is missing the sample: " + r["sample_id"])
             r["fold_b1"] = b1[r["sample_id"]]
     return folds, rows, classes, insts
 
 
 def split_a0(rows, seed=20261105):
-    """切片级随机 3 折（按类分层），故意让同一录音的切片跨折 —— 这就是被批判的捷径。"""
+    """Random slice-level 3 folds (stratified by class) that deliberately let slices of one recording cross folds — this is the criticised shortcut."""
     rng = random.Random(seed)
     by_cls = {}
     for r in rows:
@@ -97,7 +97,7 @@ def split_a0(rows, seed=20261105):
 
 
 class SliceCache(Dataset):
-    """只用给定行号的 memmap；与 train_e1.MelCache 同归一化。"""
+    """Memmap over the given row indices only; same normalisation as train_e1.MelCache."""
 
     def __init__(self, rows):
         self.mm = None
@@ -133,8 +133,8 @@ class GRL(torch.autograd.Function):
 
 
 def feats_logits(model, x, bb):
-    """返回 (表征 h, 分类 logits)。"""
-    # 分类头强制 fp32：fp16 下「反向梯度 × 类权重」会在 classifier 权重上溢出成 inf（实测 A2 首跑 97 个 inf）
+    """Returns (representation h, classification logits)."""
+    # the classifier head is forced to fp32: under fp16 the 'backward gradient × class weights' product overflows to inf in the classifier weights (97 infs on the first A2 run)
     if bb == "alexnet":
         f = model.avgpool(model.features(x)).flatten(1)
         h = model.classifier[:6](f)
@@ -176,7 +176,7 @@ def predict(model, loader, bb, device):
 
 
 class ProbeCache(Dataset):
-    """探针用：返回 (x, inst)。"""
+    """For the probe: returns (x, inst)."""
 
     def __init__(self, rows, mm=None):
         self.mm = mm
@@ -205,7 +205,7 @@ def extract_feats(model, loader, bb, device):
     fs, ins = [], []
     for x, inst in loader:
         x = x.to(device, non_blocking=True)
-        # 探针特征用 fp32 前向（autocast fp16 在对抗训练下会溢出成 inf，sklearn 直接报错）
+        # probe features use an fp32 forward pass (autocast fp16 overflows to inf under adversarial training and sklearn then errors out)
         with torch.autocast("cuda", enabled=False):
             h, _ = feats_logits(model, x.float(), bb)
         fs.append(h.float().cpu().numpy())
@@ -214,12 +214,12 @@ def extract_feats(model, loader, bb, device):
 
 
 def instrument_probe(model, bb, device, tr_rows, te_rows, n_inst):
-    """冻结表征上的乐器身份线性探针（AUC）。
+    """Linear probe for instrument identity on the frozen representation (AUC).
 
-    评估集必须与拟合集**共享乐器类**。留乐器折（A1/A2）的 held-out 乐器在训练侧完全没出现过，
-    旧实现拿 held-out 折当评估集 → top1 恒为 0、AUC 无定义（实测 A2 fold1：probe_top1 0.0、
-    auc_classes 0）。改为**训练侧按录音 8:2 切**：拟合 80%、评估 20%，两边乐器类相同，
-    度量的是「该表征里乐器身份的可线性解码程度」，与 arms 间的差异可比。
+    The evaluation set must **share instrument classes** with the fitting set. The held-out instruments of an instrument-held-out fold (A1/A2) never appear on the training side;
+    the old implementation used the held-out fold as the evaluation set → top1 stuck at 0 and AUC undefined (measured on A2 fold1: probe_top1 0.0,
+    auc_classes 0). Changed to a **recording-level 8:2 split of the training side**: fit on 80%, evaluate on 20%, the same instrument classes on both sides,
+    which measures how linearly decodable instrument identity is in that representation, and keeps the comparison across arms fair.
     """
     rng = random.Random(0)
     recs = sorted({r["recording_uid"] for r in tr_rows})
@@ -238,14 +238,14 @@ def instrument_probe(model, bb, device, tr_rows, te_rows, n_inst):
                                                shuffle=False, num_workers=0), bb, device)
     ftr = np.nan_to_num(ftr, nan=0.0, posinf=0.0, neginf=0.0)
     fte = np.nan_to_num(fte, nan=0.0, posinf=0.0, neginf=0.0)
-    # 标准化后再拟合：冻结特征范数量级差别大，未标准化的 SGD 会在 predict_proba 里 exp 溢出成 nan
+    # standardise before fitting: frozen features differ widely in norm, and unstandardised SGD overflows exp to nan inside predict_proba
     sc0 = StandardScaler().fit(ftr)
     ftr, fte = sc0.transform(ftr), sc0.transform(fte)
-    clf = LogisticRegression(C=1.0, max_iter=200, n_jobs=1)  # n_jobs>1 起 joblib 进程池，沙箱 PermissionError
+    clf = LogisticRegression(C=1.0, max_iter=200, n_jobs=1)  # n_jobs>1 spawns a joblib process pool, PermissionError in the sandbox
     clf.fit(ftr, itr)
     pred = clf.predict(fte)
     top1 = float((pred == ite).mean())
-    base_rate = float(np.bincount(ite).max() / len(ite))   # 多数类基线，top1 要跟它比而不是跟 0 比
+    base_rate = float(np.bincount(ite).max() / len(ite))   # majority-class baseline; top1 must be read against it, not against 0
     auc = None
     try:
         sc = clf.predict_proba(fte)
@@ -290,7 +290,7 @@ def run_fold(rows, folds, classes, insts, arm, bb, seed, fold, epochs, out_root,
     te_rows = [r for r in rows if r[key] == fold]
     tr_pool = [r for r in rows if r[key] != fold]
 
-    # 选型集：训练侧按录音留 10%（同录音不跨侧）
+    # selection set: a 10% recording-level hold-out from the training side (a recording never straddles the two sides)
     rng = random.Random(20261105 + fold)
     recs = sorted({r["recording_uid"] for r in tr_pool})
     rng.shuffle(recs)
@@ -330,9 +330,9 @@ def run_fold(rows, folds, classes, insts, arm, bb, seed, fold, epochs, out_root,
         w.writerow(["epoch", "step", "lr", "train_loss", "train_acc", "grad_norm", "grl_lambda",
                     "val_macro_f1_slice", "elapsed_s"])
         for ep in range(1, epochs + 1):
-            # DANN 式平滑爬升：前 2 个 epoch 不施加对抗（预热），之后按步数进度线性升到 LAM_MAX。
-            # 直接用 ep/2 会在第 1 个 epoch 就上 λ=0.5，Adam 的自适应步长让表征迅速漂移、loss 爆到 1e6；
-            # λ=0.1 时虽不发散但表征塌缩（探针 top1=0、test F1 0.29 vs A1 0.51），故上限降到 0.02 并留预热。
+            # DANN-style smooth ramp: no adversarial pressure for the first 2 epochs (warm-up), then a linear climb to LAM_MAX by step progress.
+            # using ep/2 directly puts λ=0.5 in epoch 1, and Adam's adaptive step size makes the representation drift fast and the loss explode to 1e6;
+            # at λ=0.1 it does not diverge but the representation collapses (probe top1=0, test F1 0.29 vs A1 0.51), hence the ceiling of 0.02 plus the warm-up.
             p = step / max(1, total)
             lam = 0.0 if ep <= GRL_WARMUP_EPOCHS else LAM_MAX * min(1.0, (p - GRL_WARMUP_EPOCHS / float(EPOCHS)) / 0.4)
             model.train()
@@ -349,7 +349,7 @@ def run_fold(rows, folds, classes, insts, arm, bb, seed, fold, epochs, out_root,
                     h, out = feats_logits(model, x, bb)
                     loss = lossf(out, y)
                 if arm == "A2":
-                    # 辅助分支恒走 fp32：fp16 下「反向梯度 × 类权重」在分类头上溢出成 inf（实测 97 个）
+                    # the auxiliary branch always runs in fp32: under fp16 the 'backward gradient × class weights' product overflows to inf in the classifier head (97 measured)
                     with torch.autocast("cuda", enabled=False):
                         li = ahead(GRL.apply(h.float(), lam))
                         loss = loss + AUX_W * auxf(li, inst.to(device, non_blocking=True))
@@ -397,7 +397,7 @@ def run_fold(rows, folds, classes, insts, arm, bb, seed, fold, epochs, out_root,
               ensure_ascii=False, indent=2)
     torch.save(model.state_dict(), os.path.join(run_dir, "last_fold%d.pt" % fold))
 
-    # 诊断：乐器身份线性探针（AUC）。训练侧抽 3,000 片拟合，held-out 折全量评估
+    # diagnostic: linear probe for instrument identity (AUC). Fit on 3,000 slices from the training side, evaluate on the whole held-out fold
     if arm in ("A0", "A2") and n_inst > 1:
         res["probe"] = instrument_probe(model, bb, device, tr_rows, te_rows, n_inst)
         json.dump(res, open(os.path.join(run_dir, "fold%d_result.json" % fold), "w",
@@ -413,7 +413,7 @@ def main():
     ap.add_argument("--folds", default="1,2,3")
     ap.add_argument("--epochs", type=int, default=EPOCHS)
     ap.add_argument("--tag", default="p3")
-    ap.add_argument("--fp32", action="store_true", help="关掉 AMP（A2 的 GRL 在 fp16 下不稳）")
+    ap.add_argument("--fp32", action="store_true", help="turn AMP off (the A2 GRL is unstable under fp16)")
     ap.add_argument("--out", default=RUNS)
     a = ap.parse_args()
     global AMP
@@ -431,7 +431,7 @@ def main():
     w = 1.0 / np.sqrt(np.maximum(insts_cnt, 1))
     INST_W = torch.tensor(w / w.mean(), dtype=torch.float32)
     AUX_W = 1.0
-    print("P3：%d 片 / %d 录音 / %d 类 / %d 乐器（对抗头类数 = 宇宙内出现的归一生乐器数，与预注册 §9 修订 A1 一致）"
+    print("P3: %d slices / %d recordings / %d classes / %d instruments (adversarial-head class count = normalised instruments occurring in the universe, consistent with revision A1 of pre-registration §9)"
           % (len(rows), len({r["recording_uid"] for r in rows}), n_cls, len(insts)))
 
     for arm in arms:
@@ -439,13 +439,13 @@ def main():
             for seed in seeds:
                 run_dir = os.path.join(a.out, arm, bb, "seed%d" % seed)
                 if all(os.path.exists(os.path.join(run_dir, "fold%d.npz" % f)) for f in folds_want):
-                    print("[skip] %s %s seed%d 已完成" % (arm, bb, seed))
+                    print("[skip] %s %s seed%d already done" % (arm, bb, seed))
                 else:
                     for fold in folds_want:
                         print("[run] %s %s seed%d fold%d" % (arm, bb, seed, fold), flush=True)
                         run_fold(rows, folds, classes, insts, arm, bb, seed, fold,
                                  a.epochs, a.out, a.tag)
-                # 合并三折 → pooled
+                # merge the three folds → pooled
                 ys, ps, rs = [], [], []
                 for fold in range(1, N_FOLDS + 1):
                     p = os.path.join(run_dir, "fold%d.npz" % fold)

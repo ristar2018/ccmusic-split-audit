@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""P3 前置：在 CTIS 样本清单(data/manifest/CTIS.csv)上做乐器名归一 + 属性类宇宙冻结。
-只读清单；产出 data/p3/P3_universe_norm.json + data/p3/universe_norm_43.csv。
+"""P3 prerequisite: instrument-name normalization + attribute-class universe freeze on the CTIS manifest (data/manifest/CTIS.csv).
+Read-only over the manifest; produces data/p3/P3_universe_norm.json + data/p3/universe_norm_43.csv.
 """
 import csv, json, collections, statistics, os, sys
 sys.path.insert(0, "code")
@@ -14,7 +14,7 @@ DROP = ["音阶", "空弦音", "筒音", "单音", "乐曲片段", "特有演奏
 
 rows = list(csv.DictReader(open(MANIFEST, encoding="utf-8")))
 rec = {}
-for r in rows:                      # 录音级去重：切片不重复计数
+for r in rows:                      # recording-level dedup: slices are not counted twice
     if r["recording_uid"]:
         rec.setdefault(r["recording_uid"], (r["instrument"], r["technique"]))
 n_rec = len(rec)
@@ -57,7 +57,7 @@ res["per_class_delta"] = {t: [a[t], b[t]] for t in a if a[t] != b.get(t)}
 res["dropped_present"] = {d: sum(v for t, v in per_nrm.items() if t == d) for d in DROP}
 res["dropped_missing"] = [d for d in DROP if d not in per_nrm]
 res["drop_siblings"] = {s: per_nrm.get(s, 0) for s in ["跨弦音阶","单弦音阶","轻六音阶","筒音D","音程"]}
-# 乐器归一：命中的原始名与计数
+# instrument normalization: matched raw names and their counts
 inst_c = collections.Counter(i for i, _ in pairs)
 merged = collections.OrderedDict()
 for (i, t) in pairs:
@@ -79,7 +79,7 @@ with open("data/p3/universe_norm_43.csv", "w", encoding="utf-8", newline="") as 
 print(json.dumps({k: v for k, v in res.items() if k not in ("per_class", "merge_rows")}, ensure_ascii=False, indent=1))
 print("per_class", res["per_class"])
 
-# ---- 阈值扫描 + 留出（补 §7.2 三行对账）----
+# ---- threshold sweep + hold-out (completes the three-row reconciliation of §7.2) ----
 def scan(mc, mi):
     ok = collections.defaultdict(set)
     for (t, i), c in c_nrm.items():
@@ -92,7 +92,7 @@ def scan(mc, mi):
             "median": statistics.median(per) if per else 0, "min": min(per) if per else 0,
             "cells": sum(len(s) for s in uni.values())}
 res["scan"] = {f"mc{mc}_mi{mi}": scan(mc, mi) for mi in (2, 3) for mc in (1, 2, 3, 5)}
-# 半数乐器留出：按乐器录音数降序交替分半
+# hold out half the instruments: sort by recording count descending and alternate into halves
 inst_n = collections.Counter()
 for inst, tech in pairs:
     inst_n[canon(inst)] += 1

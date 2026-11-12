@@ -1,15 +1,15 @@
-"""CCMusic 泄漏审计 + 按源（组）重新划分。
+"""CCMusic leakage audit + re-split by source (group).
 
-两种输入：
-    --index data/index/<dataset>__data_eval.zip.json   （推荐：先跑 ccmusic_zipindex.py，几 MB 即可）
-    --zip  <本地 zip>                                   （已下载完整包时用）
+Two input modes:
+    --index data/index/<dataset>__data_eval.zip.json   (recommended: run ccmusic_zipindex.py first, a few MB is enough)
+    --zip  <local zip>                                 (when the full package is already downloaded)
 
-两种模式：
-    audit    复现官方"切片 → random.shuffle → 8:1:1"过程，估计测试切片的同源泄漏率；
-             若路径里自带 train/test 目录（如 GZ_IsoTech），则直接按真实划分统计。
-    regroup  按"源"分组、按类分层，生成确定性 8:1:1 划分（可复现，任何源不跨集）。
+Two modes:
+    audit    replay the official "slice -> random.shuffle -> 8:1:1" procedure and estimate the same-source leakage rate of the test slices;
+             if the paths already carry train/test directories (e.g. GZ_IsoTech), measure the true split directly.
+    regroup  group by "source", stratify by class, and produce a deterministic 8:1:1 split (reproducible, no source crosses sets).
 
-用法：
+Usage:
     python code/ccmusic_splits.py --project p1 --mode audit
     python code/ccmusic_splits.py --dataset music_genre --index data/index/music_genre__data_eval.zip.json --mode regroup
     python code/ccmusic_splits.py --selftest
@@ -37,21 +37,21 @@ SPLIT_DIRS = {"train": "train", "training": "train",
               "test": "test", "testing": "test"}
 
 
-# ---------------------------------------------------------------- 解析
+# ---------------------------------------------------------------- parsing
 def parts_of(member: str) -> list[str]:
     return [p for p in member.replace("\\", "/").split("/") if p]
 
 
 def source_of(member: str) -> str:
-    """源 ID：同一段录音/片段的所有切片必须得到同一个值。"""
+    """Source ID: every slice of the same recording/segment must map to the same value."""
     stem = os.path.splitext(os.path.basename(member))[0]
-    for f in FEATURES:                      # 去掉特征后缀
+    for f in FEATURES:                      # strip the feature suffix
         if stem.endswith("_" + f):
             stem = stem[: -(len(f) + 1)]
             break
     if "__" in stem:                        # erhu: detache__detache_01
         return stem.split("__", 1)[1]
-    m = re.match(r"^([0-9a-f]{32})", stem)  # music_genre: md5 前缀
+    m = re.match(r"^([0-9a-f]{32})", stem)  # music_genre: md5 prefix
     if m:
         return m.group(1)
     m = re.match(r"^(\d+)_", stem)          # chest_falsetto: 0001_m_chest_0
@@ -66,7 +66,7 @@ def class_of(member: str) -> str:
         if p.lower() in (*FEATURES, "eval", "audio", *SPLIT_DIRS):
             continue
         return p
-    if "__" in stem:                        # erhu 的类名写在文件名里
+    if "__" in stem:                        # erhu puts the class name inside the file name
         return stem.split("__", 1)[0]
     return "unknown"
 
@@ -79,7 +79,7 @@ def split_in_path(member: str) -> str | None:
 
 
 def keys_of(member: str) -> tuple[str, str, str | None]:
-    """返回 (source_key, class, split_in_path)。source_key 带类前缀，避免不同类下同号相撞。"""
+    """Returns (source_key, class, split_in_path). source_key carries the class prefix so identical numbers in different classes do not collide."""
     return f"{class_of(member)}::{source_of(member)}", class_of(member), split_in_path(member)
 
 
@@ -88,7 +88,7 @@ def names_from_index(path: str) -> list[str]:
         data = json.load(fh)
     names = data.get("names")
     if not names:
-        raise SystemExit(f"{path} 里没有 names，请用 ccmusic_zipindex.py --full 重新生成")
+        raise SystemExit(f"{path} has no names; regenerate it with ccmusic_zipindex.py --full")
     return names
 
 
@@ -115,7 +115,7 @@ def audit(names: list[str], seeds: int = 20, ratios=(0.8, 0.1, 0.1)) -> dict:
     }
 
     if all(real):
-        # 情况 A：zip 里就有官方 train/test 目录 → 直接统计
+        # Case A: the zip already carries official train/test directories -> measure directly
         tr = {keys[i] for i, s in enumerate(real) if s == "train"}
         te = [i for i, s in enumerate(real) if s == "test"]
         va = [i for i, s in enumerate(real) if s == "validation"]
@@ -128,7 +128,7 @@ def audit(names: list[str], seeds: int = 20, ratios=(0.8, 0.1, 0.1)) -> dict:
             "leak_rate_mean": round(leak / max(len(te), 1), 4),
         })
     else:
-        # 情况 B：官方在加载时 random.shuffle（无种子）→ 复现过程、多种子统计
+        # Case B: the official code shuffles at load time (no seed) -> replay the process and average over seeds
         rates, sizes = [], []
         for seed in range(seeds):
             idx = list(range(n))
@@ -150,7 +150,7 @@ def audit(names: list[str], seeds: int = 20, ratios=(0.8, 0.1, 0.1)) -> dict:
 
     out["n_eff"] = n_src
     out["effective_reduction"] = round(n / max(n_src, 1), 2)
-    out["note"] = "leak_rate=测试切片中同源切片也出现在训练集的比例；n_eff=独立源数量"
+    out["note"] = "leak_rate=share of test slices whose same-source siblings also appear in train; n_eff=number of independent sources"
     return out
 
 
@@ -173,7 +173,7 @@ def regroup(names: list[str], ratios=(0.8, 0.1, 0.1)) -> dict:
     for c in sorted(by_class):
         ks = sorted(by_class[c], key=h)
         n = len(ks)
-        if n < 3:                       # 类太小：全部进 train，如实标记
+        if n < 3:                       # class too small: everything goes to train, flagged as such
             for k in ks:
                 assign[k] = "train"
             continue
@@ -188,7 +188,7 @@ def regroup(names: list[str], ratios=(0.8, 0.1, 0.1)) -> dict:
     src_splits = defaultdict(set)
     for k in members:
         src_splits[k].add(assign[k])
-    assert all(len(v) == 1 for v in src_splits.values()), "存在跨集源"
+    assert all(len(v) == 1 for v in src_splits.values()), "a source spans more than one split"
 
     return {
         "splits": {k: splits.get(k, []) for k in ("train", "validation", "test")},
@@ -202,7 +202,7 @@ def regroup(names: list[str], ratios=(0.8, 0.1, 0.1)) -> dict:
     }
 
 
-# ---------------------------------------------------------------- 入口
+# ---------------------------------------------------------------- entry point
 P1 = ["pianos", "music_genre", "chest_falsetto", "CNPM", "bel_canto",
       "erhu_playing_tech", "CTIS", "GZ_IsoTech", "Guzheng_Tech99"]
 
@@ -227,7 +227,7 @@ def selftest() -> int:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="CCMusic 泄漏审计 / 按源重划分")
+    ap = argparse.ArgumentParser(description="CCMusic leakage audit / re-split by source")
     ap.add_argument("--dataset")
     ap.add_argument("--index")
     ap.add_argument("--zip", nargs="+")
@@ -249,7 +249,7 @@ def main() -> int:
         elif zips:
             names = [n for z in zips for n in names_from_zip(z)]
         else:
-            print(f"[跳过] {dataset}: 没有 index 或 zip")
+            print(f"[skip] {dataset}: no index or zip")
             continue
         res = audit(names, seeds=args.seeds) if args.mode == "audit" else regroup(names)
         res["dataset"] = dataset
@@ -260,16 +260,16 @@ def main() -> int:
             summary.append({"dataset": dataset, "slices": res["slices"], "sources": res["sources"],
                             "K": res["slices_per_source"], "mode": res.get("mode"),
                             "leak_rate": res.get("leak_rate_mean"), "n_eff": res["n_eff"]})
-            print(f"{dataset:18s} 切片 {res['slices']:6d} 源 {res['sources']:5d} K={res['slices_per_source']:6.2f} "
-                  f"泄漏率 {res.get('leak_rate_mean')} ({res.get('mode')})")
+            print(f"{dataset:18s} slices {res['slices']:6d} sources {res['sources']:5d} K={res['slices_per_source']:6.2f} "
+                  f"leak rate {res.get('leak_rate_mean')} ({res.get('mode')})")
         else:
-            print(f"{dataset:18s} 重划分 {res['stats']['slices']} 源 {res['stats']['sources']}")
+            print(f"{dataset:18s} re-split {res['stats']['slices']} sources {res['stats']['sources']}")
     if summary:
         with open(os.path.join(args.out, "_audit_summary.csv"), "w", encoding="utf-8-sig", newline="") as fh:
             w = csv.DictWriter(fh, fieldnames=list(summary[0]))
             w.writeheader()
             w.writerows(summary)
-        print("汇总:", os.path.join(args.out, "_audit_summary.csv"))
+        print("summary:", os.path.join(args.out, "_audit_summary.csv"))
     return 0
 
 

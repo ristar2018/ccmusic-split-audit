@@ -1,21 +1,21 @@
-"""录音级 macro-F1 口径纠正（审稿追加项）。
+"""Recording-level macro-F1 caliber correction (review follow-up item).
 
-问题定位（`code/analyze_e1.py`）：
-  :189  point  = macro_f1(conf_slice(rec_y, rec_pred, nc, w=rec_n))    # 按"该录音的切片数"加权
-  :219  CI     = macro_f1(conf_slice(rec_y, rec_pred, nc, w=mult[b]))  # 按"录音被抽中次数"加权 = 每录音一票
-  :243  d_rec  = mean_over_seeds(boot_f1[...][1] - boot_f1[...][1])    # 由 :219 构成 → 区间是「每录音一票」
-  :250  p_rec  = mean_over_seeds(f1r) 用的是 w=rec_n                    # 点估计是「切片加权」
-所以旧表的 recording 列是「切片加权的点 + 每录音一票的区间」，两个估计量不一致。
-**旧区间本身是同口径的（unweighted），予以保留**；只重算点估计为 unweighted。
+Where the problem is (`code/analyze_e1.py`):
+  :189  point  = macro_f1(conf_slice(rec_y, rec_pred, nc, w=rec_n))    # weighted by "this recording's slice count"
+  :219  CI     = macro_f1(conf_slice(rec_y, rec_pred, nc, w=mult[b]))  # weighted by "times the recording was drawn" = one vote per recording
+  :243  d_rec  = mean_over_seeds(boot_f1[...][1] - boot_f1[...][1])    # built from :219 -> the interval is "one vote per recording"
+  :250  p_rec  = mean_over_seeds(f1r) uses w=rec_n                     # the point estimate is "slice-weighted"
+So the recording column of the old table mixes a slice-weighted point with a one-vote-per-recording interval: two different estimators.
+**The old interval is itself internally consistent (unweighted) and is kept**; only the point estimate is recomputed as unweighted.
 
-输出（只读封存预测，不覆盖旧 CSV）：
-  data/results/human_review/corrected_recording_metrics.csv  逐 (lib,bb,arm,seed) 的
+Writes (reads the sealed predictions, never overwrites the old CSVs):
+  data/results/human_review/corrected_recording_metrics.csv  per (lib,bb,arm,seed):
       f1_rec_unweighted / f1_rec_sliceweighted_legacy / f1_slice
-  data/results/human_review/corrected_recording_delta.csv    A1−A0 与 A2−A0（所有库）
-      含 corrected point（unweighted）、旧表 CI（unweighted，原样引用）、legacy point（切片加权）、
-      seed 极差，以及「**given the three trained seeds**、只对测试录音重抽」的条件区间
-      （`conditional_ci_*`，不是联合自助：**没有重抽种子**）。真正的种子×录音联合自助在
-      `code/audit_ctis_bootstrap.py` 的录音级 unweighted 实现里做。
+  data/results/human_review/corrected_recording_delta.csv    A1-A0 and A2-A0 (all libraries)
+      with the corrected point (unweighted), the old table CI (unweighted, quoted as is), the legacy point (slice-weighted),
+      the seed range, and the conditional interval that is "**given the three trained seeds** and resamples test recordings only"
+      (`conditional_ci_*`; not a joint bootstrap: **no seed is resampled**). The true joint seed x recording bootstrap lives in
+      the recording-level unweighted implementation of `code/audit_ctis_bootstrap.py`.
 """
 import csv
 import json
@@ -51,7 +51,7 @@ def per_recording(probs, y, rec_idx, nrec, nc):
         if first[r] < 0:
             first[r] = y[i]
         elif first[r] != y[i]:
-            raise SystemExit("录音 %d 的切片标签不一致" % r)
+            raise SystemExit("slice labels disagree for recording %d" % r)
     rec_y[:] = first
     return rec_y, rec_pred, cnt
 
@@ -97,8 +97,8 @@ class Batch:
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    # 旧表（保留其 recording CI 原文）
-    # A1−A0 在 data/results/e1_delta.csv；A2−A0 在 data/results/delta_A2/e1_delta.csv（两张表分开落盘）
+    # old table (its recording CI is quoted verbatim)
+    # A1-A0 lives in data/results/e1_delta.csv, A2-A0 in data/results/delta_A2/e1_delta.csv (two separate tables)
     old = {}
     for src in (os.path.join(RES, "e1_delta.csv"),
                 os.path.join(RES, "delta_A2", "e1_delta.csv")):
@@ -118,7 +118,7 @@ def main():
                     arms.add(parts[0])
         arms = sorted(a for a in arms if a in ("A0", "A1", "A2", "C1"))
         if "A0" not in arms:
-            print("!! %s 无 A0" % lib)
+            print("!! %s has no A0" % lib)
             continue
         probs0, y0, rec0 = load(lib, "A0", "alexnet", 0)
         recs = list(dict.fromkeys(rec0.tolist()))
@@ -136,7 +136,7 @@ def main():
                     except FileNotFoundError:
                         continue
                     if not np.array_equal(y, y0) or not np.array_equal(rec.astype(str), rec0.astype(str)):
-                        raise SystemExit("%s/%s/%s/%d 面板与参照不一致" % (lib, arm, bb, s))
+                        raise SystemExit("%s/%s/%s/%d panel differs from the reference" % (lib, arm, bb, s))
                     rec_y, rec_pred, cnt = per_recording(probs, y, rec_idx, nrec, nc)
                     onehot = np.zeros((nrec, nc)); onehot[np.arange(nrec), rec_pred] = 1.0
                     f1_unw = weighted_macro_f1(conf_from(rec_y, rec_pred, np.ones(nrec), nc))
@@ -213,8 +213,8 @@ def main():
     with open(p3, "w", encoding="utf-8") as f:
         json.dump({"arms_meta": arms_meta, "boot": BOOT,
                    "old_ci_source": "A1-A0: data/results/e1_delta.csv; A2-A0: data/results/delta_A2/e1_delta.csv (delta_rec_pt / ci_lo_rec_pt / ci_hi_rec_pt)",
-                   "bug": "analyze_e1.py:189 点估计按切片数加权，:219 区间按每录音一票；两者不是同一估计量",
-                   "fix": "点估计改为每录音一票；区间沿用旧表的 unweighted 版本，不重跑",
+                   "bug": "analyze_e1.py:189 weights the point estimate by slice count, :219 weights the interval one vote per recording; the two are not the same estimator",
+                   "fix": "point estimate switched to one vote per recording; the interval keeps the unweighted version from the old table, no re-run",
                    "conditional_note": "conditional CI = recordings resampled only, seeds held at the three trained ones; NOT a joint seed x recording bootstrap"},
                   f, ensure_ascii=False, indent=1)
     print("\nwrote", p1); print("wrote", p2); print("wrote", p3)

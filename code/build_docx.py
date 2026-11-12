@@ -160,7 +160,7 @@ def dwidth(text):
 
 
 def clean_heading(text):
-    """去粗体、去行内代码反引号、折叠空白。"""
+    """Strip bold, strip inline-code backticks, collapse whitespace."""
     text = text.replace("**", "")
     text = re.sub(r"`([^`]*)`", r"\1", text)
     return re.sub(r"[ \t]+", " ", text).strip()
@@ -187,10 +187,10 @@ def add_table(doc, rows):
     for c in range(ncol):
         col = [header[c]] + [r[c] if c < len(r) else "" for r in body]
         weights.append(max(dwidth(x) for x in col))
-        # 最长不可断开的英文标识（如 erhu_playing_tech）决定最小列宽
+        # the longest unbreakable English identifier (e.g. erhu_playing_tech) sets the minimum column width
         needs.append(max(1.15, 0.165 * max(longest_ascii_token(x) for x in col) + 0.34))
 
-    # 压缩长文本列的权重（指数 0.6）：避免主张/说明这类长列吃掉证据列的宽度
+    # weight that shrinks long text columns (exponent 0.6): keeps claim/description columns from eating the width of the evidence column
     weights = [max(w, 1.0) ** 0.6 for w in weights]
     total = sum(weights) or ncol
     avail = 16.4
@@ -219,7 +219,7 @@ def add_table(doc, rows):
 
     for r in body:
         row = table.add_row()
-        # 整行不跨页：避免一条主张被拆到两页
+        # keep a row on one page: a single claim must not be split across two pages
         row._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
         for i in range(ncol):
             cell = row.cells[i]
@@ -250,7 +250,7 @@ def add_picture(doc, path, caption=None):
     full = path if os.path.isabs(path) else os.path.join(ROOT, path)
     if not os.path.exists(full):
         p = doc.add_paragraph()
-        add_rich(p, f"[缺失图片：{path}]", size=9, color=GREY)
+        add_rich(p, f"[missing image: {path}]", size=9, color=GREY)
         return
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -415,14 +415,14 @@ def build():
         add_rich(p, stripped)
         i += 1
 
-    title = "数据集调研报告"
+    title = "Dataset survey report"
     for line in lines:
         if line.startswith("# "):
             title = line[2:].strip()
             break
     doc.core_properties.title = title
-    doc.core_properties.subject = "音乐情感计算 · 弱监督 · 数据集审计"
-    doc.core_properties.author = "研究报告"
+    doc.core_properties.subject = "music emotion computing · weak supervision · dataset audit"
+    doc.core_properties.author = "research report"
     doc.save(OUT)
     print("saved", OUT)
 

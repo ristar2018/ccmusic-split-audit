@@ -1,39 +1,39 @@
 # -*- coding: utf-8 -*-
-"""样本清单 sample_manifest 构建（依据 report/聚焦版实验设计方案v2.8.md §4.1）
+"""Sample manifest (sample_manifest) builder (design note v2.8, §4.1)
 
-覆盖两库（其余三库待补）：
-  CTIS         mel 219 类 / 4,956 录音 / 43,054 切片 / 32.63 h 音频
-  music_genre  mel  16 类 / 1,713 录音 / 36,375 切片 / 无音频（仅特征）
+Two libraries covered (the other three pending):
+  CTIS         mel 219 classes / 4,956 recordings / 43,054 slices / 32.63 h audio
+  music_genre  mel  16 classes / 1,713 recordings / 36,375 slices / no audio (features only)
 
-只读 D:\\VSCode\\Datasets；写 data/manifest/<lib>.csv + data/manifest/summary.json。
+Reads D:\\VSCode\\Datasets only; writes data/manifest/<lib>.csv + data/manifest/summary.json.
 
-字段（§4.1 全集 + 本库需要的扩展列）：
-  sample_id          dataset + ":" + relative_path，全库唯一
-  dataset            库名
+Fields (§4.1 full set + extra columns these libraries need):
+  sample_id          dataset + ":" + relative_path, unique within the library
+  dataset            library name
   feature            mel
-  relative_path      相对 D:\\VSCode\\Datasets 的路径（/ 分隔）
-  label              分类标签（CTIS=类码 C0090；music_genre=叶子类目录名）
-  recording_uid      录音身份（见下"身份规则"）
-  candidate_group    内容完全相同的切片同组（"g"+sha1[:12]）；录音级互斥由 splits_v2 的 A0 保证
-  label_version      标签体系版本
-  content_hash       图片字节 sha1（全 40 位）
-  domain             synth/real（本两库均 real，依据见 summary.domain_basis）
-  song_id            CTIS=""（单音源库，无歌曲层，§4.1 允许留空）；music_genre=recording_uid（一轨一作品）
-  identity_level     CTIS=performance（每条 wav 是一次演奏）；music_genre=work（一轨一作品）
-扩展列：label_name, slice_index, recording_duration_s, instrument, technique, take,
-        top_category, mid_category（music_genre 三级目录用）
+  relative_path      path relative to D:\\VSCode\\Datasets (/ separated)
+  label              class label (CTIS=class code C0090; music_genre=leaf class directory name)
+  recording_uid      recording identity (see "identity rules" below)
+  candidate_group    slices with identical content grouped together ("g"+sha1[:12]); recording-level mutual exclusion is guaranteed by A0 in splits_v2
+  label_version      label-scheme version
+  content_hash       image byte sha1 (full 40 hex digits)
+  domain             synth/real (both libraries here are real, basis in summary.domain_basis)
+  song_id            CTIS="" (single-source library, no song layer, §4.1 allows it to stay empty); music_genre=recording_uid (one track = one work)
+  identity_level     CTIS=performance (each wav is one performance); music_genre=work (one track = one work)
+Extra columns: label_name, slice_index, recording_duration_s, instrument, technique, take,
+        top_category, mid_category (used for the music_genre three-level directory)
 
-身份规则（两库各不相同，不能共用"去尾部数字"的 src_of）
-  CTIS:        mel 文件名 = <全局录音号>_<切片位置>.jpg，全局录音号按
-               「类名升序 → 类内 wav 文件名升序」跨类累加（C0090=0..27, C0091=28..57, …）
-               → recording_uid = 该 wav 的文件名主干
-  music_genre: mel 文件名 = <轨道序号>_<时长秒>_<切片列位置>.jpg
-               → recording_uid = "<叶子类>/<轨道序号>_<时长秒>"
+Identity rules (they differ per library, so the "strip trailing digits" src_of cannot be shared)
+  CTIS:        mel filename = <global recording number>_<slice position>.jpg; the global recording number is
+               accumulated across classes in (class name ascending, then in-class wav filename ascending) order (C0090=0..27, C0091=28..57, …)
+               → recording_uid = stem of that wav filename
+  music_genre: mel filename = <track index>_<duration seconds>_<slice column position>.jpg
+               → recording_uid = "<leaf class>/<track index>_<duration seconds>"
 
-用法
-  python code/manifest.py                       # 两库全量
-  python code/manifest.py --lib CTIS --limit 2000   # 冒烟（只取前 2000 条切片）
-  python code/manifest.py --lib CTIS,music_genre --no-hash   # 跳过 sha1（调试用）
+Usage
+  python code/manifest.py                       # both libraries, full run
+  python code/manifest.py --lib CTIS --limit 2000   # smoke test (first 2000 slices only)
+  python code/manifest.py --lib CTIS,music_genre --no-hash   # skip sha1 (debug)
 """
 import argparse
 import csv
@@ -50,7 +50,7 @@ ROOT = r"D:\VSCode\Datasets"
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTDIR = os.path.join(HERE, "data", "manifest")
 
-# 与 code/ctis_capacity.py:25 同口径
+# Same convention as code/ctis_capacity.py:25
 CTIS_RE = re.compile(r"^【(?P<inst>[^】]+)】\s*(?P<rest>.+?)\s*\.wav$")
 
 COMMON = ["sample_id", "dataset", "feature", "relative_path", "label", "recording_uid",
@@ -58,8 +58,8 @@ COMMON = ["sample_id", "dataset", "feature", "relative_path", "label", "recordin
           "identity_level"]
 EXTRA = ["label_name", "slice_index", "recording_duration_s", "instrument", "technique",
          "take", "top_category", "mid_category"]
-# 去重列：audio_hash = 录音文件字节 sha1（CTIS 才有音频）；recording_canonical = 同一音频的
-# 多个发布名折叠后的规范 id（= 组内字典序最小 uid）。splits_v2 的 A0/A2 用 canonical 判互斥。
+# De-duplication columns: audio_hash = byte sha1 of the recording file (only CTIS has audio); recording_canonical = the
+# canonical id after folding several published names of one audio into one (= lexicographically smallest uid in the group). A0/A2 in splits_v2 use canonical to decide mutual exclusion.
 DEDUP = ["audio_hash", "recording_canonical"]
 COLUMNS = COMMON + EXTRA + DEDUP
 
@@ -72,7 +72,7 @@ EXPECT = {
 }
 
 
-# ---------------------------------------------------------------- 工具
+# ---------------------------------------------------------------- helpers
 def sha1_file(path):
     h = hashlib.sha1()
     with open(path, "rb") as f:
@@ -85,7 +85,7 @@ def sha1_file(path):
 
 
 def wav_duration(path):
-    """纯文件头解析（wave 模块打不开 IEEE float WAV；soundfile 在本环境取不到）"""
+    """Header-only parse (the wave module cannot open IEEE float WAV; soundfile is unavailable in this environment)"""
     with open(path, "rb") as f:
         if f.read(4) != b"RIFF":
             return None
@@ -112,7 +112,7 @@ def wav_duration(path):
 
 
 def parse_ctis_name(stem):
-    """【乐器】演奏技法 华彩 第一遍 → (大笒, 华彩, 第一遍)；解析失败返回 (None,None,None)"""
+    """Parse a stem of the form <instrument> <technique> <take> -> (instrument, technique, take); (None, None, None) if parsing fails"""
     m = CTIS_RE.match(stem + ".wav")
     if not m:
         return None, None, None
@@ -145,7 +145,7 @@ SPOT_COLS = ["spot_id", "library", "label", "recording_uid", "recording_canonica
 
 
 def write_spotcheck(rows, lib, outdir, n=100, seed=20261105):
-    """G-A 身份人工抽查表：每库抽 n 条录音，留三列空白给人判（100% 才算过门）"""
+    """G-A identity manual spot-check sheet: sample n recordings per library, leave three columns blank for a human verdict (100% needed to pass the gate)"""
     import csv
     import random
     by_rec = defaultdict(list)
@@ -186,7 +186,7 @@ def build_ctis(limit=None, do_hash=True, verbose=True, do_audio_hash=True):
     mdir = os.path.join(root, "eval", "mel")
     classes = sorted(d for d in os.listdir(adir) if os.path.isdir(os.path.join(adir, d)))
 
-    # 1) 全局录音号 → (类码, wav 名)；全局号 = 类名升序 + 类内文件名升序的累加序号
+    # 1) global recording number -> (class code, wav name); global number = running index over class name ascending, then in-class filename ascending
     recs = {}
     g = 0
     for cls in classes:
@@ -196,7 +196,7 @@ def build_ctis(limit=None, do_hash=True, verbose=True, do_audio_hash=True):
                 g += 1
     n_rec = len(recs)
 
-    # 2) 扫 mel，按全局号归组
+    # 2) scan mel, group by global number
     slices = defaultdict(list)          # gidx -> [(pos, filename)]
     other_ext = Counter()
     for cls in classes:
@@ -213,7 +213,7 @@ def build_ctis(limit=None, do_hash=True, verbose=True, do_audio_hash=True):
     orphan = sorted(set(slices) - set(recs))
     missing = sorted(set(recs) - set(slices))
 
-    # 3) 乐器名统计（类码 → 主导乐器）与取文件名唯一性判定
+    # 3) instrument-name statistics (class code -> dominant instrument) and stem-uniqueness check
     inst_of = {}
     stems = Counter()
     parse_fail = []
@@ -229,15 +229,15 @@ def build_ctis(limit=None, do_hash=True, verbose=True, do_audio_hash=True):
     per_class_inst = {c: cnt.most_common() for c, cnt in inst_of.items()}
     mixed = {c: v for c, v in per_class_inst.items() if len(v) > 1}
 
-    # 3b) 音频去重：同一段音频被挂两个名字（如 L0148 的 "...第一遍(1)"）必须折成同一录音，
-    #     否则 A0 的录音级互斥会被同一音频的两份拷贝绕过。
+    # 3b) audio de-duplication: one audio published under two names (e.g. the "…第一遍(1)" copy under L0148) must be folded into one recording,
+    #     otherwise A0's recording-level mutual exclusion is bypassed by two copies of the same audio.
     uid_of = {}
     for gidx, (cls, fn) in recs.items():
         stem = fn.rsplit(".", 1)[0]
         uid_of[gidx] = (cls + "/" + stem) if uid_prefix else stem
     audio_hash = {}
     if do_audio_hash:
-        print("  音频去重：对 %d 个 wav 取字节 sha1 ..." % n_rec, flush=True)
+        print("  audio de-duplication: byte sha1 over %d wav files ..." % n_rec, flush=True)
         for i, gidx in enumerate(sorted(recs), 1):
             cls, fn = recs[gidx]
             audio_hash[uid_of[gidx]] = sha1_file(os.path.join(adir, cls, fn))
@@ -256,7 +256,7 @@ def build_ctis(limit=None, do_hash=True, verbose=True, do_audio_hash=True):
         dup_audio = {}
         canon = {uid: uid for uid in uid_of.values()}
 
-    # 4) 生成行
+    # 4) emit rows
     rows, n_parsed, n_uid, dur_total = [], 0, 0, 0.0
     lim = 0
     by_class = defaultdict(list)
@@ -338,16 +338,16 @@ def _ctis_stats(rows, recs, slices, classes, per_class_inst, mixed, parse_fail,
         "per_class": per_class_out,
         "classes_with_multi_instrument": {c: v for c, v in mixed.items()},
         "domain": "real",
-        "domain_basis": "盘内有 wav 音频（4,956 条真实乐器演奏录音，32.63 h），非合成",
-        "song_id_rule": "留空：CTIS 为单音源库（一条 wav = 一次演奏），无歌曲/作品层，§4.1 允许留空",
+        "domain_basis": "wav audio is present on disk (4,956 real instrument-performance recordings, 32.63 h), not synthetic",
+        "song_id_rule": "left empty: CTIS is a single-source library (one wav = one performance), no song/work layer, §4.1 allows it to stay empty",
         "identity_level": "performance",
-        "uid_rule": "mel 首段全局录音号按「类名升序→类内 wav 名升序」跨类累加；uid = wav 文件名主干（%s）"
-                    % ("文件名跨类重名 → uid 加类码前缀" if uid_prefix else "无重名"),
+        "uid_rule": "the leading field of the mel filename is the global recording number, accumulated across classes in (class name ascending -> in-class wav name ascending) order; uid = wav filename stem (%s)"
+                    % ("filename duplicated across classes -> uid gets the class-code prefix" if uid_prefix else "no duplicates"),
         "audio_hash_done": bool(dup_audio),
         "duplicate_audio_groups": dup_audio,
         "duplicate_audio_recordings": sum(len(v) for v in dup_audio.values()),
-        "dedup_rule": "audio_hash 相同的多个发布名折成 recording_canonical（组内字典序最小 uid）；"
-                      "splits_v2 的 A0/A2 按 canonical 判互斥",
+        "dedup_rule": "published names that share one audio_hash are folded into recording_canonical (lexicographically smallest uid in the group);"
+                      "A0/A2 in splits_v2 decide mutual exclusion by canonical",
         "limit": limit,
     }
     return st
@@ -426,24 +426,24 @@ def _mg_stats(rows, per_class, bad_name, limit):
         "slices": n,
         "K": round(n / recs, 2) if recs else 0,
         "audio_hours": 0.0,
-        "audio_note": "盘面无音频，仅 eval 特征；录音时长取自文件名中段（秒）",
+        "audio_note": "no audio on disk, eval features only; recording duration taken from the middle field of the filename (seconds)",
         "duration_from_filename_h": round(sum(v["dur"] for v in per_class.values()) / 3600.0, 2),
         "bad_filenames": bad_name[:20],
         "bad_filename_count": len(bad_name),
         "uid_parse_rate": round((n - len(bad_name)) / n, 4) if n else 0.0,
         "per_class": pc,
         "domain": "real",
-        "domain_basis": "MTG-Jamendo 真实曲目录音（上游官方描述；本地仅有特征、无音频与元数据可复核）",
-        "song_id_rule": "song_id = recording_uid：一轨即一作品，作品层与录音层同一标识",
+        "domain_basis": "MTG-Jamendo real track recordings (upstream official description; only features are present locally, no audio or metadata to re-verify)",
+        "song_id_rule": "song_id = recording_uid: one track is one work, work layer and recording layer share one identifier",
         "identity_level": "work",
-        "uid_rule": "mel 文件名 <轨道序号>_<时长秒>_<切片列位置> → uid = <叶子类>/<轨道序号>_<时长秒>",
+        "uid_rule": "mel filename <track index>_<duration seconds>_<slice column position> -> uid = <leaf class>/<track index>_<duration seconds>",
         "audio_hash_done": False,
-        "dedup_rule": "盘面无音频，无法做音频级去重；recording_canonical = recording_uid",
+        "dedup_rule": "no audio on disk, so audio-level de-duplication is impossible; recording_canonical = recording_uid",
         "limit": limit,
     }
 
 
-# ---------------------------------------------------------------- 另外三库（P1 主线补齐）
+# ---------------------------------------------------------------- the other three libraries (P1 main-line completion)
 def _generic_stats(lib, rows, per_class, bad, limit, uid_rule, identity):
     n = len(rows)
     recs = {r["recording_uid"] for r in rows}
@@ -466,17 +466,17 @@ def _generic_stats(lib, rows, per_class, bad, limit, uid_rule, identity):
         "identity_level": identity,
         "domain": "real",
         "audio_hash_done": False,
-        "dedup_rule": "盘面音频无可靠命名映射，未做音频级去重；recording_canonical = recording_uid",
+        "dedup_rule": "the audio on disk has no reliable naming map, so audio-level de-duplication was not done; recording_canonical = recording_uid",
         "limit": limit,
     }
 
 
 def build_pianos(limit=None, do_hash=True, verbose=True):
-    """pianos：mel 在 `data/eval/<品牌>/<录音号>_<时长秒>_<片位>.jpg`（8 品牌 = 8 类）。
+    """pianos: mel under `data/eval/<brand>/<recording number>_<duration seconds>_<slice position>.jpg` (8 brands = 8 classes).
 
-    `data/mel/` 是每录音一张图的旧目录，**不是**主线切片目录；主线用 `data/eval/`（18,352 片）。
-    音频在 `data/audio/<品牌>/<录音号>.wav`，与 eval 的录音号不同名（6009 vs 009），无可靠映射，
-    故不填 audio_hash；时长取自文件名中段。
+    `data/mel/` is the legacy directory holding one image per recording and is **not** the main-line slice directory; the main line uses `data/eval/` (18,352 slices).
+    Audio sits in `data/audio/<brand>/<recording number>.wav`, with recording numbers that do not match the eval ones (6009 vs 009) and no reliable map,
+    so audio_hash stays empty; duration is taken from the middle field of the filename.
     """
     root = os.path.join(ROOT, "pianos", "data", "eval")
     pat = re.compile(r"^(?P<rid>\d+)_(?P<dur>[0-9.]+)_(?P<pos>\d+)\.jpg$")
@@ -520,13 +520,13 @@ def build_pianos(limit=None, do_hash=True, verbose=True):
             break
     return rows, _generic_stats("pianos", rows, per_class, bad,
                                 limit if limit and lim >= limit else None,
-                                uid_rule="<品牌>/<录音号>_<时长秒>", identity="performance")
+                                uid_rule="<brand>/<recording number>_<duration seconds>", identity="performance")
 
 
 def build_CNPM(limit=None, do_hash=True, verbose=True):
-    """CNPM：mel 在 `data/eval/mel/<曲名> - <演奏者>.mp3_<片位>.jpg`（扁目录），标签取 GBK `label.csv`
-    的「样式/Pattern」（5 类，实测 0–4）。录音 id = 去最后一个 `_<片位>`（含 .mp3/.wav 扩展名），
-    与 csv 的「文件名/File Name」100% 对上（287/287，双向 0 差）。
+    """CNPM: mel under `data/eval/mel/<title> - <performer>.mp3_<slice position>.jpg` (flat directory); the label comes from the GBK `label.csv`
+    column 样式/Pattern (5 classes, observed 0–4). The recording id is the filename with the last `_<slice position>` removed (extension .mp3/.wav kept),
+    and it joins the csv 文件名/File Name column 100% (287/287, zero difference in either direction).
     """
     root = os.path.join(ROOT, "CNPM", "data")
     mel = os.path.join(root, "eval", "mel")
@@ -584,8 +584,8 @@ def build_CNPM(limit=None, do_hash=True, verbose=True):
             break
     st = _generic_stats("CNPM", rows, per_class, bad,
                         limit if limit and lim >= limit else None,
-                        uid_rule="mel 文件名去 `_<片位>`（含扩展名）", identity="performance")
-    st["label_source"] = "CNPM/data/label.csv（GBK，列「样式/Pattern」5 类）"
+                        uid_rule="mel filename with the trailing `_<slice position>` (extension kept) removed", identity="performance")
+    st["label_source"] = "CNPM/data/label.csv (GBK; column header 样式/Pattern, 5 classes)"
     st["csv_join"] = {"csv_rows": len(meta),
                       "mel_recs": len({r["recording_uid"] for r in rows}),
                       "mel_not_in_csv": len(nomatch)}
@@ -593,7 +593,7 @@ def build_CNPM(limit=None, do_hash=True, verbose=True):
 
 
 def build_bel_canto(limit=None, do_hash=True, verbose=True):
-    """bel_canto：mel 在 `data/eval/mel/<f_bel|f_folk|m_bel|m_folk>/<录音号>_<片位>.jpg`（4 类）。"""
+    """bel_canto: mel under `data/eval/mel/<f_bel|f_folk|m_bel|m_folk>/<recording number>_<slice position>.jpg` (4 classes)."""
     root = os.path.join(ROOT, "bel_canto", "data", "eval", "mel")
     pat = re.compile(r"^(?P<rid>\d+)_(?P<pos>\d+)\.jpg$")
     rows, lim, bad = [], 0, []
@@ -634,7 +634,7 @@ def build_bel_canto(limit=None, do_hash=True, verbose=True):
             break
     return rows, _generic_stats("bel_canto", rows, per_class, bad,
                                 limit if limit and lim >= limit else None,
-                                uid_rule="<类别>/<录音号>", identity="performance")
+                                uid_rule="<class>/<recording number>", identity="performance")
 
 
 # ---------------------------------------------------------------- main
@@ -642,15 +642,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lib", default="CTIS,music_genre")
     ap.add_argument("--limit", type=int, default=0)
-    ap.add_argument("--no-hash", action="store_true", help="跳过图片 sha1（调试）")
-    ap.add_argument("--no-audio-hash", action="store_true", help="跳过 CTIS wav 字节 sha1（约 13.3 GB）")
+    ap.add_argument("--no-hash", action="store_true", help="skip the image sha1 (debug)")
+    ap.add_argument("--no-audio-hash", action="store_true", help="skip the CTIS wav byte sha1 (about 13.3 GB)")
     ap.add_argument("--out", default=OUTDIR)
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     summary = {"built_by": "code/manifest.py", "root": ROOT,
                "feature": "mel", "columns": COLUMNS, "libraries": {}}
     for lib in [x.strip() for x in a.lib.split(",") if x.strip()]:
-        print("[%s] 扫描 ..." % lib, flush=True)
+        print("[%s] scanning ..." % lib, flush=True)
         if lib == "CTIS":
             rows, st = build_ctis(a.limit or None, not a.no_hash,
                                   do_audio_hash=not a.no_audio_hash and not a.limit)
@@ -663,7 +663,7 @@ def main():
         elif lib == "bel_canto":
             rows, st = build_bel_canto(a.limit or None, not a.no_hash)
         else:
-            print("  跳过（未实现）：%s" % lib)
+            print("  skipped (not implemented): %s" % lib)
             continue
         rows.sort(key=lambda r: (r["label"], r["recording_uid"], r["slice_index"]))
         p = os.path.join(a.out, lib + ".csv")
@@ -686,10 +686,10 @@ def main():
             st["spotcheck"] = {"path": sp2, "n": nsp}
         summary["libraries"][lib] = st
         ok = all(v["ok"] for v in checks.values()) if checks else None
-        print("[%s] %d 行 → %s  校验=%s" % (lib, len(rows), p, ok), flush=True)
+        print("[%s] %d rows → %s  checks=%s" % (lib, len(rows), p, ok), flush=True)
         for k, v in checks.items():
             if not v["ok"]:
-                print("   !! %s 期望 %s 实得 %s" % (k, v["expected"], v["got"]))
+                print("   !! %s expected %s got %s" % (k, v["expected"], v["got"]))
     sp = os.path.join(a.out, "summary.json")
     with open(sp, "w", encoding="utf-8") as f:
         json.dump(summary, f, ensure_ascii=False, indent=1)
@@ -697,7 +697,7 @@ def main():
     allok = all(v["ok"] for lib in summary["libraries"].values()
                 for v in lib["checks_vs_design"].values())
     if not allok and summary["libraries"]:
-        print("!! 有校验未通过")
+        print("!! some checks failed")
         return 2
     return 0
 

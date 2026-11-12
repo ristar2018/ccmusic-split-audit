@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# E1f：负对照 3 库 × 2 骨干 × {A0,A2} × 1 seed = 12 runs（设计稿 §3.7 :298-310）
-#   chest_falsetto 4 类 / erhu_playing_tech 11 类 / GZ_IsoTech 8 类
-#   Guzheng_Tech99 未进清单：无逐录音类别层（见 data/manifest/summary_neg.json → excluded），
-#   故设计稿的 16 runs 降为 12 runs。
-# 用法：bash code/run_e1f.sh [tag]
-# 每 run 一日志 logs/e1f_<lib>_<arm>_<bb>.log；总进度 logs/e1f_driver.log；已有 result.json 自动跳过。
+# E1f: 3 negative-control libraries x 2 backbones x {A0,A2} x 1 seed = 12 runs (design note §3.7 :298-310)
+#   chest_falsetto 4 classes / erhu_playing_tech 11 classes / GZ_IsoTech 8 classes
+#   Guzheng_Tech99 is not in the manifest: no per-recording class layer (see the excluded section of data/manifest/summary_neg.json),
+#   so the 16 runs of the design note drop to 12 runs.
+# Usage: bash code/run_e1f.sh [tag]
+# One log per run: logs/e1f_<lib>_<arm>_<bb>.log; overall progress in logs/e1f_driver.log; runs with an existing result.json are skipped.
 set -u
 cd "$(dirname "$0")/.." || exit 1
 PY="D:/XiaBao/AIArtDetect/envs/fapn/python.exe"
@@ -27,7 +27,7 @@ for lib in $LIBS; do
       n=$((n+1))
       log="logs/${TAG}_${lib}_${arm}_${bb}.log"
       if [ -f "runs/$lib/$arm/$bb/seed0/result.json" ]; then
-        echo "[$n/$total] $lib $arm $bb SKIP（已完成）" | tee -a "$DRV"
+        echo "[$n/$total] $lib $arm $bb SKIP (already done)" | tee -a "$DRV"
         continue
       fi
       t0=$(date +%s)
@@ -37,11 +37,11 @@ for lib in $LIBS; do
       t1=$(date +%s)
       echo "[$n/$total] $lib $arm $bb rc=$rc $(( (t1-t0)/60 ))min  $(date '+%H:%M:%S')" | tee -a "$DRV"
       if [ $rc -ne 0 ]; then
-        echo "!! 失败，日志尾部：" | tee -a "$DRV"
+        echo "!! failed, log tail:" | tee -a "$DRV"
         tail -5 "$log" | tee -a "$DRV"
       fi
     done
   done
 done
 t_all1=$(date +%s)
-echo "ALL DONE $(date '+%H:%M:%S') 总耗时 $(( (t_all1-t_all0)/60 ))min" | tee -a "$DRV"
+echo "ALL DONE $(date '+%H:%M:%S') total $(( (t_all1-t_all0)/60 ))min" | tee -a "$DRV"
