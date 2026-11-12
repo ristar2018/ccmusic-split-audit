@@ -623,7 +623,7 @@ def main():
                 "%d over %d" % (nbe, rbe))
     ck.identity("P3 universe self-check passed", bool(p3u.get("all_pass")), str(p3u.get("all_pass")))
     ck.in_text("protocol class universe after rule",
-               "%d techniques over %s recordings from %d candidate classes over %s recordings"
+               "%d techniques over %s recordings, out of %d candidate classes covering %s recordings"
                % (n43, thousands(r43), nbe, thousands(rbe)))
 
     def dup_groups(lib):

@@ -196,7 +196,7 @@ recording folds. In the labels of Section~5.7 of the main text, A0 is R-slice, A
 L-inst, and A1r is R-rec. The numbers below are the realised composition of each fold, recomputed
 from the frozen split files and the stored fold results.
 
-\begin{table}[ht]\centering\small\caption{Realised fold composition of the cross-instrument experiment (CTIS). Test slices are the evaluated panel of each fold.}
+\begin{table}[ht]\centering\small\caption{Realised fold composition of the cross-instrument experiment (CTIS). Test slices are the evaluated panel of each fold; the training side is split 90/10 by recording, so the 92 validation recordings (491 slices in the first instrument-grouped fold) are not listed and the two recording columns need not sum to the corpus.}
 \label{tab:fold-composition}
 \begin{tabular}{llrrrr}\toprule Folds & Fold & Train rec. & Test rec. & Test slices & Classes \\ \midrule
 A0, slice & 1 & 1{,}151 & 1{,}019 & 2{,}524 & 43 \\
@@ -216,7 +216,7 @@ the instrument-grouped and recording-grouped folds share no recording. Second, t
 instrument-grouped fold covers 42 of
 the 43 classes on its test side, because the natural-harmonic technique has no test recording there;
 the pooled technique score averages over the classes present, so that fold contributes 42 classes.
-The 135 instruments each fall in exactly one instrument-grouped fold.
+Each instrument falls in exactly one instrument-grouped fold.
 
 \subsection{Recording-level estimator correction}
 

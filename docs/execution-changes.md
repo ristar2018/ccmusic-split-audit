@@ -117,3 +117,59 @@ a factual attribution are listed here.
 The three gates were re-run after these edits: 338 number checks, 88 ledger rows
 and the four negative-test cases all pass, and the two figures were regenerated
 from the same artifacts.
+
+## 8. Self-check pass of 2026-11-12
+
+A full read of the compiled manuscript against the artifacts found three errors that no
+numeric gate could catch, because in each one the number is right and the sentence
+around it is wrong.
+
+1. **Tail probability, typesetting.** The sentence reporting the attainable two-sided
+   tail had lost its math delimiters and printed as "2,001$" in the PDF. It now prints
+   `$2/2{,}001$`. The value was correct in the source and in the artifact; only the
+   delimiters were broken, and a string check on the number cannot see them.
+2. **Bel canto ceiling, caption.** The caption of the main-effect table said that in
+   bel canto under Swin-T "both arms reach 1.00 at the recording level in every seed".
+   That holds for A1 and A2 (1.00 in every seed) but not for A0 (0.7490, 0.8357,
+   0.7331; mean 0.7726), and the same row reports a recording-level contrast of +22.74,
+   which is exactly 100 x (1 - 0.7726). The sentence exists to explain why the A2-A0
+   table repeats that row, so it moved to that table's caption and now names the two
+   arms it is about.
+3. **Duplicate pairs, count.** The materials section reported "three identical pairs
+   --- two takes each released under two technique names, and one take with a
+   duplicate-download suffix". The hash sweep and the canonical-fold count both give
+   two pairs: one take released under two technique names (C0090) and one take released
+   twice with a duplicate-download suffix (L0148), with 4,956 recording identifiers
+   folding to 4,954. The count is now two, which also makes the paragraph agree with
+   the slice-level sentence three paragraphs earlier that names the same take.
+
+Three further inconsistencies were fixed in wording only; no number changed.
+
+4. The abstract and Section 6.1 now give both joint seed--recording upper bounds
+   (+3.74 under AlexNet, +3.14 under Swin-T) rather than the Swin-T value alone, which
+   the sensitivity table had reported all along.
+5. The cross-instrument table caption now states that contrasts are computed on
+   unrounded scores, as the main-effect table already did; 0.8446 - 0.8157 prints as
+   2.90 because the artifact value is 2.898.
+6. The main-effect caption no longer ends on a clause that reads as a claim that both
+   CTIS intervals exclude three points. A point estimate below the threshold does not
+   imply an interval that excludes it, and the sentence now says so.
+
+Redundancy removed, about 50 words in total: a Section 6.3 sentence that restated the
+six-contrast count, the finite-resolution note repeated at the end of the first results
+paragraph, the second statement of "no model, epoch or seed selection" in Section 5.3,
+the second of two consecutive warnings against reading the cross-instrument gaps as
+leakage in Section 6.4, and the parsing log phrase "110,415 of 110,415" in Section 4.2.
+The supplement's fold table now says why its two recording columns sum to 1,296 rather
+than 1,388 --- the 92 validation recordings of the 90/10 training-side split, 491
+slices in the first fold --- and its fold sentence no longer attaches the number 135 to
+the merged instrument names.
+
+`code/verify_paper_numbers.py` changed in one place: the cross-instrument universe check
+now matches the reworded sentence ("43 techniques over 1,388 recordings, out of 49
+candidate classes covering 4,037 recordings"). The four artifact-derived numbers in that
+check are unchanged.
+
+The three gates were re-run after these edits: 338 number checks, 88 ledger rows and the
+four negative-test cases all pass. Page counts are unchanged at 31 / 10 / 1, and the
+compile log carries no overfull box, undefined reference or missing character.

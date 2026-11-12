@@ -92,7 +92,7 @@ The sealed panel is evaluated once per run, after training, and never during it.
 predictions are written to a staging directory and moved into a sealed directory only when all
 seeds of a library--arm--backbone group have completed; the sealed record contains the
 group's seed spread. This local record is not an independent timestamp and does not by itself
-prove when analytical choices were made. No model, epoch or seed selection is performed; R contains no test
+prove when analytical choices were made. R contains no test
 recording and is used for monitoring only, except that C1 consumes part of R as described above. This is what makes the reported differences interpretable: a
 pipeline that peeked at the sealed panel to choose a checkpoint would produce a number that no
 longer measures transfer.
@@ -176,8 +176,8 @@ to instruments never seen in training. We froze the class universe by a single r
 training: a technique--instrument cell entered if it held at least two recordings and its
 instrument contributed at least three recordings, and six content-type labels were excluded as
 material rather than technique (scales, open strings, fundamental tones, single tones, excerpts
-and instrument-specific techniques). That leaves 43 techniques over 1{,}388 recordings from 49
-candidate classes over 4{,}037 recordings. We then grouped instruments --- rather than recordings --- into three folds, so that each
+and instrument-specific techniques). That leaves 43 techniques over 1{,}388 recordings, out of 49
+candidate classes covering 4{,}037 recordings. We then grouped instruments --- rather than recordings --- into three folds, so that each
 recording is predicted exactly once by a model that has not seen its instrument. That property
 holds for the instrument-grouped and recording-grouped partitions, not for the random
 slice-level partition. Because that

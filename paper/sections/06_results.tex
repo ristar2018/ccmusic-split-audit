@@ -9,9 +9,9 @@ $+2.84$. Both intervals
 exclude zero. Under the add-one convention, both smaller tails have zero hits in 2{,}000
 resamples: raw $p=2/2{,}001$ and Holm-adjusted $p\approx0.0020$ for both, so the interval excludes zero in the primary
 family at the finest resolution 2{,}000 resamples can express, the smallest attainable two-sided
-tail being \/2{,}001\$, conditional on the fixed split and the trained seeds. These are finite-resolution resampling summaries.
+tail being $2/2{,}001$, conditional on the fixed split and the trained seeds.
 Both point estimates are, however, below the three-point SESOI recorded in the internal written
-protocol, which the local record describes as set before training but which lacks an independent timestamp. The Swin-T interval is wholly below three points, whereas the AlexNet interval includes
+protocol, which the local record describes as set before training. The Swin-T interval is wholly below three points, whereas the AlexNet interval includes
 that magnitude. These are conditional intervals for our fixed split and trained seeds, not
 uncertainty bounds across new training runs or split realisations. A null-compatible interval is
 not evidence of no effect, and we make no equivalence claim at any margin.
@@ -24,11 +24,10 @@ seed range are in percentage points. Recording-level points were corrected after
 their original unweighted cluster intervals are retained. Intervals are 95\% recording-cluster
 bootstrap intervals over 2{,}000 resamples on the primary replicate stream; the class-set
 comparison in Supplementary Material S1 re-draws them on a second stream, so its bounds differ in
-the second decimal. Seed range is the spread of per-seed differences. In bel canto under Swin-T
-both arms reach 1.00 at the recording level in every seed, so their points and intervals coincide
-by construction. The two primary rows, CTIS under both backbones, are marked with a dagger:
+the second decimal. Seed range is the spread of per-seed differences. The two primary rows, CTIS under both backbones, are marked with a dagger:
 neither reaches the three-point threshold of the internal plan, whereas every additional-library
-point estimate does, which does not establish that both CTIS intervals exclude it. Differences
+point estimate does; a point estimate falling short does not by itself mean its interval
+excludes that magnitude. Differences
 are computed on unrounded per-seed scores, so subtracting the four-decimal arm columns can differ
 from the reported $\Delta$ by 0.01.}
 \label{tab:main}
@@ -125,7 +124,8 @@ bel canto  & Swin-T  & 19.09 & 13.06 & 0.684 \\
 
 The CTIS sensitivity analyses in Supplementary Material S1 retain positive slice-level
 intervals when recording clusters and trained seeds are jointly resampled. Some upper bounds
-exceed three points, including Swin-T under unstratified joint resampling. For the corrected
+exceed three points: +3.74 under AlexNet and +3.14 under Swin-T on unstratified joint
+seed--recording resampling. For the corrected
 recording metric, AlexNet's unstratified joint interval includes zero, at approximately
 $-0.03$ to $+2.99$. These exploratory analyses do not include split-realisation variance.
 
@@ -165,7 +165,9 @@ self-test scores and seed dispersion explicitly.
 columns report the two levels. A2 trains on a random 80/10/10 split of C $\cup$ $Q^{\text{pool}}$, i.e.\ with
 same-recording mixing; its realised training count is 0.991--1.001 of A0's in every library.
 Intervals are conditional 95\% recording-cluster bootstrap intervals (2{,}000 resamples).
-The self-test scores are tabulated separately in Supplementary Material S1.}
+The self-test scores are tabulated separately in Supplementary Material S1. In bel canto under
+Swin-T, A1 and A2 both reach 1.00 at the recording level in every seed while A0 averages 0.77, so
+their contrast and interval coincide by construction.}
 \label{tab:a2}
 \small
 \begin{tabular}{llrr}
@@ -216,7 +218,6 @@ so this conditional interval does not establish a stable direction across traini
 to three seeds was exploratory, not publicly preregistered. GZ\_IsoTech, the only control with multi-segment recordings, sits at $+0.26$ and $-0.22$,
 consistent with its sub-one-percent exposure. Because A2 is not the main intervention, these cells
 do not test A1$-$A0 directly and cannot bound uncertainty in the main experiment.
-Five conditional intervals include zero; one excludes it despite inconsistent seed directions.
 With six contrasts and no correction for multiplicity, the single nominal exclusion is itself weak
 evidence, and five intervals that include zero do not show that the contrast is zero.
 Recording- and slice-level partitions coincide only in the exactly single-slice collections,
@@ -279,10 +280,10 @@ Withholding the instruments then lowers it by a further $36.7$ points ($33.3$ to
 $31.4$ points ($28.3$ to $35.0$). The large number in
 Table~\ref{tab:p3} is therefore two effects of very different size: within-instrument
 the R-slice--R-rec contrast is 7--10\% of the total, with the larger remainder in the
-R-rec--L-inst contrast. This is a separation of protocol contrasts, not a causal decomposition
-of all sources of performance loss. The
-reader should not read the 36.7-point (AlexNet) or 31.4-point (Swin-T) R-rec--L-inst gap, nor the
-39.6-point or 34.8-point R-slice--L-inst gap, as a leakage estimate. Figure~\ref{fig:p3} shows the
+R-rec--L-inst contrast. This separates protocol contrasts rather than decomposing
+all sources of performance loss: neither the 36.7-point (AlexNet) or 31.4-point (Swin-T)
+R-rec--L-inst gap nor the 39.6-point or 34.8-point R-slice--L-inst gap is a leakage estimate.
+Figure~\ref{fig:p3} shows the
 four partitions side by side with their intervals.
 
 \begin{figure}[!tb]
@@ -293,8 +294,9 @@ held-out folds of the CTIS technique task for four partitions: random slice-leve
 recording-grouped folds with 110 instruments on at least two folds (R-rec),
 instrument-withheld folds (L-inst), and the adversarial arm on the same folds (L-inst+Adv). Bars are means over
 two seeds and the whiskers are 95\,\% recording-cluster bootstrap intervals. The two arrows
-give the R-rec$-$R-slice contrasts of $-2.9$ and $-3.4$ points and the
-L-inst$-$R-rec contrasts of $-36.7$ and $-31.4$ points. They are differences between
+give the R-rec$--slice contrasts of $-2.9$ and $-3.4$ points and the
+L-inst$--rec contrasts of $-36.7$ and $-31.4$ points, for AlexNet and Swin-T in that
+order. They are differences between
 protocols, not causal components of a single mechanism.}
 \label{fig:p3}
 \end{figure}
@@ -309,9 +311,8 @@ split of the training recordings and its class set is closed, it measures how mu
 identity remains recoverable for instruments the model has seen; it does not establish that an
 unseen test instrument is identifiable from the representation. These rounded summaries are pooled across
 folds, seeds and both backbones; Supplementary Material S1 gives the backbone-specific probe values.
-The gradient-reversal weight was at most 0.02. The observed reduction does not establish why this
-intervention failed to improve technique classification or whether another weight schedule would
-behave differently. The adversarial and L-inst arms use the same instrument-grouped folds; they
+The gradient-reversal weight was at most 0.02. The adversarial and L-inst arms use the same
+instrument-grouped folds; they
 differ in the objective, not the recordings seen.
 This is a negative result for this intervention and weight schedule, not evidence that
 instrument invariance is unattainable.
@@ -327,7 +328,8 @@ other partitions. Intervals are 95\% recording-cluster bootstrap intervals. Cont
 $+39.63\,[+36.84,+42.39]$ for AlexNet and $+34.77\,[+32.00,+38.08]$ for Swin-T; R-slice$-$R-rec
 $+2.90\,[+0.32,+5.66]$ and $+3.41\,[+0.68,+6.36]$; R-rec$-$L-inst
 $+36.73\,[+33.31,+39.89]$ and $+31.37\,[+28.32,+34.97]$; L-inst+Adv$-$L-inst $-0.36\,[-1.75,+0.91]$ for AlexNet
-and $-2.83\,[-4.81,-0.89]$ for Swin-T.}
+and $-2.83\,[-4.81,-0.89]$ for Swin-T. Contrasts use unrounded scores and can
+differ from the difference of the four-decimal columns by 0.01.}
 \label{tab:p3}
 \footnotesize
 \setlength{\tabcolsep}{3.6pt}
