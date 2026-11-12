@@ -1,7 +1,7 @@
 # Reference audit
 
-Date: 2026-11-12. Scope: the 29 entries of `paper/refs.bib` as printed in
-`main_sn.bbl`.
+Date: 2026-11-12. Scope: the 31 entries of `paper/refs.bib` as printed in `main_sn.bbl` --- the 29
+present when the audit began, plus the two method references added at its end.
 
 ## How each entry was checked
 
@@ -27,7 +27,7 @@ book series (`Studies in Computational Intelligence`) rather than the book, and
 | `brookshire2024eeg` | article | Frontiers in Neuroscience 18:1373515 | Crossref | ok |
 | `choi2017` | inproceedings | ISMIR 2017, pp 141-149 | ISMIR proceedings | ok |
 | `defferrard2016` | inproceedings | ISMIR 2017, pp 316-323 | Zenodo paper PDF, first page | pages added |
-| `downie2010mirex` | incollection | Advances in Music Information Retrieval, pp 93-115 | Crossref | ok |
+| `downie2010mirex` | incollection | Advances in Music Information Retrieval, p 93-115 | Crossref | ok (the style prints `p` for chapters) |
 | `elizalde2024clap` | inproceedings | ICASSP 2024, pp 336-340 | Crossref | ok |
 | `engel2017` | inproceedings | ICML 2017, PMLR 70:1068-1077 | PMLR volume 70 | author order fixed |
 | `ganin2014` | inproceedings | ICML 2015, PMLR 37:1180-1189 | PMLR volume 37 | url removed |
@@ -53,6 +53,8 @@ book series (`Studies in Computational Intelligence`) rather than the book, and
 | `sturm2014horse` | article | IEEE TMM 16(6):1636-1644 | Crossref | ok |
 | `won2020` | inproceedings | SMC 2020 | arXiv 2006.00751 (comment field) | unverifiable pages removed |
 | `zhou2025ccmusic` | article | TISMIR 8(1):22-38 | Crossref | ok |
+| `field2007boot` | article | JRSS-B 69(3):369-390 | Crossref | added |
+| `holm1979` | article | Scandinavian Journal of Statistics 6(2):65-70 | JSTOR record | added |
 
 ## What was corrected
 
@@ -95,7 +97,7 @@ the list stays on 31 pages.
 
 ## Citation hygiene
 
-31 entries, 34 `\cite` commands, every entry cited at least once, no undefined
-reference, and `bibtex` reports no warning. Twenty-five entries are cited once; the
-most cited is the audited framework itself, three times.
+31 entries, 29 `\cite` commands covering 36 keys, every entry cited at least once,
+no undefined reference, and `bibtex` reports no warning. Twenty-seven entries are
+cited once; the most cited is the audited framework itself, three times.
 
