@@ -7,10 +7,10 @@ Command
 
 Expected tail
 -------------
-    checks passed: 337, failed: 0
+    checks passed: 338, failed: 0
     report: data/results/paper_verify.json
 
-What the 337 checks cover
+What the 338 checks cover
 -------------------------
 1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
    re-derived from the artifact tables under data/results/ and compared with the
@@ -38,6 +38,13 @@ What the 337 checks cover
    which archives were obtained, label-preserving canonical folding, the A2
    corpus share, the instrument group count and the multi-fold recording-level
    column -- are required to appear in the text.
+
+
+6. Review-response layer. Section 6.4 states the two protocol contrasts as
+   downward magnitudes with unsigned intervals ("lowers macro-F1 by 2.90 points
+   (CI 0.32 to 5.66)"), matching the arrow directions in Figure 3, and one check
+   requires the direction word "lowers macro-F1 by" to be present, so that a
+   sign flip cannot pass unnoticed.
 
 What the verifier does not do
 -----------------------------
