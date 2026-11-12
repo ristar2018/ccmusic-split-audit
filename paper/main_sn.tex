@@ -11,6 +11,10 @@
 \usepackage{url}
 %% Links stay clickable but are printed in black; sn-jnl defaults to blue.
 \hypersetup{citecolor=black,linkcolor=black,urlcolor=black}
+%% The class default is 1em between entries; with 31 entries that pushes the last one
+%% onto a page of its own. 0.75em keeps the list on one page group and stays close to
+%% the template look.
+\setlength{\bibsep}{0.75em}
 %% sn-jnl prints author e-mails with a hard-coded \textcolor{blue}; keep them black.
 \makeatletter
 \def\email#1{\global\advance\emailcnt by 1\relax

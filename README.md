@@ -115,6 +115,23 @@ python code/round2_data_accounting.py    # per-class budgets and fold compositio
 
 All read `runs/sealed_eval/` and finish in about a minute on one CPU core.
 
+## Check the reference list against the publisher record
+
+There is no script for this one: the reference is the external record, not an
+artifact in the repository. `docs/reference-audit.md` lists all 29 entries with the
+source each was checked against. Twenty were compared field by field with
+`api.crossref.org/works/{doi}`; the nine without a registered DOI were checked on the
+publisher page (PMLR volumes 37, 70 and 97, JMLR volume 17, the ISMIR 2017
+proceedings, SMC 2017 and 2020, OpenReview). Six corrections followed: an author
+order in `engel2017`, two missing page ranges, one page range that no source confirms
+and was removed, a missing issue number, and three stray `URL` lines. Sixteen `pages`
+fields also held a Unicode en dash, which made `sn-basic.bst` print `p` instead of
+`pp` for seven proceedings entries.
+
+Two properties of the printed list are the template's and not errors: numbering is
+alphabetical (`SORT` in `presort`), and `@incollection` page ranges always print `p`
+(`bbl.incoll.pages` is hard-coded to `p` at line 273 of `sn-basic.bst`).
+
 ## What is not here
 
 * **Raw audio and image features** (35.47 GB, 13 libraries, 328,973 files). They are released by the original publisher under its own terms and are **not** redistributed here. Five libraries from the ModelScope organisation `ccmusic-database` were used: CTIS, CNPM, pianos and bel canto ship audio; music genre ships feature images only.

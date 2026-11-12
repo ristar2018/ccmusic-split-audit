@@ -226,3 +226,42 @@ The four gates were re-run after these edits: 338 number checks, 88 ledger rows,
 quantifier claims and nine negative-test cases (four on the claim ledger, five on the
 quantifier ledger) all pass. Page counts are unchanged at 31 / 10 / 1, and the compile
 log carries no overfull box, undefined reference or missing character.
+
+## 10. The reference list
+
+All 29 entries were checked against the publisher record: 20 through
+`api.crossref.org/works/{doi}` field by field, 9 through the publisher page, because
+PMLR, JMLR, ISMIR, SMC and ICLR do not register DOIs. Nothing was fabricated. The
+per-entry table is in `docs/reference-audit.md`.
+
+Six corrections came out of it. `engel2017` had Eck and Simonyan ahead of Norouzi in
+the author list; the printed list truncates after three authors, so no reader could
+have seen it. `defferrard2016` and `lee2017` had no pages (316-323, 220-226).
+`won2020` carried a page range that no source confirms, and it was removed rather
+than left standing. `ganin2015` was missing its issue number (17(59):1-35).
+`engel2017`, `ganin2014` and `recht2019` were the only entries printing a `URL` line.
+
+One formatting defect had a mechanical cause worth recording. Sixteen `pages` fields
+held a Unicode en dash rather than `--`. `format.pages` in `sn-basic.bst` calls
+`multi.page.check`, which tests for an ASCII hyphen, so seven proceedings entries
+were printing `p 336-340` for a range while hand-written entries printed `pp`. The
+dashes are normalised and the prefixes now agree.
+
+Two things could not be fixed from the `.bib`. `@incollection` page ranges always
+print `p`: `bbl.incoll.pages` is hard-coded to `p` at line 273 of the style file and
+`format.incoll.pages` uses it for ranges as well, so `downie2010mirex` prints
+`p 93-115` although the chapter spans 23 pages. And alphabetical numbering is the
+style's own order, set by `SORT` in `presort`; a first citation numbered [13] is not
+an error.
+
+Two references were added. The manuscript builds a recording-cluster bootstrap in 20
+places and applies Holm's correction in three, and cited neither: Field and Welsh
+(2007), *Bootstrapping clustered data*, JRSS-B 69(3):369-390, and Holm (1979), *A
+simple sequentially rejective multiple test procedure*, Scandinavian Journal of
+Statistics 6(2):65-70. Both are cited at their first occurrence in Section 5. The
+extra entries pushed the last one onto a page of its own, so `\bibsep` is set to
+0.75em against the class default of 1em, which keeps the list on 31 pages.
+
+The four gates were re-run afterwards and are unchanged: 338 number checks, 88 ledger
+rows, 10 quantifier claims, nine negative-test cases. Page counts are 31 / 10 / 1 and
+the compile log has no overfull box, no undefined reference and no missing character.

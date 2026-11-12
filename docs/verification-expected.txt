@@ -101,3 +101,22 @@ of scope. Expected output:
 code/negtest_quantifier_claims.py breaks one artifact row, one ceiling score, one
 sentence and one caption in turn and requires the corresponding failure, and requires
 the clean tree to pass.
+
+The reference list
+------------------
+There is no automated gate for the bibliography, because the check is against an
+external record rather than an artifact in this repository. docs/reference-audit.md
+carries the per-entry result: 20 entries were compared field by field with
+api.crossref.org/works/{doi}, and the 9 without a registered DOI with the publisher
+page (PMLR 37/70/97, JMLR 17, ISMIR 2017, SMC 2017/2020, OpenReview).
+
+Two properties of the printed list are the style file's, not errors: numbering is
+alphabetical because sn-basic.bst sorts in presort, and @incollection page ranges
+print p rather than pp because bbl.incoll.pages is hard-coded to p.
+
+To re-check a single entry:
+
+    curl -s https://api.crossref.org/works/10.5334/tismir.194 | head -c 2000
+
+Expected state of paper/refs.bib: 31 entries, no url field, every pages field written
+with two ASCII hyphens, and 20 entries carrying a doi.

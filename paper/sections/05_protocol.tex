@@ -118,7 +118,7 @@ estimates are identical and the intervals differ by less than half a point.
 Differences are paired at the slice level: for a given library and backbone, all arms are
 scored on the same slices, which we verify by comparing the label and recording arrays of the
 sealed records element by element. Intervals come from 2{,}000 bootstrap resamples of test
-\emph{recordings}, with whole recordings resampled and the same resampling indices applied to
+\emph{recordings}~\cite{field2007boot}, with whole recordings resampled and the same resampling indices applied to
 every arm and backbone. These intervals describe test-recording resampling uncertainty
 conditional on the realised split and the three trained seeds; they do not include uncertainty
 from new training seeds or a new train/test split. Concretely, let $f_{s,a,b}$ be the macro-F1 of seed $s$, arm $a$ and
@@ -140,7 +140,7 @@ class-stratified recording bootstrap and joint seed--recording bootstrap assess 
 resampling three seeds does not replace additional training or split realisations.
 
 The internal plan designates a primary family of two tests: CTIS under AlexNet and CTIS under Swin-T, both for
-A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We correct within that family by Holm's method at $\alpha = 0.05$. The smallest effect
+A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We correct within that family by Holm's method~\cite{holm1979} at $\alpha = 0.05$. The smallest effect
 of interest, or SESOI, is the three-point macro-F1 threshold recorded in the internal plan.
 It is a study-specific practical decision threshold, not a significance cutoff and not an
 externally validated minimum useful gain. Precision does not justify practical importance.
