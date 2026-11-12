@@ -270,7 +270,7 @@ the compile log has no overfull box, no undefined reference and no missing chara
 
 Everything a reader can open here is now in English: module docstrings, block and inline comments, console messages, and the explanatory Markdown. The pass was meant to be purely lexical, and was checked rather than assumed.
 
-**What changed.** 2,226 lines carrying Chinese in 88 files became 181 lines in 28 files:
+**What changed.** 2,226 lines carrying Chinese in 88 files became 181 lines in 28 files. (A scan of the tree now reports 187, because this section quotes six of the retained strings as examples.)
 
 | Area | Files | Chinese lines before | after |
 | :-- | --: | --: | --: |
