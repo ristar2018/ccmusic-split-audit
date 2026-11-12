@@ -524,9 +524,11 @@ def main():
             "corrected_recording_delta.csv's point_unw_pt (the manuscript text uses this value);"
             " the delta_rec_pt in e1_delta.csv is the superseded legacy slice-weighted value (correction_pt is the difference between the two).",
             "boot_p differs from e1_delta.csv because of the convention: the CSV uses 2*min(k_le0,k_ge0)/B (floor 1/B), while"
-            " analyze_e1.py is now two-sided +1; both are listed in the JSON, significance for A1−C1 is judged by CI and p is informative only."
-            " A1 and C1 have different n_train (A1=25498, C1=25502); the gap comes from how the injection pool was realised, not from an evaluation-convention difference."
-            " The macro F1 of a group Δ averages only over classes present in that group; the two groups have different class universes, so absolute values are not comparable across them;"
+            " analyze_e1.py is now two-sided +1; both are listed in the JSON, significance for A1−C1 is judged by CI and p is informative only.",
+            "A1 and C1 have different n_train (A1=25498, C1=25502); the gap comes from how the injection pool was realised,"
+            " not from an evaluation-convention difference.",
+            "The macro F1 of a group Δ averages only over classes present in that group; the two groups have different class universes,"
+            " so absolute values are not comparable across them;"
             " within a group Δ is still a paired difference.",
             "The group bootstrap uses an independent stream default_rng(%d), not the same stream as the original CTIS table." % BOOT_SEED,
         ],
