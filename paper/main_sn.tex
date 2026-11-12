@@ -49,30 +49,25 @@ Technology}, \orgaddress{\city{Xinxiang}, \postcode{453003}, \country{China}}}
 
 \abstract{\textbf{Purpose} Pre-computed spectrogram releases can obscure the unit of evaluation.
 We audit the slice-level interpretation of CCMusic's stated split ratios, distinguishing our
-reconstruction from the original authors' unavailable split files. \textbf{Methods}
-Five mel-image libraries from the release, three of them among the six datasets the audited
-article evaluates, contribute 110,415 slices from 7,827 recordings in 252 classes;
+reconstruction from the unavailable original split files. \textbf{Methods}
+Five mel-image libraries contribute 110,415 slices from 7,827 recordings in 252 classes;
 109,831 slices, 7,756 recordings and 234 classes meet our recording-level rules.
-Three main arms compare clean training, equal-volume injection of held-out Q-pool slices, many
-from recordings also represented in the test panel, and a random-slice reconstruction. An additional CTIS-only control injects non-test content.
-We report paired recording-cluster bootstrap intervals conditional on the fixed split and trained
-seeds, and supplementary class-stratified and joint seed--recording sensitivity analyses.
-\textbf{Results} In CTIS, the A1--A0 pool-injection contrast changes macro-F1 by +2.02 points under AlexNet
-(95\% CI +0.83 to +3.35) and +1.70 under Swin-T (+1.28 to +2.84).
-Both intervals exclude zero; only the Swin-T interval lies wholly below the internally specified
-three-point threshold. Recording-level estimates are +1.37 and +1.61 points; the exploratory
-joint seed--recording interval for AlexNet includes zero. Against a matched control that injects the
-same volume of non-test content, the contrast is +1.96 (+0.74 to +2.99) and +1.07 (+0.23 to
-+1.96), so the difference between the two arms survives but is smaller than the A0 contrast.
-Four additional libraries change by +8.4 to +28.7 points. Our reconstruction of the stated random
-split changes CTIS by +1.21 (-0.02 to +2.44) and +1.75 (+1.18 to +2.70) points, and the self-test
-score it would print is markedly higher than any sealed-panel arm; that score is illustrative and
-is not the original benchmark score. Five of six near-single-slice control intervals include zero, with seed
-signs that disagree and six contrasts reported without multiplicity correction; they check the
-pipeline and do not establish equivalence. \textbf{Conclusion} Slice-level evaluation can reward within-recording
-recognition. Our contrasts do not isolate pure memorisation from recording diversity.
-Naming the split unit, reporting recording capacity and separating conditional inference from
-training uncertainty makes benchmark scores more interpretable.}
+Three arms compare clean training, equal-volume injection of held-out slices of
+test-designated recordings, and a random-slice reconstruction; a CTIS-only control injects
+non-test content. Intervals are paired recording-cluster bootstraps conditional on the fixed
+split and seeds. \textbf{Results} In CTIS, the A1--A0 pool-injection contrast changes
+macro-F1 by +2.02 points under AlexNet (95\% CI +0.83 to +3.35) and +1.70 under Swin-T
+(+1.28 to +2.84). Both intervals exclude zero. Only the Swin-T primary conditional
+interval lies wholly below our three-point threshold; the joint seed--recording interval
+reaches +3.14. Recording-level estimates are +1.37 and +1.61 points. Against a
+matched control that injects the same volume of non-test content, the contrast is +1.96
+(+0.74 to +2.99) and +1.07 (+0.23 to +1.96). Four further libraries change by +8.4 to
++28.7 points. Reconstructing the stated random split changes CTIS by +1.21 (-0.02 to +2.44)
+and +1.75 (+1.18 to +2.70), and the self-test score that reading would print is illustrative, not the
+original benchmark score. \textbf{Conclusion} Slice-level evaluation can
+reward within-recording recognition. Our contrasts do not isolate pure memorisation from
+recording diversity. Naming the split unit and reporting recording capacity make benchmark
+scores more interpretable.}
 
 \keywords{data leakage, benchmark audit, music information retrieval, reproducibility,
 recording-level splits, mel spectrograms}

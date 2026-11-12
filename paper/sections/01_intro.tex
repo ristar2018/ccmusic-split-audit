@@ -9,9 +9,9 @@ This is a case of non-independence between training and test, one category in th
 taxonomy of Kapoor and Narayanan~\cite{kapoor2023leakage}. The magnitude is an empirical
 question; our paired audit measures it without changing the backbone.
 
-Music information retrieval, or MIR, has dealt with this problem for a long time. The standard
-practice for urban sound, instrument, and genre corpora is to split by recording, and to state
-the split unit explicitly; Salamon et al.~\cite{salamon2014urbansound} fixed a recording-level split for
+Music information retrieval, or MIR, has dealt with this problem for a long time. Splitting by recording is
+used in several audio benchmarks, for example urban sound, instrument and genre corpora, and the
+split unit is usually stated explicitly; Salamon et al.~\cite{salamon2014urbansound} fixed a recording-level split for
 UrbanSound8K in 2014, keeping slices of one recording within one fold so that evaluation is
 recording-disjoint and comparable across papers. Yet datasets
 that distribute features instead of audio make the split unit easy to lose, and multi-library
@@ -64,7 +64,8 @@ the AlexNet interval includes three points, so that magnitude is not excluded. A
 control arm that supplies the same volume of training slices from non-test content, C1, moves
 the point estimate by $+0.05$ and $+0.62$ points only; measured against C1, the exposure arm
 still gains $+1.96$ points $[+0.74,+2.99]$ under AlexNet and $+1.07$ $[+0.23,+1.96]$ under
-Swin-T, so the difference is smaller than the A0 contrast but is not an artefact of noise. In four other libraries
+Swin-T, so the difference is smaller than the A0 contrast, though its paired interval excludes zero under
+the fixed split and the trained seeds. In four other libraries
 the same manipulation moves macro-F1 by $+8.4$ to $+28.7$ points. In the three negative-control
 libraries --- near-single-slice collections --- five of six contrasts include zero. The sixth,
 chest falsetto under Swin-T, is $-2.53$ $[-5.00,-0.21]$; its three seed-specific deltas are

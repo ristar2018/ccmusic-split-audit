@@ -28,9 +28,11 @@ Recording-level separation is an established practice in audio evaluation. Slice
 partitioning can expose a model to siblings of test examples, making within-recording recognition
 possible rather than ensuring transfer to new recordings. Salamon et al.~\cite{salamon2014urbansound}
 formalised this for urban sound, fixing ten folds at the recording level so that folds are
-comparable across papers. Corpora that share the practice differ in what they document as the
-splitting unit rather than in a single convention: FMA fixes an 8:1:1 partition at the recording
-level \citep{defferrard2016}, whereas tagging and transfer studies built on curated track-level
+comparable across papers. The same paper records that keeping songs of one artist in both training and test sets yields
+over-optimistic accuracy, which is why the artist filter is the strictest of the units we
+distinguish. Corpora that share the practice differ in what they document as the
+splitting unit rather than in a single convention: FMA fixes an 80/10/10 partition with an artist filter, so that no artist or album appears in two
+splits \citep{defferrard2016}, whereas tagging and transfer studies built on curated track-level
 collections report track identifiers instead \citep{choi2017,lee2017,won2020}, and shared
 evaluation campaigns have made cross-paper comparison routine \citep{downie2010mirex}; CCMusic
 extends this landscape to a multi-library Chinese-music resource \citep{zhou2025ccmusic}.
@@ -48,9 +50,9 @@ Release formats changed as audio models grew. Large annotated corpora of audio e
 
 \subsection{Dataset audits}
 
-Auditing a published dataset is an established genre. Sturm~\cite{sturm2012gtzan} showed that a
-widely used genre benchmark contains mislabels and duplicates that change conclusions drawn
-from it. Our audit differs in object: we do not question the content of the labels or the
+Auditing a published dataset is an established genre. Sturm~\cite{sturm2012gtzan} documented
+mislabels, duplicate takes and distortions in a widely used genre benchmark, together with the
+artificially inflated accuracy they can produce. Our audit differs in object: we do not question the content of the labels or the
 duplication structure of the corpus, but the protocol that maps that corpus onto train and test.
 Audits of this kind have a second, sharper form: a system can be shown not to listen at all, in which case the benchmark measures the shortcut rather than the task \citep{sturm2014horse}. Re-measuring a leaderboard number under a different protocol and finding that it moves is likewise an established result \citep{recht2019}, and dataset documentation now asks authors to state the split unit rather than leave it to the reader \citep{gebru2018}. That distinction matters for how the result should be read --- a labelling defect is a property
 of the data, whereas a split-unit defect is a property of the evaluation recipe and can be

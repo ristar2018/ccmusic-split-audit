@@ -465,8 +465,9 @@ def main():
                  "%.3f + %.3f + %.3f" % (parts, a0_a1, parts + a0_a1))
         share = abs(float(r_leak["delta_slice"])) / a0_a1 * 100.0
         ck.identity("B1 leak share %s in 5-12%%" % bb, 5.0 <= share <= 12.0, "%.1f%%" % share)
-    ck.in_text("prose -2.90 (leak AlexNet)", "-2.90")
-    ck.in_text("prose -3.41 (leak Swin-T)", "-3.41")
+    ck.in_text("prose leak direction (lowers macro-F1)", "lowers macro-F1 by")
+    ck.in_text("prose 2.90 (leak AlexNet)", "2.90")
+    ck.in_text("prose 3.41 (leak Swin-T)", "3.41")
     ck.in_text("prose -36.7 (novelty AlexNet)", "-36.7")
     ck.in_text("prose -31.4 (novelty Swin-T)", "-31.4")
     ck.in_text("prose A1r pooled 0.816", "0.816")

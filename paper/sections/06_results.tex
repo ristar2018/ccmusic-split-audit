@@ -7,9 +7,9 @@ In the primary library the point estimates are $+2.02$ points under
 AlexNet with a 95\% CI of $+0.83$ to $+3.35$, and $+1.70$ under Swin-T with CI $+1.28$ to
 $+2.84$. Both intervals
 exclude zero. Under the add-one convention, both smaller tails have zero hits in 2{,}000
-resamples: raw $p=2/2{,}001$ and Holm-adjusted $p\approx0.0020$ for both, so zero is excluded from
-the internal-plan family at the resolution the resampling can resolve, conditional on the fixed
-split and the trained seeds. These are finite-resolution resampling summaries.
+resamples: raw $p=2/2{,}001$ and Holm-adjusted $p\approx0.0020$ for both, so the interval excludes zero in the primary
+family at the finest resolution 2{,}000 resamples can express, the smallest attainable two-sided
+tail being \/2{,}001\$, conditional on the fixed split and the trained seeds. These are finite-resolution resampling summaries.
 Both point estimates are, however, below the three-point SESOI recorded in the internal written
 protocol, which the local record describes as set before training but which lacks an independent timestamp. The Swin-T interval is wholly below three points, whereas the AlexNet interval includes
 that magnitude. These are conditional intervals for our fixed split and trained seeds, not
@@ -18,16 +18,19 @@ not evidence of no effect, and we make no equivalence claim at any margin.
 
 \begin{table}[t]
 \centering
-\caption{Main effect, A1$-$A0, on the sealed panel; the slice-level and recording-level columns
-report the two levels, the latter with probability averaging followed by one vote per recording.
-Recording-level point estimates were corrected during revision; their original unweighted
-cluster intervals are retained. Intervals are 95\% recording-cluster bootstrap intervals over 2{,}000
-resamples. Seed range is the spread of per-seed differences. The two primary rows are CTIS
-under both backbones, marked with a dagger; neither of them reaches the three-point
-point-estimate threshold specified in the internal plan, whereas every additional-library point estimate does. This does not
-establish that both CTIS intervals exclude the threshold.
-Differences are computed on unrounded per-seed scores, so subtracting the four-decimal arm
-columns can differ from the reported $\Delta$ by 0.01.}
+\caption{Main effect, A1$-$A0, on the sealed panel. A0 and A1 are macro-F1 on a 0--1 scale, the
+latter with probability averaging followed by one vote per recording; the $\Delta$ columns and the
+seed range are in percentage points. Recording-level points were corrected after the main runs;
+their original unweighted cluster intervals are retained. Intervals are 95\% recording-cluster
+bootstrap intervals over 2{,}000 resamples on the primary replicate stream; the class-set
+comparison in Supplementary Material S1 re-draws them on a second stream, so its bounds differ in
+the second decimal. Seed range is the spread of per-seed differences. In bel canto under Swin-T
+both arms reach 1.00 at the recording level in every seed, so their points and intervals coincide
+by construction. The two primary rows, CTIS under both backbones, are marked with a dagger:
+neither reaches the three-point threshold of the internal plan, whereas every additional-library
+point estimate does, which does not establish that both CTIS intervals exclude it. Differences
+are computed on unrounded per-seed scores, so subtracting the four-decimal arm columns can differ
+from the reported $\Delta$ by 0.01.}
 \label{tab:main}
 \scriptsize
 \setlength{\tabcolsep}{1.5pt}
@@ -135,13 +138,13 @@ with 54 in CNPM. Those small panels limit precision. For CTIS A2 under AlexNet t
 recording-level contrast is $+0.23$ with interval $[-0.95,+1.69]$, so it does not exclude zero.
 Supplementary Material S1 reports the correction and training-seed sensitivity explicitly.
 
-\subsection{Reconstructing a slice-level split yields a smaller sealed-panel contrast}
+\subsection{Reconstructing a slice-level split usually yields a smaller sealed-panel contrast}
 
 A2 varies two things at once --- it moves slices of pooled recordings into training, and it does so
 through a random 80/10/10 partition of the pooled corpus. Its difference from A0 is therefore
 usually smaller than A1's, because the random partition places only a fraction of the pool in
-training, and it is the arm that comes closest to a score a user of the stated ratio would obtain
-under a slice-level reading. As a
+training, and its self-test score, not its sealed-panel score, is the one a user of the stated ratio would
+print under a slice-level reading. As a
 share of the pool-injection contrast, the
 answer, in Table~\ref{tab:a2}, is $100\times\hat\Delta_{A2}/\hat\Delta_{A1} = 60$--103\%: in the
 four additional libraries this reconstruction recovers between 81\% and 99\% of the A1 effect,
@@ -236,7 +239,7 @@ non-zero conditional interval. Intervals are 95\% recording-cluster bootstrap in
 \setlength{\tabcolsep}{3.6pt}
 \begin{tabular}{llrrrr}
 \toprule
-Library & Backbone & Rec.\, /\, slices & $\Delta$ [95\% CI] & Seed & $p$ \\
+Library & Backbone & Rec.\, /\, slices & $\Delta$ [95\% CI] (pts) & Seed range (pts) & Tail prop. \\
 \midrule
 chest\_falsetto     & AlexNet & 1{,}280 / 1{,}280 & $-1.37\;[-3.31,+0.56]$ & 4.29  & 0.167 \\
 chest\_falsetto     & Swin-T  & 1{,}280 / 1{,}280 & $-2.53\;[-5.00,-0.21]$ & 16.12 & 0.036 \\
@@ -261,7 +264,7 @@ Table~\ref{tab:p3} reports.
 Two things change between those two arms, so we added a third partition, R-rec, that
 provides an operational intermediate comparison: folds are grouped by recording, with 110
 instruments appearing on at least two folds. Thus most instrument overlap is retained while
-recording overlap is removed, but not every instrument is present in every training/test pair. A
+recording overlap is removed, but not every instrument is present in every training/test pair.
 Recording-grouped partitions are feasible on this corpus: no recording and no duplicate-audio group
 crosses a fold, all 43 classes keep at least one test recording in the recording-grouped partition,
 and fold sizes differ by less than 0.1\%. The instrument-withheld partition is tighter: its first
@@ -269,16 +272,17 @@ fold covers 42 of the 43 classes, because one technique class has no test record
 pooled metric averages only over classes present. The class universe itself comes from a
 study-specific rule stated in Section~\ref{sec:protocol}: technique--instrument cells with at least
 two recordings and instruments contributing at least three recordings, after excluding six
-content-type labels. It reaches 0.816
-and 0.843, so removing the recording-level leak costs
-$2.9$ points $[0.3,5.7]$ under AlexNet and $3.4$ points $[0.7,6.4]$ under Swin-T, that is
-$-2.90$ with CI $-5.66$ to $-0.32$ and $-3.41$ with CI $-6.36$ to $-0.68$. Withholding the instruments then costs a
-further $-36.7$ points $[-39.9,-33.3]$ and $-31.4$ points $[-35.0,-28.3]$. The large number in
+content-type labels. The R-rec partition reaches 0.816
+and 0.843, so removing the recording-level leak lowers macro-F1 by $2.90$ points
+(CI $0.32$ to $5.66$) under AlexNet and $3.41$ points (CI $0.68$ to $6.36$) under Swin-T.
+Withholding the instruments then lowers it by a further $36.7$ points ($33.3$ to $39.9$) and
+$31.4$ points ($28.3$ to $35.0$). The large number in
 Table~\ref{tab:p3} is therefore two effects of very different size: within-instrument
 the R-slice--R-rec contrast is 7--10\% of the total, with the larger remainder in the
 R-rec--L-inst contrast. This is a separation of protocol contrasts, not a causal decomposition
 of all sources of performance loss. The
-reader should not read the 35-point gap as a leakage estimate. Figure~\ref{fig:p3} shows the
+reader should not read the 36.7-point (AlexNet) or 31.4-point (Swin-T) R-rec--L-inst gap, nor the
+39.6-point or 34.8-point R-slice--L-inst gap, as a leakage estimate. Figure~\ref{fig:p3} shows the
 four partitions side by side with their intervals.
 
 \begin{figure}[!tb]

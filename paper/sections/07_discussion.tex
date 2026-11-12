@@ -81,12 +81,14 @@ The original realised split is unknown, so we cannot attribute the observed scor
 The distinction matters for repair. Mislabelled audio has to be re-annotated; a
 slice-level split can be rebuilt from recording identifiers if class capacity permits it, as
 we demonstrate for the retained classes in these five libraries. Split construction itself is
-CPU work; training costs are itemised separately in Section~\ref{sec:results}.
+CPU work; training costs are partially documented in Section~\ref{sec:results}, which reports a partial
+ledger rather than a full-study cost.
 
 \subsection{Limitations and threats to validity}
 
 \emph{One feature family.} We audited MEL only. The framework also releases chroma and CQT, and
-the leakage mechanism is identical for them, but the magnitude need not be: chroma discards
+the same split-unit issue applies in principle, because the split is defined on identifiers
+rather than on features; we measured neither, so the magnitude is unknown. Chroma discards
 timbre and may carry less recording identity.
 
 \emph{What the contrast identifies.} A1 holds the training budget and the C-side recording

@@ -32,8 +32,9 @@ reproduction of the original authors' split nor the original benchmark score.
 \item[C1, non-test injection (CTIS only).] Starting from A0, remove 4{,}177 slices and
 replace them classwise with 1{,}665 slices from unused C content and 2{,}512 from R, all from
 non-test recordings. Injection is disjoint from A0 samples, test samples, test recording IDs
-and test content hashes. One class lacks one requested slice; realised counts equal A0
-classwise, and the total is 25{,}502 versus 25{,}498 for A1, a four-slice difference.
+and test content hashes. Realised counts equal A0 classwise, so the two arms
+differ only in which slices are trained on; the total is 25{,}502, four more than A1's
+25{,}498.
 C1 uses seeds 0--2 and the same final-epoch recipe. Because it consumes R content, its
 validation scores cannot be interpreted; it performs no validation-based selection.
 This exploratory addition holds volume approximately fixed but not recording diversity.
@@ -65,7 +66,7 @@ Table~\ref{tab:arms} summarises what each arm trains on.
 \centering\footnotesize\setlength{\tabcolsep}{4pt}
 \caption{What each arm trains on in the primary library (CTIS, 201 classes, 963 test
 recordings). Recordings are distinct canonical identifiers contributing at least one training
-slice. The per-class budget $m_c$ is identical in A0, A1 and C1.}
+slice. The per-class budget $m_c$ is identical in A0 and C1; A1 is four slices short in class C0296.}
 \label{tab:arms}
 \begin{tabular}{@{}llrrll@{}}\toprule
 Arm & Training content & Slices & Recordings & Budget & Test-recording relation\\\midrule
@@ -127,8 +128,9 @@ $\hat\Delta_b = \frac{1}{3}\sum_s (f_{s,A1,b} - f_{s,A0,b})$, so the printed arm
 rounded to four decimals, need not subtract to the printed effect. Within each bootstrap
 replicate the per-seed paired difference is recomputed from the stored per-slice predictions and
 the replicate value is the mean over seeds; the interval is the 2.5--97.5 percentile range and
-the $p$-value is a two-sided smaller-tail resampling measure. The original script clipped
-zero-tail estimates to $1/B$; the revision uses the add-one convention
+the tail proportion is a two-sided smaller-tail resampling measure obtained by inverting the
+percentile interval, not from a null distribution. The original script clipped
+zero-tail estimates to $1/B$; the reported analysis uses the add-one convention
 $2(k+1)/(B+1)$ for the smaller-tail count $k$, capped at one, with $B=2{,}000$.
 Its minimum raw value is $2/2{,}001$, not evidence of an exact tail probability. Because the class set is fixed by each dataset rather than sampled from a population of classes, these intervals describe resampling uncertainty over test recordings within the realised split and do not extend to unseen classes or to other libraries.
 Seed dispersion is reported as the range over
@@ -167,6 +169,7 @@ percentile 0.0098. Its realised exposure is therefore small but not zero; it is 
 zero-exposure control.
 
 \subsection{Cross-instrument experiment}
+\label{sec:crossinstrument}
 
 One library supports a second question: whether the technique classification of CTIS transfers
 to instruments never seen in training. We froze the class universe by a single rule fixed before
@@ -209,17 +212,18 @@ insufficient; both arms train for the same ten epochs and the final-epoch weight
 so a capped budget is not an early-stopping decision. The negative-control libraries were
 expanded from one seed to three. C1 was added after the three main arms and is therefore
 exploratory: it draws on unused C and R content, and its validation scores cannot be interpreted.
-Recording-level point estimates were corrected during revision from a mean weighted by slice
+Recording-level point estimates were corrected after the main runs from a mean weighted by slice
 count to one vote per recording. The retained intervals already used that per-recording
 weighting, so only the point estimates changed; the slice-level estimates are unaffected, and
 Supplementary Material S1 reports both. The class-stratified and joint seed--recording bootstraps, the self-test table and
-the comparison against published scores were also added during revision. Two further analyses are
+the comparison against published scores were also added after the main runs. Two further analyses are
 post hoc and are reported as such: the split of the CTIS sealed panel into test recordings that do
 and do not contribute slices to the injected pool, and the fixed-class-set sensitivity table. Neither
 is part of the internal plan, and neither is used to support the primary conclusion.
 
 \subsection{Use of AI-assisted tools}
 
-The authors used Coze Agent and the GPT 6.1 Sol service for literature review, language improvement,
-and assistance with coding and debugging experimental scripts. After using these tools, the authors reviewed and edited the content as
-needed and take full responsibility for the content of the publication.
+The authors used Coze Agent (ByteDance) and the GPT 6.1 Sol model, accessed through the DeepSider
+API, between September and November 2026 for literature search, language editing, and help with
+coding and debugging. No text was produced without author review; the authors verified every
+reported number against the released artifacts and take full responsibility for the content.

@@ -79,39 +79,39 @@ for ax, bb, title in zip(axes, ("alexnet", "swin_t"), ("AlexNet", "Swin-T")):
     for arm, _, colour in ARMS:
         src = leak if arm == "A1r" else main
         r = src[(arm, bb)]
-        vals.append(float(r["macro_f1_slice"]) * 100)
-        los.append(float(r["slice_ci_lo"]) * 100)
-        his.append(float(r["slice_ci_hi"]) * 100)
+        vals.append(float(r["macro_f1_slice"]))
+        los.append(float(r["slice_ci_lo"]))
+        his.append(float(r["slice_ci_hi"]))
         cols.append(colour)
     x = np.arange(len(vals))
     ax.bar(x, vals, width=0.60, color=cols, edgecolor="none", zorder=2)
     ax.errorbar(x, vals, yerr=[np.array(vals) - np.array(los), np.array(his) - np.array(vals)],
                 fmt="none", ecolor="#333333", elinewidth=0.55, capsize=1.8, capthick=0.55,
                 zorder=3)
-    ax.set_ylim(0, 100)
+    ax.set_ylim(0, 1.0)
     ax.set_xlim(-0.65, len(vals) - 0.35)
     ax.set_xticks(x)
     ax.set_xticklabels([a[1] for a in ARMS], fontsize=FS)
     ax.set_title(title, fontsize=9.6, pad=3.0, loc="left")
-    ax.set_yticks([0, 20, 40, 60, 80, 100])
+    ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
     ax.tick_params(axis="y", labelsize=FS, length=2.0, pad=1.5)
     ax.tick_params(axis="x", length=0, pad=2.0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.grid(axis="y", lw=0.35, color="#DDDDDD", zorder=0)
 
-fig.supylabel("pooled macro-F1 on held-out folds, %", fontsize=FS, x=0.028)
+fig.supylabel("pooled macro-F1 on held-out folds", fontsize=FS, x=0.028)
 
 # Report the two gaps above the bars, one per backbone.
-for ax, bb, gaps in ((axes[0], "alexnet", ("-2.9", "-36.7")),
-                     (axes[1], "swin_t", ("-3.4", "-31.4"))):
-    ax.annotate("", xy=(1, 88), xytext=(0, 88),
+for ax, bb, gaps in ((axes[0], "alexnet", ("2.9 pts", "36.7 pts")),
+                     (axes[1], "swin_t", ("3.4 pts", "31.4 pts"))):
+    ax.annotate("", xy=(1, 0.88), xytext=(0, 0.88),
                 arrowprops=dict(arrowstyle="-|>", lw=0.55, color="#444444",
                                 mutation_scale=4))
-    ax.text(0.5, 90.0, gaps[0], ha="center", va="bottom", fontsize=FS, color="#444444")
-    ax.annotate("", xy=(2, 88), xytext=(1, 88),
+    ax.text(0.5, 0.90, gaps[0], ha="center", va="bottom", fontsize=FS, color="#444444")
+    ax.annotate("", xy=(2, 0.88), xytext=(1, 0.88),
                 arrowprops=dict(arrowstyle="-|>", lw=0.55, color="#444444",
                                 mutation_scale=4))
-    ax.text(1.5, 90.0, gaps[1], ha="center", va="bottom", fontsize=FS, color="#444444")
+    ax.text(1.5, 0.90, gaps[1], ha="center", va="bottom", fontsize=FS, color="#444444")
 
 for ext in ("pdf", "png"):
     path = os.path.join(OUT, "fig2_p3_decomposition.%s" % ext)

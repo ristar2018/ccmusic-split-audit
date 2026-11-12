@@ -10,10 +10,15 @@ among the six datasets evaluated in the audited article; \emph{music genre} and 
 belong to the same published collection of libraries but are not covered by it, so contrasts in
 those two libraries audit the same kind of split under a framework that does not report on them.
 Together they release 110{,}415 slices from 7{,}827 recordings in
-252 source classes. Of these, 109{,}831 slices from 7{,}756 recordings in 234 classes survive the
+252 source classes; folding the duplicate takes described below leaves 7{,}825 canonical
+recordings, which is the footing of the library inventory in the supplement. Of these,
+109{,}831 slices from 7{,}756 recordings in 234 classes survive the
 minimum-recording rule and placeholder removal described in
 Section~\ref{sec:capacity}, listed in Table~\ref{tab:panels}; the remainder is excluded under
-these study-specific rules. The four candidate near-single-slice collections are not part of the main sample; three are used
+these study-specific rules. In CTIS the rule leaves 42{,}509 of the 43{,}054 released slices in
+201 classes, and four of those slices repeat a content hash already claimed by the sealed panel,
+because the same take is released under two technique names; those four are dropped when the
+partitions are built, so the four partitions carry 42{,}505. The four candidate near-single-slice collections are not part of the main sample; three are used
 as controls and the fourth is excluded for lack of a usable class layer, as described
 in Section~\ref{sec:protocol}.
 
@@ -23,7 +28,9 @@ in Section~\ref{sec:protocol}.
 i.e.\ the sample every reported number is computed on. Classes are the source classes that
 survive the minimum-recording rule; $\bar K$ is the mean number of slices per recording;
 $Q_{\text{test}}$ is the sealed panel; $\alpha$ is the realised exposure ratio
-$Q^{\text{pool}}_c/m_c$, summarised by its median over classes (not the pooled ratio).}
+$Q^{\text{pool}}_c/m_c$, summarised by its median over classes (not the pooled ratio).
+Counts are those of the frozen partition files, so a take released twice under two technique
+names is counted once.}
 \label{tab:panels}
 \footnotesize
 \setlength{\tabcolsep}{3.4pt}
@@ -63,8 +70,8 @@ released audio belong together.
 Two checks protect the mapping. First, the mapping between a CTIS recording and the numbering of
 its slices is a global counter over classes, not a per-class index; using the per-class index
 mis-assigns 218 of 219 classes, and the manifest builder recomputes the global counter before
-joining. Second, a SHA-1 sweep over all 4{,}956 CTIS files, 13.3 GB, found two identical pairs --- the
-same take released under two technique names, and one take with a duplicate-download suffix ---
+joining. Second, a SHA-1 sweep over all 4{,}956 CTIS files, 13.3 GB, found three identical pairs --- two takes each
+released under two technique names, and one take with a duplicate-download suffix ---
 which we fold to a single canonical identifier carrying one label, so that no canonical
 recording appears in two classes and none can sit on two sides of a split by accident. At the slice level CTIS holds 77 groups of identical images,
 covering 175 slices. In every one of them the same window appears under more than one recording

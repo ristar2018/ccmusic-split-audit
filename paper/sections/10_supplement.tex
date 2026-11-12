@@ -2,7 +2,7 @@
 
 \subsection{Scope and provenance}
 
-This supplement accompanies the revised audit. It does not constitute a public preregistration. The internal design and worklog were maintained locally; no independent public timestamp establishes when each choice was fixed. Primary slice-level intervals retain the original sealed predictions and fixed split; all revision-stage analyses below are exploratory.
+This supplement accompanies the audit. It does not constitute a public preregistration. The internal design and worklog were maintained locally; no independent public timestamp establishes when each choice was fixed. Primary slice-level intervals retain the original sealed predictions and fixed split; all analyses added after the main runs, below, are exploratory.
 
 \subsection{The thirteen libraries and the audited set}
 
@@ -41,11 +41,11 @@ Guzheng\_Tech99 & 99 & 99 & --- & excluded; no recording-level class layer\\
 \subsection{Execution changes}
 
 The list below records every difference between the internal plan and the executed
-runs, and adds a column the earlier version did not carry: what was known when the decision was
+runs, and adds a column that the first version of this table did not carry: what was known when the decision was
 taken. The column matters because a change made with the relevant count in hand is a different
 object from a change made after seeing a result. Nothing in the list is a claim that the
 sequence was planned; it records what was available, and the supplementary analyses that follow
-are marked exploratory where they were added at revision.
+are marked exploratory where they were added after the main runs.
 
 \begin{enumerate}\itemsep2pt
 \item \textbf{CTIS classes:} 219 $\rightarrow$ 201. Known at the decision: per-class recording counts and the no-audio placeholder flags. Reason: the five-recording eligibility rule, then placeholder removal. Effect: 8.2\% fewer classes; 545 slices (1.3\%) drop.
@@ -57,8 +57,8 @@ are marked exploratory where they were added at revision.
 \item \textbf{Cross-instrument head:} L-inst $\rightarrow$ L-inst plus adversarial head, weight $\le 0.02$. Known at the decision: the instrument-probe pilot. Reason: instrument identity survives in the representation. Effect: the adversarial arm is exploratory.
 \item \textbf{Probe split:} 80/20 of all recordings $\rightarrow$ 80/20 of training recordings. Known at the decision: withheld instruments are absent from the training label space. Reason: a closed-set probe cannot identify unseen classes. Effect: the probe measures identity, not recognition.
 \item \textbf{Analyses not run:} selection regret; CQT/chroma $\rightarrow$ not run. Known at the decision: per-epoch sealed-panel scores were not stored. Reason: no artifact to analyse. Effect: stated as not run.
-\item \textbf{Recording-level estimator:} slice-weighted point $\rightarrow$ one vote per recording. Known at the decision: human review found that the point and the intervals used different weights. Reason: align the point estimator with the intervals. Effect: ten points change, all inside the retained intervals.
-\item \textbf{Revision-stage additions:} none $\rightarrow$ class-stratified and joint bootstrap, self-test tables, version comparisons, partial compute ledger. Known at the decision: reviewer comments. Reason: transparency. Effect: exploratory.
+\item \textbf{Recording-level estimator:} slice-weighted point $\rightarrow$ one vote per recording. Known at the decision: the point estimates and the intervals used different weights. Reason: align the point estimator with the intervals. Effect: ten points change, all inside the retained intervals.
+\item \textbf{Post-hoc additions:} none $\rightarrow$ class-stratified and joint bootstrap, self-test tables, version comparisons, partial compute ledger. Known at the decision: the analyses were requested during review. Reason: transparency. Effect: exploratory.
 \end{enumerate}
 
 \subsection{Realised injection and training steps}
@@ -77,13 +77,13 @@ CNPM & 268 & 50 & 47/54 & 250 & 250 \\
 bel canto & 977 & 40 & 40/40 & 920 & 920 \\
 \bottomrule\end{tabular}\end{table}
 
-\subsection{Convergence at the end of training}
+\subsection{Final-epoch training state}
 
 Per-epoch training logs were retained for every run, so the arms can be compared where they
 stop. On CTIS the final-epoch training loss has median 0.9016 in A0, 0.9027 in A1 and 0.9026 in
 C1 under AlexNet, and 0.8712, 0.8715 and 0.8714 under Swin-T; final-epoch training accuracy is at
 least 0.9997 in every arm. A2, which has 25{,}263 training slices and 3{,}940 steps against
-3{,}980, ends at 0.9034 and 0.8718. The arms therefore end at the same point of the objective,
+3{,}980, ends at 0.9034 and 0.8718. The arms therefore end at essentially the same point of the objective,
 consistent with equal epochs and, for A0, A1 and C1, equal step counts. The logs hold
 training-set and C-side validation metrics only: per-epoch sealed-panel scores were not stored,
 so no selection-regret curve is reported.
@@ -192,8 +192,9 @@ L-inst+Adv & Swin-T & 0.9366 & 0.6693 \\
 The three arms that report fold-level results use different fold definitions, because the fold has to
 be the unit the arm is protecting: the slice-level arm A0 uses random slice folds, the exposure and
 reconstruction arms A1 and A2 share instrument-grouped folds, and the recording-grouped arm A1r uses
-recording folds. The numbers below are the realised composition of each fold, recomputed from the
-frozen split files and the stored fold results.
+recording folds. In the labels of Section~5.7 of the main text, A0 is R-slice, A1 and A2 are
+L-inst, and A1r is R-rec. The numbers below are the realised composition of each fold, recomputed
+from the frozen split files and the stored fold results.
 
 \begin{table}[ht]\centering\small\caption{Realised fold composition of the cross-instrument experiment (CTIS). Test slices are the evaluated panel of each fold.}
 \label{tab:fold-composition}
@@ -219,7 +220,9 @@ The 135 instruments each fall in exactly one instrument-grouped fold.
 
 \subsection{Recording-level estimator correction}
 
-The old point estimator weighted the averaged prediction of each recording by its slice count. The original recording-cluster intervals instead counted each recording once. The revision makes the point estimator consistent with those intervals; slice-level results are unchanged. The following are A1--A0 point differences in percentage points. Original intervals are retained, because their bootstrap already used equal recording votes. All ten corrected point estimates lie within their respective retained intervals. In bel canto the corrected values exceed the old values by 4.43 and 7.54 points for AlexNet and Swin-T, respectively. Different weighting defines a different estimand; the size of the change does not by itself identify its cause. One library is also constrained by a ceiling: in bel canto the exposure arm reaches 1.00 at the recording level for most seeds against 0.84--0.93 in the control, so its recording-level contrast and interval are limited by the metric's upper bound as well as by its 40 test recordings.
+The old point estimator weighted the averaged prediction of each recording by its slice count. The original recording-cluster intervals instead counted each recording once. The point estimator reported here is consistent with those intervals; slice-level results are
+unchanged. The following are A1--A0 point differences in percentage points. Original intervals are retained, because their bootstrap already used equal recording votes. All ten corrected point estimates lie within their respective retained intervals. In bel canto the corrected values exceed the old values by 4.43 and 7.54 points for AlexNet and Swin-T, respectively. Different weighting defines a different estimand; the size of the change does not by itself identify its cause. One library is also constrained by a ceiling: in bel canto the exposure arm sits at or near the metric's ceiling, so its recording-level contrast
+and interval are limited by that ceiling as well as by its 40 test recordings.
 
 \begin{table}[ht]\centering\small\caption{Corrected recording-level points; old slice-weighted points shown only to document the change.}
 
@@ -297,20 +300,23 @@ Macro-F1 needs a decision about classes that a resampling replicate does not con
 analysis recomputes the class set inside each replicate and drops a class absent from that
 replicate; a fixed-class-set variant instead fixes the set once from the observed panel and scores
 an absent class as zero. The point estimates are identical under both conventions, and the intervals
-differ by at most 0.4 points (Table~\ref{tab:classset}): A1--A0 under AlexNet is +2.02 with bounds +0.72 to +3.09 under a fixed
-class set, against +0.83 to +3.35 as reported; A1--C1 under Swin-T is +1.07 with bounds +0.20 to
-+1.71 under a fixed class set, against +0.23 to +1.96 as reported. Under the recomputed set a
+differ by at most 0.5 points across the four contrasts (Table~\ref{tab:classset}): A1--A0 under
+AlexNet is +2.02 with bounds +0.72 to +3.09 under a fixed class set, against +0.83 to +3.35 on the
+primary stream; A1--C1 under Swin-T is +1.07 with bounds +0.20 to +1.71 under a fixed class set,
+against +0.23 to +1.96 on the primary stream. Under the recomputed set a
 replicate loses on average about 7 of the 201 CTIS classes (at most 18), so the two conventions answer
-slightly different questions; the manuscript and the table above use the recomputed set throughout.
+slightly different questions; the manuscript and the table above both use the recomputed set, so
+their bounds differ only through the replicate stream.
 No conclusion in the paper changes between them.
 
 \begin{table}[t]
 \centering
 \caption{CTIS effects under the recomputed and the fixed class set (percentage points). Both
-conventions score the same sealed panel and use the same 2{,}000 recording-cluster replicates;
-the point estimate is identical because it is computed on the observed panel, so only the tails of
-the percentile interval move. The full-class-set convention gives the same numbers as the fixed
-one and is omitted.}
+conventions score the same sealed panel and share the point estimator, which is computed on the
+observed panel and is therefore identical. The intervals are re-drawn on 2{,}000
+recording-cluster replicates from an independently implemented stream, so their bounds differ
+from the reported ones in the second decimal. The full-class-set convention gives the same
+numbers as the fixed one and is omitted.}
 \label{tab:classset}
 \small
 \begin{tabular}{llrrr}
@@ -339,7 +345,7 @@ Integer-minute driver logs represent batch wall-clock time while training on one
 
 \subsection{Reproducible commands}
 
-Analysis uses Python 3.10.22, PyTorch 2.11.0+cu128 and one RTX 5060 Ti 16 GB. Predictions store probabilities, labels and recording identifiers. Original training is not re-run for this revision. Run the following from the project root:
+Analysis uses Python 3.10.22, PyTorch 2.11.0+cu128 and one RTX 5060 Ti 16 GB. Predictions store probabilities, labels and recording identifiers. Original training is not re-run. Run the following from the project root:
 
 \begin{verbatim}
 
@@ -357,4 +363,5 @@ python code/verify_paper_numbers.py
 
 \subsection{Availability and remaining limits}
 
-The underlying recordings/images are not redistributed. This supplement supplies analysis summaries for review, not the complete prediction archive. Manifests, splits, predictions and analysis code remain available from the corresponding author on request, with public archival deposit planned upon acceptance. Only one split realisation and three primary training seeds are available; no bootstrap creates evidence about new split realisations. Compute timing logs are incomplete and rounded; no exact full-study GPU-hours are claimed.
+The underlying recordings/images are not redistributed. This supplement supplies analysis summaries for review, not the complete prediction archive. Manifests, splits, predictions and analysis code are openly available at
+\url{https://github.com/ristar2018/ccmusic-split-audit}. Only one split realisation and three primary training seeds are available; no bootstrap creates evidence about new split realisations. Compute timing logs are incomplete and rounded; no exact full-study GPU-hours are claimed.

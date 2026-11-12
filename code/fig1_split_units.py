@@ -63,10 +63,14 @@ ax.set_ylim(0, 100)
 ax.axis("off")
 
 
-def strip(y, colours, x_start, sq=SQ, gap=GAP):
+def strip(y, colours, x_start, sq=SQ, gap=GAP, hollow=()):
     x = x_start
-    for col in colours:
-        ax.add_patch(Rectangle((x, y), sq, sq, facecolor=col, edgecolor="none"))
+    for i, col in enumerate(colours):
+        if i in hollow:
+            ax.add_patch(Rectangle((x, y), sq, sq, facecolor="white", edgecolor=col,
+                                   linestyle=(0, (1.3, 1.0)), linewidth=0.7))
+        else:
+            ax.add_patch(Rectangle((x, y), sq, sq, facecolor=col, edgecolor="none"))
         x += sq + gap
     return x - gap
 
@@ -126,7 +130,7 @@ x_inj_end = strip(Y3, [C_POOL] * 2, x_inj)
 xb3 = x_inj_end + GAP + GAP_REC
 xB3_end = strip(Y3, [C_VAL] * 4, xb3)
 xc3 = xB3_end + GAP + GAP_REC
-xC3_end = strip(Y3, [C_TEST, C_TEST, C_POOL, C_POOL], xc3)
+xC3_end = strip(Y3, [C_TEST, C_TEST, C_POOL, C_POOL], xc3, hollow=(2, 3))
 
 for mid, tag in (((xa3 + x_inj_end) / 2, "C + pool"),
                  ((xb3 + xB3_end) / 2, "R"), ((xc3 + xC3_end) / 2, "Q")):
@@ -134,24 +138,27 @@ for mid, tag in (((xa3 + x_inj_end) / 2, "C + pool"),
             color="#333333")
 
 title(30.5, "Exposure arm (A1)")
-para(18.0, "Pool slices (orange) replace an equal number of C slices, so the training "
-           "budget is unchanged. Some, but not necessarily all, test recordings "
-           "contribute to the pool.")
+para(18.0, "Pool slices (orange) replace an equal number of C slices, so the budget is "
+           "unchanged; the dashed outlines in Q mark the same slices at their old "
+           "position. Not every test recording contributes to the pool.")
 
-# row 3 is read against row 2 without a connector: the orange blocks are the Q pool,
-# and the paragraph says so. A connector would have to cross a label or a strip.
+# row 3 is read against row 2 without a connector: the solid orange blocks in C are the
+# Q pool drawn at its new position, and the dashed outlines in Q are the same slices at
+# their old position. A connector would have to cross a label or a strip.
 
 # ------------------------------------------------------------------------- legend
 handles = [Rectangle((0, 0), 1, 1, facecolor=c, edgecolor="none")
            for c in (C_TRAIN, C_VAL, C_TEST, C_POOL)]
+handles.append(Rectangle((0, 0), 1, 1, facecolor="white", edgecolor=C_POOL,
+                         linestyle=(0, (1.3, 1.0)), linewidth=0.7))
 ax.legend(handles,
           ["training slice", "validation slice", "sealed test slice",
-           "held-out pool slice"],
-          loc="upper left", bbox_to_anchor=(0.0, 1.0), ncol=2, frameon=False,
+           "held-out pool slice", "moved to training"],
+          loc="upper left", bbox_to_anchor=(0.0, 1.0), ncol=3, frameon=False,
           fontsize=FS, handlelength=1.0, handleheight=1.0, handletextpad=0.45,
           columnspacing=2.0, borderaxespad=0.0, labelspacing=0.45)
 
-para(5.0, "Schematic: the counts are illustrative, not the 8:1:1 ratio.",
+para(1.5, "Schematic: the counts are illustrative, not the 8:1:1 ratio.",
      colour="#666666")
 
 for ext in ("pdf", "png"):

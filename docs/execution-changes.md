@@ -71,3 +71,48 @@ the per-class budget allocates, and what the realised pool contains), and the
 packaging manifest quotes the second. The companion counts in the same table,
 753 injected recordings and 578 of 963 exposed test recordings, were recomputed
 from `CTIS_qpool.csv` and `CTIS_qtest.csv` and match.
+
+## 7. Corrections made in response to human review
+
+A reader report on the submitted draft raised 25 points. Nineteen were accepted
+as stated, five were accepted with a correction to the premise, one was accepted
+in part, and one was rejected with evidence; the assessment and the disposition
+of each point are recorded in the project tree under
+`report/审稿意见/human-2026-11-12/`. The changes that touch a reported number or
+a factual attribution are listed here.
+
+* **Abstract.** The journal requires a structured abstract of 150--250 words.
+  The submitted draft was 338 words and had no structure; it is now 239 words in
+  four labelled parts, with no change to any reported value.
+* **Slice count in CTIS.** Section 4 now states both counts and why they differ:
+  the minimum-recording rule leaves 42,509 of the 43,054 released slices in 201
+  classes, four of those slices repeat a content hash already claimed by the
+  sealed panel because the same take is released under two technique names, and
+  the partitions built from them carry 42,505. Table 1 reports the partition
+  counts, and its caption says so. The 42,505 is the sum of
+  `data/splits/v2/CTIS_{c,r,qtest,qpool}.csv`, not an error.
+* **FMA split unit.** The submitted draft called the FMA partition
+  recording-level. It is artist-level: the release states that an artist filter
+  keeps every artist in one set only. Section 2 now says artist filter.
+* **Sturm attribution.** Section 2 attributes to Sturm the documented mislabels,
+  duplicate takes and the inflated accuracy they produce, and no longer the
+  stronger claim that the benchmark's conclusions change.
+* **Interval stream.** Table 3 and the class-set comparison in the supplement
+  re-draw 2,000 recording-cluster replicates on two independently implemented
+  streams, so their bounds differ in the second decimal while the point
+  estimates are identical. Both captions now say this instead of implying one
+  shared stream.
+* **Units.** Figures 1 and 2 and Table 3 state their scale: macro-F1 on 0--1,
+  contrasts and seed ranges in percentage points. Figure 2 previously plotted
+  macro-F1 multiplied by 100 while Figure 4 plotted the same quantity on 0--1.
+* **Partition names.** Supplement Section 1.11 now maps its arm labels onto the
+  partition names of Section 5.7 (A0 = R-slice, A1 and A2 = L-inst,
+  A1r = R-rec), and the cross-instrument paragraph of Section 6.4 names the
+  partition whose contrast it reports.
+* **Wording of the change log.** The manuscript said "during revision", which
+  implies a publicly available earlier version. It now says "after the main
+  runs", and the same wording is used in the supplement.
+
+The three gates were re-run after these edits: 338 number checks, 88 ledger rows
+and the four negative-test cases all pass, and the two figures were regenerated
+from the same artifacts.
