@@ -8,8 +8,8 @@ We did not fit an explanatory model or establish a variance decomposition, so we
 which factors explain the observed spread.
 
 Headroom constrains the scale. A library whose control arm already reaches 0.95 cannot show a large
-absolute gain, whatever the split does; CTIS loses at most 4.6 points to Swin-T and 9.2 to
-AlexNet. In bel canto the recording-level control reaches 0.83 for AlexNet and 0.77 for Swin-T, and the
+absolute gain, whatever the split does; CTIS has at most 4.6 points of headroom under Swin-T and
+9.2 under AlexNet. In bel canto the recording-level control reaches 0.83 for AlexNet and 0.77 for Swin-T, and the
 exposure arm reaches 1.00 in five of the six seed-by-backbone cells, so its recording-level
 contrast is limited by a ceiling and its interval is wide for that reason as well as for the
 small panel of 40 test recordings.
@@ -37,7 +37,7 @@ wholly below the study-specific three-point SESOI. These results distinguish sta
 from practical importance.
 
 The four additional libraries show larger observed changes, from $+8.4$ to $+28.7$ points,
-compared with $+2.02$ (AlexNet) and $+1.70$ (Swin-T) in CTIS. The tasks and class structures
+compared with $+2.02$ under AlexNet and $+1.70$ under Swin-T in CTIS. The tasks and class structures
 differ, so these comparisons are descriptive.
 
 The C1 control sharpens what the primary contrast can and cannot mean. It supplies the same volume
@@ -86,6 +86,10 @@ ledger rather than a full-study cost.
 
 \subsection{Limitations and threats to validity}
 
+Three qualifications apply to every interval in this paper and are not restated in each result:
+the intervals condition on the frozen split and the trained seeds; no contrast isolates pure
+memorisation from recording diversity; and the analysis plan was internal and unregistered.
+
 \emph{One feature family.} We audited MEL only. The framework also releases chroma and CQT, and
 the same split-unit issue applies in principle, because the split is defined on identifiers
 rather than on features; we measured neither, so the magnitude is unknown. Chroma discards
@@ -112,7 +116,7 @@ the capacity table stores the mean of 400 random draws while a split realises on
 \emph{Reconstruction of the audited protocol.} We could not retrieve the framework's own split
 files; the A2 arm reconstructs one slice-level interpretation of the stated 8:1:1 protocol and
 may differ from the authors' actual choice of split unit, seed and stratification. The A1$-$A0
-contrast does not depend on that reconstruction and is the primary contrast in the internal plan.
+contrast does not depend on that reconstruction and is the primary contrast.
 
 \emph{Version of record.} We checked the published split description in TISMIR 8(1),
 pp. 22--38 (Section~\ref{sec:framework}). The original realised splits remain unavailable, so

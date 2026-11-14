@@ -153,6 +153,22 @@ def median(vals):
     mid = n // 2
     return vals[mid] if n % 2 else 0.5 * (vals[mid - 1] + vals[mid])
 
+def load_volume():
+    """CTIS pool-budget reconciliation, straight from the split artifacts."""
+    rows = [r for r in read_csv(os.path.join(SPLITS, "feasibility.csv"))
+            if r["library"] == "CTIS"]
+    plan = sum(int(float(r["qpool_slices"])) for r in rows)
+    a1_plan = sum(int(float(r["n_a1"])) for r in rows)
+    a0 = len(read_csv(os.path.join(SPLITS, "CTIS_a0_train.csv")))
+    a1 = len(read_csv(os.path.join(SPLITS, "CTIS_a1_train.csv")))
+    qpool = len(read_csv(os.path.join(SPLITS, "CTIS_qpool.csv")))
+    with io.open(os.path.join(SPLITS, "c1_audit.json"), encoding="utf-8") as fh:
+        c1 = json.load(fh)
+    return {"plan": plan, "a0": a0, "a1": a1, "a1_plan": a1_plan, "qpool": qpool,
+            "c1_target": c1["detail"]["class_need_total"],
+            "c1_injected": c1["detail"]["n_injected"],
+            "c1_shortfall": c1["class_shortfall"]}
+
 
 # ---------------------------------------------------------------- checks
 class Checker:
@@ -468,8 +484,20 @@ def main():
     ck.in_text("prose leak direction (lowers macro-F1)", "lowers macro-F1 by")
     ck.in_text("prose 2.90 (leak AlexNet)", "2.90")
     ck.in_text("prose 3.41 (leak Swin-T)", "3.41")
-    ck.in_text("prose -36.7 (novelty AlexNet)", "-36.7")
-    ck.in_text("prose -31.4 (novelty Swin-T)", "-31.4")
+    # Figure 3 caption must carry the table's sign; derive the sign from the data
+    # instead of matching a literal, so that a flipped sign cannot pass.
+    for bb, tok in (("alexnet", "36.7"), ("swin_t", "31.4")):
+        # p3b_leak stores arm minus A0 (R-slice): A1 is L-inst, A1r is R-rec.
+        gap = (float(leak[("A1r", bb)]["delta_slice"])
+               - float(leak[("A1", bb)]["delta_slice"]))
+        # p3b_instr stores arm minus A1r, so its A1 row is L-inst minus R-rec.
+        gap2 = -float(instr[("A1", bb)]["delta_slice"])
+        ck.identity("fig3 caption R-rec-L-inst sign %s" % bb,
+                    gap > 0 and abs(gap - float(tok)) < 0.06
+                    and abs(gap - gap2) < 0.02, "%.3f/%.3f" % (gap, gap2))
+        ck.in_text("fig3 caption signed +%s" % tok, "+%s" % tok)
+    ck.identity("fig3 caption carries no negative R-rec-L-inst",
+                "-36.7" not in ck.text and "-31.4" not in ck.text)
     ck.in_text("prose A1r pooled 0.816", "0.816")
     ck.in_text("prose A1r pooled 0.843", "0.843")
     # C1: equal-volume control must stay small and well below the exposure effect
@@ -494,6 +522,16 @@ def main():
                    "%s&%s&%.4f&%.4f&%+.2f&%s" % (r["library"].replace("_", " "),
                      r["backbone"], float(r["selftest_mean"]), float(r["selftest_sd"]),
                      100 * float(r["selftest_minus_a0"]), pub))
+    # A2 self-test must sit above the sealed-panel scores of its own backbone; the
+    # claim is limited to that backbone, so check exactly that and no more.
+    st = {(r["library"], r["backbone"]): float(r["selftest_mean"])
+          for r in read_csv(os.path.join(RESULTS, "human_review", "selftest.csv"))}
+    for lib in LIBS:
+        for bb, name in (("alexnet", "AlexNet"), ("swin_t", "Swin-T")):
+            s = st[(lib, name)]
+            ok = all(s > metrics[(lib, arm, bb)]["slice"] for arm in ("A0", "A1", "A2"))
+            ck.identity("A2 self-test above same-backbone arms %s/%s" % (lib, bb),
+                        ok, "%.4f" % s)
     for (lib, bb, contrast), r in corrected_rec.items():
         if contrast != "A1-A0":
             continue
@@ -543,8 +581,9 @@ def main():
         ck.identity("A1-C1 %s %s equals A1-A0 minus C1-A0" % (bb, lv),
                     abs(delta_pp - want) <= 0.03, "%.3f vs %.3f" % (delta_pp, want))
 
-    arm_label = {"A0": "A0, slice", "A1": "A1/A2, instrument", "A2": "A1/A2, instrument",
-                 "A1r": "A1r, recording"}
+    # Partition labels follow the main text: R-slice / L-inst+L-inst+Adv / R-rec.
+    arm_label = {"A0": "R-slice", "A1": "L-inst, L-inst+Adv",
+                 "A2": "L-inst, L-inst+Adv", "A1r": "R-rec"}
     for r in read_csv(os.path.join(R2, "p3_fold_composition.csv")):
         if r["arm"] == "A2":
             continue
@@ -782,10 +821,10 @@ def main():
     ck.in_text("density comparison",
                "%.2f slices per recording against %.2f"
                % (ex["rule_median_k"], ex["kept_median_k"]))
-    ck.identity("fourteen retained classes have four to six recordings",
+    ck.identity("fourteen retained classes have five or six recordings",
                 ex["low_resource_kept_4to6"] == 14, str(ex["low_resource_kept_4to6"]))
     ck.in_text("low-resource retained classes",
-               "Fourteen retained classes have four to six source recordings")
+               "Fourteen retained classes have five or six source recordings")
     ck.identity("201-class capacity for a 50 and 30 percent target",
                 (ex["feasible_50"], ex["feasible_30"]) == (10, 38),
                 "%s/%s" % (ex["feasible_50"], ex["feasible_30"]))
@@ -820,6 +859,88 @@ def main():
     ck.in_text("convergence accuracy floor", "at least 0.9997 in every arm")
     ck.in_text("A2 convergence sentence", "ends at 0.9034 and 0.8718")
     ck.in_text("A2 step count", "3{,}940 steps against 3{,}980")
+
+    # ---- volume reconciliation (second-round review) ----------------------
+    vol = load_volume()
+    ck.identity("CTIS planned pool budget sums to 4182", vol["plan"] == 4182, str(vol["plan"]))
+    ck.identity("CTIS deduplicated pool holds 4178 slices", vol["qpool"] == 4178,
+                str(vol["qpool"]))
+    ck.identity("duplicate-content rule removes 4 pool slices",
+                vol["plan"] - vol["qpool"] == 4, str(vol["plan"] - vol["qpool"]))
+    ck.identity("A0 minus A1 training slices equals the duplicate drop",
+                vol["a0"] - vol["a1"] == vol["plan"] - vol["qpool"] == 4,
+                "%d/%d" % (vol["a0"], vol["a1"]))
+    ck.identity("planned A1 budget equals A0 at 25502", vol["a1_plan"] == 25502,
+                str(vol["a1_plan"]))
+    ck.identity("A0 and A1 training slices are 25502 and 25498",
+                (vol["a0"], vol["a1"]) == (25502, 25498), "%d/%d" % (vol["a0"], vol["a1"]))
+    ck.identity("C1 injects 4177 against a 4178 target",
+                (vol["c1_target"], vol["c1_injected"]) == (4178, 4177),
+                "%d/%d" % (vol["c1_target"], vol["c1_injected"]))
+    ck.identity("C1 shortfall is one slice in D0242", vol["c1_shortfall"] == {"D0242": 1},
+                str(vol["c1_shortfall"]))
+    ck.in_text("volume reconciliation opening",
+               "The per-class budgets sum to 4{,}182 pool slices over the 201 CTIS classes")
+    ck.in_text("volume reconciliation A1 clause",
+               "A1 removes the planned 4{,}182 C slices and injects 4{,}178, which leaves 25{,}498")
+    ck.in_text("volume reconciliation C1 clause",
+               "no further non-test candidate remains, so it removes and injects 4{,}177")
+    ck.in_text("fig 3 caption R-slice to R-rec drop",
+               "Arrows mark the drop in pooled macro-F1 from R-slice to R-rec (2.9 and 3.4 points)")
+    ck.in_text("fig 3 caption R-rec to L-inst drop",
+               "from R-rec to L-inst (36.7 and 31.4 points), AlexNet first and Swin-T second")
+    # ---- third-round review (2026-11-14) ----------------------------------
+    # A3: phrasing retired by the review must not come back. ck.text is the whole
+    # manuscript plus supplement, normalised, so the needles are whitespace-free.
+    for bad, why in [
+            ("everyotherpoint", "A2 self-test is only above same-backbone points"),
+            ("bottomtworows", "Figure 1 has three panels"),
+            ("secondstream", "the class-set comparison is the third stream"),
+            ("fromdominating", "macro-F1 is never pooled across libraries"),
+            ("thetwoextremesoftheten", "the ten cells need an explicit antecedent"),
+            ("CTISlosesatmost", "headroom, not a loss"),
+            ("fourtosixsourcerecordings", "retained classes have five or six recordings"),
+            ("A0,slice", "supplement table 5 must use the partition labels"),
+            ("A1/A2,instrument", "supplement table 5 must use the partition labels"),
+            ("A1r,recording", "supplement table 5 must use the partition labels")]:
+        ck.identity("guard absent: %s" % why, bad not in ck.text)
+    ck.in_text("8:1:1 scope", "Except for Guzheng Tech99 (79:10:10) and ErhuPT (6:2:2)")
+
+    # A4: the 39-slice gap between the rule-only count and the audited count.
+    drop = {"CTIS": 42509 - panels["CTIS"]["slices"],
+            "CNPM": 2724 - panels["CNPM"]["slices"],
+            "bel_canto": 9910 - panels["bel_canto"]["slices"]}
+    ck.identity("duplicate removal 39 slices = 4 + 11 + 24",
+                sum(drop.values()) == 39, str(drop))
+    ck.in_text("prose 39 slice attribution",
+               "a further 39 slices (4 in CTIS, 11 in CNPM and 24 in bel canto)")
+
+    # A5: retained classes against the recording floor.
+    per_class = {}
+    for part in PARTITIONS:
+        for r in read_csv(os.path.join(SPLITS, "CTIS_%s.csv" % part)):
+            per_class.setdefault(r["label"], set()).add(r["recording_uid"])
+    sizes = [len(v) for v in per_class.values()]
+    ck.identity("no retained class below five recordings",
+                min(sizes) >= 5, "min=%d" % min(sizes))
+    ck.identity("fourteen retained classes at five or six",
+                sum(1 for s in sizes if 5 <= s <= 6) == 14,
+                str(sorted(s for s in sizes if s <= 6)))
+
+    # A6: recording identifiers against canonical takes in the audited sample.
+    uid, canon = set(), set()
+    for part in PARTITIONS:
+        for r in read_csv(os.path.join(SPLITS, "CTIS_%s.csv" % part)):
+            uid.add(r["recording_uid"])
+            canon.add(r["recording_canonical"])
+    ck.identity("CTIS 4887 identifiers against 4885 canonical takes",
+                (len(uid), len(canon)) == (4887, 4885) and len(uid) - len(canon) == 2,
+                "%d/%d" % (len(uid), len(canon)))
+    ck.in_text("table1 caption recording basis",
+               "recordings are counted by recording identifier")
+
+    # A7: the fold-composition table must use the partition labels of Section 5.7.
+    ck.in_text("supplement fold table uses partition labels", "R-slice&1&1{,}151")
 
     # ---- report ---------------------------------------------------------
     summary = {

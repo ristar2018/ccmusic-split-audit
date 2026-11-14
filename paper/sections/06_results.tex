@@ -6,24 +6,27 @@ Table~\ref{tab:main} reports the pool-injection contrast, A1$-$A0, on the sealed
 In the primary library the point estimates are $+2.02$ points under
 AlexNet with a 95\% CI of $+0.83$ to $+3.35$, and $+1.70$ under Swin-T with CI $+1.28$ to
 $+2.84$. Both intervals
-exclude zero. Under the add-one convention, both smaller tails have zero hits in 2{,}000
-resamples: raw $p=2/2{,}001$ and Holm-adjusted $p\approx0.0020$ for both, so the interval excludes zero in the primary
-family at the finest resolution 2{,}000 resamples can express, the smallest attainable two-sided
-tail being $2/2{,}001$, conditional on the fixed split and the trained seeds.
+exclude zero. Under the add-one convention both smaller tails have zero hits in 2{,}000
+resamples, which gives a raw tail proportion of $2/2{,}001$ and a Holm-adjusted value of
+$0.0020$ for both tests. These are descriptive, resolution-limited quantities: at $B=2{,}000$
+the smallest attainable two-sided tail is $2/2{,}001$, so it is the resolution, not a computed
+exceedance, that supports the statement that the interval excludes zero in the primary family.
 Both point estimates are, however, below the three-point SESOI recorded in the internal written
 protocol, which the local record describes as set before training. The Swin-T interval is wholly below three points, whereas the AlexNet interval includes
-that magnitude. These are conditional intervals for our fixed split and trained seeds, not
-uncertainty bounds across new training runs or split realisations. A null-compatible interval is
-not evidence of no effect, and we make no equivalence claim at any margin.
+that magnitude. They are not uncertainty bounds across new training runs or split realisations.
+A null-compatible interval is not evidence of no effect, and we make no equivalence claim at any margin.
 
 \begin{table}[t]
 \centering
-\caption{Main effect, A1$-$A0, on the sealed panel. A0 and A1 are macro-F1 on a 0--1 scale, the
-latter with probability averaging followed by one vote per recording; the $\Delta$ columns and the
+\caption{Main effect, A1$-$A0, on the sealed panel. A0 and A1 are slice-level macro-F1 on a 0--1
+scale; $\Delta$ slice is A1$-$A0, and $\Delta$ rec.\ is the recording-level contrast obtained by
+averaging predicted probabilities within each recording and taking one vote, so it is not the
+difference between the two columns to its left; the $\Delta$ columns and the
 seed range are in percentage points. Recording-level points were corrected after the main runs;
 their original unweighted cluster intervals are retained. Intervals are 95\% recording-cluster
 bootstrap intervals over 2{,}000 resamples on the primary replicate stream; the class-set
-comparison in Supplementary Material S1 re-draws them on a second stream, so its bounds differ in
+comparison in Supplementary Material S1 re-draws them on a separate (third) stream, so its bounds
+differ in the second decimal. Seed range is the spread of per-seed differences. The two primary rows, CTIS under both backbones, are marked with a dagger:
 the second decimal. Seed range is the spread of per-seed differences. The two primary rows, CTIS under both backbones, are marked with a dagger:
 neither reaches the three-point threshold of the internal plan, whereas every additional-library
 point estimate does; a point estimate falling short does not by itself mean its interval
@@ -52,7 +55,7 @@ bel canto & Swin-T  & 0.8091 & 0.9397 & $+13.06\;[+7.50,+24.75]$ & $+22.74\;[+9.
 \end{table}
 
 In the four additional libraries the same manipulation moves macro-F1 by $+8.4$ to $+28.7$
-points, compared with $+2.02$ (AlexNet) and $+1.70$ (Swin-T) in CTIS. Baseline headroom differs
+points, compared with $+2.02$ under AlexNet and $+1.70$ under Swin-T in CTIS. Baseline headroom differs
 substantially; the similar library medians of exposure alone do not establish its role in the
 between-library spread. CTIS starts
 from 0.908 under AlexNet and 0.954 under Swin-T, so at most 9.2 and 4.6 points were available to
@@ -148,14 +151,17 @@ print under a slice-level reading. As a
 share of the pool-injection contrast, the
 answer, in Table~\ref{tab:a2}, is $100\times\hat\Delta_{A2}/\hat\Delta_{A1} = 60$--103\%: in the
 four additional libraries this reconstruction recovers between 81\% and 99\% of the A1 effect,
-whereas in the primary library the recovered share spans the two extremes of the ten: 60\%
-under AlexNet and 103\% under Swin-T. In CTIS under AlexNet the interval touches zero, at $+1.21$
-with CI $-0.02$ to $+2.44$ and $p = 0.056$, so the reconstruction is not reliably better than the
-control arm there; under Swin-T it is, at $+1.75$ with CI $+1.18$ to $+2.70$. The A2 self-test scores --- an illustrative stand-in for the score this reconstruction
-would print under a slice-level reading --- are shown as open squares in Figure~\ref{fig:arms} and sit above every other
-point in every library. Self-test slices are disjoint from training slices, but may come from
+whereas in the primary library the recovered share ranges from 60\% under AlexNet to 103\%
+under Swin-T, the lowest and highest of the ten cells. In CTIS under AlexNet the interval
+includes zero: the
+point estimate is $+1.21$ with CI $-0.02$ to $+2.44$ and tail proportion $0.056$, so the
+reconstruction is not reliably better than the control arm there; under Swin-T it is, at $+1.75$
+with CI $+1.18$ to $+2.70$. The A2 self-test scores --- an illustrative stand-in for the score this reconstruction
+would print under a slice-level reading --- are shown as open squares in Figure~\ref{fig:arms} and
+sit above every sealed-panel point of the same backbone in every library. Self-test slices are
+disjoint from training slices, but may come from
 the same recordings; the panels and their supports differ, and in one library a small number of
-self-test images repeat content that also appears in A2 training (Supplementary Material S1). A self-test-minus-A0 difference is
+self-test images repeat content that also appears in A2 training; see Supplementary Material S1. A self-test-minus-A0 difference is
 therefore descriptive, not a paired estimate of leakage. Supplementary Material S1 reports the
 self-test scores and seed dispersion explicitly.
 
@@ -281,10 +287,9 @@ $31.4$ points ($28.3$ to $35.0$). The large number in
 Table~\ref{tab:p3} is therefore two effects of very different size: within-instrument
 the R-slice--R-rec contrast is 7--10\% of the total, with the larger remainder in the
 R-rec--L-inst contrast. This separates protocol contrasts rather than decomposing
-all sources of performance loss: neither the 36.7-point (AlexNet) or 31.4-point (Swin-T)
-R-rec--L-inst gap nor the 39.6-point or 34.8-point R-slice--L-inst gap is a leakage estimate.
-Figure~\ref{fig:p3} shows the
-four partitions side by side with their intervals.
+all sources of performance loss: none of these gaps --- the 36.7- and 31.4-point R-rec--L-inst
+gaps and the 39.6- and 34.8-point R-slice--L-inst gaps --- is a leakage estimate.
+Figure~\ref{fig:p3} shows the four partitions side by side with their intervals.
 
 \begin{figure}[!tb]
 \centering
@@ -293,10 +298,11 @@ four partitions side by side with their intervals.
 held-out folds of the CTIS technique task for four partitions: random slice-level folds (R-slice),
 recording-grouped folds with 110 instruments on at least two folds (R-rec),
 instrument-withheld folds (L-inst), and the adversarial arm on the same folds (L-inst+Adv). Bars are means over
-two seeds and the whiskers are 95\,\% recording-cluster bootstrap intervals. The two arrows
-give the R-rec$--slice contrasts of $-2.9$ and $-3.4$ points and the
-L-inst$--rec contrasts of $-36.7$ and $-31.4$ points, for AlexNet and Swin-T in that
-order. They are differences between
+two seeds and the whiskers are 95\,\% recording-cluster bootstrap intervals. Arrows mark the
+drop in pooled macro-F1 from R-slice to R-rec (2.9 and 3.4 points) and from R-rec to L-inst
+(36.7 and 31.4 points), AlexNet first and Swin-T second; in signed form, as Table~\ref{tab:p3}
+lists the contrasts, R-rec$-$L-inst is $+36.7$ and $+31.4$ points and R-slice$-$R-rec is $+2.9$
+and $+3.4$. They are differences between
 protocols, not causal components of a single mechanism.}
 \label{fig:p3}
 \end{figure}

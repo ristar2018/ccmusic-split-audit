@@ -7,10 +7,10 @@ Command
 
 Expected tail
 -------------
-    checks passed: 338, failed: 0
+    checks passed: 382, failed: 0
     report: data/results/paper_verify.json
 
-What the 338 checks cover
+What the 382 checks cover
 -------------------------
 1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
    re-derived from the artifact tables under data/results/ and compared with the
@@ -45,6 +45,24 @@ What the 338 checks cover
    (CI 0.32 to 5.66)"), matching the arrow directions in Figure 3, and one check
    requires the direction word "lowers macro-F1 by" to be present, so that a
    sign flip cannot pass unnoticed.
+
+7. Review rounds of 12 and 14 November. Ten checks hold the volume
+   reconciliation in Section 5.3: 4,182 planned pool slices, 4 removed by the
+   duplicate-content rule, 4,178 injected, 25,498 training slices for A1, and
+   C1 injecting 4,177 against a 4,178 target with a one-slice shortfall in
+   D0242. The sign of the Figure 3 caption is derived rather than matched: R-rec
+   minus L-inst is recomputed as A1r minus A1 in p3b_leak (+36.734 and +31.369)
+   and cross-checked against the A1 row of p3b_instr, whose base is A1r; a
+   reverse assertion requires that -36.7 and -31.4 appear nowhere. Ten further
+   checks require the retired wordings to be absent (every other point, bottom
+   two rows, second stream, from dominating, the two extremes of the ten, CTIS
+   loses at most, four to six, and the three internal arm labels A0, slice /
+   A1/A2, instrument / A1r, recording). The self-test score is compared with
+   every sealed-panel point of the same backbone in all ten library-by-backbone
+   cells; the two recording-count bases (4,887 identifiers and 4,885 canonical
+   recordings against 4,956 and 4,954 released) are bound to the manifest; and
+   the minimum number of recordings in a retained class is checked at 5 together
+   with the 14 classes that hold five or six.
 
 What the verifier does not do
 -----------------------------

@@ -85,5 +85,5 @@ claim_id,section,artifact,where,column,agg,decimals,printed,phrase,qualifier,spe
 "C84","07_discussion","data/results/e1_delta.csv","library=='CNPM' and bb=='swin_t' and contrast=='A1-A0'","delta_slice_pt","single","1","28.7","from +8.4 to +28.7 points","four additional libraries",""
 "C85","07_discussion","data/results/human_review/round2/a1_minus_c1.csv","lib=='CTIS' and backbone=='alexnet' and level=='slice' and contrast=='A1-C1'","delta_pp","single","2","1.96","still leads it by +1.96 points","AlexNet",""
 "C86","07_discussion","data/results/human_review/round2/a1_minus_c1.csv","lib=='CTIS' and backbone=='swin_t' and level=='slice' and contrast=='A1-C1'","delta_pp","single","2","1.07","+1.07 under Swin-T","Swin-T",""
-"C87","07_discussion","data/results/headroom.csv","library=='CTIS' and backbone=='swin_t'","headroom_pt","single","1","4.6","at most 4.6 points to Swin-T","Swin-T",""
-"C88","07_discussion","data/results/headroom.csv","library=='CTIS' and backbone=='alexnet'","headroom_pt","single","1","9.2","9.2 to AlexNet","AlexNet",""
+"C87","07_discussion","data/results/headroom.csv","library=='CTIS' and backbone=='swin_t'","headroom_pt","single","1","4.6","at most 4.6 points of headroom under Swin-T","Swin-T",""
+"C88","07_discussion","data/results/headroom.csv","library=='CTIS' and backbone=='alexnet'","headroom_pt","single","1","9.2","9.2 under AlexNet","AlexNet",""

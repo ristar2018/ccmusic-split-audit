@@ -14,11 +14,11 @@ shares a recording with anything it is scored on.
 \item[A1, homologous exposure.] Same $m_c$ and same C-side recording count, but the entire
 $Q^{\text{pool}}_c$ is injected and an equal number of C slices is removed. Much of this pool
 shares recording identifiers with the sealed panel, but some pool recordings contribute no test
-slices. Realised overlap is given in Supplementary Material S1; $\alpha_c$ is the full injected
+slices. Supplementary Material S1 gives the realised overlap; $\alpha_c$ is the full injected
 pool fraction, not the fraction restricted to recordings represented in the test panel. In one
 class, the suona technique cell C0296, four candidate pool slices repeat content that already sits
 in the sealed panel and are removed by the duplicate-content rule before injection, so A1 trains
-on four fewer slices than A0 and C1 (25{,}498 against 25{,}502) and the per-class budgets are equal
+on four fewer slices than A0 and C1, 25{,}498 against 25{,}502, and the per-class budgets are equal
 everywhere else.
 
 \item[A2, slice-level reconstruction.] Draw the slice-level 80/10/10 partition of C $\cup$
@@ -39,6 +39,14 @@ C1 uses seeds 0--2 and the same final-epoch recipe. Because it consumes R conten
 validation scores cannot be interpreted; it performs no validation-based selection.
 This exploratory addition holds volume approximately fixed but not recording diversity.
 \end{description}
+
+\paragraph{Volume reconciliation.} The per-class budgets sum to 4{,}182 pool slices over the
+201 CTIS classes. Duplicate-content removal deletes four of them, all in C0296 (39 $\rightarrow$
+35), so 4{,}178 slices are injected. A1 removes the planned 4{,}182 C slices and injects
+4{,}178, which leaves 25{,}498 training slices. C1 targets the same 4{,}178, but in class D0242
+no further non-test candidate remains, so it removes and injects 4{,}177 and stays at
+25{,}502. The 4{,}177--4{,}178 difference is therefore the C1 shortfall, not the
+duplicate-content rule.
 
 A0 and A1 hold the number of training slices and the C-side recording count fixed, so a
 difference between them cannot be attributed to more data or to more recording diversity within
@@ -85,7 +93,7 @@ Swin-T \citep{swin2021} --- under three seeds.
 No data augmentation is applied: the recipe specifies none, and time-axis flips are not
 meaningful for spectrograms. The number of epochs is fixed at ten and the final-epoch weights are
 the ones evaluated: no checkpoint, epoch or seed is chosen on any panel, so the reported scores
-carry no selection step, and the validation partition is monitored and reported but never used to
+carry no selection step, and the validation partition is monitored and logged but never used to
 pick a model.
 
 The sealed panel is evaluated once per run, after training, and never during it. Per-seed
@@ -102,8 +110,8 @@ longer measures transfer.
 The primary metric is macro-F1 on the sealed panel. We compute it at two levels. At the slice
 level, each slice is one prediction. At the recording level, the predicted probabilities of all
 slices of a recording are averaged and the recording receives one label, which gives every
-recording the same weight within a library and keeps a library with $\bar K = 48$ from dominating
-one with $\bar K = 8.7$ through sheer slice count. Both levels are reported side by side; the
+recording the same weight within a library, so that recordings with many slices do not dominate
+those with few. Both levels are reported side by side; the
 primary contrast is at the slice level, as specified in the internal analysis plan, and the recording level
 serves as a robustness check, with any disagreement between the two flagged in the text. Macro-averaging is a reasonable summary when class support is uneven; we take the
 motivating argument from the literature on precision--recall summaries under imbalance \citep{saito2015pr}, though that argument concerns two-class problems and we do not treat it as a general justification. Macro-F1 averages only over classes with non-zero support or
@@ -140,7 +148,10 @@ class-stratified recording bootstrap and joint seed--recording bootstrap assess 
 resampling three seeds does not replace additional training or split realisations.
 
 The internal plan designates a primary family of two tests: CTIS under AlexNet and CTIS under Swin-T, both for
-A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We correct within that family by Holm's method~\cite{holm1979} at $\alpha = 0.05$. The smallest effect
+A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We
+correct within that family by Holm's method~\cite{holm1979} at $\alpha = 0.05$, applied to the
+tail proportions and read descriptively: an adjusted value is not a null-distribution
+$p$-value and inherits the $2/2{,}001$ resolution of the raw proportions. The smallest effect
 of interest, or SESOI, is the three-point macro-F1 threshold recorded in the internal plan.
 It is a study-specific practical decision threshold, not a significance cutoff and not an
 externally validated minimum useful gain. Precision does not justify practical importance.
@@ -175,12 +186,14 @@ One library supports a second question: whether the technique classification of 
 to instruments never seen in training. We froze the class universe by a single rule fixed before
 training: a technique--instrument cell entered if it held at least two recordings and its
 instrument contributed at least three recordings, and six content-type labels were excluded as
-material rather than technique (scales, open strings, fundamental tones, single tones, excerpts
-and instrument-specific techniques). That leaves 43 techniques over 1{,}388 recordings, out of 49
-candidate classes covering 4{,}037 recordings. We then grouped instruments --- rather than recordings --- into three folds, so that each
-recording is predicted exactly once by a model that has not seen its instrument. That property
-holds for the instrument-grouped and recording-grouped partitions, not for the random
-slice-level partition. Because that
+material rather than technique: scales, open strings, fundamental tones, single tones, excerpts
+and instrument-specific techniques. That leaves 43 techniques over 1{,}388 recordings, out of 49
+candidate classes covering 4{,}037 recordings. We then grouped instruments --- rather than
+recordings --- into three folds, so that each recording is predicted exactly once by a model
+that has not seen its instrument. In both grouped partitions each recording is held out
+exactly once; only L-inst additionally guarantees that the test instrument is absent from
+training. The random slice-level partition satisfies neither property: a recording's slices
+appear on both sides of the split. Because that
 partition changes both recording overlap and instrument novelty, a recording-grouped reference
 partition provides an operational separation of the two successive contrasts. We build it by grouping slices of the same
 recording, and of the same duplicate-audio group, into one fold, then balancing fold sizes across
@@ -207,10 +220,10 @@ treat the two CTIS tests as its primary family rather than as a registered hypot
 choices changed during execution; Supplementary Material S1 lists each one. The CTIS class
 universe narrowed from 219 to 201 classes after the five-recording rule and placeholder removal.
 Early injection targets of 50\% and 30\% of the training slices were abandoned in favour of
-injecting the entire pool, which is the arm reported here. Per-class budgets are capped where C content is
-insufficient; both arms train for the same ten epochs and the final-epoch weights are evaluated,
-so a capped budget is not an early-stopping decision. The negative-control libraries were
-expanded from one seed to three. C1 was added after the three main arms and is therefore
+injecting the entire pool, which is the arm reported here. We cap the per-class budget where C
+content is insufficient; both arms train for the same ten epochs and the final-epoch weights are
+evaluated, so a capped budget is not an early-stopping decision. We expanded the negative-control
+libraries from one seed to three. C1 was added after the three main arms and is therefore
 exploratory: it draws on unused C and R content, and its validation scores cannot be interpreted.
 Recording-level point estimates were corrected after the main runs from a mean weighted by slice
 count to one vote per recording. The retained intervals already used that per-recording
@@ -223,7 +236,7 @@ is part of the internal plan, and neither is used to support the primary conclus
 
 \subsection{Use of AI-assisted tools}
 
-The authors used Coze Agent (ByteDance) and the GPT 6.1 Sol model, accessed through the DeepSider
+The authors used ByteDance's Coze Agent and the GPT 6.1 Sol model, accessed through the DeepSider
 API, between September and November 2026 for literature search, language editing, and help with
 coding and debugging. No text was produced without author review; the authors verified every
 reported number against the released artifacts and take full responsibility for the content.

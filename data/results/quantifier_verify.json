@@ -111,6 +111,8 @@
         "release_classes": 219,
         "panel_recordings": 4887,
         "release_recordings": 4954,
+        "release_identifiers": 4956,
+        "panel_canonical": 4885,
         "n_other_libs_keep_all": 4
       },
       "problems": []

@@ -28,14 +28,15 @@ Recording-level separation is an established practice in audio evaluation. Slice
 partitioning can expose a model to siblings of test examples, making within-recording recognition
 possible rather than ensuring transfer to new recordings. Salamon et al.~\cite{salamon2014urbansound}
 formalised this for urban sound, fixing ten folds at the recording level so that folds are
-comparable across papers. The same paper records that keeping songs of one artist in both training and test sets yields
-over-optimistic accuracy, which is why the artist filter is the strictest of the units we
-distinguish. Corpora that share the practice differ in what they document as the
-splitting unit rather than in a single convention: FMA fixes an 80/10/10 partition with an artist filter, so that no artist or album appears in two
-splits \citep{defferrard2016}, whereas tagging and transfer studies built on curated track-level
-collections report track identifiers instead \citep{choi2017,lee2017,won2020}, and shared
-evaluation campaigns have made cross-paper comparison routine \citep{downie2010mirex}; CCMusic
-extends this landscape to a multi-library Chinese-music resource \citep{zhou2025ccmusic}.
+comparable across papers. Corpora that share the practice differ in what they document as the
+splitting unit rather than in a single convention: FMA fixes an 80/10/10 partition with an
+artist filter, so that no artist or album appears in two splits \citep{defferrard2016}, and it
+notes that keeping the songs of one artist on both sides yields over-optimistic accuracy. An
+artist filter is the strictest of the units we distinguish. Tagging and transfer studies built
+on curated track-level collections report track identifiers instead
+\citep{choi2017,lee2017,won2020}, and shared evaluation campaigns have made cross-paper
+comparison routine \citep{downie2010mirex}; CCMusic extends this landscape to a multi-library
+Chinese-music resource \citep{zhou2025ccmusic}.
 GiantMIDI-Piano is instead a large classical-piano MIDI resource \citep{kong2022giantmidi}.
 Environmental-sound datasets and augmentation studies provide useful evaluation recipes
 \citep{piczak2015,salamon2017augment}; we do not take them as evidence that augmentation

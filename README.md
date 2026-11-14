@@ -32,11 +32,11 @@ python code/verify_paper_numbers.py
 Expected last lines:
 
 ```
-checks passed: 338, failed: 0
+checks passed: 382, failed: 0
 report: data/results/paper_verify.json
 ```
 
-The verifier works in four groups: (1) *identity* — re-derives rounded means, deltas, sums, ratios and cost totals from the artifact tables; (2) *text* — rebuilds table rows and reported tokens from the manuscript source and requires each to appear; (3) *round-2 additions* — A1−C1 cells and their transitivity, the exposure split, fold composition, the class-set table, the 43-class universe and the bel canto ceiling; (4) *round-3 additions* — the arm table, the thirteen-library inventory, the threshold-sensitivity sweep, the excluded-class profile, the cross-library duplicate count and the end-of-training losses, each recomputed from `data/results/library_inventory_and_convergence.json` and the split files. It reads the CSVs and JSONs, **not** the `.npz` predictions: the bootstrap intervals are produced by the analysis scripts from the sealed predictions, which the verifier does not re-run.
+The verifier works in four groups: (1) *identity* — re-derives rounded means, deltas, sums, ratios and cost totals from the artifact tables; (2) *text* — rebuilds table rows and reported tokens from the manuscript source and requires each to appear; (3) *round-2 additions* — A1−C1 cells and their transitivity, the exposure split, fold composition, the class-set table, the 43-class universe and the bel canto ceiling; (4) *round-3 additions* — the arm table, the thirteen-library inventory, the threshold-sensitivity sweep, the excluded-class profile, the cross-library duplicate count and the end-of-training losses, each recomputed from `data/results/library_inventory_and_convergence.json` and the split files. A fifth group was added by the two review rounds of 12 and 14 November: the ten volume-reconciliation checks (4,182 planned pool slices, 4 removed as duplicates, 4,178 injected, 25,498 training slices, and the C1 shortfall of one slice in D0242), the sign of the Figure 3 caption derived from `p3b_leak` and cross-checked against `p3b_instr` instead of matched as a literal, the self-test score against every sealed-panel point of the same backbone, the two recording-count bases, the minimum recording count of a retained class, and ten reverse assertions that retired wordings appear nowhere. It reads the CSVs and JSONs, **not** the `.npz` predictions: the bootstrap intervals are produced by the analysis scripts from the sealed predictions, which the verifier does not re-run.
 
 ## Check that each prose claim is bound to its artifact cell
 

@@ -14,8 +14,10 @@ Together they release 110{,}415 slices from 7{,}827 recordings in
 recordings, which is the footing of the library inventory in the supplement. Of these,
 109{,}831 slices from 7{,}756 recordings in 234 classes survive the
 minimum-recording rule and placeholder removal described in
-Section~\ref{sec:capacity}, listed in Table~\ref{tab:panels}; the remainder is excluded under
-these study-specific rules. In CTIS the rule leaves 42{,}509 of the 43{,}054 released slices in
+Section~\ref{sec:capacity} together with the duplicate-content removal described below, which
+takes a further 39 slices (4 in CTIS, 11 in CNPM and 24 in bel canto); the survivors are listed
+in Table~\ref{tab:panels}, and the remainder is excluded under these study-specific rules. In
+CTIS the rule leaves 42{,}509 of the 43{,}054 released slices in
 201 classes, and four of those slices repeat a content hash already claimed by the sealed panel,
 because the same take is released under two technique names; those four are dropped when the
 partitions are built, so the four partitions carry 42{,}505. The four candidate near-single-slice collections are not part of the main sample; three are used
@@ -29,8 +31,8 @@ i.e.\ the sample every reported number is computed on. Classes are the source cl
 survive the minimum-recording rule; $\bar K$ is the mean number of slices per recording;
 $Q_{\text{test}}$ is the sealed panel; $\alpha$ is the realised exposure ratio
 $Q^{\text{pool}}_c/m_c$, summarised by its median over classes (not the pooled ratio).
-Counts are those of the frozen partition files, so a take released twice under two technique
-names is counted once.}
+Slice counts are those of the frozen partition files, so a take released twice under two
+technique names is counted once; recordings are counted by recording identifier.}
 \label{tab:panels}
 \footnotesize
 \setlength{\tabcolsep}{3.4pt}
@@ -126,7 +128,7 @@ class in the released feasibility table, so a reader can see exactly where the a
 
 We required at least five recordings per class as a study-specific eligibility rule; this is not a
 mathematical minimum for every possible recording-level split. Applying that rule to CTIS reduces 219 source
-classes to 206. Five further classes (D0051, D0058, D0060, D0061 and D0062) each contain
+classes to 206. Five further classes --- D0051, D0058, D0060, D0061 and D0062 --- each contain
 one placeholder recording whose identifier includes a Chinese ``no audio'' marker; removing it reduces
 five recordings to four in each class, giving 201 classes and 4{,}887 recordings. The placeholder
 slices in D0060--D0062 share a byte-identical set of 21 images; D0051 and D0058 have 27 and 26

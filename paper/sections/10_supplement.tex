@@ -21,7 +21,8 @@ the audited set; we make no claim about them.
 \begin{table}[ht]\centering\footnotesize\setlength{\tabcolsep}{4pt}
 \caption{Libraries touched by this audit. Slices, recordings and classes are counted in the released MEL
 manifest after canonicalisation of duplicate recordings. The frozen CTIS panel keeps 201 of the 219
-classes and 4{,}887 of the 4{,}954 recordings after the eligibility rule and the placeholder removal;
+classes and 4{,}887 of the 4{,}956 released recording identifiers --- 4{,}885 of the 4{,}954 canonical
+recordings --- after the eligibility rule and the placeholder removal;
 the other four main-sample libraries keep all their classes. Guzheng\_Tech99 releases 99 MEL images
 without a per-recording class directory, so its class count is not reported.}
 \label{tab:libraries}
@@ -40,7 +41,7 @@ Guzheng\_Tech99 & 99 & 99 & --- & excluded; no recording-level class layer\\
 
 \subsection{Execution changes}
 
-The list below records every difference between the internal plan and the executed
+The list below records the differences we identified between the internal plan and the executed
 runs, and adds a column that the first version of this table did not carry: what was known when the decision was
 taken. The column matters because a change made with the relevant count in hand is a different
 object from a change made after seeing a result. Nothing in the list is a claim that the
@@ -49,7 +50,7 @@ are marked exploratory where they were added after the main runs.
 
 \begin{enumerate}\itemsep2pt
 \item \textbf{CTIS classes:} 219 $\rightarrow$ 201. Known at the decision: per-class recording counts and the no-audio placeholder flags. Reason: the five-recording eligibility rule, then placeholder removal. Effect: 8.2\% fewer classes; 545 slices (1.3\%) drop.
-\item \textbf{Injection volume:} uniform 50\%/30\% of $S_c$ $\rightarrow$ all $Q^{\text{pool}}$. Known at the decision: the capacity calculation on the 201 classes: 10 can supply 50\%, 38 can supply 30\%. Reason: a common fraction is infeasible for most classes. Effect: $\alpha_c$ varies by class, median 0.17; no fixed common exposure.
+\item \textbf{Injection volume:} uniform 50\%/30\% of $S_c$ $\rightarrow$ all $Q^{\text{pool}}$. Known at the decision: the capacity calculation on the 201 classes: 10 can supply 50\%, 38 can supply 30\%. Reason: a common fraction is infeasible for most classes. Effect: $\alpha_c$ varies by class, median 0.160 in CTIS (0.1595 unrounded); per-library medians 0.160--0.170; no fixed common exposure.
 \item \textbf{Exposure agreement:} enforce within 2\% of a 400-draw mean $\rightarrow$ report descriptively. Known at the decision: 400-draw planning means and per-class capacity. Reason: the C-side recording count is the binding constraint. Effect: $\alpha_c$ dispersion is reported, not tested.
 \item \textbf{Negative controls:} one seed $\rightarrow$ three seeds. Known at the decision: the initial single-seed contrasts. Reason: single-seed dispersion is too wide to read. Effect: exploratory; five of six intervals include zero.
 \item \textbf{Slice budget:} $m_c=0.60S_c$ $\rightarrow$ capped by C capacity. Known at the decision: the classwise feasibility artifact. Reason: C cannot supply the planned count. Effect: a slice-count constraint, not early stopping.
@@ -58,7 +59,7 @@ are marked exploratory where they were added after the main runs.
 \item \textbf{Probe split:} 80/20 of all recordings $\rightarrow$ 80/20 of training recordings. Known at the decision: withheld instruments are absent from the training label space. Reason: a closed-set probe cannot identify unseen classes. Effect: the probe measures identity, not recognition.
 \item \textbf{Analyses not run:} selection regret; CQT/chroma $\rightarrow$ not run. Known at the decision: per-epoch sealed-panel scores were not stored. Reason: no artifact to analyse. Effect: stated as not run.
 \item \textbf{Recording-level estimator:} slice-weighted point $\rightarrow$ one vote per recording. Known at the decision: the point estimates and the intervals used different weights. Reason: align the point estimator with the intervals. Effect: ten points change, all inside the retained intervals.
-\item \textbf{Post-hoc additions:} none $\rightarrow$ class-stratified and joint bootstrap, self-test tables, version comparisons, partial compute ledger. Known at the decision: the analyses were requested during review. Reason: transparency. Effect: exploratory.
+\item \textbf{Post-hoc additions:} none $\rightarrow$ class-stratified and joint bootstraps, the self-test tables and the comparison against published scores, the split of the CTIS sealed panel into test recordings that do and do not contribute slices to the injected pool, the fixed-class-set sensitivity table, and the partial compute ledger. Known at the decision: added during internal review. Reason: transparency. Effect: exploratory; none of them supports the primary conclusion.
 \end{enumerate}
 
 \subsection{Realised injection and training steps}
@@ -115,7 +116,7 @@ recordings against 23, median 20 slices against 197, and 8.25 slices per recordi
 The rule removes 393 slices, 0.9\% of the library; the five placeholder classes remove a
 further 152 slices, 0.35\%. Together the eighteen excluded classes account for 545 slices,
 1.3\% of the library, so the exclusion does not carve out a systematically harder stratum.
-Fourteen retained classes have four to six source recordings; their recording-level intervals
+Fourteen retained classes have five or six source recordings; their recording-level intervals
 are the widest in the primary results and are reported with the rest, without a separate
 stability claim.
 
@@ -189,29 +190,30 @@ L-inst+Adv & Swin-T & 0.9366 & 0.6693 \\
 \subsection{Fold composition}
 \label{sec:fold-composition}
 
-The three arms that report fold-level results use different fold definitions, because the fold has to
-be the unit the arm is protecting: the slice-level arm A0 uses random slice folds, the exposure and
-reconstruction arms A1 and A2 share instrument-grouped folds, and the recording-grouped arm A1r uses
-recording folds. In the labels of Section~5.7 of the main text, A0 is R-slice, A1 and A2 are
-L-inst, and A1r is R-rec. The numbers below are the realised composition of each fold, recomputed
-from the frozen split files and the stored fold results.
+The three fold definitions behind the partitions that report fold-level results differ, because the
+fold has to be the unit the partition is protecting: R-slice uses random slice folds, the two
+instrument-withheld partitions L-inst and L-inst+Adv share instrument-grouped folds, and R-rec
+uses recording folds. These are the labels defined in Section~5.7 of the main text. The numbers
+below are the realised composition of each fold, recomputed from the frozen split files and the
+stored fold results.
 
 \begin{table}[ht]\centering\small\caption{Realised fold composition of the cross-instrument experiment (CTIS). Test slices are the evaluated panel of each fold; the training side is split 90/10 by recording, so the 92 validation recordings (491 slices in the first instrument-grouped fold) are not listed and the two recording columns need not sum to the corpus.}
 \label{tab:fold-composition}
 \begin{tabular}{llrrrr}\toprule Folds & Fold & Train rec. & Test rec. & Test slices & Classes \\ \midrule
-A0, slice & 1 & 1{,}151 & 1{,}019 & 2{,}524 & 43 \\
-A0, slice & 2 & 1{,}146 & 1{,}014 & 2{,}508 & 43 \\
-A0, slice & 3 & 1{,}164 & 997 & 2{,}496 & 43 \\
-A1/A2, instrument & 1 & 829 & 467 & 2{,}509 & 42 \\
-A1/A2, instrument & 2 & 818 & 480 & 2{,}509 & 43 \\
-A1/A2, instrument & 3 & 853 & 441 & 2{,}510 & 43 \\
-A1r, recording & 1 & 835 & 461 & 2{,}509 & 43 \\
-A1r, recording & 2 & 834 & 462 & 2{,}509 & 43 \\
-A1r, recording & 3 & 831 & 465 & 2{,}510 & 43 \\
+R-slice & 1 & 1{,}151 & 1{,}019 & 2{,}524 & 43 \\
+R-slice & 2 & 1{,}146 & 1{,}014 & 2{,}508 & 43 \\
+R-slice & 3 & 1{,}164 & 997 & 2{,}496 & 43 \\
+L-inst, L-inst+Adv & 1 & 829 & 467 & 2{,}509 & 42 \\
+L-inst, L-inst+Adv & 2 & 818 & 480 & 2{,}509 & 43 \\
+L-inst, L-inst+Adv & 3 & 853 & 441 & 2{,}510 & 43 \\
+R-rec & 1 & 835 & 461 & 2{,}509 & 43 \\
+R-rec & 2 & 834 & 462 & 2{,}509 & 43 \\
+R-rec & 3 & 831 & 465 & 2{,}510 & 43 \\
 \bottomrule\end{tabular}\end{table}
 
-Two features of the table matter for reading Section~6.4. First, the slice-level folds of A0 place
-slices of the same recording on both sides, which is exactly the leak the arm is meant to measure;
+Two features of the table matter for reading Section~6.4. First, the slice-level folds of R-slice
+place slices of the same recording on both sides, which is the leak this partition is designed to
+measure;
 the instrument-grouped and recording-grouped folds share no recording. Second, the first
 instrument-grouped fold covers 42 of
 the 43 classes on its test side, because the natural-harmonic technique has no test recording there;
@@ -254,7 +256,7 @@ pianos & Swin-T & +4.85 & +4.86 \\
 
 These exploratory intervals use an independently implemented bootstrap (2,000 resamples; fixed split). The point estimate is always computed on the observed data, not the bootstrap mean. Class stratification resamples recording clusters within true class. Joint resampling also draws the three trained seeds with replacement, preserving arm pairing. Three observed seeds cannot identify uncertainty for a new training population. The original primary intervals remain in the manuscript; these sensitivity results are not selected to replace them. The independent reimplementation reproduces the CTIS point estimates exactly and the cluster-only intervals to within a few hundredths: 2.02 with bounds 0.79 to 3.28 here against 0.83 to 3.35 in the sealed pipeline, and 1.70 with bounds 1.27 to 2.81 against 1.28 to 2.84 there. The manuscript reports the sealed-pipeline interval; both AlexNet upper bounds exceed the three-point threshold. The small difference is consistent with the different resampling stream, not a change of estimate.
 
-\begin{table}[ht]\centering\scriptsize\caption{CTIS sensitivity: percentage-point effects and 95\% percentile intervals.}
+\begin{table}[ht]\centering\scriptsize\caption{CTIS sensitivity: percentage-point effects and 95\% percentile intervals. The interval column is produced by \texttt{code/audit\_ctis\_bootstrap.py} (nominal seed 20261105, $B=2{,}000$, generator \texttt{default\_rng(seed+1)}, unstratified recording resampling), a separate stream from the main-text primary intervals; the bounds therefore differ in the second decimal.}
 
 \begin{tabular}{lllrrr}\toprule Metric & Backbone & Scheme & Point & Lower & Upper \\ \midrule
 
@@ -314,7 +316,9 @@ No conclusion in the paper changes between them.
 \caption{CTIS effects under the recomputed and the fixed class set (percentage points). Both
 conventions score the same sealed panel and share the point estimator, which is computed on the
 observed panel and is therefore identical. The intervals are re-drawn on 2{,}000
-recording-cluster replicates from an independently implemented stream, so their bounds differ
+recording-cluster replicates by \texttt{code/round2\_macro\_denominator.py} (nominal seed
+20261105, generator seeded by \texttt{md5(library|backbone|denom)}), a third stream on the same
+resampling scheme as the main-text primary intervals, so their bounds differ
 from the reported ones in the second decimal. The full-class-set convention gives the same
 numbers as the fixed one and is omitted.}
 \label{tab:classset}
@@ -345,7 +349,7 @@ Integer-minute driver logs represent batch wall-clock time while training on one
 
 \subsection{Reproducible commands}
 
-Analysis uses Python 3.10.22, PyTorch 2.11.0+cu128 and one RTX 5060 Ti 16 GB. Predictions store probabilities, labels and recording identifiers. Original training is not re-run. Run the following from the project root:
+Analysis uses Python 3.10.22, PyTorch 2.11.0+cu128 and one RTX 5060 Ti 16 GB. Predictions store probabilities, labels and recording identifiers. Original training is not re-run. Script names record the internal revision round in which a script was written, not a journal review. Run the following from the project root:
 
 \begin{verbatim}
 

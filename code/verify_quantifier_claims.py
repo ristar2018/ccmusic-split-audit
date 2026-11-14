@@ -277,8 +277,14 @@ def h_panel_keeps():
     inv = load_inventory()["libraries"]
     others = ("music_genre", "pianos", "CNPM", "bel_canto")
     keep = sum(1 for l in others if panels[l][0] == inv[l]["classes"])
+    ids = {r["recording_uid"] for r in load_ctis_manifest()}
+    canon = set()
+    for part in ("c", "r", "qtest", "qpool"):
+        for r in read_csv(os.path.join(SPLITS, "CTIS_%s.csv" % part)):
+            canon.add(r["recording_canonical"])
     return {"panel_classes": panels["CTIS"][0], "release_classes": inv["CTIS"]["classes"],
             "panel_recordings": panels["CTIS"][1], "release_recordings": inv["CTIS"]["recordings"],
+            "release_identifiers": len(ids), "panel_canonical": len(canon),
             "n_other_libs_keep_all": keep}
 
 

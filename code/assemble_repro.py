@@ -47,7 +47,11 @@ TREES = [
     ("data/p3", "data/p3"),
     ("runs/sealed_eval", "runs/sealed_eval"),
     ("report/审稿意见/human-2026-11-11", "docs/review_human-2026-11-11"),
+    ("report/审稿意见/human-2026-11-12", "docs/review_human-2026-11-12"),
+    ("report/审稿意见/human-2026-11-12b", "docs/review_human-2026-11-12b"),
+    ("report/审稿意见/human-2026-11-14", "docs/review_human-2026-11-14"),
     ("worklog", "docs/worklog"),
+    ("report/工具与流程", "docs/tooling"),
 ]
 
 SKIP_EXT = {".aux", ".log", ".out", ".toc", ".synctex.gz", ".fls", ".fdb_latexmk",
@@ -120,6 +124,30 @@ def main(argv=None):
     for src_rel, dst_rel in TREES:
         copy_tree(src_rel, dst_rel, files)
 
+    # the CRLF-safe editing helper referenced by the worklog travels with the package
+    _se = os.path.join(PROJ, "tools", "safe_edit.py")
+    if os.path.isfile(_se):
+        _sed = os.path.join(OUT, "tools")
+        if not os.path.isdir(_sed):
+            os.makedirs(_sed)
+        shutil.copy2(_se, os.path.join(_sed, "safe_edit.py"))
+        files.append(("tools/safe_edit.py", _se))
+
+    # the ten training records behind the volume-matched budget claim: each is a
+    # few hundred bytes and carries n_train, which the quantifier gate re-reads
+    for lib in ("CTIS", "music_genre", "pianos", "CNPM", "bel_canto"):
+        for arm in ("A0", "A2"):
+            rel = "runs/%s/%s/alexnet/seed0/result.json" % (lib, arm)
+            src = os.path.join(PROJ, rel.replace("/", os.sep))
+            if not os.path.isfile(src):
+                continue
+            dst = os.path.join(OUT, "runs", lib, arm, "alexnet", "seed0", "result.json")
+            parent = os.path.dirname(dst)
+            if not os.path.isdir(parent):
+                os.makedirs(parent)
+            shutil.copy2(src, dst)
+            files.append((rel, src))
+
     for extra in ("AGENTS.md", "README.md"):
         src = os.path.join(PROJ, extra)
         if os.path.isfile(src):
@@ -186,7 +214,7 @@ def main(argv=None):
         "assembled_by": "code/assemble_repro.py",
         "project_root_at_assembly": PROJ,
         "contents": {
-            "paper": "LaTeX sources, sn-jnl class and style files, compiled PDFs (31/10/1 pages)",
+            "paper": "LaTeX sources, sn-jnl class and style files, compiled PDFs (32/10/1 pages)",
             "figures": "figure PDFs and PNGs as embedded in the manuscript",
             "code": "every analysis, training, audit, figure and verification script used in the study",
             "data/splits": "frozen split CSVs (per library and side) and the leak audit summary",
@@ -195,7 +223,12 @@ def main(argv=None):
             "data/p3": "cross-instrument experiment artifacts and the 43-class universe",
             "runs/sealed_eval": "sealed test-set predictions (probs, labels, recording ids) per library, arm, backbone and seed",
             "docs/review_human-2026-11-11": "second human review report, item-by-item verification, revision record and the audited article",
+            "docs/review_human-2026-11-12": "third (manual) review round: 25 comments, item-by-item adjudication, execution record and the revised article",
+            "docs/review_human-2026-11-12b": "fourth (manual) review round: 11 comments in 17 points, adjudication, execution record and the revised article",
+            "docs/review_human-2026-11-14": "fifth (manual) review round: 10 comments in 12 points, adjudication, execution record and the revised article",
             "docs/worklog": "project status cards and the append-only work log (internal; drop before shipping to reviewers)",
+            "docs/tooling": "notes on the PowerShell driving traps hit while editing and the CRLF-safe editing helper",
+            "tools/safe_edit.py": "CRLF-safe, uniqueness-asserting text patcher (reads and writes back the original line endings)",
             "docs/AGENTS.md, docs/README.md": "workspace rules and directory map",
         },
         "layout_note": "the package mirrors the project layout; scripts resolve the project root from their own location, so they run unmodified from the package root",
@@ -229,6 +262,9 @@ def main(argv=None):
             {"quantity": "injected CTIS slices / recordings / test recordings exposed",
              "value": "4,178 / 753 / 578 of 963",
              "source": "DATA/splits/v2/CTIS_qpool.csv, DATA/splits/v2/CTIS_qtest.csv"},
+            {"quantity": "CTIS pool budget, deduplicated, C1 target and C1 injection",
+             "value": "4,182 / 4,178 / 4,178 / 4,177",
+             "source": "DATA/splits/v2/feasibility.csv, CTIS_qpool.csv, c1_audit.json"},
             {"quantity": "reported-number verification", "value": verify_str,
              "source": "DATA/results/paper_verify.json"},
             {"quantity": "prose claims bound to artifact cells", "value": claim_str,

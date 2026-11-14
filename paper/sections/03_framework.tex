@@ -22,17 +22,20 @@ actual split files.
 
 Two properties of the release shape the audit. First, the feature images are the unit of
 analysis: for the MEL family, each image is a 496$\times$369 JPEG whose file name encodes the
-recording identifier and the window index. What ships beside the images also differs in what can be checked: all five libraries release
-source audio, but only in CTIS do the audio file names map unambiguously onto the evaluation
-recording identifiers, so the five libraries in Table~\ref{tab:panels} are not equally checkable
-against the audio. Second, the
+recording identifier and the window index. What ships beside the images also differs in what can
+be checked: all five libraries release source audio. We obtained the audio of three of them, and
+among those only in CTIS do the file names map unambiguously onto the evaluation recording
+identifiers, so the five libraries in Table~\ref{tab:panels} are not equally checkable against
+the audio; the bel canto and music genre archives were not downloaded, so their mapping is
+unchecked. Second, the
 same recording contributes many images --- between 8.7 and 48.9 per recording across the five
 libraries we use, as Table~\ref{tab:panels} lists --- so the number of images per recording is large
 enough for a slice-level split to place many siblings of every test recording in training.
 
 \subsection{The split statement}
 
-The framework states that each dataset is ``randomly split \ldots at a ratio of 8:1:1''. The
+Except for Guzheng Tech99 (79:10:10) and ErhuPT (6:2:2), the framework states that each dataset
+is ``randomly split \ldots at a ratio of 8:1:1''. The
 statement does not name the unit of splitting, and the released files support a slice-level
 reading: a split over image files. We verified that the article states no grouping constraint
 in the stated evaluation description --- by recording, song, performer or album. Under the slice-level reading almost every test slice has siblings in training. If the
@@ -43,8 +46,8 @@ probability 0.2. It is 0.99999744 at $K=9$ and exceeds 0.999999999 at $K=14$ and
 This is an independent-allocation calculation, not an exact formula for a fixed-size,
 without-replacement partition. The
 unconditional probability that a recording of $K$ slices contributes at least one training slice
-is $1-0.2^{K}$. Figure~\ref{fig:units} contrasts the two units on one recording in its top two rows, and then
-shows how the pool moves between panels in its bottom two rows.
+is $1-0.2^{K}$. Figure~\ref{fig:units} contrasts the two units on one recording in its first two
+panels, and then shows how the pool moves in its third panel.
 
 \begin{figure}[!t]
 \centering

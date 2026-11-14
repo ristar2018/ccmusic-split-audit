@@ -297,3 +297,118 @@ Where a comment cited a design document that lives in the private project tree a
 - `python -m compileall code` clean; `bash -n` on the four shell scripts clean; the PowerShell parser accepts both `.ps1` files.
 - The four gates re-run afterwards: 338 number checks, 88 ledger rows, 10 quantifier claims, and both negative tests still fail in the designed way.
 - Page counts are unchanged at 31 / 10 / 1, because nothing outside `code/` and the Markdown notes was touched.
+
+## 12. Second review round, 12 November evening
+
+Eleven comments, split into 17 executable points: 15 held, one held in part (comment 6,
+on the `p`-value wording) and one did not hold (11g).
+
+**One real typesetting defect.** The Figure 3 caption had been written `R-rec$--slice
+contrasts of $-2.9$`; the `$--` opened math mode without closing it and the PDF printed
+`R-rec--- slicecontrastso f-2.9and3.4points`. A scan of the whole manuscript for `$...$`
+groups containing three or more lowercase words, or an odd number of `$`, found this
+caption and nothing else. It was rewritten with the drops in words and the signed
+contrasts kept as a separate clause.
+
+**A volume reconciliation that had been missing.** The pool budget is 4,182 slices over
+the 201 CTIS classes. The duplicate-content rule removes 4 of them (all in C0296, 39 to
+35 slices), so A1 injects 4,178 and its training set is 25,502 - 4,182 + 4,178 = 25,498.
+C1 has the same 4,178 target but injects 4,177, because no further non-test candidate
+remains in D0242; the 4,177-versus-4,178 difference is that shortfall, not the duplicate
+rule. The paragraph is in Section 5.3 and six identities in the number gate now hold it
+in place.
+
+**Other changes.** The recording-grouped partition no longer inherits the
+"test instrument absent from training" property, which belongs to L-inst alone. The
+Table 3 caption says slice level and explains that the recording-level column comes from
+a separate vote-per-recording pass, so the recording-level delta is not the difference
+between the two columns to its left. Section 3.1 no longer says the five libraries are
+equally checkable against the audio: three archives were obtained and two were not
+downloaded. The `p` quantities are called tail proportions, and Holm is marked
+descriptive at the 2/2,001 resolution the resampling can express. The three interval
+sets are attributed to their three independent replicate streams in the table captions.
+The abstract defines CTIS and the A1-A0 contrast at first use and comes to 249 words.
+
+Comment 11g was declined. `sn-basic.bst` hard-codes `bbl.incoll.pages = "p"` at line 273
+and `format.incoll.pages` uses it for ranges too, so all 11 `@incollection` entries print
+`p 93-115` for a 23-page chapter. Changing the style file would move the manuscript away
+from the publisher's template.
+
+Gate after this round: 351 number checks, 88 ledger rows, 10 quantifier claims. Page
+counts 32 / 10 / 1.
+
+## 13. Third review round, 14 November
+
+Ten comments, 12 executable points, all of which held. Six manuscript files changed in
+16 places, and the supplement's fold table gained the partition labels used in the main
+text.
+
+**The Figure 3 caption carried the wrong sign, and the gate had frozen it.** The caption
+said `R-rec$-$L-inst is $-36.7$ and $-31.4$ points`. Table 7 lists the same contrasts as
+R-rec-L-inst `+36.73` and `+31.37`, and R-slice-R-rec as `+2.90` and `+3.41`: the caption
+had the sign of the two large gaps inverted, so a reader comparing caption and table saw
+a contradiction. The caption now reads `R-rec$-$L-inst is $+36.7$ and $+31.4$ points and
+R-slice$-$R-rec is $+2.9$ and $+3.4$`.
+
+The reason it survived is worth recording. The number gate checked the caption with two
+literal strings, `"-36.7"` and `"-31.4"`, written when the caption was first typeset.
+Those two checks made the wrong sign a requirement: correcting the manuscript turned the
+gate red. They are now data-derived. `p3b_leak` stores each arm against A0, so
+R-rec-L-inst is `A1r - A1` of that table, which gives +36.734 and +31.369; `p3b_instr`
+stores each arm against A1r, so its A1 row is the same quantity with the opposite sign
+and serves as an independent cross-check. A reverse assertion requires that `-36.7` and
+`-31.4` appear nowhere in the manuscript. The general lesson: a literal string in a gate
+is a claim about the data, and has to be justified as one.
+
+**Two count bases, kept apart and disclosed.** The released CTIS manifest holds 43,054
+slices, 4,956 distinct recording identifiers and 4,954 distinct canonical recordings. The
+frozen panel keeps 4,887 identifiers (4,885 canonical recordings); across the five
+libraries the totals are 7,756 and 7,754. The manuscript and Table 1 keep the identifier
+basis, because the recording-level metric aggregates by recording identifier and the 963
+test recordings are counted the same way; switching to canonical recordings would put the
+table out of step with the unit the metric is computed on. What was wrong was a sentence
+that took the numerator from one basis and the denominator from the other - "4,887 of the
+4,954 recordings". The supplement now prints both bases and the two-record difference
+explicitly, and the Table 1 caption says that recordings are counted by identifier.
+
+**A range that was simply wrong.** "Fourteen retained classes have four to six source
+recordings" should have been five or six: over the 201 retained classes the distribution
+of recordings per class is {5: 4, 6: 10}, so 14 classes have five or six and the minimum
+is 5 under both count bases. The gate now checks the minimum as well as the count, so the
+lower bound cannot drift again.
+
+**Labels and scoping.** Table S5 used the internal arm codes `A0, slice`,
+`A1/A2, instrument` and `A1r, recording`; it now uses `R-slice`, `L-inst, L-inst+Adv` and
+`R-rec`, the labels of Section 5.7, and the paragraph above it states which unit each
+partition is protecting rather than listing the three arms. The 8:1:1 statement is
+qualified by its two exceptions in the framework itself (Guzheng Tech99 at 79:10:10,
+ErhuPT at 6:2:2). The supplementary bootstrap is described as a third stream, not a
+second, since three independent streams exist. The duplicate-content removal is stated
+where the slice counts are first given: 39 slices, 4 in CTIS, 11 in CNPM, 24 in bel canto.
+
+**Four overstatements.** "Sit above every other point in every library" became "above
+every sealed-panel point of the same backbone in every library", because self-test slices
+are disjoint from training slices but may come from the same recordings. "Neither the
+36.7-point nor the 39.6-point gap is a leakage estimate" now enumerates the four gaps it
+means, two per backbone. "Spans the two extremes of the ten" became "ranges from 60 per
+cent under AlexNet to 103 per cent under Swin-T, the lowest and highest of the ten cells",
+which is what the table shows. "CTIS loses at most 4.6 points to Swin-T" became "CTIS has
+at most 4.6 points of headroom under Swin-T", which is the direction the argument needs.
+
+Gate after this round: 382 number checks, 88 ledger rows, 10 quantifier claims, nine
+negative-test cases, all passing. Page counts 32 / 10 / 1, with no overfull box, no
+undefined reference and no missing character.
+
+## 14. State of the checks after the three rounds
+
+| gate | checks | what it binds |
+| :-- | --: | :-- |
+| `verify_paper_numbers.py` | 382 | every number in prose and captions to an artifact cell or an identity between cells |
+| `verify_claim_provenance.py` | 88 rows | each claim to the CSV cell it prints, through a declared selector and aggregation |
+| `verify_quantifier_claims.py` | 10 claims, 8 captions | each quantified sentence to a fact dictionary, and table captions to coverage |
+| `negtest_claim_provenance.py` | 4 cases | that the first gate fails when the tree is perturbed |
+| `negtest_quantifier_claims.py` | 5 cases | that the third gate fails when a fact or a sentence is perturbed |
+
+The number gate grew from 337 to 338 (the direction-word check), to 351 (the volume
+reconciliation), and to 382 (the round of 14 November). The count is not a quality score;
+what matters is that each of the 382 is a statement about a file that can be re-read.
