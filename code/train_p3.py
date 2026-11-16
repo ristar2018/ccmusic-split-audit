@@ -49,7 +49,7 @@ NUM_WORKERS = 0
 LAM_MAX = 0.02     # adversarial-strength ceiling: λ=1 blows the loss up (1e6), λ=0.1 collapses outright (probe top1=0, pooled F1 0.21)
 AMP = True         # --fp32 turns it off (GRL + fp16 is numerically unstable on 43 small classes, see the worklog note)
 INST_W = None      # class weights of the instrument auxiliary loss, computed as 1/sqrt(n_c) in main()
-AUX_W = 0.2        # total weight of the auxiliary loss (the adversarial term only regularises, it is not weighted like the main loss)
+AUX_W = 1.0        # total weight of the auxiliary loss; main() sets it explicitly and 1.0 is the value every reported run used
 
 
 def read_csv(path):

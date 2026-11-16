@@ -1,0 +1,9 @@
+{
+  "probe_top1": 0.5688,
+  "probe_majority_baseline": 0.0446,
+  "probe_auc_ovr_macro": 0.9242,
+  "probe_auc_classes": 99,
+  "probe_n_train": 3000,
+  "probe_n_test": 1032,
+  "probe_eval": "train_side_recording_split_80_20"
+}

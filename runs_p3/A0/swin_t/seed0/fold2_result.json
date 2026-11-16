@@ -1,0 +1,29 @@
+{
+  "lib": "CTIS",
+  "arm": "A0",
+  "bb": "swin_t",
+  "seed": 0,
+  "fold": 2,
+  "epochs": 10,
+  "n_train": 4520,
+  "n_val": 500,
+  "n_test": 2508,
+  "n_classes": 43,
+  "n_inst": 135,
+  "tag": "p3",
+  "val_best": {
+    "macro_f1_slice": 0.7738,
+    "epoch": 8
+  },
+  "elapsed_s": 424.9,
+  "test_macro_f1_slice": 0.8481,
+  "probe": {
+    "probe_top1": 0.6209,
+    "probe_majority_baseline": 0.0522,
+    "probe_auc_ovr_macro": 0.9345,
+    "probe_auc_classes": 94,
+    "probe_n_train": 3000,
+    "probe_n_test": 881,
+    "probe_eval": "train_side_recording_split_80_20"
+  }
+}

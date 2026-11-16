@@ -26,7 +26,7 @@ Three values were fixed while the pipeline was being built. The ones listed here
 
 ## 3. Negative controls
 
-Six control contrasts (three libraries × two backbones) were run at seed 0. Five had a 95% CI spanning zero. The single exception (chest_falsetto, Swin-T, +5.57) was re-run at three seeds and moved to −2.53 [−4.97, −0.19] with a 16.12-point seed spread. The manuscript therefore reports "five of six intervals span zero, and the sixth returns to within the interval once three seeds are used", and states that chest_falsetto has only four classes, 1,280 slices and 257 test slices, so a single-seed Δ carries no discriminating power there.
+Six control contrasts (three libraries × two backbones) were run at seed 0. Five had a 95% CI spanning zero. The single exception (chest_falsetto, Swin-T, +5.57) was re-run at three seeds and moved to −2.53 [−4.97, −0.19] with a 16.12-point seed spread. The manuscript therefore reports "five of six intervals include zero, and the sixth is the only interval that excludes zero once three seeds are used", and states that chest_falsetto has only four classes, 1,280 slices and 257 test slices, so a single-seed Δ carries no discriminating power there.
 
 ## 4. Cross-instrument revisions
 
@@ -412,3 +412,32 @@ undefined reference and no missing character.
 The number gate grew from 337 to 338 (the direction-word check), to 351 (the volume
 reconciliation), and to 382 (the round of 14 November). The count is not a quality score;
 what matters is that each of the 382 is a statement about a file that can be re-read.
+
+## 15. Fourth review round, 16 November
+
+Fifteen comments arrived on 16 November. Thirteen were upheld, one in part and
+one rejected against the artifact: the comment that music genre ships feature
+images only described this README, not the library, which releases a 13.79 GB
+audio archive. No reported point estimate or interval changed in this round, so
+the three gates report the same counts (382 / 88 / 10) and the negative tests
+the same cases (4 + 5).
+
+| item | change | where |
+| :-- | :-- | :-- |
+| adversarial parameters | the manuscript printed the module default of the auxiliary weight (0.2); `main()` sets 1.0, and that is the value every run used. The reversal weight is 0 for the first two epochs and then ramps to 0.02 | `code/train_p3.py` (line 52 now carries the effective value), protocol section |
+| audited framework | the article applies one pipeline per dataset and reports them one at a time; the manuscript had described a per-task pooled classifier | framework section |
+| audio availability | all five libraries ship `data/audio.zip`; the "images only" claim was wrong in this README and in the materials section | README, materials section |
+| reproducibility | `runs_p3/` is released: 178 files, 8.8 MB of per-slice predictions, training logs, per-fold results, probe output and pooled metrics; the 7.8 GB of checkpoints stays out | `runs_p3/`, data-availability statement |
+| recording-level contrast | the cross-instrument step now reports +1.58 [-1.33, +4.95] and +2.43 [-0.61, +5.63] at the recording level, neither interval excluding zero, alongside the slice-level +2.90 and +3.41 | results section, protocol section |
+| A2 self-test repetition | ten slices in CTIS, two in chest_falsetto and one in music genre repeat content that also appears in A2 training; the sentence that said the panels were disjoint from training slices was corrected | results section, S1 |
+| leaderboard wording | the discussion no longer promises a leaderboard shift that the study cannot attribute | discussion |
+| per-class budgets | three classes, not one, differ between A0 and A1; the totals are now given (CNPM 1,624 against 1,627, bel canto 5,925 against 5,928) | protocol section |
+| Q counts in the sweep | the four counts are planning values, `sum_c round(0.20 n_c)` before the cap and the duplicate rule; the realised count is 1,138 | S1 |
+| difficulty inference | the exclusion of small classes is no longer read as evidence that they are not harder | S1 |
+| "Chinese music" | the five libraries share a publisher, not a repertoire | discussion |
+| duplicated caption sentence | the repeated fragment in the Table 3 note is gone | results |
+| probe AUC | 0.96 to 0.97, the mean of 0.9612 and 0.9697 at two decimals | results, S1 |
+| probe seeds | the two columns are classifier-training seeds; the probe's 80/20 split and its fit use a fixed seed 0 | results, S1 |
+| prose items | ten rewordings: the memorisation/transfer hedge, the "arguably" in the abstract and conclusion, the Holm wording, the self-test claim, the low-exposure control, the architecture claim, the giant-MIDI sentence, the self-supervised-model citation, the "largest contrast" sentence and the caption-note phrasing | abstract, conclusion, protocol, related work, S1 |
+
+The version anchor below moves to the commit that carries this round.

@@ -15,8 +15,8 @@ contrast is limited by a ceiling and its interval is wide for that reason as wel
 small panel of 40 test recordings.
 Rescaling by headroom, as Table~\ref{tab:headroom} does, reduces but does not remove
 the dispersion---0.219 to 0.873, still about four-fold---so the normalised contrast is 22--37\% of the score headroom in CTIS, 38--48\% in
-CNPM, 47--68\% in bel canto, 49--68\% in music genre, and 83--87\% in pianos. Absolute points answer the question ``how much would the leaderboard move under the stated
-protocol''; the rescaled number answers the question ``how large is the contrast relative to the
+CNPM, 47--68\% in bel canto, 49--68\% in music genre, and 83--87\% in pianos. Absolute points answer the question ``how much does the score move under our fixed-budget pool
+injection''; the rescaled number answers the question ``how large is the contrast relative to the
 baseline's remaining score headroom''.
 Because $1-\text{macro-F1}$ is not an error count, this is a descriptive normalised
 effect size, not a division of predictions into memorisation and transfer.
@@ -122,7 +122,8 @@ contrast does not depend on that reconstruction and is the primary contrast.
 pp. 22--38 (Section~\ref{sec:framework}). The original realised splits remain unavailable, so
 our contrasts cannot be attributed numerically to the original authors' models.
 
-\emph{External validity.} All five libraries are Chinese-music collections. Nothing in the
+\emph{External validity.} All five libraries come from one publishing organisation and differ in repertoire and task.
+Nothing in the
 mechanism is language-specific. In the single-slice controls recording- and slice-level units
 coincide by construction; the low-exposure control only approximates this condition. These
 sanity checks are consistent with, but do not by themselves establish, slice multiplicity as the

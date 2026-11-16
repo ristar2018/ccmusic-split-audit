@@ -4,7 +4,7 @@
 
 We use the five collections for which the MEL family is released with per-class labels and more
 than one slice per recording: CTIS for Chinese instrument recognition, music genre for
-popular-song excerpts, pianos for eight piano brands, CNPM for Chinese pentatonic-mode classification, and
+popular-song genre classification, pianos for eight piano brands, CNPM for Chinese pentatonic-mode classification, and
 bel canto for bel-canto and folk singing. Three of the five --- CTIS, CNPM and bel canto --- are
 among the six datasets evaluated in the audited article; \emph{music genre} and \emph{pianos}
 belong to the same published collection of libraries but are not covered by it, so contrasts in
@@ -65,7 +65,9 @@ We obtained the audio archives of CTIS, CNPM and pianos. Audio-level verificatio
 identities was possible only for CTIS, the one library whose audio file names map unambiguously
 onto its evaluation recordings; in CNPM and pianos the audio file names carry no reliable link
 to the evaluation recording identifiers, so their identities rest on the file-name rule alone.
-Bel canto and music genre also release audio, which we did not obtain. A correct parse is in any case not the same as a correct identity: the rule can
+Bel canto and music genre also release audio, which we did not obtain; in music genre the audio
+archive and the MEL image archive are separate releases, and the images we audit come from the
+latter. A correct parse is in any case not the same as a correct identity: the rule can
 reproduce a plausible recording identifier without proving that the released images and the
 released audio belong together.
 

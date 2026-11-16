@@ -1,0 +1,21 @@
+{
+  "lib": "CTIS",
+  "arm": "A1r",
+  "bb": "alexnet",
+  "seed": 0,
+  "fold": 2,
+  "epochs": 10,
+  "n_train": 4528,
+  "n_val": 491,
+  "n_test": 2509,
+  "n_classes": 43,
+  "n_inst": 135,
+  "tag": "b1",
+  "val_best": {
+    "macro_f1_slice": 0.5411,
+    "epoch": 10
+  },
+  "elapsed_s": 49.6,
+  "test_macro_f1_slice": 0.8114,
+  "probe": null
+}

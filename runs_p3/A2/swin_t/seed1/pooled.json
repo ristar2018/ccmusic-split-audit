@@ -1,0 +1,12 @@
+{
+  "macro_f1_slice": 0.4925,
+  "acc": 0.6898,
+  "n": 7528,
+  "macro_f1_recording": 0.5321,
+  "n_recordings": 1388,
+  "arm": "A2",
+  "bb": "swin_t",
+  "seed": 1,
+  "folds_pooled": 3,
+  "tag": "p3"
+}

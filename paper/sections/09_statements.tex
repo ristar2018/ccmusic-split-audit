@@ -15,7 +15,11 @@ The underlying libraries are publicly released by the CCMusic project; we do not
 them, and they remain under the terms of their original release. The recording manifests, the
 recording-level splits, the sealed predictions, the analysis
 code and the verification script required to reproduce every table and figure are openly
-available at \url{https://github.com/ristar2018/ccmusic-split-audit}. The repository also carries
+available at \url{https://github.com/ristar2018/ccmusic-split-audit}. The cross-instrument runs
+are released at the level the reported numbers need --- per-slice predictions, per-fold training
+logs and pooled metrics --- so that Table~\ref{tab:p3}, Fig.~\ref{fig:p3} and the instrument
+probe table can be recomputed from the repository without the checkpoints. The repository also
+carries
 the design plan, the execution-change list and the expected verification output. The feature cache is a derived artifact --- 224$\times$224 resized copies of the released MEL
 images --- and is not redistributed: at 16.24 GiB it does not belong in a code repository, and
 it can be rebuilt from the released images with the script provided. The
@@ -59,6 +63,8 @@ Feature cache: \texttt{data/cache/mel224/} with 115{,}847 images, 16.24 GiB, and
 images of classes excluded by the minimum-recording rule, plus the 5{,}432 control images.
 Sealed predictions: \texttt{runs/sealed\_eval/}, holding \texttt{.npz} archives with per-slice
 probabilities, labels and recording indices.
-Cross-instrument archive: \texttt{runs\_p3/}.
+Cross-instrument archive: \texttt{runs\_p3/}, holding the per-slice predictions, the per-fold
+training logs and the pooled metrics of every cross-instrument run; the checkpoints themselves are
+not redistributed.
 Result tables: \texttt{data/results/}.
 \end{sloppypar}

@@ -3,13 +3,14 @@
 \subsection{The release}
 
 CCMusic \citep{zhou2025ccmusic} is a Chinese-music resource whose associated article documents
-six datasets, from instrumental technique corpora to popular-song excerpts, and evaluates all six
+six datasets, from instrument recognition and playing-technique corpora to mode and singing-style
+collections, and evaluates all six
 through one framework. The release we audited is larger than the article: it comprises thirteen
 library directories published under the same ModelScope organisation, of which the six datasets
 described in the article are a subset. Each library ships chroma, CQT and MEL features computed
 from the audio, stored as one image per short-time window; the article notes that the MEL
-spectrogram is provided alongside the audio for visualisation. The evaluation framework pools
-datasets that share a task and trains a common classifier per task. We checked the version of
+spectrogram is provided alongside the audio for visualisation. The evaluation framework applies a common pipeline to
+each dataset separately and reports them one at a time. We checked the version of
 record in TISMIR 8(1), pp. 22--38 (2025), against the arXiv release and against the archives we
 downloaded on 2 November 2026. On printed p. 26 the article states, for CTIS, that the dataset
 was randomly split into training, validation and testing sets at a ratio of 8:1:1 after
@@ -63,8 +64,8 @@ $Q_{\mathrm{pool}}$, while $Q_{\mathrm{test}}$ remains sealed.}
 
 We treat this as a specification question rather than an accusation. A database paper can leave an evaluation detail underspecified without establishing that its
 implemented split was defective. We therefore distinguish the stated recipe, our slice-level
-reconstruction, and the unavailable original split files. What the audit adds is the size of the gap between the protocol as stated and the protocol a
-reader would need to interpret the number as generalisation to unseen music. The exposure
+reconstruction, and the unavailable original split files. What the audit adds is an estimate of how much such a gap can matter under our reconstruction, for
+a reader who would otherwise read the number as generalisation to unseen music. The exposure
 distribution, the capacity calculation and the four-arm contrast support that gap jointly; A2
 contributes only a slice-level approximation.
 

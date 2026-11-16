@@ -17,6 +17,7 @@ All code comments and documentation here are in English. Chinese strings that re
 | `data/splits/v2/` | Frozen split CSVs, one file per library and side (`<lib>_qtest.csv`, `_qpool.csv`, `_a0_train.csv`, `_a1_train.csv`, `_a2_train.csv`, `_a2_selftest.csv`, `_r.csv`, `_c.csv`), plus `_audit_summary.csv`, `assertions.json` and `feasibility.csv` |
 | `data/results/` | Metric tables and bootstrap summaries, `paper_verify.json` (verifier report) and `human_review/round2/` (A1−C1, exposure split, slice budget, fold composition, macro-denominator sensitivity) |
 | `data/p3/` | Cross-instrument artifacts and the 43-class universe (`universe_43.csv`, `universe_before_drop.csv`, `P3_universe.json`) |
+| `runs_p3/` | Cross-instrument runs, per `<arm>/<backbone>/seed<k>/`: `fold<k>.npz` (per-slice probabilities, labels and recording ids), `fold<k>_log.csv` (per-epoch loss and accuracy), `fold<k>_result.json`, `fold<k>_probe.json` (A0 and A1 only) and `pooled.json`; 178 files, 8.8 MB. The checkpoints are not redistributed |
 | `runs/sealed_eval/` | Sealed test-set predictions, per `<library>_<arm>_<backbone>/seed<k>_qtest.npz` (arrays `probs`, `y`, `records`) plus `SEALED.json` |
 | `figures/` | The three figures exactly as embedded in the manuscript (PDF and PNG) |
 | `paper/` | Manuscript sources (`main_sn.tex`, `supplement_s1.tex`, `sections/*.tex`, `refs.bib`, `bst/sn-basic.bst`), included so that the verifier's text layer can run; compiled PDFs are not included |
@@ -136,8 +137,8 @@ alphabetical (`SORT` in `presort`), and `@incollection` page ranges always print
 
 ## What is not here
 
-* **Raw audio and image features** (35.47 GB, 13 libraries, 328,973 files). They are released by the original publisher under its own terms and are **not** redistributed here. Five libraries from the ModelScope organisation `ccmusic-database` were used: CTIS, CNPM, pianos and bel canto ship audio; music genre ships feature images only.
-* **Feature cache** (115,847 images: 110,415 study slices + 5,432 control-library slices) and **trained checkpoints**. No reported number needs them; every interval is computed from the sealed predictions in `runs/sealed_eval/`.
+* **Raw audio and image features** (35.47 GB, 13 libraries, 328,973 files). They are released by the original publisher under its own terms and are **not** redistributed here. Five libraries from the ModelScope organisation `ccmusic-database` were used: all five ship source audio in `data/audio.zip` (CTIS 6.47 GB, CNPM 2.11 GB, pianos 0.35 GB, music genre 13.79 GB, bel canto 1.20 GB). We obtained the audio of three; in music genre the audio archive and the MEL image archive are separate releases, and the images audited here come from the latter.
+* **Feature cache** (115,847 images: 110,415 study slices + 5,432 control-library slices) and **trained checkpoints** (including the 7.8 GB of cross-instrument checkpoints). No reported number needs them: every interval is computed from the sealed predictions in `runs/sealed_eval/` or from the cross-instrument predictions in `runs_p3/`.
 * **Compiled manuscript PDFs.** The LaTeX sources are included so that the verifier can run its text layer; rebuilding them requires the Springer Nature `sn-jnl` class from CTAN.
 
 Scripts in `code/` derive the repository root from their own location, so the analysis, verification and round-2 chains run unmodified. A few early data-preparation scripts (`ccmusic_cache.py`, `ccmusic_extract.py`, `datasets_manifest.py` and similar) still carry the absolute dataset path of the machine on which the study ran; point `DATA` / `DATASETS_ROOT` at your own copy before running those.
@@ -153,9 +154,9 @@ These are carried in the manuscript itself and are not artefacts of this deposit
 * One split realisation and three training seeds; no bootstrap creates evidence about new splits.
 * Compute timing comes from integer-minute driver logs, incomplete and rounded; no exact study-wide GPU-hour total is claimed.
 * The reconstruction of the stated 8:1:1 ratios is **one** slice-level reading. The original authors' split files are unavailable and this audit does not claim to recover them.
-* A2's self-test score is illustrative and is not the original benchmark score; in one library a small number of self-test images repeat content that also appears in A2 training (11 slices, reported in Supplementary Material S1).
+* A2's self-test score is illustrative and is not the original benchmark score; in one library a small number of self-test images repeat content that also appears in A2 training (13 slices in three libraries, reported in Supplementary Material S1).
 * The instrument-grouped partition covers 42 of 43 classes in its first fold (one technique class has no test recording there); the pooled score averages over the classes present.
-* The bel canto recording-level contrast is bounded by a ceiling: the control arm reaches the low 0.9s and the exposure arm saturates at 1.00 for most seeds.
+* The bel canto recording-level contrast is bounded by a ceiling: the control arm reaches 0.83 under AlexNet and 0.77 under Swin-T at the recording level, and the exposure arm saturates at 1.00 for most seeds.
 
 ## Data and licensing
 

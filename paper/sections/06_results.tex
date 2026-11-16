@@ -27,7 +27,6 @@ their original unweighted cluster intervals are retained. Intervals are 95\% rec
 bootstrap intervals over 2{,}000 resamples on the primary replicate stream; the class-set
 comparison in Supplementary Material S1 re-draws them on a separate (third) stream, so its bounds
 differ in the second decimal. Seed range is the spread of per-seed differences. The two primary rows, CTIS under both backbones, are marked with a dagger:
-the second decimal. Seed range is the spread of per-seed differences. The two primary rows, CTIS under both backbones, are marked with a dagger:
 neither reaches the three-point threshold of the internal plan, whereas every additional-library
 point estimate does; a point estimate falling short does not by itself mean its interval
 excludes that magnitude. Differences
@@ -160,8 +159,9 @@ with CI $+1.18$ to $+2.70$. The A2 self-test scores --- an illustrative stand-in
 would print under a slice-level reading --- are shown as open squares in Figure~\ref{fig:arms} and
 sit above every sealed-panel point of the same backbone in every library. Self-test slices are
 disjoint from training slices, but may come from
-the same recordings; the panels and their supports differ, and in one library a small number of
-self-test images repeat content that also appears in A2 training; see Supplementary Material S1. A self-test-minus-A0 difference is
+the same recordings; the panels and their supports differ, and in three libraries a small number of
+self-test images repeat content that also appears in A2 training, ten slices in CTIS, two in the
+chest-falsetto control and one in music genre; see Supplementary Material S1. A self-test-minus-A0 difference is
 therefore descriptive, not a paired estimate of leakage. Supplementary Material S1 reports the
 self-test scores and seed dispersion explicitly.
 
@@ -260,8 +260,7 @@ GZ\_IsoTech         & Swin-T  & 2{,}824 / 2{,}899 & $-0.22\;[-0.56,+0.05]$ & 0.7
 
 \subsection{Technique classification performance decreases on held-out instruments}
 
-The cross-instrument experiment gives the largest contrast in the study and the one most
-useful for interpreting published technique-classification numbers. With random slice-level
+The cross-instrument experiment gives the largest contrast in the study. With random slice-level
 folds, pooled macro-F1 on CTIS techniques reaches 0.845 under AlexNet and 0.877 under Swin-T.
 Grouping the folds by instrument --- same data, same budget, but every test recording's
 instrument withheld from training --- brings the same pipeline to 0.448 and 0.530. The difference is $+39.6$ points
@@ -281,7 +280,11 @@ study-specific rule stated in Section~\ref{sec:protocol}: technique--instrument 
 two recordings and instruments contributing at least three recordings, after excluding six
 content-type labels. The R-rec partition reaches 0.816
 and 0.843, so removing the recording-level leak lowers macro-F1 by $2.90$ points
-(CI $0.32$ to $5.66$) under AlexNet and $3.41$ points (CI $0.68$ to $6.36$) under Swin-T.
+(CI $0.32$ to $5.66$) under AlexNet and $3.41$ points (CI $0.68$ to $6.36$) under Swin-T at the
+slice level. At the recording level the same contrast is $1.58$ points (CI $-1.33$ to $+4.95$)
+under AlexNet and $2.43$ points (CI $-0.61$ to $+5.63$) under Swin-T: same sign, but neither
+interval excludes zero. The withholding step that follows, and the summary we draw from it, use
+the slice-level contrast.
 Withholding the instruments then lowers it by a further $36.7$ points ($33.3$ to $39.9$) and
 $31.4$ points ($28.3$ to $35.0$). The large number in
 Table~\ref{tab:p3} is therefore two effects of very different size: within-instrument
@@ -311,12 +314,12 @@ The adversarial instrument head does not recover the loss relative to L-inst. Un
 macro-F1 by $-0.36$ $[-1.75,+0.91]$; under Swin-T it changes it by $-2.83$ $[-4.81,-0.89]$.
 The instrument-identity probe, fitted on a closed set of the instrument classes present in the
 training recordings, shows that this information remains decodable: on frozen features
-it reaches AUC 0.94 for R-slice and 0.96 for L-inst, and the adversarial head lowers it only
+it reaches AUC 0.94 for R-slice and 0.97 for L-inst, and the adversarial head lowers it only
 to 0.93 for L-inst+Adv while technique macro-F1 falls. Because the probe is fitted on an 80/20
 split of the training recordings and its class set is closed, it measures how much instrument
 identity remains recoverable for instruments the model has seen; it does not establish that an
 unseen test instrument is identifiable from the representation. These rounded summaries are pooled across
-folds, seeds and both backbones; Supplementary Material S1 gives the backbone-specific probe values.
+folds, classifier-training seeds and both backbones; Supplementary Material S1 gives the backbone-specific probe values.
 The gradient-reversal weight was at most 0.02. The adversarial and L-inst arms use the same
 instrument-grouped folds; they
 differ in the objective, not the recordings seen.

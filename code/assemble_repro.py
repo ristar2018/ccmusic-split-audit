@@ -46,16 +46,19 @@ TREES = [
     ("data/results", "data/results"),
     ("data/p3", "data/p3"),
     ("runs/sealed_eval", "runs/sealed_eval"),
+    # predictions and logs only: the 7.8 GB of cross-instrument checkpoints is excluded by SKIP_EXT
+    ("runs_p3", "runs_p3"),
     ("report/审稿意见/human-2026-11-11", "docs/review_human-2026-11-11"),
     ("report/审稿意见/human-2026-11-12", "docs/review_human-2026-11-12"),
     ("report/审稿意见/human-2026-11-12b", "docs/review_human-2026-11-12b"),
     ("report/审稿意见/human-2026-11-14", "docs/review_human-2026-11-14"),
+    ("report/审稿意见/human-2026-11-16", "docs/review_human-2026-11-16"),
     ("worklog", "docs/worklog"),
     ("report/工具与流程", "docs/tooling"),
 ]
 
 SKIP_EXT = {".aux", ".log", ".out", ".toc", ".synctex.gz", ".fls", ".fdb_latexmk",
-            ".pyc", ".pyo", ".bak", ".tmp"}
+            ".pyc", ".pyo", ".bak", ".tmp", ".pt"}
 
 
 def keep(path):
@@ -222,10 +225,12 @@ def main(argv=None):
             "data/results": "metric tables, bootstrap summaries, round-2 analyses and the verification report",
             "data/p3": "cross-instrument experiment artifacts and the 43-class universe",
             "runs/sealed_eval": "sealed test-set predictions (probs, labels, recording ids) per library, arm, backbone and seed",
+            "runs_p3": "cross-instrument per-slice predictions, training logs, fold results, probe output and pooled metrics (checkpoints excluded)",
             "docs/review_human-2026-11-11": "second human review report, item-by-item verification, revision record and the audited article",
             "docs/review_human-2026-11-12": "third (manual) review round: 25 comments, item-by-item adjudication, execution record and the revised article",
             "docs/review_human-2026-11-12b": "fourth (manual) review round: 11 comments in 17 points, adjudication, execution record and the revised article",
             "docs/review_human-2026-11-14": "fifth (manual) review round: 10 comments in 12 points, adjudication, execution record and the revised article",
+            "docs/review_human-2026-11-16": "sixth (manual) review round: 15 comments, adjudication, execution record and the revised article",
             "docs/worklog": "project status cards and the append-only work log (internal; drop before shipping to reviewers)",
             "docs/tooling": "notes on the PowerShell driving traps hit while editing and the CRLF-safe editing helper",
             "tools/safe_edit.py": "CRLF-safe, uniqueness-asserting text patcher (reads and writes back the original line endings)",

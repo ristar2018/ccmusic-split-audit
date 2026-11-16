@@ -1,0 +1,27 @@
+{
+  "lib": "CTIS",
+  "arm": "A0",
+  "bb": "alexnet",
+  "seed": 0,
+  "fold": 2,
+  "epochs": 10,
+  "n_train": 4520,
+  "n_val": 500,
+  "n_test": 2508,
+  "n_classes": 43,
+  "n_inst": 135,
+  "tag": "p3",
+  "val_best": {
+    "macro_f1_slice": 0.6587,
+    "epoch": 9
+  },
+  "elapsed_s": 82.7,
+  "test_macro_f1_slice": 0.8158,
+  "probe": {
+    "probe_top1": 0.7133,
+    "probe_auc_ovr_macro": 0.9734,
+    "probe_auc_classes": 129,
+    "probe_n_train": 3000,
+    "probe_n_test": 2508
+  }
+}

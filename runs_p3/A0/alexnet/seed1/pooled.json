@@ -1,0 +1,12 @@
+{
+  "macro_f1_slice": 0.8373,
+  "acc": 0.9049,
+  "n": 7528,
+  "macro_f1_recording": 0.8781,
+  "n_recordings": 1388,
+  "arm": "A0",
+  "bb": "alexnet",
+  "seed": 1,
+  "folds_pooled": 3,
+  "tag": "p3"
+}

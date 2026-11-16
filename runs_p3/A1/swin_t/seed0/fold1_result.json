@@ -1,0 +1,21 @@
+{
+  "lib": "CTIS",
+  "arm": "A1",
+  "bb": "swin_t",
+  "seed": 0,
+  "fold": 1,
+  "epochs": 10,
+  "n_train": 4528,
+  "n_val": 491,
+  "n_test": 2509,
+  "n_classes": 43,
+  "n_inst": 135,
+  "tag": "p3",
+  "val_best": {
+    "macro_f1_slice": 0.803,
+    "epoch": 6
+  },
+  "elapsed_s": 399.6,
+  "test_macro_f1_slice": 0.5941,
+  "probe": null
+}

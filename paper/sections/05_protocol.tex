@@ -18,8 +18,11 @@ slices. Supplementary Material S1 gives the realised overlap; $\alpha_c$ is the 
 pool fraction, not the fraction restricted to recordings represented in the test panel. In one
 class, the suona technique cell C0296, four candidate pool slices repeat content that already sits
 in the sealed panel and are removed by the duplicate-content rule before injection, so A1 trains
-on four fewer slices than A0 and C1, 25{,}498 against 25{,}502, and the per-class budgets are equal
-everywhere else.
+on four fewer slices than A0 and C1, 25{,}498 against 25{,}502. The per-class budgets are equal in
+all but three of the 201 classes. In CNPM and in bel canto the library-level duplicate-content
+rule removes a different number of slices from each arm, so the two totals differ by three slices
+there as well: A0 trains on 1{,}624 against 1{,}627 in CNPM and on 5{,}925 against 5{,}928 in
+bel canto. In slice count these are the only departures from a matched budget.
 
 \item[A2, slice-level reconstruction.] Draw the slice-level 80/10/10 partition of C $\cup$
 $Q^{\text{pool}}$, i.e.\ a slice-level interpretation of the audited protocol, including same-recording
@@ -113,7 +116,10 @@ slices of a recording are averaged and the recording receives one label, which g
 recording the same weight within a library, so that recordings with many slices do not dominate
 those with few. Both levels are reported side by side; the
 primary contrast is at the slice level, as specified in the internal analysis plan, and the recording level
-serves as a robustness check, with any disagreement between the two flagged in the text. Macro-averaging is a reasonable summary when class support is uneven; we take the
+serves as a robustness check, with any disagreement between the two flagged in the text. For the
+cross-instrument contrast the two levels do disagree: the slice-level interval excludes zero under
+both backbones, the recording-level interval includes it, and both are reported in
+Section~\ref{sec:results}. Macro-averaging is a reasonable summary when class support is uneven; we take the
 motivating argument from the literature on precision--recall summaries under imbalance \citep{saito2015pr}, though that argument concerns two-class problems and we do not treat it as a general justification. Macro-F1 averages only over classes with non-zero support or
 predictions in the evaluation panel. In the reported intervals the class set is recomputed within
 each resampling replicate: a class that is absent from a replicate is dropped from that
@@ -149,7 +155,7 @@ resampling three seeds does not replace additional training or split realisation
 
 The internal plan designates a primary family of two tests: CTIS under AlexNet and CTIS under Swin-T, both for
 A1$-$A0. There is no independent public timestamp verifying when the plan was fixed. We
-correct within that family by Holm's method~\cite{holm1979} at $\alpha = 0.05$, applied to the
+correct within that family by Holm's method~\cite{holm1979} at the 0.05 level, applied to the
 tail proportions and read descriptively: an adjusted value is not a null-distribution
 $p$-value and inherits the $2/2{,}001$ resolution of the raw proportions. The smallest effect
 of interest, or SESOI, is the three-point macro-F1 threshold recorded in the internal plan.
@@ -201,8 +207,8 @@ classes; all 43 classes keep at least one test recording per fold and 110 instru
 groups after name merging and each with at least three recordings, appear on at least two folds. The labels here are distinct from the main arms:
 R-slice denotes random slice-level folds; R-rec denotes recording-grouped folds with instrument
 overlap; L-inst denotes instrument-withheld folds; and L-inst+Adv adds an adversarial instrument head on the penultimate
-representation through a gradient-reversal layer \citep{ganin2014,ganin2015} with weight ramped to 0.02 over two warm-up epochs,
-and an auxiliary loss weight of 0.2. All four partitions use two seeds and three folds. Because held-out instruments never occur in training, the
+representation through a gradient-reversal layer \citep{ganin2014,ganin2015} with the reversal weight held at zero for the first two epochs and then ramped linearly to a
+ceiling of 0.02, and an auxiliary loss weight of 1.0. All four partitions use two seeds and three folds. Because held-out instruments never occur in training, the
 instrument-identity probe that diagnoses the mechanism is fitted on an 80/20 split of the
 \emph{training} recordings: a closed-set probe cannot identify unseen instrument classes.
 The probe is standardised logistic regression with $C=1$ and at most 200 iterations, on frozen
