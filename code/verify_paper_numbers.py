@@ -500,6 +500,61 @@ def main():
                 "-36.7" not in ck.text and "-31.4" not in ck.text)
     ck.in_text("prose A1r pooled 0.816", "0.816")
     ck.in_text("prose A1r pooled 0.843", "0.843")
+    # Instrument probe (S1) and the recording-level contrast: both are quoted in prose and in
+    # the supplement but sat outside the gate set until the 2026-11-16 review.
+    probe = {}
+    for r in read_csv(os.path.join(P3, "p3_probe.csv")):
+        probe.setdefault((r["arm"], r["bb"]), []).append(
+            (float(r["probe_auc_mean"]), float(r["probe_top1_mean"])))
+    probe_cells = [
+        # (arm, backbone, macro-AUC, top-1) exactly as printed in the S1 probe table
+        ("A0", "alexnet", 0.9324, 0.5550),
+        ("A0", "swin_t", 0.9394, 0.6326),
+        ("A1", "alexnet", 0.9612, 0.6682),
+        ("A1", "swin_t", 0.9697, 0.7320),
+        ("A2", "alexnet", 0.9261, 0.5952),
+        ("A2", "swin_t", 0.9366, 0.6693),
+    ]
+    stale = []
+    for arm, bb, auc, top1 in probe_cells:
+        runs = probe[(arm, bb)]
+        m_auc = sum(v[0] for v in runs) / len(runs)
+        m_top = sum(v[1] for v in runs) / len(runs)
+        if abs(m_auc - auc) > 5e-4 or abs(m_top - top1) > 5e-4:
+            stale.append("%s/%s table %.4f/%.4f runs %.4f/%.4f"
+                         % (arm, bb, auc, top1, m_auc, m_top))
+    ck.identity("S1 probe table cells match the run file", not stale, "; ".join(stale))
+    arm_auc = {}
+    for arm in ("A0", "A1", "A2"):
+        vals = [v[0] for bb in ("alexnet", "swin_t") for v in probe[(arm, bb)]]
+        arm_auc[arm] = sum(vals) / len(vals)
+    ck.in_text(
+        "prose probe AUC three rounded values",
+        "AUC %s for R-slice and %s for L-inst, and the adversarial head lowers it "
+        "only to %s for L-inst+Adv"
+        % (rnd(arm_auc["A0"]).lstrip("+"), rnd(arm_auc["A1"]).lstrip("+"),
+           rnd(arm_auc["A2"]).lstrip("+")),
+    )
+    # Recording level: same contrast as the slice-level one, but no interval excludes zero.
+    # p3b_leak stores arm minus A0 (R-slice), so the printed positive contrast is -delta_rec.
+    rec_ok = True
+    rec_detail = []
+    rec_txt = []
+    for bb, bb_label in (("alexnet", "AlexNet"), ("swin_t", "Swin-T")):
+        r = leak[("A1r", bb)]
+        d_rec = -float(r["delta_rec"])
+        lo, hi = -float(r["rec_ci_hi"]), -float(r["rec_ci_lo"])
+        d_sl = -float(r["delta_slice"])
+        ok = d_rec * d_sl > 0 and lo <= 0.0 <= hi and abs(d_rec) < abs(d_sl)
+        rec_ok = rec_ok and ok
+        rec_detail.append("%s rec %+.3f [%+.3f,%+.3f] slice %+.3f"
+                          % (bb, d_rec, lo, hi, d_sl))
+        rec_txt.append("%s points (CI %s to %s) under %s"
+                       % (rnd(d_rec).lstrip("+"), rnd(lo), rnd(hi), bb_label))
+    ck.identity("recording-level contrast keeps the slice-level sign and spans zero",
+                rec_ok, " | ".join(rec_detail))
+    ck.in_text("prose recording-level contrast",
+               "%s and %s" % (rec_txt[0], rec_txt[1]))
     # C1: equal-volume control must stay small and well below the exposure effect
     c1 = {(r["bb"]): r for r in read_csv(os.path.join(RESULTS, "c1", "e1_delta.csv"))}
     main_d = {(r["library"], r["bb"]): r for r in read_csv(os.path.join(RESULTS, "e1_delta.csv"))}

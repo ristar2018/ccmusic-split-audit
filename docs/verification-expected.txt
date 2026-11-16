@@ -7,10 +7,10 @@ Command
 
 Expected tail
 -------------
-    checks passed: 382, failed: 0
+    checks passed: 386, failed: 0
     report: data/results/paper_verify.json
 
-What the 382 checks cover
+What the 386 checks cover
 -------------------------
 1. Identity layer. Rounded means, deltas, sums, ratios and cost totals are
    re-derived from the artifact tables under data/results/ and compared with the
@@ -63,6 +63,16 @@ What the 382 checks cover
    recordings against 4,956 and 4,954 released) are bound to the manifest; and
    the minimum number of recordings in a retained class is checked at 5 together
    with the 14 classes that hold five or six.
+
+8. Review round of 16 November. Four checks close two claims that had none. The
+   instrument-probe table is re-derived: each of the twelve cells must be the mean over
+   the two classifier-training seeds in data/results/p3/p3_probe.csv, to within the fourth
+   decimal, and the three AUC values quoted in Section 6.4 must be those means at two
+   decimals (0.94, 0.97, 0.93). The recording-level contrast of the cross-instrument step
+   is bound the other way round: its identity requires the recording-level delta to keep
+   the sign of the slice-level delta, to be smaller in magnitude, and to have an interval
+   that spans zero, and the prose is then rebuilt from p3b_leak/p3_delta.csv, so a
+   recording-level number that drifts, changes sign or loses its caveat fails.
 
 What the verifier does not do
 -----------------------------

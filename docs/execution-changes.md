@@ -403,15 +403,17 @@ undefined reference and no missing character.
 
 | gate | checks | what it binds |
 | :-- | --: | :-- |
-| `verify_paper_numbers.py` | 382 | every number in prose and captions to an artifact cell or an identity between cells |
+| `verify_paper_numbers.py` | 386 | every number in prose and captions to an artifact cell or an identity between cells |
 | `verify_claim_provenance.py` | 88 rows | each claim to the CSV cell it prints, through a declared selector and aggregation |
 | `verify_quantifier_claims.py` | 10 claims, 8 captions | each quantified sentence to a fact dictionary, and table captions to coverage |
 | `negtest_claim_provenance.py` | 4 cases | that the first gate fails when the tree is perturbed |
 | `negtest_quantifier_claims.py` | 5 cases | that the third gate fails when a fact or a sentence is perturbed |
 
 The number gate grew from 337 to 338 (the direction-word check), to 351 (the volume
-reconciliation), and to 382 (the round of 14 November). The count is not a quality score;
-what matters is that each of the 382 is a statement about a file that can be re-read.
+reconciliation), to 382 (the round of 14 November) and to 386 (the round of 16 November,
+which added the probe-table, probe-AUC and recording-level checks). The count is not a
+quality score; what matters is that each of the 386 is a statement about a file that can be
+re-read.
 
 ## 15. Fourth review round, 16 November
 
@@ -419,8 +421,10 @@ Fifteen comments arrived on 16 November. Thirteen were upheld, one in part and
 one rejected against the artifact: the comment that music genre ships feature
 images only described this README, not the library, which releases a 13.79 GB
 audio archive. No reported point estimate or interval changed in this round, so
-the three gates report the same counts (382 / 88 / 10) and the negative tests
-the same cases (4 + 5).
+the ledger and the quantifier gate report the same counts (88 / 10) and the negative
+tests the same cases (4 + 5). The number gate grew from 382 to 386: the probe AUC and
+the recording-level contrast were quoted in the manuscript with no gate behind them, and
+one of them was already stale.
 
 | item | change | where |
 | :-- | :-- | :-- |
@@ -428,7 +432,7 @@ the same cases (4 + 5).
 | audited framework | the article applies one pipeline per dataset and reports them one at a time; the manuscript had described a per-task pooled classifier | framework section |
 | audio availability | all five libraries ship `data/audio.zip`; the "images only" claim was wrong in this README and in the materials section | README, materials section |
 | reproducibility | `runs_p3/` is released: 178 files, 8.8 MB of per-slice predictions, training logs, per-fold results, probe output and pooled metrics; the 7.8 GB of checkpoints stays out | `runs_p3/`, data-availability statement |
-| recording-level contrast | the cross-instrument step now reports +1.58 [-1.33, +4.95] and +2.43 [-0.61, +5.63] at the recording level, neither interval excluding zero, alongside the slice-level +2.90 and +3.41 | results section, protocol section |
+| recording-level contrast | the cross-instrument step now reports +1.58 [-1.33, +4.95] and +2.43 [-0.61, +5.63] at the recording level, neither interval excluding zero, alongside the slice-level +2.90 and +3.41; now gated by sign, magnitude and zero-span, and by the printed numbers | results section, protocol section, `verify_paper_numbers.py` |
 | A2 self-test repetition | ten slices in CTIS, two in chest_falsetto and one in music genre repeat content that also appears in A2 training; the sentence that said the panels were disjoint from training slices was corrected | results section, S1 |
 | leaderboard wording | the discussion no longer promises a leaderboard shift that the study cannot attribute | discussion |
 | per-class budgets | three classes, not one, differ between A0 and A1; the totals are now given (CNPM 1,624 against 1,627, bel canto 5,925 against 5,928) | protocol section |
@@ -436,7 +440,7 @@ the same cases (4 + 5).
 | difficulty inference | the exclusion of small classes is no longer read as evidence that they are not harder | S1 |
 | "Chinese music" | the five libraries share a publisher, not a repertoire | discussion |
 | duplicated caption sentence | the repeated fragment in the Table 3 note is gone | results |
-| probe AUC | 0.96 to 0.97, the mean of 0.9612 and 0.9697 at two decimals | results, S1 |
+| probe AUC | 0.96 to 0.97, the mean of 0.9612 and 0.9697 at two decimals; now gated, with the twelve table cells re-derived from `p3_probe.csv` | results, S1, `verify_paper_numbers.py` |
 | probe seeds | the two columns are classifier-training seeds; the probe's 80/20 split and its fit use a fixed seed 0 | results, S1 |
 | prose items | ten rewordings: the memorisation/transfer hedge, the "arguably" in the abstract and conclusion, the Holm wording, the self-test claim, the low-exposure control, the architecture claim, the giant-MIDI sentence, the self-supervised-model citation, the "largest contrast" sentence and the caption-note phrasing | abstract, conclusion, protocol, related work, S1 |
 
