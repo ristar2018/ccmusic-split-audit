@@ -53,6 +53,7 @@ TREES = [
     ("report/审稿意见/human-2026-11-12b", "docs/review_human-2026-11-12b"),
     ("report/审稿意见/human-2026-11-14", "docs/review_human-2026-11-14"),
     ("report/审稿意见/human-2026-11-16", "docs/review_human-2026-11-16"),
+    ("report/审稿意见/aigc-2026-11-18", "docs/review_aigc-2026-11-18"),
     ("worklog", "docs/worklog"),
     ("report/工具与流程", "docs/tooling"),
 ]
@@ -60,11 +61,21 @@ TREES = [
 SKIP_EXT = {".aux", ".log", ".out", ".toc", ".synctex.gz", ".fls", ".fdb_latexmk",
             ".pyc", ".pyo", ".bak", ".tmp", ".pt"}
 
+# The P2 study (document-data consistency, second paper in the series) keeps its
+# scripts in the same code/ tree.  It is not part of this manuscript, so its
+# scripts and outputs stay out of this package; without this filter a rebuild
+# would ship P2 scripts whose inputs are absent.
+SKIP_PREFIX = ("p2_", "data/p2/", "data/p2")
+
 
 def keep(path):
     low = path.lower()
     if "__pycache__" in low:
         return False
+    norm = path.replace("\\", "/").lstrip("./")
+    for pre in SKIP_PREFIX:
+        if norm.startswith(pre):
+            return False
     for ext in SKIP_EXT:
         if low.endswith(ext):
             return False
