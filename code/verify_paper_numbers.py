@@ -959,7 +959,7 @@ def main():
             ("A1/A2,instrument", "supplement table 5 must use the partition labels"),
             ("A1r,recording", "supplement table 5 must use the partition labels")]:
         ck.identity("guard absent: %s" % why, bad not in ck.text)
-    ck.in_text("8:1:1 scope", "Except for Guzheng Tech99 (79:10:10) and ErhuPT (6:2:2)")
+    ck.in_text("8:1:1 scope", "Except for Guzheng Tech99 at 79:10:10 and ErhuPT at 6:2:2")
 
     # A4: the 39-slice gap between the rule-only count and the audited count.
     drop = {"CTIS": 42509 - panels["CTIS"]["slices"],
@@ -968,7 +968,7 @@ def main():
     ck.identity("duplicate removal 39 slices = 4 + 11 + 24",
                 sum(drop.values()) == 39, str(drop))
     ck.in_text("prose 39 slice attribution",
-               "a further 39 slices (4 in CTIS, 11 in CNPM and 24 in bel canto)")
+               "a further 39 slices: 4 in CTIS, 11 in CNPM and 24 in bel canto")
 
     # A5: retained classes against the recording floor.
     per_class = {}

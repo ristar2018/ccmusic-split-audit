@@ -444,4 +444,49 @@ one of them was already stale.
 | probe seeds | the two columns are classifier-training seeds; the probe's 80/20 split and its fit use a fixed seed 0 | results, S1 |
 | prose items | ten rewordings: the memorisation/transfer hedge, the "arguably" in the abstract and conclusion, the Holm wording, the self-test claim, the low-exposure control, the architecture claim, the giant-MIDI sentence, the self-supervised-model citation, the "largest contrast" sentence and the caption-note phrasing | abstract, conclusion, protocol, related work, S1 |
 
+## 16. Pre-submission AIGC check, 18 November
+
+Before submission the English text was run through a 25-item AIGC fingerprint
+detector (`aigc_en_detector.py` v2.0, strictest level) on the prose only: the
+sources were expanded through `\input`, float and display-math environments were
+dropped, captions were extracted separately and set aside, and the remainder was
+split on blank lines. The input is 85 paragraphs, 11,188 words and 473 sentences,
+comparable with the 78 paragraphs and 10,700 words used in the November 11 pass.
+
+The score moved from 90.5 (high risk) to 92.5 (medium risk). One failing item was
+closed: parenthetical asides fell from 26 to 16, inside the 17-place threshold.
+Two items were left alone on purpose. Type-token ratio is 0.53 against a 0.64
+threshold, and sentence-length standard deviation is 13.9 against 14.3. In an
+eleven-thousand-word methods paper the core nouns have to recur; swapping them for
+synonyms would drift the terminology and break the verbatim binding that the claim
+ledger and the quantifier gate rely on. Manufacturing sentence-length variation
+would mean splitting method sentences for rhythm. Passing a detector is not worth
+either, so both are recorded as known deviations rather than fixed.
+
+Nine edits remove ten parentheses. Numbers, interval endpoints, terms and
+qualifiers are untouched:
+
+| where | change |
+| :-- | :-- |
+| framework section | `(79:10:10)` and `(6:2:2)` after the two library names become `at 79:10:10` and `at 6:2:2` |
+| materials section | `takes a further 39 slices (4 in CTIS, 11 in CNPM and 24 in bel canto)` becomes a colon list, the three counts unchanged |
+| protocol section | `all in C0296 (39 -> 35)` becomes `all in C0296, taking the class from 39 to 35 slices` |
+| results section, two places | interval endpoints in parentheses become `95% CI a to b`, matching the form already used elsewhere in the same section |
+| discussion, two places | the same change for the two paired contrasts |
+| discussion, one citation | `pp. 22--38 (Section 3)` becomes `pp. 22--38, Section 3` |
+| statements | `(2026, Grant No. SKL-2026-0504)` becomes `, 2026, Grant No. SKL-2026-0504` |
+
+Two text assertions in the number gate quoted the parenthetical wording that was
+removed. They were updated to the new wording; the semantic content and the
+strength of each assertion are unchanged, and neither was relaxed. A punctuation
+checker reported 57 items, all traced to extraction artefacts, house style on the
+Oxford comma, library names that are capitalised by their publishers, or one
+formula artifact; no new real error was introduced.
+
+Gate after this round: 386 number checks, 88 ledger rows, 10 quantifier claims and
+the nine negative-test cases, all passing. Page counts 32 / 10 / 1, with no
+overfull box, no underfull box, no undefined reference and no missing character.
+The submission date in the cover letter is 18 November 2026, to be moved to the
+actual submission day.
+
 The version anchor below moves to the commit that carries this round.
